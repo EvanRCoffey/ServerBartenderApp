@@ -1,0 +1,5 @@
+Unfortunately, I couldn't get bcrypt to install.
+
+I got an error about python not being installed, which I fixed, and I got an error about package.json not being found, which I fixed.  I'm getting new errors now, but I don't understand them, and I don't know how to proceed.
+
+Moved on to Blowfish, which seems to be working just fine.
