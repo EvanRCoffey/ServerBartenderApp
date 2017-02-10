@@ -22,7 +22,7 @@ app.listen(PORT, function() {
 });
 
 function myAmazingFunction(){
-	if(PORT === 5 && PORT > 50){
-		console.log('nothing')
+	if(PORT === 5){
+		console.log('something')
 	}
 }
