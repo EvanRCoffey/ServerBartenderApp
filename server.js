@@ -24,6 +24,6 @@ app.listen(PORT, function() {
 
 function myAmazingFunction(){
 	if(PORT === 5){
-		console.log('nothing')
+		console.log('something')
 	}
 }
