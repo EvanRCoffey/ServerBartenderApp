@@ -20,3 +20,9 @@ app.use(function(req, res) {
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
+
+function myAmazingFunction(){
+	if(PORT === 5){
+		console.log('nothing')
+	}
+}
