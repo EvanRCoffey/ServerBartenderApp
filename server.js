@@ -11,9 +11,21 @@ var connection = require("./config/connection.js");
 //ROUTING
 //We will eventually split this off into a controllers folder.
 
+//This grabs all of our static files - frontend js and css.
+app.use(express.static(path.join(__dirname,'public/assets')));
+
 app.get("/alt", function(req, res) {
 	res.sendFile(path.join(__dirname, "/./public/alt.html"));
 });
+
+app.get("/login", function(req, res) {
+	res.sendFile(path.join(__dirname, "/./public/login.html"));
+});
+
+//Login Post
+  app.post("/login", function(req, res) {
+    console.log(req.body);
+  });
 
 // If no matching route is found default to home
 app.use(function(req, res) {
