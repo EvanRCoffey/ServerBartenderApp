@@ -6,43 +6,19 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
+
+var routes = require("./controllers/route_controller.js");
 var connection = require("./config/connection.js");
 
 //ROUTING
-//We will eventually split this off into a controllers folder.
 
-//This grabs all of our static files - frontend js and css.
+//Servers all of our static .css and .js files.
 app.use(express.static(path.join(__dirname,'public/assets')));
 
-app.get("/alt", function(req, res) {
-	res.sendFile(path.join(__dirname, "/./public/alt.html"));
-});
-
-app.get("/login", function(req, res) {
-	res.sendFile(path.join(__dirname, "/./public/login.html"));
-});
-
-app.get("/signup", function(req, res) {
-	res.sendFile(path.join(__dirname, "/./public/signup.html"));
-});
-
-//Login Post 
-  app.post("/login", function(req, res) {
-    console.log(req.body);
-  });
-
-  //Signup Post 
-  app.post("/newUser", function(req, res) {
-    console.log(req.body);
-  });
-
-// If no matching route is found default to home
-app.use(function(req, res) {
-	res.sendFile(path.join(__dirname, "./public/home.html"));
-});
+//Routes are found in controllers/route_controllers.js
+app.use("/", routes);
 
 //LISTENER
-
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
