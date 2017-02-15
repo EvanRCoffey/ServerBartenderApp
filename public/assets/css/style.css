@@ -2,3 +2,7 @@
 	width: 90% !important;
 	display: none !important;
 }
+
+.signUpError {
+	color: red;
+}

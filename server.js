@@ -22,8 +22,17 @@ app.get("/login", function(req, res) {
 	res.sendFile(path.join(__dirname, "/./public/login.html"));
 });
 
-//Login Post
+app.get("/signup", function(req, res) {
+	res.sendFile(path.join(__dirname, "/./public/signup.html"));
+});
+
+//Login Post 
   app.post("/login", function(req, res) {
+    console.log(req.body);
+  });
+
+  //Signup Post 
+  app.post("/newUser", function(req, res) {
     console.log(req.body);
   });
 
@@ -31,12 +40,6 @@ app.get("/login", function(req, res) {
 app.use(function(req, res) {
 	res.sendFile(path.join(__dirname, "./public/home.html"));
 });
-
-//Confirming db connection works.
-connection.query("SELECT * FROM users;", function(err, result) {
-	console.log(result)
-    });
-
 
 //LISTENER
 
