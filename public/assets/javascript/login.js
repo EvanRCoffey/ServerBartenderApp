@@ -13,3 +13,6 @@ $('.loginSubmitBtn').on('click', function(event) {
             console.log(data);
         });
 })
+
+//This allows the slideout navbar to function.
+$(".button-collapse").sideNav();

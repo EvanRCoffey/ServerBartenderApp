@@ -1,9 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+
 <head>
-	<title>Home - Server Bartender App</title>
+    <title>Server App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- materialize css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <!-- materialize js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
+
 <body>
-	This is the home page.
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">The Amazing Server App!</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">signup</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+         <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+		</ul>
+    </div>
+  </nav>
+    
 </body>
+<script type="text/javascript" src="./javascript/home.js"></script>
+
 </html>
