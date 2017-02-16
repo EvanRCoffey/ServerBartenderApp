@@ -2,35 +2,64 @@ $('.shiftSubmitBtn').on('click', function(event) {
     event.preventDefault();
     console.log(event);
 
-    // var password = $("#password").val().trim()
-    // var passwordCheck = $("#passwordCheck").val().trim()
+    var largestTip = $("#largestTip").val().trim();
+    var smallestTip = $("#smallestTip").val().trim();
+    var stiffed = $("#stiffed").val().trim();
+    var bwl = $("#bwl").val().trim();
+    var sales = $("#sales").val().trim();
+    var tipout = $("#tipout").val().trim();
+    var tipPercent = $("#tipPercent").val().trim();
+    var ppa = $("#ppa").val().trim();
+    var comments = $("#comments").val().trim();
+    var breakthroughs = $("#breakthroughs").val().trim();
+    var shiftDate = $("#shiftDate").val().trim();
 
-    // if (password === passwordCheck) {
-    //     //Create new user object.
-    //     var newUser = {
-    //         firstName: $("#first_name").val().trim(),
-    //         email: $("#email").val().trim(),
-    //         password: password
-    //     };
-    //     // Send object via AJAX post
-    //     $.post("/newUser", newUser)
-    //         //Once sent deal with successful/unsuccessful signup.
-    //         .done(function(data) {
-    //             console.log(data);
-    //         });
-    // } else {
-    //     displayErrorMessage()
-    // }
+    var inTime = 0; //Get these two working
+    var outTime = 1; //Get these two working
+
+    var shiftType = $("#shiftType").val().trim(); 
+
+    var isReal = $("#isReal1").val().trim(); //Not working either
+
+    var restaurant_id = $("#restaurant_id").val().trim();
+    var user_id = $("#user_id").val().trim();
+
+    //Create new user object.
+    var newShift = {
+        largestTip:largestTip,
+        smallestTip:smallestTip,
+        stiffed:stiffed,
+        bwl:bwl,
+        sales:sales,
+        tipout:tipout,
+        tipPercent:tipPercent,
+        ppa:ppa,
+        comments:comments,
+        breakthroughs:breakthroughs,
+        shiftDate:shiftDate,
+        inTime:inTime,
+        outTime:outTime,
+        shiftType:shiftType,
+        isReal:isReal,
+        restaurant_id:restaurant_id,
+        user_id:user_id
+    };
+    // Send object via AJAX post
+    $.post("/newShift", newShift)
+    //Once sent deal with successful/unsuccessful signup.
+    .done(function(data) {
+        console.log(data);
+    });
 });
 
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
-  });
+});
 
 $(document).ready(function() {
     $('select').material_select();
-  });
+});
 
 var slider = document.getElementById('slider');
 
@@ -42,10 +71,6 @@ noUiSlider.create(slider, {
         'max': 1919
     }
 })
-
-function displayErrorMessage() {
-    $('form').append('<p class="signUpError">Password does not match. Please Try again.</p>')
-}
 
 //This allows the slideout navbar to function.
 $(".button-collapse").sideNav();

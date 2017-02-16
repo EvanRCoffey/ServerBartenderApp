@@ -30,17 +30,17 @@ router.get("/shift", function(req, res) {
 });
 
 router.post("/login", function(req, res) {
-	//authenticate email and password using...
-	//req.email
-	//req.password
+    //Interact with DB here
     console.log(req.body);
   });
 
 router.post("/newUser", function(req, res) {
-	//post new user to table "users" using...
-	//req.firstName
-	//req.email
-	//req.password
+    //Interact with DB here
+    console.log(req.body);
+  });
+
+router.post("/newShift", function(req, res) {
+    //Interact with DB here
     console.log(req.body);
   });
 
