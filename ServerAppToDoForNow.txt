@@ -1,22 +1,14 @@
-1) User login system
--User registration
+1) User login system (Mills is on this)
+-User signup
 -User login
+-Password encryption
 -Password recovery via email
--Password encryption (Mills said he was on this)
 
-2) Build all of the forms (and their corresponding .html files)
--Job
--Shift
--Restaurant
--User sign up
--User login
 
-3) Build a site directory.  Set up HTML routes.  Code links to other pages, where they belong.
+3) Ensure all forms are interacting with the database how they should.  Allow users to add, edit, and delete jobs, shifts, and restaurants.
 
-4) Ensure all forms are interacting with the database how they should.  Allow users to add, edit, and delete jobs, shifts, and restaurants.
 
-5) Make the site look halfway decent
+4) Deploy
 
-6) Deploy (to Heroku?)
 
-7) Give to friends to start using
+5) Give to friends to start using
