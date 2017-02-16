@@ -8,15 +8,17 @@
 -Job
 -Shift
 -Restaurant
--User sign up
--User login
-
-3) Build a site directory.  Set up HTML routes.  Code links to other pages, where they belong.
 
 4) Ensure all forms are interacting with the database how they should.  Allow users to add, edit, and delete jobs, shifts, and restaurants.
-
-5) Make the site look halfway decent
 
 6) Deploy (to Heroku?)
 
 7) Give to friends to start using
+
+
+
+
+
+
+
+Try out passport.js!  I looked over it a bit, and it makes sense to me.  I'm ready to test it out.

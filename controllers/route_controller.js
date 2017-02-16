@@ -25,11 +25,22 @@ router.get("/signup", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/signup.html"));
 });
 
+router.get("/shift", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/shift.html"));
+});
+
 router.post("/login", function(req, res) {
+	//authenticate email and password using...
+	//req.email
+	//req.password
     console.log(req.body);
   });
 
 router.post("/newUser", function(req, res) {
+	//post new user to table "users" using...
+	//req.firstName
+	//req.email
+	//req.password
     console.log(req.body);
   });
 
