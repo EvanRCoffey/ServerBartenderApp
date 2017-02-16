@@ -1,5 +1,9 @@
 //I found this through a google search and decided to include it.  Gonna give it a shot later.
 
+
+
+
+
 // config/passport.js
                 
 // load all the things we need
@@ -46,7 +50,7 @@ module.exports = function(passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        connection.query("select * from users where user_email = '"+email+"'",function(err,rows){
+        connection.query("select * from users where email = '"+email+"'",function(err,rows){
             console.log(rows);
             console.log("above row object");
             if (err)
@@ -87,7 +91,7 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) { // callback with email and password from our form
 
-         connection.query("SELECT * FROM `users` WHERE `user_email` = '" + email + "'",function(err,rows){
+         connection.query("SELECT * FROM `users` WHERE `email` = '" + email + "'",function(err,rows){
             if (err)
                 return done(err);
              if (!rows.length) {
