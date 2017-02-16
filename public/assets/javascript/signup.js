@@ -7,9 +7,13 @@ $('.signUpSubmitBtn').on('click', function(event) {
     if (password === passwordCheck) {
         //Create new user object.
         var newUser = {
-            firstName: $("#first_name").val().trim(),
-            email: $("#email").val().trim(),
-            password: password
+            user_id: 9000,
+            user_email: $("#email").val().trim(),
+            user_name: $("#first_name").val().trim(),
+            user_password: $("#password").val().trim(),
+            user_level: 9000,
+            restaurant_name: "Flemings",
+            isReal: false
         };
         // Send object via AJAX post
         $.post("/newUser", newUser)
