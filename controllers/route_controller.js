@@ -29,6 +29,14 @@ router.get("/shift", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/shift.html"));
 });
 
+router.get("/job", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/job.html"));
+});
+
+router.get("/restaurant", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/restaurant.html"));
+});
+
 router.post("/login", function(req, res) {
     //Interact with DB here
     console.log(req.body);
@@ -40,6 +48,16 @@ router.post("/newUser", function(req, res) {
   });
 
 router.post("/newShift", function(req, res) {
+    //Interact with DB here
+    console.log(req.body);
+  });
+
+router.post("/newJob", function(req, res) {
+    //Interact with DB here
+    console.log(req.body);
+  });
+
+router.post("/newRestaurant", function(req, res) {
     //Interact with DB here
     console.log(req.body);
   });
