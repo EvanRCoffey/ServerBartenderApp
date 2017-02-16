@@ -2,6 +2,8 @@ var express = require("express");
 var path = require('path');
 var app = express();
 
+var db = require("../models");
+
 var router = express.Router();
 
 var bodyParser = require("body-parser");
@@ -14,6 +16,47 @@ router.get("/", function(req, res) {
 });
 
 router.get("/alt", function(req, res) {
+
+//  CREATE!
+//   db.Blah.create({
+//   email: "HELLYEAH@myspace.com",
+//   password: "superduperinsecurepassword123",
+//   age: 55,
+//   name: "Betty"
+// }).then(function(dbUser) {
+//   console.log(dbUser);
+// });
+
+//  FIND ONE!
+// db.Blah.findOne({ where: {id: 1} }).then(function(dbUser) {
+//     console.log(dbUser);
+//   });
+
+//  FIND ALL!
+// db.Blah.findAll().then(function(dbUser) {
+//   console.log(dbUser);
+// });
+
+//  UPDATE ONE!
+// var newTom = {
+//   age: 25,
+//   email: "mark@facebook.com"
+// };
+// db.Blah.update(newTom, {
+//   where: {
+//     id: 1
+//   }
+// }).then(function(dbUser) {
+//   console.log(dbUser);
+// });
+
+// DELETE ONE!
+// db.Blah.destroy({
+//   where: {id: 1}
+// }).then(function(dbUser) {
+//   console.log(dbUser);
+// });
+
   res.sendFile(path.join(__dirname, "../public/alt.html"));
 });
 
