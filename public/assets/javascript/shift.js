@@ -1,3 +1,85 @@
+//////////////////////////////
+//EDIT SHIFT
+//////////////////////////////
+
+$('.shiftEditBtn').on('click', function(event) {
+    event.preventDefault();
+    console.log(event);
+
+    var dateToEdit = $("#dateToEdit").val().trim();
+
+    //Create new user object.
+    var dateObj = {
+        id: 9000,
+        dateToEdit:dateToEdit,
+        timeIn: 1
+    }
+
+    var matchArray = [];
+
+    //Search database for any entries where date === dateToEdit.  For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+
+    if (matchArray.length === 0) {
+        //Notify user that there are no shifts saved for that date
+    }
+    else if (matchArray.length === 1) {
+        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[0]
+    }
+    else if (matchArray.length > 1) {
+        var inTimes = [];
+        for (var i = 0; i<matchArray.length; i++) {
+            inTimes.append(matchArray[i].timeIn);
+        }
+        //Load a dropdown for the user to select which of the in-times they want.  
+        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[userSelection]
+    }
+}
+
+// //////////////////////////////
+// //DELETE SHIFT
+// //////////////////////////////
+
+// $('.shiftDeleteBtn').on('click', function(event) {
+//     event.preventDefault();
+//     console.log(event);
+
+//     var dateToDelete = $("#dateToDelete").val().trim();
+
+//     //Create new user object.
+//     var dateObj = {
+//         id: 9000,
+//         dateToDelete:dateToDelete,
+//         timeIn: 1
+//     }
+
+//     var matchArray = [];
+
+//     //Search database for any entries where date === dateToDelete.  For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+
+//     if (matchArray.length === 0) {
+//         //Notify user that there are no shifts saved for that date
+//     }
+//     else if (matchArray.length === 1) {
+//         //Verify user selection
+//         //If the user cancelled, report "delete cancelled"
+//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful"
+//     }
+//     else if (matchArray.length > 1) {
+//         var inTimes = [];
+//         for (var i = 0; i<matchArray.length; i++) {
+//             inTimes.append(matchArray[i].timeIn);
+//         }
+//         //Load a dropdown for the user to select which of the in-times they want.  
+//         //Verify user selection
+//         //If the user cancelled, report "delete cancelled"
+//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful"
+//     }
+// }
+
+//////////////////////////////
+//SUBMIT NEW SHIFT
+//////////////////////////////
+
 $('.shiftSubmitBtn').on('click', function(event) {
     event.preventDefault();
     console.log(event);
@@ -74,3 +156,11 @@ noUiSlider.create(slider, {
 
 //This allows the slideout navbar to function.
 $(".button-collapse").sideNav();
+
+
+
+
+
+
+
+

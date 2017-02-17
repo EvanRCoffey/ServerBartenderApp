@@ -1,24 +1,24 @@
 BY THE END OF THE WEEK...
 
-1) User login system (Mills said he was on this)
--User registration
--User login
--Password encryption
--Password recovery via email
+1) Password recovery via email
 
-2) Allow users to view, edit, and delete jobs, shifts, and restaurants.
+2) Allow users to view/edit and delete jobs/shifts/restaurants.
+-Evan working on this now
 
-3) Think of a name for the website (brainstorm!)
+3) Decide on a name for the website (see potentialSiteNames.txt)
 
-4) Deploy
+4) Envision the "new user" experience - make sure everything is intuitive
 
-5) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
+5) Deploy
+
+6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 
 
 ***Errors needing fixing
 -Why are all of the DECIMAL values rounding off?
 -What's the deal with these friggin range slidebars?
 -Why are the radio buttons not working correctly?
+-You need a field for "Total Walked With" in the shift form
 
 ___________________________________________________________________
 
