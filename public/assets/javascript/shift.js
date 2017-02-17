@@ -17,21 +17,23 @@ $('.shiftEditBtn').on('click', function(event) {
 
     var matchArray = [];
 
-    //Search database for any entries where date === dateToEdit.  For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+    //Search database for any entries where date === dateToEdit.  (Sequelize - You'll need to make a new one, I think)
+
+    //For each match, add an object to matchArray which contains that match's id, date, and timeIn.  
 
     if (matchArray.length === 0) {
-        //Notify user that there are no shifts saved for that date
+        //Notify user that there are no shifts saved for that date (MATERIALIZE - CARDS)
     }
     else if (matchArray.length === 1) {
-        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[0]
+        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[0]  (LEARN THIS)
     }
     else if (matchArray.length > 1) {
         var inTimes = [];
         for (var i = 0; i<matchArray.length; i++) {
             inTimes.append(matchArray[i].timeIn);
         }
-        //Load a dropdown for the user to select which of the in-times they want.  
-        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[userSelection]
+        //Load a dropdown for the user to select which of the in-times they want.  (MATERIALIZE - DROPDOWN) 
+        //Load shiftUpdate.html and populate its form with the data from the shift with the id held at matchArray[userSelection]  (LEARN THIS)
     }
 }
 
@@ -54,25 +56,27 @@ $('.shiftEditBtn').on('click', function(event) {
 
 //     var matchArray = [];
 
-//     //Search database for any entries where date === dateToDelete.  For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+//     //Search database for any entries where date === dateToDelete.  (Sequelize - You'll need to make a new one, I think)
+
+//     //For each match, add an object to matchArray which contains that match's id, date, and timeIn.
 
 //     if (matchArray.length === 0) {
-//         //Notify user that there are no shifts saved for that date
+//         //Notify user that there are no shifts saved for that date (MATERIALIZE - CARDS)
 //     }
 //     else if (matchArray.length === 1) {
-//         //Verify user selection
-//         //If the user cancelled, report "delete cancelled"
-//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful"
+//         //Verify user selection (MATERIALIZE - CARDS)
+//         //If the user cancelled, report "delete cancelled" (MATERIALIZE - CARDS)
+//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful" (Sequelize - Delete) AND (MATERIALIZE - CARDS)
 //     }
 //     else if (matchArray.length > 1) {
 //         var inTimes = [];
 //         for (var i = 0; i<matchArray.length; i++) {
 //             inTimes.append(matchArray[i].timeIn);
 //         }
-//         //Load a dropdown for the user to select which of the in-times they want.  
-//         //Verify user selection
-//         //If the user cancelled, report "delete cancelled"
-//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful"
+//         //Load a dropdown for the user to select which of the in-times they want.  (MATERIALIZE - DROPDOWN) 
+//         //Verify user selection (MATERIALIZE - CARDS)
+//         //If the user cancelled, report "delete cancelled" (MATERIALIZE - CARDS)
+//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful" (Sequelize - Delete) AND (MATERIALIZE - CARDS)
 //     }
 // }
 

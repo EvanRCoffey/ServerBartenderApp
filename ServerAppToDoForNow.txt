@@ -2,10 +2,13 @@ BY THE END OF THE WEEK...
 
 1) Password recovery via email
 
-2) Allow users to view/edit and delete jobs/shifts/restaurants.
--Evan working on this now
+2) Allow users to view/edit and delete jobs/shifts/restaurants. (Evan is on this)
 
-3) Decide on a name for the website (see potentialSiteNames.txt)
+-HTML updated for shift.html!
+-Pseudocode entered into shift.js!
+-Currently working through pseudocode and replacing it with real code
+
+3) Decide on a name for the website (already thought of a few - see potentialSiteNames.txt)
 
 4) Envision the "new user" experience - make sure everything is intuitive
 
