@@ -10,7 +10,7 @@ $('.signUpSubmitBtn').on('click', function(event) {
             user_id: 9000,
             user_email: $("#email").val().trim(),
             user_name: $("#first_name").val().trim(),
-            user_password: $("#password").val().trim(),
+            user_password: password,
             user_level: 9000,
             restaurant_name: "Flemings",
             isReal: false

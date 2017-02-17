@@ -14,49 +14,48 @@
 </head>
 
 <body>
- <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">The Amazing Server App!</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/login">Login</a></li>
-        <li><a href="/signup">Sign Up</a></li>
-        <li><a href="/shift">Shift</a></li>
-        <li><a href="/job">Job</a></li>
-        <li><a href="/restaurant">Restaurant</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-         <li><a href="/login">Login</a></li>
-        <li><a href="/signup">Sign Up</a></li>
-        <li><a href="/shift">Shift</a></li>
-        <li><a href="/job">Job</a></li>
-        <li><a href="/restaurant">Restaurant</a></li>
-        </ul>
-    </div>
-  </nav>
-
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">The Amazing Server App!</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                <li><a href="/shift">Shift</a></li>
+                <li><a href="/job">Job</a></li>
+                <li><a href="/restaurant">Restaurant</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                <li><a href="/shift">Shift</a></li>
+                <li><a href="/job">Job</a></li>
+                <li><a href="/restaurant">Restaurant</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="row">
         <div class="row">
             <div class="col s12">
                 <h4>Please Login</h4>
             </div>
         </div>
-        <form class="col s12">
+        <form class="col s12" method="POST" action="/login">>
             <div class="row">
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
+                    <input id="email" type="email" class="validate" name="username">
                     <label for="email">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
+                    <input id="password" type="password" class="validate" name="password">
                     <label for="password">Password</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light loginSubmitBtn">Submit
+            <button class="btn waves-effect waves-light loginSubmitBtn" type="submit">Submit
             </button>
             <div class="row">
             </div>

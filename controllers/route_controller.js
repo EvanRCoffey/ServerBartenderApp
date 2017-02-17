@@ -1,14 +1,14 @@
 var express = require("express");
 var path = require('path');
 var app = express();
-
+var passport = require('passport')
 var db = require("../models");
 
 var router = express.Router();
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
-var connection = require("../config/connection.js");
+var bcrypt = require("bcrypt-nodejs")
 
 router.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/home.html"));
@@ -27,7 +27,8 @@ router.get("/signup", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/signup.html"));
 });
 
-router.get("/shift", function(req, res) {
+//This is now limited to login only.
+router.get("/shift", loggedIn, function(req, res, next) {
   res.sendFile(path.join(__dirname, "../public/shift.html"));
 });
 
@@ -39,30 +40,50 @@ router.get("/restaurant", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/restaurant.html"));
 });
 
-router.post("/login", function(req, res) {
-  // db.User.create({
-  //   email: req.body.email,
-  //   password: req.body.password,
-  // }).then(function(dbUser) {
-  //   console.log(dbUser);
-  // });
-  // console.log(req.body);
-});
+router.post("/login", passport.authenticate('local', { 
+  failureRedirect: '/login2',
+  successRedirect: '/shift'
+}))
 
-router.post("/newUser", function(req, res) {
-  db.User.create({
+// router.post("/newUser", function(req, res) {
+//   db.User.create({
+//     user_id: req.body.user_id,
+//     user_email: req.body.user_email,
+//     user_name: req.body.user_name,
+//     password: bcrypt.hashSync(req.body.user_password),
+//     user_level: req.body.user_level,
+//     restaurant_name: req.body.restaurant_name,
+//     isReal: false
+//   }).then(function(dbUser) {
+//     console.log(dbUser);
+//   });
+//   console.log(req.body);
+// });
+
+router.post("/newUser", function(req, res, next) {
+  console.log(req.body)
+      db.User.findOne({
+    where: {
+     user_email: req.body.user_email
+    }
+  }).then(function(user){
+    if(!user){
+     db.User.create({
     user_id: req.body.user_id,
     user_email: req.body.user_email,
     user_name: req.body.user_name,
-    user_password: req.body.user_password,
+    user_password: bcrypt.hashSync(req.body.user_password),
     user_level: req.body.user_level,
     restaurant_name: req.body.restaurant_name,
     isReal: false
-  }).then(function(dbUser) {
-    console.log(dbUser);
+  }).then(function(user){
+        passport.authenticate("local", {failureRedirect:"/signup", successRedirect: "/posts"})(req, res, next)
+      })
+    } else {
+      res.send("user exists")
+    }
+  })
   });
-  console.log(req.body);
-});
 
 router.post("/newShift", function(req, res) {
   db.Shift.create({
@@ -123,7 +144,14 @@ router.get('*', function(req, res){
   res.status(404).send('404 Page Goes Here');
 });
 
-
+//function for limiting access to logged in user only.
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
 // Export routes for server.js to use.
 module.exports = router;
 
