@@ -1,16 +1,10 @@
 BY THE END OF THE WEEK...
 
-Soon, meet on slack to discuss database setups - think ahead!
-Set up relationships too.
+1) Set up relationship between users and shifts (Mills is on this)
 
-
-1) Password recovery via email (Mills)
+2) Edit models to get rid of dead weight (Mills is on this, I think)
 
 2) Allow users to view/edit and delete jobs/shifts/restaurants. (Evan is on this)
-
--HTML updated for shift.html!
--Pseudocode entered into shift.js!
--Currently working through pseudocode and replacing it with real code
 
 3) Envision the "new user" experience - make sure everything is intuitive
 
@@ -22,8 +16,6 @@ Set up relationships too.
 
 ***Errors needing fixing
 -Why are all of the DECIMAL values rounding off?
--What's the deal with these friggin range slidebars?
--Why are the radio buttons not working correctly?
 -You need a field for "Total Walked With" in the shift form
 
 ___________________________________________________________________

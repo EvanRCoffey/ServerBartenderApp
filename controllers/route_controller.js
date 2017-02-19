@@ -226,7 +226,25 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
 router.post("/editShift", function(req, res) {
   var shiftData = req.body;
   db.Shift.update(shiftData, {
-    where: {shiftDate: req.body.shiftDate, timeIn: req.body.timeIn}
+    where: {id:shiftData.id}
+  }).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/editJob", function(req, res) {
+  var jobData = req.body;
+  db.Job.update(jobData, {
+    where: {id:jobData.id}
+  }).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/editRestaurant", function(req, res) {
+  var restaurantData = req.body;
+  db.Restaurant.update(restaurantData, {
+    where: {id:restaurantData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
   });
@@ -237,6 +255,27 @@ router.post("/deleteShift", function(req, res) {
   db.Shift.destroy({where: {id: shiftData.id}}).then(function(dbUser) {
     console.log(dbUser);
   });
+});
+
+router.post("/deleteJob", function(req, res) {
+  var jobData = req.body;
+  db.Job.destroy({where: {id: jobData.id}}).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/deleteRestaurant", function(req, res) {
+  var restaurantData = req.body;
+  db.Restaurant.destroy({where: {id: restaurantData.id}}).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/shiftsDescendingByDate", function(req, res) {
+    db.Shift.findAll({ where: {user_id: req.user_id}, // Will order by shiftDate on an associated User
+    order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+      console.log(dbUser);
+    });
 });
 
 router.post("/shiftByDate", function(req, res) {
@@ -316,5 +355,12 @@ function tempPWgenerator() {
 // db.Blah.destroy({
 //   where: {id: 1}
 // }).then(function(dbUser) {
+//   console.log(dbUser);
+// });
+
+
+
+
+// db.Shift.findAll({ where: {user_id: USER_ID}, order: [[sequelize.fn('max', sequelize.col('shiftDate')), 'DESC']]}).then(function(dbUser) {
 //   console.log(dbUser);
 // });

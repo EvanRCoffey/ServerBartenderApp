@@ -163,11 +163,16 @@ $('.shiftDeleteBtn').on('click', function(event) {
             var selectedShiftObject = data[0];
             console.log(selectedShiftObject);
 
-            //Delete DB entry of selectedShiftObject
-            $.post("/deleteShift", selectedShiftObject)
+            $.post("/shiftsDescendingByDate", selectedShiftObject)
             .done(function(data) {
                 console.log(data);
             })
+
+            // //Delete DB entry of selectedShiftObject
+            // $.post("/deleteShift", selectedShiftObject)
+            // .done(function(data) {
+            //     console.log(data);
+            // })
         }
 
         else if (matchArray.length > 1) {
@@ -280,17 +285,6 @@ $('.datepicker').pickadate({
 $(document).ready(function() {
     $('select').material_select();
 });
-
-var slider = document.getElementById('slider');
-
-noUiSlider.create(slider, {
-    start: [1020, 1320],
-    connect: true,
-    range: {
-        'min': 0,
-        'max': 1919
-    }
-})
 
 //This allows the slideout navbar to function.
 $(".button-collapse").sideNav();

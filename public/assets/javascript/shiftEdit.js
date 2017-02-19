@@ -61,17 +61,6 @@ $(document).ready(function() {
     $('select').material_select();
 });
 
-var slider = document.getElementById('slider');
-
-noUiSlider.create(slider, {
-    start: [1020, 1320],
-    connect: true,
-    range: {
-        'min': 0,
-        'max': 1919
-    }
-})
-
 //This allows the slideout navbar to function.
 $(".button-collapse").sideNav();
 
