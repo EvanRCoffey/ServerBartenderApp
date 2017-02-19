@@ -16,6 +16,12 @@ var connection = require("./config/connection.js");
 app.use(require('cookie-parser')())
 app.use(require('express-session')({ secret: 'secretServerApp', resave: false, saveUninitialized: false }))
 
+
+//Servers all of our static .css and .js files.
+//This has to go above the passport stuff, or it will try to 
+//validate each request for the static files.
+app.use(express.static(path.join(__dirname,'public/assets')));
+
 //Passport stuff
 //this only configs passport. If i require it as an external
 //file it all goes to hell. It can live here for now.
@@ -55,9 +61,6 @@ app.use(function(req,res,next){
   }
   next()
 })
-
-//Servers all of our static .css and .js files.
-app.use(express.static(path.join(__dirname,'public/assets')));
 
 //Routes are found in controllers/route_controllers.js
 app.use("/", routes);

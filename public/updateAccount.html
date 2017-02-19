@@ -38,43 +38,49 @@
     <div class="row">
         <div class="row">
             <div class="col s12">
-                <h4>Sign up</h4>
+                <h4>Update Account Info</h4>
             </div>
         </div>
-        <form class="col s12" method="POST" action="/newUser" onsubmit="return validateForm()" >
+        <form class="col s12" method="POST" action="/updateAccount" onsubmit="return validateForm()" >
             <div class="row">
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="first_name" type="text" class="validate" name="user_name">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">New First Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" type="email" class="validate" name="user_email">
-                    <label for="email">Email</label>
+                    <label for="email">New Email</label>
+                </div>
+            </div>
+                <div class="row">
+                <div class="input-field col s12">
+                    <input id="Oldpassword" type="password" class="validate" name="old_password">
+                    <label for="password">Old Password</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" class="validate" name="user_password">
-                    <label for="password">Password</label>
+                    <input id="password" type="password" class="validate" name="new_password">
+                    <label for="password">New Password</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="passwordCheck" type="password" class="validate">
-                    <label for="password">Re-enter Password</label>
+                    <label for="password">Re-enter New Password</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Sign Up
+            <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Update
             </button>
             <div class="row">
             </div>
         </form>
     </div>
 </body>
-<script type="text/javascript" src="./javascript/signup.js"></script>
+<script type="text/javascript" src="./javascript/updateAccount.js"></script>
 
 </html>
