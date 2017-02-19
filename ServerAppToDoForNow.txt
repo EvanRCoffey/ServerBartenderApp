@@ -1,6 +1,5 @@
 BY THE END OF THE WEEK...
 
-
 Soon, meet on slack to discuss database setups - think ahead!
 Set up relationships too.
 

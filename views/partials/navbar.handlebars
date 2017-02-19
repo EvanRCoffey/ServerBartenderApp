@@ -1,0 +1,41 @@
+ <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">The Amazing Server App!</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+      {{#unless this.user}}
+      <!-- This section only shows when not logged in. -->
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+         {{/unless}}
+        {{#if this.user}}
+        <!-- This section only shows when logged in. -->
+        <li><a href="/shift">Shift</a></li>
+        <li><a href="/job">Job</a></li>
+        <li><a href="/restaurant">Restaurant</a></li>
+        <li><a href="/updateAccount">Update Account</a></li>
+        <li><a href="/logout">Logout</a></li>
+         {{/if}}
+        <li><a href="/feedback">Feedback</a></li>
+        <!-- If we need a menu item to show when logged in and not, but it outside of those if/unless statements. -->
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+      {{#unless this.user}}
+      <!-- This section only shows when not logged in. -->
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+         {{/unless}}
+         {{#if this.user}}
+        <!-- This section only shows when logged in. -->
+        <li><a href="/shift">Shift</a></li>
+        <li><a href="/job">Job</a></li>
+        <li><a href="/restaurant">Restaurant</a></li>
+        <li><a href="/updateAccount">Update Account</a></li>
+        <li><a href="/logout">Logout</a></li>
+         {{/if}}
+        <li><a href="/feedback">Feedback</a></li>
+         <!-- If we need a menu item to show when logged in and not, but it outside of those if/unless statements. -->
+        </ul>
+    </div>
+  </nav>
+   

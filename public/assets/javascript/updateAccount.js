@@ -8,9 +8,10 @@
         }
     }
 
-function displayErrorMessage() {
-    $('form').append('<p class="signUpError">Password does not match. Please Try again.</p>')
-}
 
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
+    function displayErrorMessage() {
+        $('form').append('<p class="signUpError">Password does not match. Please Try again.</p>')
+    }
+
+    //This allows the slideout navbar to function.
+    $(".button-collapse").sideNav();

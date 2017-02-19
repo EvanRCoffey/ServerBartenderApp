@@ -1,0 +1,45 @@
+
+    <div class="row">
+        <div class="row">
+            <div class="col s12">
+                <h4>Restaurant Form</h4>
+            </div>
+        </div>
+
+        <form class="col s12">
+
+            <div class="row"></div>
+    
+            <div class="row">
+                <!--restaurant_id INT(32)-->
+                <div class="input-field col s12">
+                    <input id="restaurant_id" type="text" class="validate">
+                    <label for="restaurant_id">Restaurant ID</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <!--restaurant_name VARCHAR(32)-->
+                <div class="input-field col s12">
+                    <input id="restaurant_name" type="text" class="validate">
+                    <label for="restaurant_name">Restaurant Name</label>
+                </div>
+            </div>
+
+            <!--defaultMenu JSON would go here-->
+
+            <div class="row">
+                <!--isReal BOOLEAN NOT NULL-->
+                <input name="isReal" type="radio" id="isReal1" />
+                <label for="isReal1">Real Data</label>
+                <input name="isReal" type="radio" id="isReal2" />
+                <label for="isReal2">Fake Data</label>
+            </div>
+            
+            <button class="btn waves-effect waves-light restaurantSubmitBtn">Submit Restaurant
+            </button>
+            <div class="row">
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="./javascript/restaurant.js"></script>
