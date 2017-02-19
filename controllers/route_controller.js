@@ -20,46 +20,18 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-
-
 var bcrypt = require("bcrypt-nodejs")
 
 router.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/home.html"));
+   res.render("home", req);
 });
 
 router.get("/alt", function(req, res) {
-
-    res.sendFile(path.join(__dirname, "../public/alt.html"));
+res.sendFile(path.join(__dirname, "../public/alt.html"));
 });
 
 router.get("/login", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/login.html"));
-});
-
-router.get("/updateAccount", loggedIn, function(req, res, next) {
-    res.sendFile(path.join(__dirname, "../public/updateAccount.html"));
-});
-
-router.get("/signup", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
-});
-
-router.get("/passwordReset", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/passwordReset.html"));
-});
-
-//This is now limited to login only.
-router.get("/shift", loggedIn, function(req, res, next) {
-    res.sendFile(path.join(__dirname, "../public/shift.html"));
-});
-
-router.get("/job", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/job.html"));
-});
-
-router.get("/restaurant", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/restaurant.html"));
+    res.render("login", req);
 });
 
 router.post("/login", passport.authenticate('local', {
@@ -67,8 +39,33 @@ router.post("/login", passport.authenticate('local', {
     successRedirect: '/shift'
 }))
 
+router.get("/signup", function(req, res) {
+    res.render("signup", req);
+});
+
+router.get("/passwordReset", function(req, res) {
+    res.render("passwordReset", req);
+});
+
+router.get("/updateAccount", loggedIn, function(req, res, next) {
+    res.render("updateAccount", req);
+});
+
+//This is now limited to login only.
+router.get("/shift", loggedIn, function(req, res, next) {
+    res.render("shift", req);
+});
+
+router.get("/job", loggedIn, function(req, res, next) {
+    res.render("job", req);
+});
+
+router.get("/restaurant", loggedIn, function(req, res, next) {
+    res.render("restaurant", req);
+});
+
 //Logs user out and returns to homepage.
-router.get('/logout', function(req, res) {
+router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();
     res.redirect('/');
 });
@@ -119,6 +116,7 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
     }
 });
 
+//Sends an email to user entered email with a new temporary password.
 router.post("/reset", function(req, res, next) {
     //generate temporary password.
     var tempPass = tempPWgenerator()
@@ -150,7 +148,7 @@ router.post("/reset", function(req, res, next) {
 });
 
 
-router.post("/newShift", function(req, res) {
+router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
         restaurant_id: req.body.restaurant_id,
         user_id: req.body.user_id,
@@ -175,7 +173,7 @@ router.post("/newShift", function(req, res) {
     console.log(req.body);
 });
 
-router.post("/newJob", function(req, res) {
+router.post("/newJob", loggedIn, function(req, res, next) {
     db.Job.create({
         restaurant_id: req.body.restaurant_id,
         user_id: req.body.user_id,
@@ -191,7 +189,7 @@ router.post("/newJob", function(req, res) {
     console.log(req.body);
 });
 
-router.post("/newRestaurant", function(req, res) {
+router.post("/newRestaurant",loggedIn, function(req, res, next) {
     db.Restaurant.create({
         restaurant_id: req.body.restaurant_id,
         restaurant_name: req.body.restaurant_name,
@@ -218,6 +216,7 @@ function loggedIn(req, res, next) {
         res.redirect('/login');
     }
 }
+
 // Export routes for server.js to use.
 module.exports = router;
 
