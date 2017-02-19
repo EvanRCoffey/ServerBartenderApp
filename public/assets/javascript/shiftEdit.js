@@ -6,6 +6,7 @@ $('.shiftEditBtn2').on('click', function(event) {
     event.preventDefault();
     console.log(event);
 
+    var totalWalkedWith = $("#totalWalkedWith").val().trim;
     var largestTip = $("#largestTip").val().trim();
     var smallestTip = $("#smallestTip").val().trim();
     var stiffed = $("#stiffed").val().trim();
@@ -26,6 +27,7 @@ $('.shiftEditBtn2').on('click', function(event) {
 
     //Create new user object.
     var newShift = {
+        totalWalkedWith:totalWalkedWith,
         largestTip:largestTip,
         smallestTip:smallestTip,
         stiffed:stiffed,
