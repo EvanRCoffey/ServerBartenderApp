@@ -271,13 +271,6 @@ router.post("/deleteRestaurant", function(req, res) {
   });
 });
 
-router.post("/shiftsDescendingByDate", function(req, res) {
-    db.Shift.findAll({ where: {user_id: req.user_id}, // Will order by shiftDate on an associated User
-    order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-      console.log(dbUser);
-    });
-});
-
 router.post("/shiftByDate", function(req, res) {
   console.log(req.body);
 
@@ -355,12 +348,5 @@ function tempPWgenerator() {
 // db.Blah.destroy({
 //   where: {id: 1}
 // }).then(function(dbUser) {
-//   console.log(dbUser);
-// });
-
-
-
-
-// db.Shift.findAll({ where: {user_id: USER_ID}, order: [[sequelize.fn('max', sequelize.col('shiftDate')), 'DESC']]}).then(function(dbUser) {
 //   console.log(dbUser);
 // });

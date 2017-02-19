@@ -163,16 +163,11 @@ $('.shiftDeleteBtn').on('click', function(event) {
             var selectedShiftObject = data[0];
             console.log(selectedShiftObject);
 
-            $.post("/shiftsDescendingByDate", selectedShiftObject)
+            //Delete DB entry of selectedShiftObject
+            $.post("/deleteShift", selectedShiftObject)
             .done(function(data) {
                 console.log(data);
             })
-
-            // //Delete DB entry of selectedShiftObject
-            // $.post("/deleteShift", selectedShiftObject)
-            // .done(function(data) {
-            //     console.log(data);
-            // })
         }
 
         else if (matchArray.length > 1) {
