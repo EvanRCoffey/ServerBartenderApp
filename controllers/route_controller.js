@@ -34,6 +34,10 @@ router.get("/login", function(req, res) {
     res.render("login", req);
 });
 
+router.get("/feedback", function(req, res) {
+    res.render("feedback", req);
+});
+
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/loginFailure',
     successRedirect: '/shift'
