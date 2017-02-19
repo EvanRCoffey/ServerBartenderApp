@@ -24,8 +24,12 @@ let transporter = nodemailer.createTransport({
 
 var bcrypt = require("bcrypt-nodejs")
 
+// router.get("/", function(req, res) {
+//     res.sendFile(path.join(__dirname, "../public/home.html"));
+// });
+
 router.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/home.html"));
+   res.render("home", req);
 });
 
 router.get("/alt", function(req, res) {
