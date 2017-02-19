@@ -8,6 +8,20 @@ var router = express.Router();
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
+
+var nodemailer = require('nodemailer');
+
+//node mailer config
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'serverappbeta@gmail.com',
+        pass: 'websterdog'
+    }
+});
+
+
+
 var bcrypt = require("bcrypt-nodejs")
 
 router.get("/", function(req, res) {
@@ -50,7 +64,7 @@ router.get("/restaurant", function(req, res) {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/loginFailure',
-    successRedirect: '/dashboard'
+    successRedirect: '/shift'
 }))
 
 //Logs user out and returns to homepage.
@@ -77,7 +91,7 @@ router.post("/newUser", function(req, res, next) {
                 restaurant_name: 'default',
                 isReal: false
             }).then(function(err, user, info) {
-              res.redirect('/login');
+                res.redirect('/login');
             })
         } else {
             res.send("user exists")
@@ -106,21 +120,33 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
 });
 
 router.post("/reset", function(req, res, next) {
-  //generate temporary password.
-  var tempPass = tempPWgenerator()
-    if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
-        var reset = {
-            user_password: bcrypt.hashSync(tempPass)
+    //generate temporary password.
+    var tempPass = tempPWgenerator()
+    console.log(tempPass)
+    var reset = {
+        user_password: bcrypt.hashSync(tempPass)
+    };
+    db.User.update(reset, {
+        where: {
+            user_email: req.body.user_email
+        }
+    }).then(function() {
+          let mailOptions = {
+            from: '"Server App Beta" <serverappbeta@gmail.com>', 
+            to: req.body.user_email, 
+            subject: 'Server App Beta - Password Reset', // Subject line
+            text: 'Your password has been reset. Your temporary password is ' + tempPass + '. Please go to http://localhost:8080/login to login and change your password', // plain text body
+            html: '<b>Your password has been reset.</b><br><p>Your temporary password is <b>' + tempPass  + '</b><p>Please go to <a href="http://localhost:8080/login">Login</a> to login and create a new password.'
         };
-        db.User.update(reset, {
-            where: {
-                id: req.body.user_email
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
             }
-        }).then(function() {
-   
-            res.redirect('/login');
+            console.log('Message %s sent: %s', info.messageId, info.response);
         });
-    }
+        res.redirect('/login'); //Sends user to login screen for now.
+    });
 });
 
 
@@ -198,12 +224,12 @@ module.exports = router;
 
 
 //This is used to create a temporary password.
-function tempPWgenerator(){
+function tempPWgenerator() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for( var i=0; i < 5; i++ )
+    for (var i = 0; i < 5; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-  return text;
+    return text;
 }
 
 
