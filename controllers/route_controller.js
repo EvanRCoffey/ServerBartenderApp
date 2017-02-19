@@ -223,6 +223,32 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
     console.log(req.body);
 });
 
+router.post("/editShift", function(req, res) {
+  var shiftData = req.body;
+  db.Shift.update(shiftData, {
+    where: {restaurant_id: shiftData.restaurant_id}
+  }).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/deleteShift", function(req, res) {
+  var shiftData = req.body;
+  db.Shift.destroy({where: {id: shiftData.id}}).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/shiftByDate", function(req, res) {
+  console.log(req.body);
+
+  db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
+    // console.log(dbUser);
+    // console.log(req.body.id);
+    res.json(dbUser);
+  });
+});
+
 //Keep this at the end of the router section.
 //If nothing is found this is sent.
 router.get('*', function(req, res) {
@@ -242,8 +268,6 @@ function loggedIn(req, res, next) {
 // Export routes for server.js to use.
 module.exports = router;
 
-
-
 //This is used to create a temporary password.
 function tempPWgenerator() {
     var text = "";
@@ -252,9 +276,6 @@ function tempPWgenerator() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
-
-
-
 
 // SEQUELIZE CRUD METHODS
 
