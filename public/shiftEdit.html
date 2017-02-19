@@ -51,7 +51,7 @@
     <div class="row" id="dateToEditDiv">
         <!--dateToEdit DATE-->
         <div class="input-field col s12">
-            <input id="dateToEdit" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
+            <input value="" id="dateToEdit" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
             <label for="dateToEdit">Date to edit</label>
         </div>
     </div>
@@ -71,7 +71,7 @@
     <div class="row">
         <!--dateToDelete DATE-->
         <div class="input-field col s12">
-            <input id="dateToDelete" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
+            <input value="" id="dateToDelete" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
             <label for="dateToDelete">Date to delete</label>
         </div>
     </div>
@@ -96,7 +96,7 @@
             <div class="row">
                 <!--largestTip DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="largestTip" type="text" class="validate">
+                    <input value="" value="" id="largestTip" type="text" class="validate">
                     <label for="largestTip">Largest tip</label>
                 </div>
             </div>
@@ -104,7 +104,7 @@
             <div class="row">
                 <!--smallestTip DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="smallestTip" type="text" class="validate">
+                    <input value="" id="smallestTip" type="text" class="validate">
                     <label for="smallestTip">Smallest tip</label>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             <div class="row">
                 <!--stiffed INT(10)-->
                 <div class="input-field col s12">
-                    <input id="stiffed" type="text" class="validate">
+                    <input value="" id="stiffed" type="text" class="validate">
                     <label for="stiffed">Number of times stiffed (hopefully zero!)</label>
                 </div>
             </div>
@@ -120,7 +120,7 @@
             <div class="row">
                 <!--bwl DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="bwl" type="text" class="validate">
+                    <input value="" id="bwl" type="text" class="validate">
                     <label for="bwl">BWL</label>
                 </div>
             </div>
@@ -128,7 +128,7 @@
             <div class="row">
                 <!--sales DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="sales" type="text" class="validate">
+                    <input value="" id="sales" type="text" class="validate">
                     <label for="sales">Sales</label>
                 </div>
             </div>
@@ -136,7 +136,7 @@
             <div class="row">
                 <!--tipout DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="tipout" type="text" class="validate">
+                    <input value="" id="tipout" type="text" class="validate">
                     <label for="tipout">Total tipped out</label>
                 </div>
             </div>
@@ -144,7 +144,7 @@
             <div class="row">
                 <!--tipPercent DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="tipPercent" type="text" class="validate">
+                    <input value="" id="tipPercent" type="text" class="validate">
                     <label for="tipPercent">Tip %</label>
                 </div>
             </div>
@@ -152,7 +152,7 @@
             <div class="row">
                 <!--ppa DECIMAL(10,2)-->
                 <div class="input-field col s12">
-                    <input id="ppa" type="text" class="validate">
+                    <input value="" id="ppa" type="text" class="validate">
                     <label for="ppa">PPA</label>
                 </div>
             </div>
@@ -176,7 +176,7 @@
             <div class="row">
                 <!--shiftDate DATE-->
                 <div class="input-field col s12">
-                    <input id="shiftDate" type="date" class="datepicker">
+                    <input value="" id="shiftDate" type="date" class="datepicker">
                     <label for="shiftDate">Date of shift start</label>
                 </div>
             </div>
@@ -202,16 +202,16 @@
 
             <div class="row">
                 <!--isReal BOOLEAN NOT NULL-->
-                <input name="isReal" type="radio" id="isReal1" />
+                <input value="" name="isReal" type="radio" id="isReal1" />
                 <label for="isReal1">Real Data</label>
-                <input name="isReal" type="radio" id="isReal2" />
+                <input value="" name="isReal" type="radio" id="isReal2" />
                 <label for="isReal2">Fake Data</label>
             </div>
 
             <div class="row">
                 <!--restaurant_id INT(32) NOT NULL-->
                 <div class="input-field col s12">
-                    <input id="restaurant_id" type="text" class="validate">
+                    <input value="" id="restaurant_id" type="text" class="validate">
                     <label for="restaurant_id">Restaurant ID</label>
                 </div>
             </div>
@@ -219,7 +219,7 @@
             <div class="row">
                 <!--user_id INT(32) NOT NULL-->
                 <div class="input-field col s12">
-                    <input id="user_id" type="text" class="validate">
+                    <input value="" id="user_id" type="text" class="validate">
                     <label for="user_id">User ID</label>
                 </div>
             </div>
@@ -236,7 +236,7 @@
     <script src="./javascript/nouislider.min.js"></script>
 
 </body>
-<script type="text/javascript" src="./javascript/shift.js"></script>
+<script type="text/javascript" src="./javascript/shiftEdit.js"></script>
 <script type="text/javascript" src="./javascript/wNumb.js"></script>
 
 </html>

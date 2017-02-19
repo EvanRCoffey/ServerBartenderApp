@@ -1,6 +1,11 @@
 BY THE END OF THE WEEK...
 
-1) Password recovery via email
+
+Soon, meet on slack to discuss database setups - think ahead!
+Set up relationships too.
+
+
+1) Password recovery via email (Mills)
 
 2) Allow users to view/edit and delete jobs/shifts/restaurants. (Evan is on this)
 
@@ -8,14 +13,13 @@ BY THE END OF THE WEEK...
 -Pseudocode entered into shift.js!
 -Currently working through pseudocode and replacing it with real code
 
-3) Decide on a name for the website (already thought of a few - see potentialSiteNames.txt)
+3) Envision the "new user" experience - make sure everything is intuitive
 
-4) Envision the "new user" experience - make sure everything is intuitive
+4) Create a basic financial data aggregation - average tip%, average $ per shift, etc (Evan is on this too - OK if incomplete)
 
 5) Deploy
 
 6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
-
 
 ***Errors needing fixing
 -Why are all of the DECIMAL values rounding off?
@@ -44,3 +48,9 @@ NEXT STEPS...
 ...) Flash Card
 
 ...) Quiz Maker
+
+
+
+See if Sarah can get a bunch of data for you since she's admin at Fleming's.  Make sure that's legal, first.
+
+Decide on a name for the website (already thought of a few - see potentialSiteNames.txt)

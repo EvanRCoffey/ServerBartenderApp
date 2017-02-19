@@ -39,6 +39,16 @@ router.get("/restaurant", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/restaurant.html"));
 });
 
+router.post("/shiftByDate", function(req, res) {
+  console.log(req.body);
+
+  db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
+    // console.log(dbUser);
+    // console.log(req.body.id);
+    res.json(dbUser);
+  });
+});
+
 router.post("/login", function(req, res) {
   // db.User.create({
   //   email: req.body.email,
@@ -115,6 +125,19 @@ router.post("/newRestaurant", function(req, res) {
     console.log(dbUser);
   });
   console.log(req.body);
+});
+
+router.post("/editShift", function(req, res) {
+  console.log(req);
+  var shiftData = req.body;
+  console.log(shiftData.id);
+  db.Shift.update(shiftData, {
+    where: {
+      restaurant_id: shiftData.restaurant_id
+    }
+  }).then(function(dbUser) {
+    console.log(dbUser);
+  });
 });
 
 //Keep this at the end of the router section.
