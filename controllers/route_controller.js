@@ -31,6 +31,10 @@ router.get("/signup", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/signup.html"));
 });
 
+router.get("/passwordReset", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/passwordReset.html"));
+});
+
 //This is now limited to login only.
 router.get("/shift", loggedIn, function(req, res, next) {
     res.sendFile(path.join(__dirname, "../public/shift.html"));
@@ -55,9 +59,9 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
-//Creates a new user
+//Creates a new user.
+//They are then redirected to the login page.
 router.post("/newUser", function(req, res, next) {
-    console.log(req.body)
     db.User.findOne({
         where: {
             user_email: req.body.user_email
@@ -65,24 +69,25 @@ router.post("/newUser", function(req, res, next) {
     }).then(function(user) {
         if (!user) {
             db.User.create({
-                user_id: req.body.user_id,
+                user_id: 9000,
                 user_email: req.body.user_email,
                 user_name: req.body.user_name,
                 user_password: bcrypt.hashSync(req.body.user_password),
-                user_level: req.body.user_level,
-                restaurant_name: req.body.restaurant_name,
+                user_level: 9001,
+                restaurant_name: 'default',
                 isReal: false
-            }).then(function(user) {
-                passport.authenticate("local", { failureRedirect: "/signup", successRedirect: "/signin" })(req, res, next)
+            }).then(function(err, user, info) {
+              res.redirect('/login');
             })
         } else {
             res.send("user exists")
         }
     })
 });
-//
+
+//User types in their old password, and can then update any of thier login credintials.
+//It then logs them out and asks relog in. This prevents potentional conflicts/exploits.
 router.post("/updateAccount", loggedIn, function(req, res, next) {
-  console.log(req.body.new_password)
     if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
         var updateUser = {
             user_email: req.body.user_email,
@@ -93,8 +98,27 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
             where: {
                 id: req.user.id
             }
-        }).then(function(dbUser) {
-            console.log(dbUser);
+        }).then(function() {
+            req.logout();
+            res.redirect('/login');
+        });
+    }
+});
+
+router.post("/reset", function(req, res, next) {
+  //generate temporary password.
+  var tempPass = tempPWgenerator()
+    if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
+        var reset = {
+            user_password: bcrypt.hashSync(tempPass)
+        };
+        db.User.update(reset, {
+            where: {
+                id: req.body.user_email
+            }
+        }).then(function() {
+   
+            res.redirect('/login');
         });
     }
 });
@@ -172,6 +196,15 @@ function loggedIn(req, res, next) {
 module.exports = router;
 
 
+
+//This is used to create a temporary password.
+function tempPWgenerator(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
 
 
 

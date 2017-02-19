@@ -41,24 +41,24 @@
                 <h4>Sign up</h4>
             </div>
         </div>
-        <form class="col s12">
+        <form class="col s12" method="POST" action="/newUser" onsubmit="return validateForm()" >
             <div class="row">
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="first_name" type="text" class="validate">
+                    <input id="first_name" type="text" class="validate" name="user_name">
                     <label for="first_name">First Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
+                    <input id="email" type="email" class="validate" name="user_email">
                     <label for="email">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
+                    <input id="password" type="password" class="validate" name="user_password">
                     <label for="password">Password</label>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <label for="password">Re-enter Password</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light signUpSubmitBtn">Sign Up
+            <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Sign Up
             </button>
             <div class="row">
             </div>
