@@ -127,48 +127,95 @@ $('.shiftEditBtn').on('click', function(event) {
 
 
 
-// //////////////////////////////
-// //DELETE SHIFT
-// //////////////////////////////
+//////////////////////////////
+//DELETE SHIFT
+//////////////////////////////
 
-// $('.shiftDeleteBtn').on('click', function(event) {
-//     event.preventDefault();
-//     console.log(event);
+$('.shiftDeleteBtn').on('click', function(event) {
+    event.preventDefault();
 
-//     var dateToDelete = $("#dateToDelete").val().trim();
+    var dateToDelete = $("#dateToDelete").val().trim();
 
-//     //Create new user object.
-//     var dateObj = {
-//         id: 9000,
-//         dateToDelete:dateToDelete,
-//         timeIn: 1
-//     }
+    //Create new user object.
+    var dateObj = {
+        id: 9000,
+        dateToEdit:dateToDelete,
+        timeIn: 1
+    };
 
-//     var matchArray = [];
+    console.log(dateObj);
 
-//     //Search database for any entries where date === dateToDelete.  (Sequelize - You'll need to make a new one, I think)
+    var matchArray = [];
 
-//     //For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+    //Search database for any entries where date === dateToDelete.  (Sequelize - You'll need to make a new one, I think)
+    $.post("/shiftByDate", dateObj)
+    .done(function(data) {
 
-//     if (matchArray.length === 0) {
-//         //Notify user that there are no shifts saved for that date (MATERIALIZE - CARDS)
-//     }
-//     else if (matchArray.length === 1) {
-//         //Verify user selection (MATERIALIZE - CARDS)
-//         //If the user cancelled, report "delete cancelled" (MATERIALIZE - CARDS)
-//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful" (Sequelize - Delete) AND (MATERIALIZE - CARDS)
-//     }
-//     else if (matchArray.length > 1) {
-//         var inTimes = [];
-//         for (var i = 0; i<matchArray.length; i++) {
-//             inTimes.append(matchArray[i].timeIn);
-//         }
-//         //Load a dropdown for the user to select which of the in-times they want.  (MATERIALIZE - DROPDOWN) 
-//         //Verify user selection (MATERIALIZE - CARDS)
-//         //If the user cancelled, report "delete cancelled" (MATERIALIZE - CARDS)
-//         //Otherwise, delete the selected entry (OR JUST FLAG IT AS DO_NOT_USE), and report "delete successful" (Sequelize - Delete) AND (MATERIALIZE - CARDS)
-//     }
-// }
+        //For each match, add an object to matchArray which contains that match's id, date, and timeIn.
+        for (var i = 0; i<data.length; i++) {
+            matchArray.push(data[i]);
+        }
+
+        console.log("SO FAR, MATCHARRAY CONTAINS ");
+        console.log(matchArray);
+
+        if (matchArray.length === 0) {
+            var noMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">No Shifts</span><p>No shifts for that date.</p></div></div></div></div>'
+            $("#dateToDeleteDiv").append(noMatchString);
+        }
+
+        else if (matchArray.length === 1) {
+
+            var selectedShiftObject = data[0];
+            console.log(selectedShiftObject);
+
+            //Delete DB entry of selectedShiftObject
+            $.post("/deleteShift", selectedShiftObject)
+            .done(function(data) {
+                console.log(data);
+            })
+        }
+
+        else if (matchArray.length > 1) {
+            var moreThanOneMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">More Than One Shift</span><p>More than one shift for that date.</p></div></div></div></div>'
+            $("#dateToDeleteDiv").append(moreThanOneMatchString);
+            var inTimes = [];
+            for (var i = 0; i<matchArray.length; i++) {
+                inTimes.push(matchArray[i].timeIn);
+            }
+
+            var dropDownString = '<form class="col s12"><div class="row"><!--shiftType VARCHAR(32)--><select id="shiftSelect"><option value="" disabled selected>Choose shift</option>'
+
+            for (var i = 0; i<matchArray.length; i++) {
+                dropDownString += '<option value="';
+                dropDownString += i;
+                dropDownString += '">inTime = ';
+                dropDownString += matchArray[i].inTime;
+                dropDownString += '</option>';
+            }
+
+            dropDownString += '</select><label>Shift selection</label></div><button class="btn waves-effect waves-light shiftSelectionSubmitBtnDelete">Submit shift selection</button></form>';
+
+            console.log(dropDownString);
+
+            $("#dateToDeleteDiv").append(dropDownString);
+
+            $('.shiftSelectionSubmitBtnDelete').on('click', function(event) {
+
+                event.preventDefault();
+                var indexToUse = $("#shiftSelect").val().trim();
+                var selectedShiftObject = data[indexToUse];
+
+                //Delete DB entry of selectedShiftObject
+                $.post("/deleteShift", selectedShiftObject)
+                .done(function(data) {
+                    console.log(data);
+                })
+
+            });
+        }
+    });     
+});
 
 //////////////////////////////
 //SUBMIT NEW SHIFT

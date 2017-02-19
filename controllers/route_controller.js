@@ -128,14 +128,17 @@ router.post("/newRestaurant", function(req, res) {
 });
 
 router.post("/editShift", function(req, res) {
-  console.log(req);
   var shiftData = req.body;
-  console.log(shiftData.id);
   db.Shift.update(shiftData, {
-    where: {
-      restaurant_id: shiftData.restaurant_id
-    }
+    where: {restaurant_id: shiftData.restaurant_id}
   }).then(function(dbUser) {
+    console.log(dbUser);
+  });
+});
+
+router.post("/deleteShift", function(req, res) {
+  var shiftData = req.body;
+  db.Shift.destroy({where: {id: shiftData.id}}).then(function(dbUser) {
     console.log(dbUser);
   });
 });
