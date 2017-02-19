@@ -151,6 +151,24 @@ router.post("/reset", function(req, res, next) {
     });
 });
 
+router.post("/sendFeedback", function(req, res) {
+          let mailOptions = {
+            from: '"Server App Beta" <serverappbeta@gmail.com>', 
+            to: 'serverappbeta@gmail.com', 
+            subject: 'Server App Beta - Feedback', // Subject line
+            text: req.body.user_email + " comment: " + req.body.comment,
+            html: 'From: ' + req.body.user_email  + '</br><p>' + req.body.comment + '</p>'
+        };
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message %s sent: %s', info.messageId, info.response);
+        });
+        res.redirect('/login'); //Sends user to login screen for now.
+    })
+
 
 router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
