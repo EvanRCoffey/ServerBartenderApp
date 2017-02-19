@@ -172,11 +172,11 @@ router.post("/sendFeedback", function(req, res) {
 
 router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
-        restaurant_id: req.body.restaurant_id,
-        user_id: req.body.user_id,
+        restaurant_id: 0,
+        user_id: 0,
         shiftDate: req.body.shiftDate,
-        timeIn: 0,
-        timeOut: 1,
+        timeIn: req.body.timeIn,
+        timeOut: req.body.timeOut,
         shiftType: req.body.shiftType,
         largestTip: req.body.largestTip,
         smallestTip: req.body.smallestTip,
@@ -226,7 +226,7 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
 router.post("/editShift", function(req, res) {
   var shiftData = req.body;
   db.Shift.update(shiftData, {
-    where: {restaurant_id: shiftData.restaurant_id}
+    where: {shiftDate: req.body.shiftDate, timeIn: req.body.timeIn}
   }).then(function(dbUser) {
     console.log(dbUser);
   });
