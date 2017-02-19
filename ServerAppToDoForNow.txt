@@ -1,6 +1,6 @@
 BY THE END OF THE WEEK...
 
-1) User login system (Mills said he was on this)
+1) User login system (Mills has finished this. Though there will be bugs.)
 -User registration
 -User login
 -Password encryption
