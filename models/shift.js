@@ -17,6 +17,19 @@ module.exports = function(sequelize, DataTypes) {
 		comments: DataTypes.TEXT,
 	    breakthroughs: DataTypes.TEXT,
 	    isReal: DataTypes.BOOLEAN
-	});
+	},
+	    {
+      classMethods: {
+        associate: function(models) {
+          // An Author (foreignKey) is required or a Post can't be made
+          Post.belongsTo(models.User, {
+            foreignKey: {
+              allowNull: false
+            }
+          });
+        }
+      }
+    }
+	);
 	return Shift;
 }

@@ -7,6 +7,14 @@ module.exports = function(sequelize, DataTypes) {
 		user_level: DataTypes.INTEGER,
 		restaurant_name: DataTypes.STRING,
 		isReal: DataTypes.BOOLEAN
-	});
+	},
+	      classMethods: {
+        associate: function(models) {
+		User.hasMany(models.Shift, {
+          });
+        }
+      }
+
+	);
 	return User;
 }
