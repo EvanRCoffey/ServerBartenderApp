@@ -171,9 +171,11 @@ router.post("/sendFeedback", function(req, res) {
 
 
 router.post("/newShift", loggedIn, function(req, res, next) {
+    // console.log(req.body)
+    console.log('dirt')
     db.Shift.create({
         restaurant_id: 0,
-        user_id: 0,
+        user_id: req.user.id,
         shiftDate: req.body.shiftDate,
         timeIn: req.body.timeIn,
         timeOut: req.body.timeOut,
@@ -185,6 +187,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         sales: req.body.sales,
         tipout: req.body.tipout,
         tipPercent: req.body.tipPercent,
+        totalWalkedWith: 5,
         ppa: req.body.ppa,
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
@@ -192,7 +195,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
     }).then(function(dbUser) {
         console.log(dbUser);
     });
-    console.log(req.body);
+
 });
 
 router.post("/newJob", loggedIn, function(req, res, next) {
