@@ -171,6 +171,8 @@ router.post("/sendFeedback", function(req, res) {
 
 
 router.post("/newShift", loggedIn, function(req, res, next) {
+    console.log('body' + req.body)
+    console.log(req.user.id)
     db.Shift.create({
         restaurant_id: 0,
         user_id: req.user.id,
