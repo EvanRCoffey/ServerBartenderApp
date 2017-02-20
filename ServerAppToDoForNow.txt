@@ -1,22 +1,25 @@
 BY THE END OF THE WEEK...
 
-1) Set up relationship between users and shifts (Mills is on this)
-
-2) Edit models to get rid of dead weight (Mills is on this, I think)
+1) Pull shifts for a user, listing them descending by date (Mills is on this)
 
 2) Allow users to view/edit and delete jobs/shifts/restaurants. (Evan is on this)
 
-3) Envision the "new user" experience - make sure everything is intuitive
+-For now, can only do it the 'one entry on a given date' method.  That's enough to make sure they're all working, though.
 
-4) Create a basic financial data aggregation - average tip%, average $ per shift, etc (Evan is on this too - OK if incomplete)
+3) Debug to the best of your ability - test various things and make sure there are no glaring errors
 
-5) Deploy
+-Some things should be AJAX requests, and some should be http requests.  Find out which go where.
+
+4) Deploy
+
+5) Test the online version to make sure everything works as expected
 
 6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 
+
+
 ***Errors needing fixing
 -Why are all of the DECIMAL values rounding off?
--You need a field for "Total Walked With" in the shift form
 
 ___________________________________________________________________
 
