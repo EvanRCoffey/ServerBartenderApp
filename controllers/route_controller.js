@@ -171,8 +171,8 @@ router.post("/sendFeedback", function(req, res) {
 
 
 router.post("/newShift", loggedIn, function(req, res, next) {
-    console.log('body' + req.body)
-    console.log(req.user.id)
+    // console.log(req.body)
+    console.log('dirt')
     db.Shift.create({
         restaurant_id: 0,
         user_id: req.user.id,
@@ -193,9 +193,9 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         breakthroughs: req.body.breakthroughs,
         isReal: false
     }).then(function(dbUser) {
-        console.log('send ' + dbUser);
+        console.log(dbUser);
     });
-    console.log('body' + req.body);
+
 });
 
 router.post("/newJob", loggedIn, function(req, res, next) {
