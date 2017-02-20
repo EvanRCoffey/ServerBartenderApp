@@ -16,7 +16,7 @@
             <div class="row" id="dateToEditDiv">
                 <!--dateToEdit DATE-->
                 <div class="input-field col s12">
-                    <input id="dateToEdit" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
+                    <input id="dateToEdit" type="date" class="datepicker">
                     <label for="dateToEdit">Click here to select a date</label>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="row" id="dateToDeleteDiv">
                 <!--dateToDelete DATE-->
                 <div class="input-field col s12">
-                    <input id="dateToDelete" type="date" class="datepicker"> <!--Default to today?  That'd be nice.-->
+                    <input id="dateToDelete" type="date" class="datepicker">
                     <label for="dateToDelete">Click here to select a date</label>
                 </div>
             </div>
@@ -61,90 +61,90 @@
             </div>
         </div>
 
-        <form class="col s12">
+        <form class="col s12" method="POST" action="/newShift">
 
             <!--totalWalkedWith DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="totalWalkedWith" type="text" class="validate">
+                <input name="totalWalkedWith" id="totalWalkedWith" type="text" class="validate">
                 <label for="totalWalkedWith">Total walked with</label>
             </div>
         
             <!--largestTip DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="largestTip" type="text" class="validate">
+                <input name="largestTip" id="largestTip" type="text" class="validate">
                 <label for="largestTip">Largest tip</label>
             </div>
 
             <!--smallestTip DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="smallestTip" type="text" class="validate">
+                <input name="smallestTip" id="smallestTip" type="text" class="validate">
                 <label for="smallestTip">Smallest tip</label>
             </div>
 
             <!--stiffed INT(10)-->
             <div class="input-field col s12">
-                <input id="stiffed" type="text" class="validate">
+                <input name="stiffed" id="stiffed" type="text" class="validate">
                 <label for="stiffed">Number of times stiffed (hopefully zero!)</label>
             </div>
 
             <!--sales DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="sales" type="text" class="validate">
+                <input name="sales" id="sales" type="text" class="validate">
                 <label for="sales">Sales</label>
             </div>
 
             <!--ppa DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="ppa" type="text" class="validate">
+                <input name="ppa" id="ppa" type="text" class="validate">
                 <label for="ppa">PPA</label>
             </div>
 
             <!--tipout DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="tipout" type="text" class="validate">
+                <input name="tipout" id="tipout" type="text" class="validate">
                 <label for="tipout">Total tipped out</label>
             </div>
 
             <!--tipPercent DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="tipPercent" type="text" class="validate">
+                <input name="tipPercent" id="tipPercent" type="text" class="validate">
                 <label for="tipPercent">Tip %</label>
             </div>
 
             <!--bwl DECIMAL(10,2)-->
             <div class="input-field col s12">
-                <input id="bwl" type="text" class="validate">
+                <input name="bwl" id="bwl" type="text" class="validate">
                 <label for="bwl">BWL %</label>
             </div>
 
             <!--comments MEDIUMBLOB-->
             <div class="input-field col s12">
-                <textarea id="comments" class="materialize-textarea"></textarea>
+                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
                 <label for="comments">Comments</label>
             </div>
 
             <!--breakthroughs MEDIUMBLOB-->
             <div class="input-field col s12">
-                <textarea id="breakthroughs" class="materialize-textarea"></textarea>
+                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea"></textarea>
                 <label for="breakthroughs">Breakthroughs</label>
             </div>
 
             <!--shiftDate DATE-->
             <div class="input-field col s12">
-                <input id="shiftDate" type="date" class="datepicker">
+                <input name="shiftDate" id="shiftDate" type="date" class="datepicker">
                 <label for="shiftDate">Click here to select a date for this shift</label>
             </div>
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" onchange="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
+            <input name="inTime" type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" onchange="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
 
             <!--timeOut TIMESTAMP NOT NULL-->
-            <input type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" onchange="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
+            <input name="outTime" type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" onchange="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
 
             <!--shiftType VARCHAR(32)-->
-            <select id="shiftType">
-              <option value="" disabled selected>Choose shift type</option>
+            <select name="shiftType" id="shiftType">
+              <option value="" disabled selected>Click here to choose the shift type</option>
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
@@ -152,7 +152,7 @@
             </select>
             <label>Shift type</label>
 
-            <button class="btn waves-effect waves-light shiftSubmitBtn">Submit Shift</button>
+            <button class="btn waves-effect waves-light" type="submit">Submit Shift</button>
 
             <div class="row"></div>
         </form>

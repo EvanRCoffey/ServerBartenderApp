@@ -1,25 +1,34 @@
 BY THE END OF THE WEEK...
 
-1) Pull shifts for a user, listing them descending by date (Mills is on this)
+1) Finish shift-table-test verion of selecting shift to edit (Mills is on this)
 
-2) Allow users to view/edit and delete jobs/shifts/restaurants. (Evan is on this)
 
--For now, can only do it the 'one entry on a given date' method.  That's enough to make sure they're all working, though.
+
+2) Once Mill's shift-table-test is done and you get it working with shifts, apply everything to jobs/restaurants
+
+
 
 3) Debug to the best of your ability - test various things and make sure there are no glaring errors
 
--Some things should be AJAX requests, and some should be http requests.  Find out which go where.
+-Use moment.js to solve the timeIn and timeOut problems.
+
+-Why are all of the DECIMAL values rounding off?
+
+-Why do the pre-filled forms overlap with the form labels?  And why does it only happen sometimes, not others?
+
+-Look over site for any input validation you should include
+
+
 
 4) Deploy
 
+
+
 5) Test the online version to make sure everything works as expected
 
+
+
 6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
-
-
-
-***Errors needing fixing
--Why are all of the DECIMAL values rounding off?
 
 ___________________________________________________________________
 

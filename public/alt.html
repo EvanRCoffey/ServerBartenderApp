@@ -1,9 +1,128 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Alt - Server Bartender App</title>
-</head>
-<body>
-	This is the alternate page.
-</body>
-</html>
+<title>Server App</title>
+<meta content="width=device-width,initial-scale=1" name=viewport>
+<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js></script>
+<link href=./css/style.css rel=stylesheet>
+
+<div id=mainDiv>
+    <div class=row>
+        <div class=row>
+            <div class="col s12">
+                <h4>Shift Form</h4>
+            </div>
+        </div>
+        <form class="col s12" method="POST" action="/editShift">
+            <div class=row></div>
+            <div class="row">
+                <!--totalWalkedWith DECIMAL(10,2)-->
+                <div class="input-field col s12">
+                    <input name="totalWalkedWith" id="totalWalkedWith" type="text" class="validate">
+                    <label for="totalWalkedWith">Total walked with</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="largestTip" id="largestTip" type="text" class="validate">
+                    <label for="largestTip">Largest tip</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="smallestTip" id="smallestTip" type="text" class="validate">
+                    <label for="smallestTip">Smallest tip</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="stiffed" id="stiffed" type="text" class="validate">
+                    <label for="stiffed">Number of times stiffed (hopefully zero!)</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="bwl" id="bwl" type="text" class="validate">
+                    <label for="bwl">BWL</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="sales" id="sales" type="text" class="validate">
+                    <label for="sales">Sales</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="tipout" id="tipout" type="text" class="validate">
+                    <label for="tipout">Total tipped out</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="tipPercent" id="tipPercent" type="text" class="validate">
+                    <label for="tipPercent">Tip %</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="ppa" id="ppa" type="text" class="validate">
+                    <label for="ppa">PPA</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <textarea name="comments" class="materialize-textarea" type="text" id="comments"></textarea>
+                    <label for="comments">Comments</label>
+                </div>
+            </div>
+            <div class=row>
+                <div class="col s12 input-field">
+                    <textarea name="breakthroughs" class="materialize-textarea" type="text" id="breakthroughs"></textarea>
+                    <label for="breakthroughs">Breakthroughs</label>
+                </div>
+            </div>
+
+            <div class="input-field col s12">
+                <input name="shiftDate" id="shiftDate" type="date" class="datepicker">
+                <label for="shiftDate">Click here to select a date for this shift</label>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <input name="inTime" type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" onchange="showInTime(this.value)" />
+            <br><span id="inTimeSpan">In-time: 12:00:00 </span>
+            <br>
+            <br>
+            <input name="outTime" type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" onchange="showOutTime(this.value)" />
+            <br><span id="outTimeSpan">Out-time: 17:00:00</span>
+            <br>
+            <br>
+
+            <div class=row>
+                <select name="shiftType" id="shiftType">
+                    <option value="" disabled selected>Choose shift type</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="double">Double</option>
+                </select>
+                <label>Shift type</label>
+            </div>
+
+            <div class=row>
+                <div class="col s12 input-field">
+                    <input name="id" id="id" type="text" class="validate">
+                    <label for="id">SHIFT ID - DO NOT CHANGE</label>
+                </div>
+            </div>
+
+        	<button class="btn waves-effect waves-light" type="submit">Update Shift</button>
+        	<div class=row></div>
+        </form>
+    </div>
+</div>
+<script src=./javascript/shiftEdit.js></script>
+<script src=./javascript/wNumb.js></script>

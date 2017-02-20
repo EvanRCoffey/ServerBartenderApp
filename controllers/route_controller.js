@@ -1,7 +1,11 @@
+////////////////////////
+//DEPENDENCIES
+////////////////////////
+
 var express = require("express");
 var path = require('path');
 var app = express();
-var passport = require('passport')
+var passport = require('passport');
 var db = require("../models");
 
 var router = express.Router();
@@ -20,7 +24,11 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-var bcrypt = require("bcrypt-nodejs")
+var bcrypt = require("bcrypt-nodejs");
+
+////////////////////////
+//ROUTES
+////////////////////////
 
 router.get("/", function(req, res) {
    res.render("home", req);
@@ -171,14 +179,13 @@ router.post("/sendFeedback", function(req, res) {
 
 
 router.post("/newShift", loggedIn, function(req, res, next) {
-    // console.log(req.body)
-    console.log('dirt')
+    console.log("Test");
     db.Shift.create({
         restaurant_id: 0,
         user_id: req.user.id,
         shiftDate: req.body.shiftDate,
-        timeIn: req.body.timeIn,
-        timeOut: req.body.timeOut,
+        timeIn: convertToTime(req.body.inTime),
+        timeOut: convertToTime(req.body.outTime),
         shiftType: req.body.shiftType,
         largestTip: req.body.largestTip,
         smallestTip: req.body.smallestTip,
@@ -187,13 +194,14 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         sales: req.body.sales,
         tipout: req.body.tipout,
         tipPercent: req.body.tipPercent,
-        totalWalkedWith: 5,
+        totalWalkedWith: req.body.totalWalkedWith,
         ppa: req.body.ppa,
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
         isReal: false
     }).then(function(dbUser) {
         console.log(dbUser);
+        res.render("shift");
     });
 
 });
@@ -228,10 +236,12 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
 
 router.post("/editShift", function(req, res) {
   var shiftData = req.body;
+  console.log(shiftData);
   db.Shift.update(shiftData, {
     where: {id:shiftData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
+    res.render("shift");
   });
 });
 
@@ -278,8 +288,6 @@ router.post("/shiftByDate", function(req, res) {
   console.log(req.body);
 
   db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
-    // console.log(dbUser);
-    // console.log(req.body.id);
     res.json(dbUser);
   });
 });
@@ -321,6 +329,51 @@ function tempPWgenerator() {
     for (var i = 0; i < 5; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
+}
+
+//Converts a number 0-1440 to a xx:xx:xx time.  Returns the time as a string.  Only works if num is divisible by 15.
+function convertToTime(num) {
+    var string = "";
+
+    if (num / 60 >= 23) {string+="23";}
+    else if (num / 60 >= 22) {string+="22";}
+    else if (num / 60 >= 21) {string+="21";}
+    else if (num / 60 >= 20) {string+="20";}
+    else if (num / 60 >= 19) {string+="19";}
+    else if (num / 60 >= 18) {string+="18";}
+    else if (num / 60 >= 17) {string+="17";}
+    else if (num / 60 >= 16) {string+="16";}
+    else if (num / 60 >= 15) {string+="15";}
+    else if (num / 60 >= 14) {string+="14";}
+    else if (num / 60 >= 13) {string+="13";}
+    else if (num / 60 >= 12) {string+="12";}
+    else if (num / 60 >= 11) {string+="11";}
+    else if (num / 60 >= 10) {string+="10";}
+    else if (num / 60 >= 9) {string+="09";}
+    else if (num / 60 >= 8) {string+="08";}
+    else if (num / 60 >= 7) {string+="07";}
+    else if (num / 60 >= 6) {string+="06";}
+    else if (num / 60 >= 5) {string+="05";}
+    else if (num / 60 >= 4) {string+="04";}
+    else if (num / 60 >= 3) {string+="03";}
+    else if (num / 60 >= 2) {string+="02";}
+    else if (num / 60 >= 1) {string+="01";}
+    else if (num / 60 >= 0) {string+="00";}
+
+    if (num % 60 === 0) {
+        string += ":00:00";
+    }
+    else if (num % 60 === 15) {
+        string += ":15:00";
+    }
+    else if (num % 60 === 30) {
+        string += ":30:00";
+    }
+    else if (num % 60 === 45) {
+        string += ":45:00";
+    }
+
+    return string;
 }
 
 // SEQUELIZE CRUD METHODS

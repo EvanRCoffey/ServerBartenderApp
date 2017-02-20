@@ -16,7 +16,7 @@ $('.shiftEditBtn').on('click', function(event) {
 
     var matchArray = [];
 
-    //Search database for any entries where date === dateToEdit.  (Sequelize - You'll need to make a new one, I think)
+    //Search database for any entries where date === dateToEdit.
     $.post("/shiftByDate", dateObj)
     .done(function(data) {
         //For each match, add an object to matchArray which contains that match's id, date, and timeIn.
@@ -24,21 +24,18 @@ $('.shiftEditBtn').on('click', function(event) {
             matchArray.push(data[i]);
         }
 
-        console.log("SO FAR, MATCHARRAY CONTAINS ");
-        console.log(matchArray);
-
+        //No matches?  Card.
         if (matchArray.length === 0) {
-            //Notify user that there are no shifts saved for that date (MATERIALIZE - CARDS)
             var noMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">No Shifts</span><p>No shifts for that date.</p></div></div></div></div>'
             $("#dateToEditDiv").append(noMatchString);
         }
 
+        //One match?  Edit it.
         else if (matchArray.length === 1) {
 
             var selectedShiftObject = data[0];
-            var editShiftHTMLString = '<!DOCTYPE html><title>Server App</title><meta content="width=device-width,initial-scale=1"name=viewport><script src=https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel=stylesheet><link href=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js></script><link href=./css/style.css rel=stylesheet><link href=./css/nouislider.min.css rel=stylesheet><div id=mainDiv><div class=row><div class=row><div class="col s12"><h4>Shift Form</h4></div></div><form class="col s12"><div class=row></div><div class="row"><!--totalWalkedWith DECIMAL(10,2)--><div class="input-field col s12"><input id="totalWalkedWith" type="text" class="validate"><label for="totalWalkedWith">Total walked with</label></div></div><div class=row><div class="col s12 input-field"><input id=largestTip class=validate><label for=largestTip>Largest tip</label></div></div><div class=row><div class="col s12 input-field"><input id=smallestTip class=validate><label for=smallestTip>Smallest tip</label></div></div><div class=row><div class="col s12 input-field"><input id=stiffed class=validate><label for=stiffed>Number of times stiffed (hopefully zero!)</label></div></div><div class=row><div class="col s12 input-field"><input id=bwl class=validate><label for=bwl>BWL</label></div></div><div class=row><div class="col s12 input-field"><input id=sales class=validate><label for=sales>Sales</label></div></div><div class=row><div class="col s12 input-field"><input id=tipout class=validate><label for=tipout>Total tipped out</label></div></div><div class=row><div class="col s12 input-field"><input id=tipPercent class=validate><label for=tipPercent>Tip %</label></div></div><div class=row><div class="col s12 input-field"><input id=ppa class=validate><label for=ppa>PPA</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=comments></textarea><label for=comments>Comments</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=breakthroughs></textarea><label for=breakthroughs>Breakthroughs</label></div></div><div class=row><select id=shiftType><option value=""disabled selected>Choose shift type<option value=breakfast>Breakfast<option value=lunch>Lunch<option value=dinner>Dinner<option value=double>Double</select><label>Shift type</label></div><div id="shiftDate" value=""></div><div id="inTime" value=""></div><div id="outTime" value=""></div><button class="btn shiftEditBtn2 waves-effect waves-light">Submit Shift</button><div class=row></div></form></div></div><script src=./javascript/nouislider.min.js></script><script src=./javascript/shiftEdit.js></script><script src=./javascript/wNumb.js></script>'
+            var editShiftHTMLString = '<!DOCTYPE html><title>Server App</title><meta content="width=device-width,initial-scale=1"name=viewport><script src=https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel=stylesheet><link href=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js></script><link href=./css/style.css rel=stylesheet><div id=mainDiv><div class=row><div class=row><div class="col s12"><h4>Shift Form</h4></div></div><form action=/editShift class="col s12"method=POST><div class=row></div><div class=row><div class="col s12 input-field"><input class=validate id=totalWalkedWith name=totalWalkedWith><label for=totalWalkedWith>Total walked with</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=largestTip name=largestTip><label for=largestTip>Largest tip</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=smallestTip name=smallestTip><label for=smallestTip>Smallest tip</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=stiffed name=stiffed><label for=stiffed>Number of times stiffed (hopefully zero!)</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=bwl name=bwl><label for=bwl>BWL</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=sales name=sales><label for=sales>Sales</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=tipout name=tipout><label for=tipout>Total tipped out</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=tipPercent name=tipPercent><label for=tipPercent>Tip %</label></div></div><div class=row><div class="col s12 input-field"><input class=validate id=ppa name=ppa><label for=ppa>PPA</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=comments name=comments type=text></textarea><label for=comments>Comments</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=breakthroughs name=breakthroughs type=text></textarea><label for=breakthroughs>Breakthroughs</label></div></div><div class="col s12 input-field"><input class=datepicker id=shiftDate name=shiftDate type=date><label for=shiftDate>Click here to select a date for this shift</label></div><br><br><br><br><input class=timeRun id=inTime name=inTime type=range max=1425 min=0 onchange=showInTime(this.value) step=15 value=720><br><span id=inTimeSpan>In-time: 12:00:00</span><br><br><input class=timeRun id=outTime name=outTime type=range max=1425 min=0 onchange=showOutTime(this.value) step=15 value=1020><br><span id=outTimeSpan>Out-time: 17:00:00</span><br><br><div class=row><select id=shiftType name=shiftType><option value=""disabled selected>Choose shift type<option value=breakfast>Breakfast<option value=lunch>Lunch<option value=dinner>Dinner<option value=double>Double</select><label>Shift type</label></div><div class=row><div class="col s12 input-field"><input class=validate id=id name=id><label for=id>SHIFT ID - DO NOT CHANGE</label></div></div><button class="btn waves-effect waves-light"type=submit>Update Shift</button><div class=row></div></form></div></div></script><script src=./javascript/shiftEdit.js></script><script src=./javascript/wNumb.js></script>'
 
-            //Wipe the page and replace it with shift update form
             $("#mainDiv").html(editShiftHTMLString);
 
             //Change the values of all the new divs in shift.html to the values held in the selected shift
@@ -53,70 +50,17 @@ $('.shiftEditBtn').on('click', function(event) {
             $("#ppa").val(selectedShiftObject.ppa);
             $("#comments").val(selectedShiftObject.comments);
             $("#breakthroughs").val(selectedShiftObject.breakthroughs);
-            $("#shiftDate").val(selectedShiftObject.shiftDate); //YOU SHOULD MAKE THIS UNCHANGEABLE
-            $("#inTime").val(selectedShiftObject.timeIn); //YOU SHOULD MAKE THIS UNCHANGEABLE
-            $("#outTime").val(selectedShiftObject.timeOut); //YOU SHOULD MAKE THIS UNCHANGEABLE
+            $("#shiftDate").val(selectedShiftObject.shiftDate);
+            $("#inTime").val(selectedShiftObject.timeIn);
+            $("#outTime").val(selectedShiftObject.timeOut);
             $("#shiftType").val(selectedShiftObject.shiftType);
-
-            //It's working correctly, but it looks funny.  The input titles are overlapping with the input fields
+            $("#id").val(selectedShiftObject.id);
         }
 
+        //More than one match?  Card.
         else if (matchArray.length > 1) {
             var moreThanOneMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">More Than One Shift</span><p>More than one shift for that date.</p></div></div></div></div>'
             $("#dateToEditDiv").append(moreThanOneMatchString);
-            var inTimes = [];
-            for (var i = 0; i<matchArray.length; i++) {
-                inTimes.push(matchArray[i].timeIn);
-            }
-
-            var dropDownString = '<form class="col s12"><div class="row"><!--shiftType VARCHAR(32)--><select id="shiftSelect"><option value="" disabled selected>Choose shift</option>'
-
-
-            for (var i = 0; i<matchArray.length; i++) {
-                dropDownString += '<option value="';
-                dropDownString += i;
-                dropDownString += '">inTime = ';
-                dropDownString += matchArray[i].inTime;
-                dropDownString += '</option>';
-            }
-
-            dropDownString += '</select><label>Shift selection</label></div><button class="btn waves-effect waves-light shiftSelectionSubmitBtn">Submit shift selection</button></form>';
-
-            console.log(dropDownString);
-
-            $("#dateToEditDiv").append(dropDownString);
-
-            $('.shiftSelectionSubmitBtn').on('click', function(event) {
-
-                //Take the value of the selected dropdown and use that index of matchArray to wipe the page and replace it with the shift update form
-                event.preventDefault();
-                var indexToUse = $("#shiftSelect").val().trim();
-
-                var selectedShiftObject = data[indexToUse];
-                var editShiftHTMLString = '<!DOCTYPE html><title>Server App</title><meta content="width=device-width,initial-scale=1"name=viewport><script src=https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel=stylesheet><link href=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js></script><link href=./css/style.css rel=stylesheet><link href=./css/nouislider.min.css rel=stylesheet><div id=mainDiv><div class=row><div class=row><div class="col s12"><h4>Shift Form</h4></div></div><form class="col s12"><div class=row></div><div class="row"><!--totalWalkedWith DECIMAL(10,2)--><div class="input-field col s12"><input id="totalWalkedWith" type="text" class="validate"><label for="totalWalkedWith">Total walked with</label></div></div><div class=row><div class="col s12 input-field"><input id=largestTip class=validate><label for=largestTip>Largest tip</label></div></div><div class=row><div class="col s12 input-field"><input id=smallestTip class=validate><label for=smallestTip>Smallest tip</label></div></div><div class=row><div class="col s12 input-field"><input id=stiffed class=validate><label for=stiffed>Number of times stiffed (hopefully zero!)</label></div></div><div class=row><div class="col s12 input-field"><input id=bwl class=validate><label for=bwl>BWL</label></div></div><div class=row><div class="col s12 input-field"><input id=sales class=validate><label for=sales>Sales</label></div></div><div class=row><div class="col s12 input-field"><input id=tipout class=validate><label for=tipout>Total tipped out</label></div></div><div class=row><div class="col s12 input-field"><input id=tipPercent class=validate><label for=tipPercent>Tip %</label></div></div><div class=row><div class="col s12 input-field"><input id=ppa class=validate><label for=ppa>PPA</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=comments></textarea><label for=comments>Comments</label></div></div><div class=row><div class="col s12 input-field"><textarea class=materialize-textarea id=breakthroughs></textarea><label for=breakthroughs>Breakthroughs</label></div></div><div class=row><select id=shiftType><option value=""disabled selected>Choose shift type<option value=breakfast>Breakfast<option value=lunch>Lunch<option value=dinner>Dinner<option value=double>Double</select><label>Shift type</label></div><div id="shiftDate" value=""></div><div id="inTime" value=""></div><div id="outTime" value=""></div><button class="btn shiftEditBtn2 waves-effect waves-light">Submit Shift</button><div class=row></div></form></div></div><script src=./javascript/nouislider.min.js></script><script src=./javascript/shiftEdit.js></script><script src=./javascript/wNumb.js></script>'
-
-                //Wipe the page and replace it with shift update form
-                $("#mainDiv").html(editShiftHTMLString);
-
-                //Change the values of all the new divs in shift.html to the values held in the selected shift
-                $("#totalWalkedWith").val(selectedShiftObject.totalWalkedWith);
-                $("#largestTip").val(selectedShiftObject.largestTip);
-                $("#smallestTip").val(selectedShiftObject.smallestTip);
-                $("#stiffed").val(selectedShiftObject.stiffed);
-                $("#bwl").val(selectedShiftObject.bwl);
-                $("#sales").val(selectedShiftObject.sales);
-                $("#tipout").val(selectedShiftObject.tipout);
-                $("#tipPercent").val(selectedShiftObject.tipPercent);
-                $("#ppa").val(selectedShiftObject.ppa);
-                $("#comments").val(selectedShiftObject.comments);
-                $("#breakthroughs").val(selectedShiftObject.breakthroughs);
-                $("#shiftDate").val(selectedShiftObject.shiftDate); //YOU SHOULD MAKE THIS UNCHANGEABLE
-                $("#inTime").val(selectedShiftObject.timeIn); //YOU SHOULD MAKE THIS UNCHANGEABLE
-                $("#outTime").val(selectedShiftObject.timeOut); //YOU SHOULD MAKE THIS UNCHANGEABLE
-                $("#shiftType").val(selectedShiftObject.shiftType);
-
-                //It's working correctly, but it looks funny.  The input titles are overlapping with the input fields
-            });
         }        
     });
 });
@@ -139,11 +83,9 @@ $('.shiftDeleteBtn').on('click', function(event) {
         timeIn: 1
     };
 
-    console.log(dateObj);
-
     var matchArray = [];
 
-    //Search database for any entries where date === dateToDelete.  (Sequelize - You'll need to make a new one, I think)
+    //Search database for any entries where date === dateToDelete.
     $.post("/shiftByDate", dateObj)
     .done(function(data) {
 
@@ -152,19 +94,17 @@ $('.shiftDeleteBtn').on('click', function(event) {
             matchArray.push(data[i]);
         }
 
-        console.log("SO FAR, MATCHARRAY CONTAINS ");
-        console.log(matchArray);
-
+        //No matches?  Card.
         if (matchArray.length === 0) {
             var noMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">No Shifts</span><p>No shifts for that date.</p></div></div></div></div>'
             $("#dateToDeleteDiv").append(noMatchString);
         }
 
+        //One match?  Delete it.
         else if (matchArray.length === 1) {
-
             var selectedShiftObject = data[0];
-            console.log(selectedShiftObject);
-
+            var deleteSuccessfulString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">Deletion Success</span><p>Shift delete successful.</p></div></div></div></div>'
+            $("#dateToDeleteDiv").append(deleteSuccessfulString);
             //Delete DB entry of selectedShiftObject
             $.post("/deleteShift", selectedShiftObject)
             .done(function(data) {
@@ -172,43 +112,10 @@ $('.shiftDeleteBtn').on('click', function(event) {
             })
         }
 
+        //More than one match?  Card.
         else if (matchArray.length > 1) {
             var moreThanOneMatchString = '<div class="row"><div class="col s12 m6"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">More Than One Shift</span><p>More than one shift for that date.</p></div></div></div></div>'
             $("#dateToDeleteDiv").append(moreThanOneMatchString);
-            var inTimes = [];
-            for (var i = 0; i<matchArray.length; i++) {
-                inTimes.push(matchArray[i].timeIn);
-            }
-
-            var dropDownString = '<form class="col s12"><div class="row"><!--shiftType VARCHAR(32)--><select id="shiftSelect"><option value="" disabled selected>Choose shift</option>'
-
-            for (var i = 0; i<matchArray.length; i++) {
-                dropDownString += '<option value="';
-                dropDownString += i;
-                dropDownString += '">inTime = ';
-                dropDownString += matchArray[i].inTime;
-                dropDownString += '</option>';
-            }
-
-            dropDownString += '</select><label>Shift selection</label></div><button class="btn waves-effect waves-light shiftSelectionSubmitBtnDelete">Submit shift selection</button></form>';
-
-            console.log(dropDownString);
-
-            $("#dateToDeleteDiv").append(dropDownString);
-
-            $('.shiftSelectionSubmitBtnDelete').on('click', function(event) {
-
-                event.preventDefault();
-                var indexToUse = $("#shiftSelect").val().trim();
-                var selectedShiftObject = data[indexToUse];
-
-                //Delete DB entry of selectedShiftObject
-                $.post("/deleteShift", selectedShiftObject)
-                .done(function(data) {
-                    console.log(data);
-                })
-
-            });
         }
     });     
 });
@@ -242,8 +149,7 @@ $('.shiftSubmitBtn').on('click', function(event) {
 
     var shiftType = $("#shiftType").val().trim(); 
 
-    var isReal = 0; //Not working either
-
+    var isReal = 0;
     var restaurant_id = 0;
     var user_id = 0;
 

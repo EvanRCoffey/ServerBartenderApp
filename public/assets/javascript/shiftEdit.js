@@ -6,7 +6,7 @@ $('.shiftEditBtn2').on('click', function(event) {
     event.preventDefault();
     console.log(event);
 
-    var totalWalkedWith = $("#totalWalkedWith").val().trim;
+    var totalWalkedWith = $("#totalWalkedWith").val().trim();
     var largestTip = $("#largestTip").val().trim();
     var smallestTip = $("#smallestTip").val().trim();
     var stiffed = $("#stiffed").val().trim();
@@ -18,12 +18,12 @@ $('.shiftEditBtn2').on('click', function(event) {
     var comments = $("#comments").val().trim();
     var breakthroughs = $("#breakthroughs").val().trim();
     var shiftType = $("#shiftType").val().trim(); 
-    var restaurant_id = 0;
-    var user_id = 0;
 
-    var inTime = $("#inTime").val().trim();;
-    var outTime = $("#outTime").val().trim();;
-    var shiftDate = $("#shiftDate").val().trim();;
+    var inTime = $("#inTime").val().trim();
+    var outTime = $("#outTime").val().trim();
+    var shiftDate = $("#shiftDate").val().trim();
+
+    var id = $("#holdsID").val().trim();
 
     //Create new user object.
     var newShift = {
@@ -39,14 +39,12 @@ $('.shiftEditBtn2').on('click', function(event) {
         comments:comments,
         breakthroughs:breakthroughs,
         shiftDate:shiftDate,
-        timeIn:inTime,
-        timeOut:outTime,
+        timeIn:convertToTime(inTime),
+        timeOut:convertToTime(outTime),
         shiftType:shiftType,
-        restaurant_id:restaurant_id,
-        user_id:user_id
+        id:id
     };
-    console.log("newShift:");
-    console.log(newShift);
+
     // Update object via AJAX post
     $.post("/editShift", newShift)
     .done(function(data) {
