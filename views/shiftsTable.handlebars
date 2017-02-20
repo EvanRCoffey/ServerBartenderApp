@@ -1,0 +1,19 @@
+      <table class="bordered">
+        <thead>
+          <tr>
+              <th>Date</th>
+              <th>Location</th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+         {{#each this}}
+          <tr>
+            <td>{{this.shiftDate}}</td>
+            <td>{{this.restaurant_id}}</td>
+            <td>{{this.id}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
