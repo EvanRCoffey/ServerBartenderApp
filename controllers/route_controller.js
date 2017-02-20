@@ -284,6 +284,17 @@ router.post("/shiftByDate", function(req, res) {
   });
 });
 
+//Testing out a shifts table.
+//Added a raw:true option to cut down the garbage.
+router.get("/shiftsTable", loggedIn, function(req, res, next) {
+    db.Shift.findAll({ where: {user_id: req.user.id},
+    raw: true, // Will order by shiftDate on an associated User
+     order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+       console.log(dbUser);
+       res.render("shiftsTable", dbUser);
+     });
+ });
+
 //Keep this at the end of the router section.
 //If nothing is found this is sent.
 router.get('*', function(req, res) {
