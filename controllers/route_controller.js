@@ -179,7 +179,6 @@ router.post("/sendFeedback", function(req, res) {
 
 
 router.post("/newShift", loggedIn, function(req, res, next) {
-    console.log("Test");
     db.Shift.create({
         restaurant_id: 0,
         user_id: req.user.id,
@@ -201,15 +200,14 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         isReal: false
     }).then(function(dbUser) {
         console.log(dbUser);
-        res.render("shift");
+        res.render("shiftSuccess");
     });
-
 });
 
 router.post("/newJob", loggedIn, function(req, res, next) {
     db.Job.create({
-        restaurant_id: req.body.restaurant_id,
-        user_id: req.body.user_id,
+        restaurant_id: 0,
+        user_id: req.user.id,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         wage: req.body.wage,
@@ -218,20 +216,20 @@ router.post("/newJob", loggedIn, function(req, res, next) {
         comments: req.body.comments
     }).then(function(dbUser) {
         console.log(dbUser);
+        res.render("jobSuccess");     
     });
-    console.log(req.body);
 });
 
 router.post("/newRestaurant",loggedIn, function(req, res, next) {
     db.Restaurant.create({
-        restaurant_id: req.body.restaurant_id,
+        restaurant_id: 0,
         restaurant_name: req.body.restaurant_name,
         defaultMenu: 1,
         isReal: true
     }).then(function(dbUser) {
         console.log(dbUser);
+        res.render("restaurantSuccess");
     });
-    console.log(req.body);
 });
 
 router.post("/editShift", function(req, res) {
@@ -241,7 +239,7 @@ router.post("/editShift", function(req, res) {
     where: {id:shiftData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
-    res.render("shift");
+    res.render("shiftSuccess");
   });
 });
 
@@ -267,6 +265,7 @@ router.post("/deleteShift", function(req, res) {
   var shiftData = req.body;
   db.Shift.destroy({where: {id: shiftData.id}}).then(function(dbUser) {
     console.log(dbUser);
+    alert("Shift deleted!");
   });
 });
 

@@ -1,33 +1,10 @@
-BY THE END OF THE WEEK...
+ASAP...
 
 1) Finish shift-table-test verion of selecting shift to edit (Mills is on this)
-
-
-
-2) Once Mill's shift-table-test is done and you get it working with shifts, apply everything to jobs/restaurants
-
-
-
+2) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
 3) Debug to the best of your ability - test various things and make sure there are no glaring errors
-
--Use moment.js to solve the timeIn and timeOut problems.
-
--Why are all of the DECIMAL values rounding off?
-
--Why do the pre-filled forms overlap with the form labels?  And why does it only happen sometimes, not others?
-
--Look over site for any input validation you should include
-
-
-
 4) Deploy
-
-
-
 5) Test the online version to make sure everything works as expected
-
-
-
 6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 
 ___________________________________________________________________
