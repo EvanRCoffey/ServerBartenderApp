@@ -1,6 +1,28 @@
 ASAP...
 
 1) Finish shift-table-test verion of selecting shift to edit (Mills is on this)
+
+Shifts Table:
+Everything is reading in as expected.
+Edit buttons work without issue.
+There are format and line issues, but I will get those worked out.
+Basically don't bother with this section, i'll take care of it.
+
+Shifts Editor:
+Everything populates fine except for the date and the shift type dropdown.
+(the slider bar doesn't move to match the time, but that is pretty minor).
+
+I will have to modify the date before sending it to handlebars.
+I think I know what to do for the dropdown (huge pain, but doable).
+
+The update and delete shift buttons do not send to working routes yet.
+I think you can easily point them to one of your existing routes/queries with small modifications.
+Be sure the logged in function is set on the route, and the query checks WHERE 
+id AND req.user.id. Otherwise it could be exploited.
+They should probably redirect to the shifts table once updated/deleted.
+
+If we can get the time to display with AM/PM in browser, and as is in the database, I can use moment.js in node to convert it before sending to handlebars.
+
 2) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
 3) Debug to the best of your ability - test various things and make sure there are no glaring errors
 4) Deploy

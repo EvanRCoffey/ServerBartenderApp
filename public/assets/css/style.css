@@ -1,3 +1,9 @@
 .signUpError {
 	color: red;
 }
+
+button.tableEditButton {
+	border: none;
+	background-color: white;
+	color: gray;
+}
