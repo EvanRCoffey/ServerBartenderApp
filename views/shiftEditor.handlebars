@@ -5,8 +5,9 @@
                 <br><h4>Edit Shift</h4>
             </div>
         </div>
-
-        <form class="col s12" method="POST" action="/newShift">
+    
+    <!--   need to modify the route/query so this updates the shift. -->
+        <form class="col s12" method="POST" action="/updateShift">
 
             <!--totalWalkedWith DECIMAL(10,2)-->
             <div class="input-field col s12">
@@ -64,13 +65,13 @@
 
             <!--comments MEDIUMBLOB-->
             <div class="input-field col s12">
-                <textarea name="comments" id="comments" class="materialize-textarea" value={{this.comments}}></textarea>
+                <textarea name="comments" id="comments" class="materialize-textarea">{{this.comments}}</textarea>
                 <label for="comments" class="active">Comments</label>
             </div>
 
             <!--breakthroughs MEDIUMBLOB-->
             <div class="input-field col s12">
-                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea value={{this.breakthroughs}}"></textarea>
+                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea">{{this.breakthroughs}}</textarea>
                 <label for="breakthroughs" class="active">Breakthroughs</label>
             </div>
 
@@ -82,10 +83,10 @@
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input name="inTime" type="range" min="0" max="1425" value={{this.inTime}} step="15" class="timeRun" id="inTime" onchange="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
+            <input name="inTime" type="range" min="0" max="1425" value={{this.timeIn}} step="15" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: {{this.timeIn}} </span><br><br>
 
             <!--timeOut TIMESTAMP NOT NULL-->
-            <input name="outTime" type="range" min="0" max="1425" value={{this.outTime}} step="15" class="timeRun" id="outTime" onchange="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
+            <input name="outTime" type="range" min="0" max="1425" value={{this.timeOut}} step="15" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: {{this.timeOut}}</span><br><br>
 
             <!--shiftType VARCHAR(32)-->
             <select name="shiftType" id="shiftType" value={{this.shiftType}}>
@@ -97,10 +98,15 @@
             </select>
             <label>Shift type</label>
 
-            <button class="btn waves-effect waves-light" type="submit">Create New Shift</button>
+             <input type="hidden" name="shiftID" value={{this.id}}>
+
+            <button class="btn waves-effect waves-light" type="submit">Update Shift</button>
 
             <div class="row"></div>
         </form>
+
+      <!--   need to modify the route/query so this deletes the shift. -->
+         <form action="/deleteShift{{this.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Shift</button></form>
     </div>
 </div>
 

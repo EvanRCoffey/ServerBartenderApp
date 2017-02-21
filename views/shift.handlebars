@@ -137,10 +137,10 @@
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input name="inTime" type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" onchange="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
+            <input name="inTime" type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
 
             <!--timeOut TIMESTAMP NOT NULL-->
-            <input name="outTime" type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" onchange="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
+            <input name="outTime" type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
 
             <!--shiftType VARCHAR(32)-->
             <select name="shiftType" id="shiftType">
