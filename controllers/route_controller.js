@@ -232,6 +232,16 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
     });
 });
 
+router.get("/editShift:id", loggedIn, function(req, res, next) {
+  var ShiftID = req.params.id;
+      db.Shift.findAll({ where: {user_id: req.user.id, id: ShiftID},
+    raw: true
+    }).then(function(dbUser) {
+       console.log(dbUser[0].id);
+        res.render("shiftEditor", dbUser[0]);
+     });
+});
+
 router.post("/editShift", function(req, res) {
   var shiftData = req.body;
   console.log(shiftData);
