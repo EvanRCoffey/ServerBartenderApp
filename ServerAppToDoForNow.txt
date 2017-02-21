@@ -23,25 +23,25 @@ They should probably redirect to the shifts table once updated/deleted.
 
 If we can get the time to display with AM/PM in browser, and as is in the database, I can use moment.js in node to convert it before sending to handlebars.
 
-2) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
-3) Debug to the best of your ability - test various things and make sure there are no glaring errors
-4) Deploy
-5) Test the online version to make sure everything works as expected
-6) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
+
+
+
+2) Finish Financial Summary (Evan is on this) 
+
+3) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
+4) Debug to the best of your ability - test various things and make sure there are no glaring errors
+5) Deploy
+6) Test the online version to make sure everything works as expected
+7) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
+-Make sure they have the sample login so they can see how the financial summary works
 
 ___________________________________________________________________
 
 NEXT STEPS...
 
-1) Insert enough fake shift data with one account to where you can start working on the financial summary (and timeline)
+2) Get the timeline up and working
 
-2) Get the financial summary up and working 
-
-3) Allow anybody to log in to the sample account to see how it will look once more data is entered
-
-4) Get the timeline up and working
-
-5) Notify users so they can log in to the sample account to see that, too
+3) Notify users so they can log in to the sample account to see that, too
 
 ...) Goals
 
