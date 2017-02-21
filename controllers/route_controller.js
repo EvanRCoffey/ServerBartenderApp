@@ -76,6 +76,10 @@ router.get("/restaurant", loggedIn, function(req, res, next) {
     res.render("restaurant", req);
 });
 
+router.get("/financialSummaryTest", loggedIn, function(req, res, next) {
+    res.render("financialSummaryTest", req);
+});
+
 //Logs user out and returns to homepage.
 router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();
@@ -297,6 +301,14 @@ router.post("/shiftByDate", function(req, res) {
   console.log(req.body);
 
   db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
+    res.json(dbUser);
+  });
+});
+
+router.post("/financialSummary", function(req, res) {
+  console.log(req.body);
+
+  db.Shift.findAll({where: {user_id: req.body.userID}}).then(function(dbUser) {
     res.json(dbUser);
   });
 });

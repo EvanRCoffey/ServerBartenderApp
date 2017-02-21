@@ -35,26 +35,20 @@ var leastWalkedWithShift = 99999;
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
+var userIdObj = {
+    userID: 1
+}
 
+$.post("/financialSummary", userIdObj)
+.done(function(data) {
 
+    var shifts = [];
 
-//READY TO BE TESTED.
+    for (var i = 0; i < data.length; i++) {
+        shifts.push(data[i]);
+    }
 
-//1) Drop shifts table and remake it with the 20 entries in Book1.xls
-//2) Build your AJAX query and sequelize request to pull the 20 shifts
-//3) Put the 20 shift objects into shifts[]
-//4) Debug!
-
-
-
-
-var shifts = [];
-
-//AJAX REQUEST FOR ALL SHIFTS WHERE USER ID MATCHES CURRENTLY LOGGED-IN USER (do range-of-dates later)
-
-//DO ALL OF THIS IN THE CALLBACK TO THE AJAX REQUEST:
-
-    //ADD RESULTS OF DB QUERY TO shifts[]
+    console.log(shifts); //Holds 20 shift objects
 
     for (var i = 0; i < shifts.length; i++) {
         countShifts++;
@@ -86,94 +80,96 @@ var shifts = [];
         if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
         if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
 
-        if (shifts[i].totalBWL != "NULL") {
-            totalBWL += shifts[i].totalBWL;
+        if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
+
+        if (shifts[i].bwl != "NULL") {
+            totalBWL += shifts[i].bwl;
             countBWL++;
         }
             
-        if (shifts[i].totalPPA != "NULL") {
-            totalPPA += shifts[i].totalPPA;
+        if (shifts[i].ppa != "NULL") {
+            totalPPA += shifts[i].ppa;
             countPPA++;
         }
             
-        if (shifts[i].totalSales != "NULL") {
-            totalSales += shifts[i].totalSales;
+        if (shifts[i].sales != "NULL") {
+            totalSales += shifts[i].sales;
             countSales++;
         }
             
-        if (shifts[i].totalTipout != "NULL") {
-            totalTipout += shifts[i].totalTipout;
+        if (shifts[i].tipout != "NULL") {
+            totalTipout += shifts[i].tipout;
             countTipout++;
         }
             
-        if (shifts[i].totalTipPercent != "NULL") {
-            totalTipPercent += shifts[i].totalTipPercent;
+        if (shifts[i].tipPercent != "NULL") {
+            totalTipPercent += shifts[i].tipPercent;
             countTipPercent++;
         }
     }
-//END CALLBACK
 
-///////////////////////////////////////
-//PREPARE FINANCIAL SUMMARY VARIABLES
-///////////////////////////////////////
+    ///////////////////////////////////////
+    //PREPARE FINANCIAL SUMMARY VARIABLES
+    ///////////////////////////////////////
 
-// var numDays = lastShiftDate - firstShiftDate;  //This only works if the dates are translated to ints somehow
-var numDays = 20;  //For now, this will be hardcoded.  Use exactly 20 database entries for testing.
-var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
-var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
-var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
-var avgShiftLength = totalHoursWorked / countShifts;
-var avgShiftsPerWeek = countShifts / (numDays / 7);
-var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
-var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
-var avgTipout = totalTipout / countTipout;
-var avgTipPercent = totalTipPercent / countTipPercent;
-var avgBWL = totalBWL / countBWL;
-var avgPPA = totalPPA / countPPA;
-var avgSales = totalSales / countSales;
+    // var numDays = lastShiftDate - firstShiftDate;  //This only works if the dates are translated to ints somehow
+    var numDays = 26;  //For now, this will be hardcoded.
+    var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
+    var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
+    var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
+    var avgShiftLength = totalHoursWorked / countShifts;
+    var avgShiftsPerWeek = countShifts / (numDays / 7);
+    var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
+    var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
+    var avgTipout = totalTipout / countTipout;
+    var avgTipPercent = totalTipPercent / countTipPercent;
+    var avgBWL = totalBWL / countBWL;
+    var avgPPA = totalPPA / countPPA;
+    var avgSales = totalSales / countSales;
 
-///////////////////////////////////////
-//CURRENTLY DEBUGGING WITH CONSOLE.LOG
-///////////////////////////////////////
+    ///////////////////////////////////////
+    //CURRENTLY DEBUGGING WITH CONSOLE.LOG
+    ///////////////////////////////////////
 
-console.log("********************************")
-console.log("numDays = " numDays);
-console.log("totalEarnedBeforeTaxes = " totalEarnedBeforeTaxes);
-console.log("avgHourlyWalkedWith = " avgHourlyWalkedWith);
-console.log("avgHourlyTotal = " avgHourlyTotal);
-console.log("avgShiftLength = " avgShiftLength);
-console.log("avgShiftsPerWeek = " avgShiftsPerWeek);
-console.log("avgShiftsPerMonth = " avgShiftsPerMonth);
-console.log("avgHoursPerWeek = " avgHoursPerWeek);
-console.log("avgTipout = " avgTipout);
-console.log("avgTipPercent = " avgTipPercent);
-console.log("avgBWL = " avgBWL);
-console.log("avgPPA = " avgPPA);
-console.log("avgSales = " avgSales);
-console.log("********************************")
-console.log("hourlyWage = " hourlyWage);
-console.log("totalWalkedWith = " totalWalkedWith);
-console.log("totalBWL = " totalBWL);
-console.log("totalPPA = " totalPPA);
-console.log("totalSales = " totalSales);
-console.log("totalTipout = " totalTipout);
-console.log("totalTipPercent = " totalTipPercent);
-// console.log("firstShiftDate = " firstShiftDate);
-// console.log("lastShiftDate = " lastShiftDate);
-console.log("********************************")
-console.log("countShifts = " countShifts);
-console.log("countBWL = " countBWL);
-console.log("countPPA = " countPPA);
-console.log("countSales = " countSales);
-console.log("countTipout = " countTipout);
-console.log("countStiffed = " countStiffed);
-console.log("********************************")
-console.log("bestTip = " bestTip);
-console.log("worstTip = " worstTip);
-console.log("longestShift = " longestShift);
-console.log("shortestShift = " shortestShift);
-console.log("mostWalkedWithShift = " mostWalkedWithShift);
-console.log("leastWalkedWithShift = " leastWalkedWithShift);
+    console.log("********************************");
+    // console.log("numDays = " + numDays);
+    console.log("totalEarnedBeforeTaxes = " + totalEarnedBeforeTaxes);
+    console.log("avgHourlyWalkedWith = " + avgHourlyWalkedWith);
+    console.log("avgHourlyTotal = " + avgHourlyTotal);
+    // console.log("avgShiftLength = " + avgShiftLength);
+    // console.log("avgShiftsPerWeek = " + avgShiftsPerWeek);
+    // console.log("avgShiftsPerMonth = " + avgShiftsPerMonth);
+    console.log("avgHoursPerWeek = " + avgHoursPerWeek);
+    // console.log("avgTipout = " + avgTipout);
+    // console.log("avgTipPercent = " + avgTipPercent);
+    // console.log("avgBWL = " + avgBWL);
+    // console.log("avgPPA = " + avgPPA);
+    // console.log("avgSales = " + avgSales);
+    // console.log("********************************")
+    // console.log("hourlyWage = " + hourlyWage);
+    // console.log("totalWalkedWith = " + totalWalkedWith);
+    // console.log("totalBWL = " + totalBWL);
+    // console.log("totalPPA = " + totalPPA);
+    // console.log("totalSales = " + totalSales);
+    // console.log("totalTipout = " + totalTipout);
+    // console.log("totalTipPercent = " + totalTipPercent);
+    // // console.log("firstShiftDate = " firstShiftDate);
+    // // console.log("lastShiftDate = " lastShiftDate);
+    // console.log("********************************")
+    // console.log("countShifts = " + countShifts);
+    // console.log("countBWL = " + countBWL);
+    // console.log("countPPA = " + countPPA);
+    // console.log("countSales = " + countSales);
+    // console.log("countTipout = " + countTipout);
+    // console.log("countStiffed = " + countStiffed);
+    // console.log("********************************")
+    // console.log("bestTip = " + bestTip);
+    // console.log("worstTip = " + worstTip);
+    // console.log("longestShift = " + longestShift);
+    console.log("shortestShift = " + shortestShift);
+    // console.log("mostWalkedWithShift = " + mostWalkedWithShift);
+    // console.log("leastWalkedWithShift = " + leastWalkedWithShift);
+});
 
 ///////////////////////////////////////
 //HELPER FUNCTIONS
