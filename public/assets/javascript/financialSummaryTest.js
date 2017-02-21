@@ -68,7 +68,7 @@ $.post("/financialSummary", userIdObj)
         else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
             totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
             if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-            if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift =((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+            if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
         }
 
         //If they're the same, log the error and move on.
@@ -112,6 +112,9 @@ $.post("/financialSummary", userIdObj)
     //PREPARE FINANCIAL SUMMARY VARIABLES
     ///////////////////////////////////////
 
+    //totalHoursWorked currently holds the number of minutes worked.  Correcting that here.
+    totalHoursWorked = totalHoursWorked/60;
+
     // var numDays = lastShiftDate - firstShiftDate;  //This only works if the dates are translated to ints somehow
     var numDays = 26;  //For now, this will be hardcoded.
     var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
@@ -132,43 +135,43 @@ $.post("/financialSummary", userIdObj)
     ///////////////////////////////////////
 
     console.log("********************************");
-    // console.log("numDays = " + numDays);
+    console.log("numDays = " + numDays);
     console.log("totalEarnedBeforeTaxes = " + totalEarnedBeforeTaxes);
     console.log("avgHourlyWalkedWith = " + avgHourlyWalkedWith);
     console.log("avgHourlyTotal = " + avgHourlyTotal);
-    // console.log("avgShiftLength = " + avgShiftLength);
-    // console.log("avgShiftsPerWeek = " + avgShiftsPerWeek);
-    // console.log("avgShiftsPerMonth = " + avgShiftsPerMonth);
+    console.log("avgShiftLength = " + avgShiftLength);
+    console.log("avgShiftsPerWeek = " + avgShiftsPerWeek);
+    console.log("avgShiftsPerMonth = " + avgShiftsPerMonth);
     console.log("avgHoursPerWeek = " + avgHoursPerWeek);
-    // console.log("avgTipout = " + avgTipout);
-    // console.log("avgTipPercent = " + avgTipPercent);
-    // console.log("avgBWL = " + avgBWL);
-    // console.log("avgPPA = " + avgPPA);
-    // console.log("avgSales = " + avgSales);
-    // console.log("********************************")
-    // console.log("hourlyWage = " + hourlyWage);
-    // console.log("totalWalkedWith = " + totalWalkedWith);
-    // console.log("totalBWL = " + totalBWL);
-    // console.log("totalPPA = " + totalPPA);
-    // console.log("totalSales = " + totalSales);
-    // console.log("totalTipout = " + totalTipout);
-    // console.log("totalTipPercent = " + totalTipPercent);
-    // // console.log("firstShiftDate = " firstShiftDate);
-    // // console.log("lastShiftDate = " lastShiftDate);
-    // console.log("********************************")
-    // console.log("countShifts = " + countShifts);
-    // console.log("countBWL = " + countBWL);
-    // console.log("countPPA = " + countPPA);
-    // console.log("countSales = " + countSales);
-    // console.log("countTipout = " + countTipout);
-    // console.log("countStiffed = " + countStiffed);
-    // console.log("********************************")
-    // console.log("bestTip = " + bestTip);
-    // console.log("worstTip = " + worstTip);
-    // console.log("longestShift = " + longestShift);
+    console.log("avgTipout = " + avgTipout);
+    console.log("avgTipPercent = " + avgTipPercent);
+    console.log("avgBWL = " + avgBWL);
+    console.log("avgPPA = " + avgPPA);
+    console.log("avgSales = " + avgSales);
+    console.log("********************************")
+    console.log("hourlyWage = " + hourlyWage);
+    console.log("totalWalkedWith = " + totalWalkedWith);
+    console.log("totalBWL = " + totalBWL);
+    console.log("totalPPA = " + totalPPA);
+    console.log("totalSales = " + totalSales);
+    console.log("totalTipout = " + totalTipout);
+    console.log("totalTipPercent = " + totalTipPercent);
+    // console.log("firstShiftDate = " firstShiftDate);
+    // console.log("lastShiftDate = " lastShiftDate);
+    console.log("********************************")
+    console.log("countShifts = " + countShifts);
+    console.log("countBWL = " + countBWL);
+    console.log("countPPA = " + countPPA);
+    console.log("countSales = " + countSales);
+    console.log("countTipout = " + countTipout);
+    console.log("countStiffed = " + countStiffed);
+    console.log("********************************")
+    console.log("bestTip = " + bestTip);
+    console.log("worstTip = " + worstTip);
+    console.log("longestShift = " + longestShift);
     console.log("shortestShift = " + shortestShift);
-    // console.log("mostWalkedWithShift = " + mostWalkedWithShift);
-    // console.log("leastWalkedWithShift = " + leastWalkedWithShift);
+    console.log("mostWalkedWithShift = " + mostWalkedWithShift);
+    console.log("leastWalkedWithShift = " + leastWalkedWithShift);
 });
 
 ///////////////////////////////////////

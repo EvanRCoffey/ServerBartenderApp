@@ -24,10 +24,7 @@ They should probably redirect to the shifts table once updated/deleted.
 If we can get the time to display with AM/PM in browser, and as is in the database, I can use moment.js in node to convert it before sending to handlebars.
 
 
-
-
-2) Finish Financial Summary (Evan is on this) 
-
+2) Get financial summary to display using jquery instead of in the console
 3) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
 4) Debug to the best of your ability - test various things and make sure there are no glaring errors
 5) Deploy
