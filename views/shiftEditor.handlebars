@@ -89,7 +89,7 @@
             <input name="outTime" type="range" min="0" max="1425" value={{this.timeOut}} step="15" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: {{this.timeOut}}</span><br><br>
 
             <!--shiftType VARCHAR(32)-->
-            <select name="shiftType" id="shiftType" value={{this.shiftType}}>
+            <select name="shiftType" id="shiftType">
               <option value="" disabled selected>Click here to choose the shift type</option>
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
@@ -97,6 +97,7 @@
               <option value="double">Double</option>
             </select>
             <label>Shift type</label>
+            <input type="hidden" id='shiftTypePopulate' value={{this.shiftType}}>
 
              <input type="hidden" name="shiftID" value={{this.id}}>
 

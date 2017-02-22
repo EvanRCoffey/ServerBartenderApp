@@ -275,11 +275,11 @@ router.post("/editRestaurant", function(req, res) {
   });
 });
 
-router.post("/deleteShift", function(req, res) {
-  var shiftData = req.body;
-  db.Shift.destroy({where: {id: shiftData.id}}).then(function(dbUser) {
-    console.log(dbUser);
-    alert("Shift deleted!");
+router.post("/deleteShift:id", loggedIn, function(req, res, next) {
+  var ShiftID = req.params.id;
+  db.Shift.destroy({where: {user_id: req.user.id, id: ShiftID}}).then(function(dbUser) {
+    console.log("Shift deleted!");
+    res.redirect('/shiftsTable')
   });
 });
 

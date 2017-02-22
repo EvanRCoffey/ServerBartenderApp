@@ -266,3 +266,16 @@ function convertToTime(num) {
 
     return string;
 }
+
+//Janky function that sets the repopulated value of a dropdown.
+
+populateDropdown('#shiftTypePopulate', '#shiftType')
+
+function populateDropdown(hiddenTarget, dropdownTarget) {
+    //checks if exists.
+    if ($(hiddenTarget).val()) {
+        var setValue = $(hiddenTarget).val()
+        //Sets the value in the dropdown based on the prepopulated hidden value.
+        $(dropdownTarget + ' option[value =' + setValue + ']').prop('selected', true);
+    }
+}
