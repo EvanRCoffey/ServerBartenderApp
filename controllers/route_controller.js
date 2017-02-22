@@ -319,8 +319,10 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
     db.Shift.findAll({ where: {user_id: req.user.id},
     raw: true, // Will order by shiftDate on an associated User
      order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-       console.log(dbUser);
-       res.render("shiftsTable", dbUser);
+      var dataObject = {
+          allShifts: dbUser
+        };
+       res.render("shiftsTable", dataObject);
      });
  });
 
