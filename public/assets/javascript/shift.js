@@ -141,66 +141,66 @@ $('.shiftDeleteBtn').on('click', function(event) {
 });
 
 //////////////////////////////
-//SUBMIT NEW SHIFT
+//SUBMIT NEW SHIFT - CURRENTLY USING A POST METHOD
 //////////////////////////////
 
-$('.shiftSubmitBtn').on('click', function(event) {
-    event.preventDefault();
-    console.log(event);
+// $('.shiftSubmitBtn').on('click', function(event) {
+//     event.preventDefault();
+//     console.log(event);
 
-    var totalWalkedWith = $("#totalWalkedWith").val().trim();
-    var largestTip = $("#largestTip").val().trim();
-    var smallestTip = $("#smallestTip").val().trim();
-    var stiffed = $("#stiffed").val().trim();
-    var bwl = $("#bwl").val().trim();
-    var sales = $("#sales").val().trim();
-    var tipout = $("#tipout").val().trim();
-    var tipPercent = $("#tipPercent").val().trim();
-    var ppa = $("#ppa").val().trim();
-    var comments = $("#comments").val().trim();
-    var breakthroughs = $("#breakthroughs").val().trim();
-    var shiftDate = $("#shiftDate").val().trim();
+//     var totalWalkedWith = $("#totalWalkedWith").val().trim();
+//     var largestTip = $("#largestTip").val().trim();
+//     var smallestTip = $("#smallestTip").val().trim();
+//     var stiffed = $("#stiffed").val().trim();
+//     var bwl = $("#bwl").val().trim();
+//     var sales = $("#sales").val().trim();
+//     var tipout = $("#tipout").val().trim();
+//     var tipPercent = $("#tipPercent").val().trim();
+//     var ppa = $("#ppa").val().trim();
+//     var comments = $("#comments").val().trim();
+//     var breakthroughs = $("#breakthroughs").val().trim();
+//     var shiftDate = $("#shiftDate").val().trim();
 
-    var inTime = $("#inTime").val().trim(); 
-    var outTime = $("#outTime").val().trim(); 
+//     var inTime = $("#inTime").val().trim(); 
+//     var outTime = $("#outTime").val().trim(); 
 
-    inTime = convertToTime(inTime);
-    outTime = convertToTime(outTime);
+//     inTime = convertToTime(inTime);
+//     outTime = convertToTime(outTime);
 
-    var shiftType = $("#shiftType").val().trim(); 
+//     var shiftType = $("#shiftType").val().trim(); 
 
-    var isReal = 0;
-    var restaurant_id = 0;
-    var user_id = 0;
+//     var isReal = 0;
+//     var restaurant_id = 0;
+//     var user_id = 0;
 
-    //Create new user object.
-    var newShift = {
-        totalWalkedWith:totalWalkedWith,
-        largestTip:largestTip,
-        smallestTip:smallestTip,
-        stiffed:stiffed,
-        bwl:bwl,
-        sales:sales,
-        tipout:tipout,
-        tipPercent:tipPercent,
-        ppa:ppa,
-        comments:comments,
-        breakthroughs:breakthroughs,
-        shiftDate:shiftDate,
-        timeIn:inTime,
-        timeOut:outTime,
-        shiftType:shiftType,
-        isReal:isReal,
-        restaurant_id:restaurant_id,
-        user_id:user_id
-    };
-    // Send object via AJAX post
-    $.post("/newShift", newShift)
-    //Once sent deal with successful/unsuccessful signup.
-    .done(function(data) {
-        console.log(data);
-    });
-});
+//     //Create new user object.
+//     var newShift = {
+//         totalWalkedWith:totalWalkedWith,
+//         largestTip:largestTip,
+//         smallestTip:smallestTip,
+//         stiffed:stiffed,
+//         bwl:bwl,
+//         sales:sales,
+//         tipout:tipout,
+//         tipPercent:tipPercent,
+//         ppa:ppa,
+//         comments:comments,
+//         breakthroughs:breakthroughs,
+//         shiftDate:shiftDate,
+//         timeIn:inTime,
+//         timeOut:outTime,
+//         shiftType:shiftType,
+//         isReal:isReal,
+//         restaurant_id:restaurant_id,
+//         user_id:user_id
+//     };
+//     // Send object via AJAX post
+//     $.post("/newShift", newShift)
+//     //Once sent deal with successful/unsuccessful signup.
+//     .done(function(data) {
+//         console.log(data);
+//     });
+// });
 
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -209,6 +209,7 @@ $('.datepicker').pickadate({
 
 $(document).ready(function() {
     $('select').material_select();
+    // prepareJobDropdown();
 });
 
 //This allows the slideout navbar to function.
@@ -279,3 +280,23 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
         $(dropdownTarget + ' option[value =' + setValue + ']').prop('selected', true);
     }
 }
+
+// //Pulls all jobs from DB for user, creates a dropdown menu with the jobs, appends it to the shift form using jQuery
+// function prepareJobDropdown() {
+//     var jQueryString = '';
+
+//     //For now, userID defaulting to 1.  It *should* pull the userID from being logged in.
+//     var userIdObj = {
+//         userID: 1
+//     }
+
+//     $.post("/allJobs", userIdObj)
+//     .done(function(data) {
+//         for (var i=0; i<data.length; i++) {
+//             jQueryString += '<option value="' + data[i].id + '">'+ data[i].id +'</option>'
+//         }
+//         $("#jobID").append(jQueryString);
+//         console.log(jQueryString);
+//         console.log(data);
+//     });
+// }

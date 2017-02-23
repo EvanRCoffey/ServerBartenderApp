@@ -20,11 +20,13 @@ Only thing left to do is dependant on getting the date/time converted to moment.
 The update button does not post to the route yet, but will be easy to setup once the moment stuff 
 is in.
 
-2) Get financial summary to display using jquery instead of in the console
-3) Once Mills's shift-table-test is done and you get it working with shifts, apply EVERYTHING to jobs/restaurant
-4) Debug to the best of your ability - test various things and make sure there are no glaring errors
+3) Once the shift-table-test is done and you get it working with shifts, apply it to jobs/restaurant, too
+
+TESTING/DEBUGGING...
+
+4) Test/Debug offline version
 5) Deploy
-6) Test the online version to make sure everything works as expected
+6) Test/Debug online version
 7) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 -Make sure they have the sample login so they can see how the financial summary works
 
@@ -32,20 +34,22 @@ ___________________________________________________________________
 
 NEXT STEPS...
 
-2) Get the timeline up and working
+*Goals manager 
 
-3) Notify users so they can log in to the sample account to see that, too
+*Goal checker
 
-...) Goals
+*Timeline creator
 
-...) Menus
+*Menu manager
 
-...) Flash Card
+*Flash card quizzer
 
-...) Quiz Maker
+*Quiz maker
 
+*Anything else?  Missing group project requirements?  Any ideas for improvements?
 
+___________________________________________________________________
+
+WHENEVER...
 
 See if Sarah can get a bunch of data for you since she's admin at Fleming's.  Make sure that's legal, first.
-
-Decide on a name for the website (already thought of a few - see potentialSiteNames.txt)

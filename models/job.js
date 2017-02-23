@@ -8,6 +8,13 @@ module.exports = function(sequelize, DataTypes) {
 		isReal: DataTypes.BOOLEAN,
 		userJobMenu: DataTypes.INTEGER,
 		comments: DataTypes.TEXT
-	});
+	}, {
+      classMethods: {
+        associate: function(models) {
+          Job.hasMany(models.Shift, {
+          });
+        }
+      }
+    });
 	return Job;
 }

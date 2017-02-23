@@ -1,3 +1,10 @@
+//There are a couple things that still need to be fixed
+
+//1)Eventually, all shifts will be attached to a job, where we will find the wage.  For now, it's always 2.13.
+//2)Still need to find the total span of time worked.  For now, it's always 26 days.
+//3)Not 100% sure the earlier-than-in-time out-times are being handled correctly.
+
+
 ///////////////////////////////////////
 //VARIABLES
 ///////////////////////////////////////
@@ -47,8 +54,6 @@ $.post("/financialSummary", userIdObj)
     for (var i = 0; i < data.length; i++) {
         shifts.push(data[i]);
     }
-
-    console.log(shifts); //Holds 20 shift objects
 
     for (var i = 0; i < shifts.length; i++) {
         countShifts++;
@@ -131,47 +136,38 @@ $.post("/financialSummary", userIdObj)
     var avgSales = totalSales / countSales;
 
     ///////////////////////////////////////
-    //CURRENTLY DEBUGGING WITH CONSOLE.LOG
+    //DISPLAY FINANCIAL SUMMARY DATA
     ///////////////////////////////////////
 
-    console.log("********************************");
-    console.log("numDays = " + numDays);
-    console.log("totalEarnedBeforeTaxes = " + totalEarnedBeforeTaxes);
-    console.log("avgHourlyWalkedWith = " + avgHourlyWalkedWith);
-    console.log("avgHourlyTotal = " + avgHourlyTotal);
-    console.log("avgShiftLength = " + avgShiftLength);
-    console.log("avgShiftsPerWeek = " + avgShiftsPerWeek);
-    console.log("avgShiftsPerMonth = " + avgShiftsPerMonth);
-    console.log("avgHoursPerWeek = " + avgHoursPerWeek);
-    console.log("avgTipout = " + avgTipout);
-    console.log("avgTipPercent = " + avgTipPercent);
-    console.log("avgBWL = " + avgBWL);
-    console.log("avgPPA = " + avgPPA);
-    console.log("avgSales = " + avgSales);
-    console.log("********************************")
-    console.log("hourlyWage = " + hourlyWage);
-    console.log("totalWalkedWith = " + totalWalkedWith);
-    console.log("totalBWL = " + totalBWL);
-    console.log("totalPPA = " + totalPPA);
-    console.log("totalSales = " + totalSales);
-    console.log("totalTipout = " + totalTipout);
-    console.log("totalTipPercent = " + totalTipPercent);
-    // console.log("firstShiftDate = " firstShiftDate);
-    // console.log("lastShiftDate = " lastShiftDate);
-    console.log("********************************")
-    console.log("countShifts = " + countShifts);
-    console.log("countBWL = " + countBWL);
-    console.log("countPPA = " + countPPA);
-    console.log("countSales = " + countSales);
-    console.log("countTipout = " + countTipout);
-    console.log("countStiffed = " + countStiffed);
-    console.log("********************************")
-    console.log("bestTip = " + bestTip);
-    console.log("worstTip = " + worstTip);
-    console.log("longestShift = " + longestShift);
-    console.log("shortestShift = " + shortestShift);
-    console.log("mostWalkedWithShift = " + mostWalkedWithShift);
-    console.log("leastWalkedWithShift = " + leastWalkedWithShift);
+    $("#mainDiv").append("<br>********************************");
+    $("#mainDiv").append("<br>Total earned (before taxes) = $" + totalEarnedBeforeTaxes.toFixed(2));
+    $("#mainDiv").append("<br>Average hourly walked with = $" + avgHourlyWalkedWith.toFixed(2));
+    $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
+    $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
+    $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
+    $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
+    $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
+    $("#mainDiv").append("<br>Average tipout = $" + avgTipout.toFixed(2));
+    $("#mainDiv").append("<br>Average tip percent = " + avgTipPercent.toFixed(2) + "%");
+    $("#mainDiv").append("<br>Average BWL = " + avgBWL.toFixed(2) + "%");
+    $("#mainDiv").append("<br>Average PPA = $" + avgPPA.toFixed(2));
+    $("#mainDiv").append("<br>Average sales = $" + avgSales.toFixed(2));
+    $("#mainDiv").append("<br>Best tip = $" + bestTip.toFixed(2));
+    $("#mainDiv").append("<br>Worst (non-zero) tip = $" + worstTip.toFixed(2));
+    $("#mainDiv").append("<br>Number of times stiffed = " + countStiffed);
+    $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
+    $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
+    $("#mainDiv").append("<br>Most walked with shift = $" + mostWalkedWithShift.toFixed(2));
+    $("#mainDiv").append("<br>Least walked with shift = $" + leastWalkedWithShift.toFixed(2));
+    // $("#mainDiv").append("<br>********************************")
+    // $("#mainDiv").append("<br>firstShiftDate = " firstShiftDate.toFixed(2));
+    // $("#mainDiv").append("<br>lastShiftDate = " lastShiftDate.toFixed(2));
+    $("#mainDiv").append("<br>********************************")
+    $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
+    $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
+    $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
+    $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
+    $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
 });
 
 ///////////////////////////////////////

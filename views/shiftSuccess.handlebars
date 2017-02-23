@@ -69,6 +69,17 @@
 
         <form class="col s12" method="POST" action="/newShift">
 
+            <!--jobID INT-->
+            <div class="input-field col s12">
+                <select name="jobID" id="jobID">
+                    <option value="" disabled selected>Click here to choose a job</option>
+                    {{#each jobs}}
+                        <option value="{{this.id}}">{{this.id}}</option>
+                    {{/each}}
+                </select>
+                <label>Job Selector</label>
+            </div>
+
             <!--totalWalkedWith DECIMAL(10,2)-->
             <div class="input-field col s12">
                 <input name="totalWalkedWith" id="totalWalkedWith" type="number" step="0.01" class="validate">

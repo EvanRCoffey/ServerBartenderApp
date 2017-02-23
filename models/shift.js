@@ -28,6 +28,9 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Shift.belongsTo(models.User);
+            },
+            associate: function(models) {
+                Shift.belongsTo(models.Job);
             }
         }
     });

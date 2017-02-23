@@ -5,15 +5,13 @@ module.exports = function(sequelize, DataTypes) {
 		user_password: DataTypes.STRING,
 		user_level: DataTypes.INTEGER,
 		isReal: DataTypes.BOOLEAN
-	},    {
+	}, {
       classMethods: {
         associate: function(models) {
           User.hasMany(models.Shift, {
           });
         }
       }
-    }
-
-	);
+    });
 	return User;
 }

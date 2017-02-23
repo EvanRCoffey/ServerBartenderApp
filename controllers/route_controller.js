@@ -1,6 +1,8 @@
-////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////////
 //DEPENDENCIES
-////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
 
 var express = require("express");
 var path = require('path');
@@ -26,9 +28,11 @@ let transporter = nodemailer.createTransport({
 
 var bcrypt = require("bcrypt-nodejs");
 
-////////////////////////
-//ROUTES
-////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////////
+//SITE NAVIGATION
+//////////////////////////////////////////////////////////////////////////////
+//
 
 router.get("/", function(req, res) {
    res.render("home", req);
@@ -63,9 +67,13 @@ router.get("/updateAccount", loggedIn, function(req, res, next) {
     res.render("updateAccount", req);
 });
 
-//This is now limited to login only.
 router.get("/shift", loggedIn, function(req, res, next) {
-    res.render("shift", req);
+    db.Job.findAll({where: {user_id: req.user.id}}).then(function(dbUser) {
+      var dataObject = {
+          jobs: dbUser
+        };
+       res.render("shift", dataObject);
+     });
 });
 
 router.get("/job", loggedIn, function(req, res, next) {
@@ -76,6 +84,19 @@ router.get("/restaurant", loggedIn, function(req, res, next) {
     res.render("restaurant", req);
 });
 
+//Testing out a shifts table.
+//Added a raw:true option to cut down the garbage.
+router.get("/shiftsTable", loggedIn, function(req, res, next) {
+    db.Shift.findAll({ where: {user_id: req.user.id},
+    raw: true, // Will order by shiftDate on an associated User
+     order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+      var dataObject = {
+          allShifts: dbUser
+        };
+       res.render("shiftsTable", dataObject);
+     });
+ });
+
 router.get("/financialSummaryTest", loggedIn, function(req, res, next) {
     res.render("financialSummaryTest", req);
 });
@@ -85,6 +106,12 @@ router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();
     res.redirect('/');
 });
+
+//
+//////////////////////////////////////////////////////////////////////////////
+//LOGIN/EMAIL STUFF
+//////////////////////////////////////////////////////////////////////////////
+//
 
 //Creates a new user.
 //They are then redirected to the login page.
@@ -163,29 +190,36 @@ router.post("/reset", function(req, res, next) {
     });
 });
 
+//Nodemailer function for feedback page
 router.post("/sendFeedback", function(req, res) {
-          let mailOptions = {
-            from: '"Server App Beta" <serverappbeta@gmail.com>', 
-            to: 'serverappbeta@gmail.com', 
-            subject: 'Server App Beta - Feedback', // Subject line
-            text: req.body.user_email + " comment: " + req.body.comment,
-            html: 'From: ' + req.body.user_email  + '</br><p>' + req.body.comment + '</p>'
-        };
-        // send mail with defined transport object
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-            console.log('Message %s sent: %s', info.messageId, info.response);
-        });
-        res.redirect('/login'); //Sends user to login screen for now.
-    })
+      let mailOptions = {
+        from: '"Server App Beta" <serverappbeta@gmail.com>', 
+        to: 'serverappbeta@gmail.com', 
+        subject: 'Server App Beta - Feedback', // Subject line
+        text: req.body.user_email + " comment: " + req.body.comment,
+        html: 'From: ' + req.body.user_email  + '</br><p>' + req.body.comment + '</p>'
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+    res.redirect('/login'); //Sends user to login screen for now.
+})
 
+//
+//////////////////////////////////////////////////////////////////////////////
+//CRUD
+//////////////////////////////////////////////////////////////////////////////
+//
 
 router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
         restaurant_id: 0,
         user_id: req.user.id,
+        UserId: req.user.id,
         shiftDate: req.body.shiftDate,
         timeIn: convertToTime(req.body.inTime),
         timeOut: convertToTime(req.body.outTime),
@@ -201,10 +235,17 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         ppa: req.body.ppa,
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
-        isReal: false
+        isReal: false,
+        JobId: req.body.jobID
     }).then(function(dbUser) {
         console.log(dbUser);
-        res.render("shiftSuccess");
+
+        db.Job.findAll({where: {user_id: req.user.id}}).then(function(dbUser) {
+            var dataObject = {
+              jobs: dbUser
+            };
+            res.render("shiftSuccess", dataObject);
+        });
     });
 });
 
@@ -234,16 +275,6 @@ router.post("/newRestaurant",loggedIn, function(req, res, next) {
         console.log(dbUser);
         res.render("restaurantSuccess");
     });
-});
-
-router.get("/editShift:id", loggedIn, function(req, res, next) {
-  var ShiftID = req.params.id;
-      db.Shift.findAll({ where: {user_id: req.user.id, id: ShiftID},
-    raw: true
-    }).then(function(dbUser) {
-       console.log(dbUser[0].id);
-        res.render("shiftEditor", dbUser[0]);
-     });
 });
 
 router.post("/editShift", function(req, res) {
@@ -297,14 +328,13 @@ router.post("/deleteRestaurant", function(req, res) {
   });
 });
 
-router.post("/shiftByDate", function(req, res) {
-  console.log(req.body);
+//
+//////////////////////////////////////////////////////////////////////////////
+//MISCELLANEOUS
+//////////////////////////////////////////////////////////////////////////////
+//
 
-  db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
-    res.json(dbUser);
-  });
-});
-
+//Grabs all shifts for a user, for use with financial summary
 router.post("/financialSummary", function(req, res) {
   console.log(req.body);
 
@@ -313,24 +343,49 @@ router.post("/financialSummary", function(req, res) {
   });
 });
 
-//Testing out a shifts table.
-//Added a raw:true option to cut down the garbage.
-router.get("/shiftsTable", loggedIn, function(req, res, next) {
-    db.Shift.findAll({ where: {user_id: req.user.id},
-    raw: true, // Will order by shiftDate on an associated User
-     order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-      var dataObject = {
-          allShifts: dbUser
-        };
-       res.render("shiftsTable", dataObject);
+//Grabs all shifts of a given date, for use with edit shift button
+router.post("/shiftByDate", function(req, res) {
+  console.log(req.body);
+
+  db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
+    res.json(dbUser);
+  });
+});
+
+//Grabs all jobs for a user, for use with the job selector dropdown
+router.post("/allJobs", function(req, res) {
+    console.log(req.body);
+
+    db.Job.findAll({where: {user_id: req.body.userID}}).then(function(dbUser) {
+        res.json(dbUser);
+    });
+});
+
+//Grabs a shift with a given id, for use with shift editor
+router.get("/editShift:id", loggedIn, function(req, res, next) {
+  var ShiftID = req.params.id;
+      db.Shift.findAll({ where: {user_id: req.user.id, id: ShiftID},
+    raw: true
+    }).then(function(dbUser) {
+       console.log(dbUser[0].id);
+        res.render("shiftEditor", dbUser[0]);
      });
- });
+});
 
 //Keep this at the end of the router section.
 //If nothing is found this is sent.
 router.get('*', function(req, res) {
     res.status(404).send('404 Page Goes Here');
 });
+
+// Export routes for server.js to use.
+module.exports = router;
+
+//
+//////////////////////////////////////////////////////////////////////////////
+//HELPER FUNCTIONS
+//////////////////////////////////////////////////////////////////////////////
+//
 
 //function for limiting access to logged in user only.
 //Sends them back to the login page if not.
@@ -341,9 +396,6 @@ function loggedIn(req, res, next) {
         res.redirect('/login');
     }
 }
-
-// Export routes for server.js to use.
-module.exports = router;
 
 //This is used to create a temporary password.
 function tempPWgenerator() {
@@ -399,7 +451,7 @@ function convertToTime(num) {
     return string;
 }
 
-// SEQUELIZE CRUD METHODS
+// SEQUELIZE CRUD METHODS, FOR REFERENCE
 
 //  CREATE!
 //   db.Blah.create({
