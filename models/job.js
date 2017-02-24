@@ -1,19 +1,19 @@
 module.exports = function(sequelize, DataTypes) {
 	var Job = sequelize.define("Job", {
-		restaurant_id: DataTypes.INTEGER,
-		user_id: DataTypes.INTEGER,
 		job_name: DataTypes.STRING,
-		startDate: DataTypes.DATE,
-		endDate: DataTypes.DATE,
+		startDate: DataTypes.DATEONLY,
+		endDate: DataTypes.DATEONLY,
 		wage: DataTypes.FLOAT(10,2),
 		isReal: DataTypes.BOOLEAN,
-		userJobMenu: DataTypes.INTEGER,
+		stillWorkingHere: DataTypes.BOOLEAN,
 		comments: DataTypes.TEXT
 	}, {
       classMethods: {
+      	associate: function(models) {
+            Job.belongsTo(models.User);
+        },
         associate: function(models) {
-          Job.hasMany(models.Shift, {
-          });
+          	Job.hasMany(models.Shift);
         }
       }
     });

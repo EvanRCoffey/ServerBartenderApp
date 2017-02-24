@@ -11,7 +11,6 @@ var bcrypt = require("bcrypt-nodejs")
 var db = require("./models");
 var exphbs = require("express-handlebars");
 var routes = require("./controllers/route_controller.js");
-var connection = require("./config/connection.js");
 
 app.use(require('cookie-parser')())
 app.use(require('express-session')({ secret: 'secretServerApp', resave: false, saveUninitialized: false }))

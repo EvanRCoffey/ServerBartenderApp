@@ -1,27 +1,27 @@
-       <div class="row">
-            <div class="col s12">
-      <table class="bordered">
-        <thead>
-          <tr>
-              <th>Start Date</th>
-              <th>Job Name</th>
-              <th>Wage</th>
-              <th>Edit/Delete</th>
-              <th></th>
-          </tr>
-        </thead>
+<div class="row">
+  <div class="col s12">
+    <table class="bordered">
+      <thead>
+        <tr>
+            <th>Start Date</th>
+            <th>Job Name</th>
+            <th>Wage</th>
+            <th>Edit/Delete</th>
+            <th></th>
+        </tr>
+      </thead>
 
-        <tbody>
-         {{#each allJobs}}
-          <tr>
-            <td>{{this.startDate}}</td>
-            <td>{{this.job_name}}</td>
-            <td>${{this.wage}}</td>
-            <td><form action="/editJob{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
-      </div>
-      </div>
+      <tbody>
+       {{#each allJobs}}
+        <tr>
+          <td>{{this.startDate}}</td>
+          <td>{{this.job_name}}</td>
+          <td>${{this.wage}}</td>
+          <td><form action="/editJob{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
 

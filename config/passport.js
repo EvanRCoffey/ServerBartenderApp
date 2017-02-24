@@ -1,11 +1,3 @@
-//I found this through a google search and decided to include it.  Gonna give it a shot later.
-
-
-
-
-
-// config/passport.js
-                
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 var connection = require('./connection.js');
@@ -104,11 +96,6 @@ module.exports = function(passport) {
             
             // all is well, return successful user
             return done(null, rows[0]);         
-        
         });
-        
-
-
     }));
-
 };

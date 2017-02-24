@@ -8,27 +8,15 @@ TESTING/DEBUGGING...
 
 -Make sure updating/deleting shifts/jobs is all happening as intended
 
--Change the "select the same date if you're still working here" on the job form to "leave blank if you're still there"
-	-Add a boolean to the db, stillWorkingHere
-	-If endDate === NULL, stillWorkingHere = true
-
 -Decide how to handle early A.M. out-times AND matching in- and out-times
 
--Look at your models to make sure there aren't any duplicated/unnecessary fields
-
--Remove "shiftSuccess" and "jobSuccess" files, and implement a replacement
+-When you add a new shift, you need to save the JobId.  You'll need to find the id of the job that's been selected.
 
 -Finish/polish the financial summary
-	-Finish the code for it
-	-Make it look not-awful
--Finish/polish the shifts table
-	-Format TimeIn items
--Finish/polish the jobs table
-	-Format StartDate items
 
--The better the site looks, the better the UX will be.  Friends will help, but we don't want them to begrudge it.
+-Format TimeIn items on shift table and StartDate items on job table
 
--Go through your project directory and delete anything you're no longer using
+-If you can make the site look better without spending much time on it, do so
 
 -Make loginFailure more than just "404 page goes here"
 

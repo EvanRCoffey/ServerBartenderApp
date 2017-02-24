@@ -1,13 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Shift = sequelize.define("Shift", {
-        user_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "users",
-                key: "id"
-            }
-        },
-		restaurant_id: DataTypes.INTEGER,
         job_name: DataTypes.STRING,
         shiftDate: DataTypes.DATEONLY,
         timeIn: DataTypes.TIME,
@@ -29,8 +21,6 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Shift.belongsTo(models.User);
-            },
-            associate: function(models) {
                 Shift.belongsTo(models.Job);
             }
         }

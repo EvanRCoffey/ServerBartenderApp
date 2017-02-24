@@ -70,7 +70,7 @@ router.get("/updateAccount", loggedIn, function(req, res, next) {
 });
 
 router.get("/shift", loggedIn, function(req, res, next) {
-    db.Job.findAll({where: {user_id: req.user.id}}).then(function(dbUser) {
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
           jobs: dbUser
         };
@@ -89,7 +89,7 @@ router.get("/job", loggedIn, function(req, res, next) {
 //Testing out a shifts table.
 //Added a raw:true option to cut down the garbage.
 router.get("/shiftsTable", loggedIn, function(req, res, next) {
-    db.Shift.findAll({ where: {user_id: req.user.id},
+    db.Shift.findAll({ where: {UserId: req.user.id},
     raw: true, // Will order by shiftDate on an associated User
      order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
       var dataObject = {
@@ -109,7 +109,7 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
  });
 
 router.get("/jobsTable", loggedIn, function(req, res, next) {
-    db.Job.findAll({ where: {user_id: req.user.id}}).then(function(dbUser) {
+    db.Job.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
           allJobs: dbUser
         };
@@ -143,11 +143,10 @@ router.post("/newUser", function(req, res, next) {
     }).then(function(user) {
         if (!user) {
             db.User.create({
-                user_id: 9000,
                 user_email: req.body.user_email,
                 user_name: req.body.user_name,
                 user_password: bcrypt.hashSync(req.body.user_password),
-                user_level: 9001,
+                user_level: 1,
                 restaurant_name: 'default',
                 isReal: false
             }).then(function(err, user, info) {
@@ -237,8 +236,6 @@ router.post("/sendFeedback", function(req, res) {
 
 router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
-        restaurant_id: 0,
-        user_id: req.user.id,
         UserId: req.user.id,
         shiftDate: req.body.shiftDate,
         timeIn: req.body.inTime,
@@ -256,34 +253,54 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
         isReal: false,
-        job_name: req.body.job_name
+        job_name: req.body.job_name,
+        JobId: 1
     }).then(function(dbUser) {
         console.log(dbUser);
 
-        db.Job.findAll({where: {user_id: req.user.id}}).then(function(dbUser) {
+        db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
             var dataObject = {
               jobs: dbUser
             };
-            res.render("shiftSuccess", dataObject);
+            res.render("success", dataObject);
         });
     });
 });
 
 router.post("/newJob", loggedIn, function(req, res, next) {
-    db.Job.create({
-        restaurant_id: 0,
-        user_id: req.user.id,
-        job_name: req.body.job_name,
-        startDate: req.body.startDate,
-        endDate: req.body.endDate,
-        wage: req.body.wage,
-        isReal: false,
-        userJobMenu: 1,
-        comments: req.body.comments
-    }).then(function(dbUser) {
-        console.log(dbUser);
-        res.render("jobSuccess");     
-    });
+    console.log(req.body.endDate);
+    if (req.body.endDate === "") {
+        db.Job.create({
+            UserId: req.user.id,
+            job_name: req.body.job_name,
+            startDate: req.body.startDate,
+            wage: req.body.wage,
+            isReal: false,
+            stillWorkingHere: true,
+            comments: req.body.comments
+        }).then(function(dbUser) {
+            console.log(dbUser);
+            res.render("success");     
+        });
+    }
+    else {
+        db.Job.create({
+            UserId: req.user.id,
+            job_name: req.body.job_name,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            wage: req.body.wage,
+            isReal: false,
+            stillWorkingHere: false,
+            comments: req.body.comments
+        }).then(function(dbUser) {
+            console.log(dbUser);
+            res.render("success");     
+        });
+    }
+
+
+    
 });
 
 // router.post("/newRestaurant",loggedIn, function(req, res, next) {
@@ -294,7 +311,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
 //         isReal: true
 //     }).then(function(dbUser) {
 //         console.log(dbUser);
-//         res.render("restaurantSuccess");
+//         res.render("success");
 //     });
 // });
 
@@ -305,7 +322,7 @@ router.post("/editShift", function(req, res) {
     where: {id:shiftData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
-    res.render("shiftSuccess");
+    res.render("success");
   });
 });
 
@@ -315,7 +332,7 @@ router.post("/editJob", function(req, res) {
     where: {id:jobData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
-    res.render("jobSuccess");
+    res.render("success");
   });
 });
 
@@ -330,7 +347,7 @@ router.post("/editJob", function(req, res) {
 
 router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
-  db.Shift.destroy({where: {user_id: req.user.id, id: ShiftID}}).then(function(dbUser) {
+  db.Shift.destroy({where: {UserId: req.user.id, id: ShiftID}}).then(function(dbUser) {
     console.log("Shift deleted!");
     res.redirect('/shiftsTable')
   });
@@ -360,7 +377,7 @@ router.post("/deleteJob", function(req, res) {
 router.post("/financialSummary", function(req, res) {
   console.log(req.body);
 
-  db.Shift.findAll({where: {user_id: req.body.userID}}).then(function(dbUser) {
+  db.Shift.findAll({where: {UserId: req.body.userID}}).then(function(dbUser) {
     res.json(dbUser);
   });
 });
@@ -378,7 +395,7 @@ router.post("/shiftByDate", function(req, res) {
 router.post("/allJobs", function(req, res) {
     console.log(req.body);
 
-    db.Job.findAll({where: {user_id: req.body.userID}}).then(function(dbUser) {
+    db.Job.findAll({where: {UserId: req.body.userID}}).then(function(dbUser) {
         res.json(dbUser);
     });
 });
@@ -386,7 +403,7 @@ router.post("/allJobs", function(req, res) {
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
-      db.Shift.findAll({ where: {user_id: req.user.id, id: ShiftID},
+      db.Shift.findAll({ where: {UserId: req.user.id, id: ShiftID},
     raw: true
     }).then(function(dbUser) {
         var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
@@ -399,7 +416,7 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editJob:id", loggedIn, function(req, res, next) {
   var JobID = req.params.id;
-      db.Job.findAll({ where: {user_id: req.user.id, id: JobID},
+      db.Job.findAll({ where: {UserId: req.user.id, id: JobID},
     raw: true
     }).then(function(dbUser) {
         var date = moment(dbUser[0].jobDate).format('YYYY-MM-DD')
