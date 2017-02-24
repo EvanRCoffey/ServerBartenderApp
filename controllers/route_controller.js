@@ -95,12 +95,15 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
       var dataObject = {
           allShifts: dbUser
         };
+
+         console.log('dataobject')
+        console.log(dataObject.allShifts[0].shiftDate.toString())
         //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
         for (var i = 0; i < dataObject.allShifts.length; i++) {
             dataObject.allShifts[i].shiftDate = dataObject.allShifts[i].shiftDate.toString().substr(0, 15)
         }
-        console.log('dataobject')
-        console.log(dataObject)
+
+    
        res.render("shiftsTable", dataObject);
      });
  });
@@ -376,7 +379,9 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
       db.Shift.findAll({ where: {user_id: req.user.id, id: ShiftID},
     raw: true
     }).then(function(dbUser) {
-       console.log(dbUser[0].id);
+        var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
+        console.log(date)
+       dbUser[0].shiftDate = date
         res.render("shiftEditor", dbUser[0]);
      });
 });
