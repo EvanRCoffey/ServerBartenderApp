@@ -15,6 +15,8 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var moment = require('moment');
+
 var nodemailer = require('nodemailer');
 
 //node mailer config
@@ -93,6 +95,12 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
       var dataObject = {
           allShifts: dbUser
         };
+        //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
+        for (var i = 0; i < dataObject.allShifts.length; i++) {
+            dataObject.allShifts[i].shiftDate = dataObject.allShifts[i].shiftDate.toString().substr(0, 15)
+        }
+        console.log('dataobject')
+        console.log(dataObject)
        res.render("shiftsTable", dataObject);
      });
  });
@@ -221,8 +229,8 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         user_id: req.user.id,
         UserId: req.user.id,
         shiftDate: req.body.shiftDate,
-        timeIn: convertToTime(req.body.inTime),
-        timeOut: convertToTime(req.body.outTime),
+        timeIn: req.body.inTime,
+        timeOut: req.body.outTime,
         shiftType: req.body.shiftType,
         largestTip: req.body.largestTip,
         smallestTip: req.body.smallestTip,
@@ -236,7 +244,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
         isReal: false,
-        JobId: req.body.jobID
+        job_name: req.body.job_name
     }).then(function(dbUser) {
         console.log(dbUser);
 
@@ -253,6 +261,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
     db.Job.create({
         restaurant_id: 0,
         user_id: req.user.id,
+        job_name: req.body.job_name,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         wage: req.body.wage,

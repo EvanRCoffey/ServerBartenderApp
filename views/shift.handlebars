@@ -1,21 +1,21 @@
 <div id="mainDiv">
 
-    <div class="row">
-        <div class="col s6">
+    <!-- <div class="row">
+        <div class="col s6"> -->
 
             <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
             <!--Edit Shift Form-->
             <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-            <div class="row">
+<!--             <div class="row">
                 <div class="col s12">
                     <br><h4>Select a date here to edit a shift</h4>
                 </div>
             </div>
 
-            <div class="row" id="dateToEditDiv">
+            <div class="row" id="dateToEditDiv"> -->
                 <!--dateToEdit DATE-->
-                <div class="input-field col s12">
+<!--                 <div class="input-field col s12">
                     <input id="dateToEdit" type="date" class="datepicker">
                     <label for="dateToEdit">Click here to select a date</label>
                 </div>
@@ -25,21 +25,21 @@
 
         </div>
 
-        <div class="col s6">
+        <div class="col s6"> -->
 
             <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
             <!--Delete Shift Form-->
             <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-            <div class="row">
+<!--             <div class="row">
                 <div class="col s12">
                     <br><h4>Select a date here to delete a shift</h4>
                 </div>
             </div>
 
-            <div class="row" id="dateToDeleteDiv">
+            <div class="row" id="dateToDeleteDiv"> -->
                 <!--dateToDelete DATE-->
-                <div class="input-field col s12">
+<!--                 <div class="input-field col s12">
                     <input id="dateToDelete" type="date" class="datepicker">
                     <label for="dateToDelete">Click here to select a date</label>
                 </div>
@@ -48,7 +48,7 @@
             <button class="btn waves-effect waves-light shiftDeleteBtn">Search for shift(s) to delete</button>
 
         </div>
-    </div>
+    </div> -->
 
     <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
     <!--New Shift Form-->
@@ -65,10 +65,10 @@
 
             <!--jobID INT-->
             <div class="input-field col s12">
-                <select name="jobID" id="jobID">
+                <select name="job_name" id="jobID">
                     <option value="" disabled selected>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}">{{this.id}}</option>
+                        <option value="{{this.job_name}}">{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
@@ -148,10 +148,12 @@
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input name="inTime" type="range" min="0" max="1425" value="720" step="15" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00:00 </span><br><br>
+            <input type="range" min="0" max="95" value="48" step="1" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: 12:00 PM</span><br><br>
+            <input id='inTimeHidden' type="hidden" name="inTime" value='12:00:00'>
 
             <!--timeOut TIMESTAMP NOT NULL-->
-            <input name="outTime" type="range" min="0" max="1425" value="1020" step="15" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 17:00:00</span><br><br>
+            <input  type="range" min="0" max="95" value="48" step="1" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: 12:00 PM</span><br><br>
+            <input id='outTimeHidden' type="hidden" name="outTime" value='12:00:00'>
 
             <!--shiftType VARCHAR(32)-->
             <select name="shiftType" id="shiftType">

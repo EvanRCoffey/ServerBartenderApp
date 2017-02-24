@@ -204,69 +204,88 @@ $('.shiftDeleteBtn').on('click', function(event) {
 
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
+    selectYears: 15, // Creates a dropdown of 15 years to control year
+    format: 'dddd mmm dd, yyyy',
+    formatSubmit: 'yyyy-mm-dd',
+    hiddenName:true
 });
+
 
 $(document).ready(function() {
     $('select').material_select();
     // prepareJobDropdown();
 });
 
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
 
 function showInTime(newValue) {
-    document.getElementById("inTimeSpan").innerHTML="In-time: " + convertToTime(newValue);
+    $("#inTimeSpan").text("In-time: " + timeArray[newValue])
+    var inTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $('#inTimeHidden').val(inTime)
 }
 
 function showOutTime(newValue) {
-    document.getElementById("outTimeSpan").innerHTML="Out-time: " + convertToTime(newValue);
+    $("#outTimeSpan").text("Out-time: " + timeArray[newValue])
+    var outTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $('#outTimeHidden').val(outTime)
 }
 
-//Converts a number 0-1440 to a xx:xx:xx time.  Returns the time as a string.  Only works if num is divisible by 15.
-function convertToTime(num) {
-    var string = "";
+var timeArray = []
 
-    if (num / 60 >= 23) {string+="23";}
-    else if (num / 60 >= 22) {string+="22";}
-    else if (num / 60 >= 21) {string+="21";}
-    else if (num / 60 >= 20) {string+="20";}
-    else if (num / 60 >= 19) {string+="19";}
-    else if (num / 60 >= 18) {string+="18";}
-    else if (num / 60 >= 17) {string+="17";}
-    else if (num / 60 >= 16) {string+="16";}
-    else if (num / 60 >= 15) {string+="15";}
-    else if (num / 60 >= 14) {string+="14";}
-    else if (num / 60 >= 13) {string+="13";}
-    else if (num / 60 >= 12) {string+="12";}
-    else if (num / 60 >= 11) {string+="11";}
-    else if (num / 60 >= 10) {string+="10";}
-    else if (num / 60 >= 9) {string+="09";}
-    else if (num / 60 >= 8) {string+="08";}
-    else if (num / 60 >= 7) {string+="07";}
-    else if (num / 60 >= 6) {string+="06";}
-    else if (num / 60 >= 5) {string+="05";}
-    else if (num / 60 >= 4) {string+="04";}
-    else if (num / 60 >= 3) {string+="03";}
-    else if (num / 60 >= 2) {string+="02";}
-    else if (num / 60 >= 1) {string+="01";}
-    else if (num / 60 >= 0) {string+="00";}
+fillTimeArray()
 
-    if (num % 60 === 0) {
-        string += ":00:00";
+//This just fills the timeArray. I send the result to a global var so this function doesn't run everytime.
+function fillTimeArray(){
+    //Push start time to array
+    timeArray.push(moment().startOf('day').format('LT'))
+    for (var i = 0; i < 95; i++) {
+        timeArray.push(moment(timeArray[i], 'LT').add(15, 'minutes').format('LT'))
     }
-    else if (num % 60 === 15) {
-        string += ":15:00";
-    }
-    else if (num % 60 === 30) {
-        string += ":30:00";
-    }
-    else if (num % 60 === 45) {
-        string += ":45:00";
-    }
-
-    return string;
 }
+
+// //Converts a number 0-1440 to a xx:xx:xx time.  Returns the time as a string.  Only works if num is divisible by 15.
+// function convertToTime(num) {
+//     var string = "";
+
+//     if (num / 60 >= 23) {string+="23";}
+//     else if (num / 60 >= 22) {string+="22";}
+//     else if (num / 60 >= 21) {string+="21";}
+//     else if (num / 60 >= 20) {string+="20";}
+//     else if (num / 60 >= 19) {string+="19";}
+//     else if (num / 60 >= 18) {string+="18";}
+//     else if (num / 60 >= 17) {string+="17";}
+//     else if (num / 60 >= 16) {string+="16";}
+//     else if (num / 60 >= 15) {string+="15";}
+//     else if (num / 60 >= 14) {string+="14";}
+//     else if (num / 60 >= 13) {string+="13";}
+//     else if (num / 60 >= 12) {string+="12";}
+//     else if (num / 60 >= 11) {string+="11";}
+//     else if (num / 60 >= 10) {string+="10";}
+//     else if (num / 60 >= 9) {string+="09";}
+//     else if (num / 60 >= 8) {string+="08";}
+//     else if (num / 60 >= 7) {string+="07";}
+//     else if (num / 60 >= 6) {string+="06";}
+//     else if (num / 60 >= 5) {string+="05";}
+//     else if (num / 60 >= 4) {string+="04";}
+//     else if (num / 60 >= 3) {string+="03";}
+//     else if (num / 60 >= 2) {string+="02";}
+//     else if (num / 60 >= 1) {string+="01";}
+//     else if (num / 60 >= 0) {string+="00";}
+
+//     if (num % 60 === 0) {
+//         string += ":00:00";
+//     }
+//     else if (num % 60 === 15) {
+//         string += ":15:00";
+//     }
+//     else if (num % 60 === 30) {
+//         string += ":30:00";
+//     }
+//     else if (num % 60 === 45) {
+//         string += ":45:00";
+//     }
+
+//     return string;
+// }
 
 //Janky function that sets the repopulated value of a dropdown.
 

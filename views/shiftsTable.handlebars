@@ -4,6 +4,7 @@
         <thead>
           <tr>
               <th>Date</th>
+              <th>Time In</th>
               <th>Location</th>
               <th></th>
           </tr>
@@ -13,7 +14,8 @@
          {{#each allShifts}}
           <tr>
             <td>{{this.shiftDate}}</td>
-            <td>{{this.restaurant_id}}</td>
+            <td>{{this.timeIn}}</td>
+            <td>{{this.job_name}}</td>
             <td><form action="/editShift{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
           </tr>
         {{/each}}

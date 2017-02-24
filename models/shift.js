@@ -8,7 +8,8 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
 		restaurant_id: DataTypes.INTEGER,
-        shiftDate: DataTypes.DATE,
+        job_name: DataTypes.STRING,
+        shiftDate: DataTypes.DATEONLY,
         timeIn: DataTypes.TIME,
         timeOut: DataTypes.TIME,
         shiftType: DataTypes.STRING,
