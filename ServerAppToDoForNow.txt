@@ -1,34 +1,46 @@
-ASAP...
-
-1) Finish shift-table-test verion of selecting shift to edit (Mills is on this)
-
-Shifts Table:
-Working as expected and extra lines are gone.
-We need to change the location to be a resturant name.
-This has to be linked to the job table in the db.
-Once we get moment.js incorparated, it will be easy to fix the date format.
-I need to move the search shifts by date to the bottom or top of this page.
-I would hold off on applying this to the other sections for now so we don't have to change the
-code in multiple spots.
-
-Shifts Editor:
-Amazing magical dropdown populating function created.
-It takes the value of a hidden input field and sets the targeted dropdown accordingly.
-I think i can use this method to set the slider positions as well.
-Only thing left to do is dependant on getting the date/time converted to moment.js
-
-The update button does not post to the route yet, but will be easy to setup once the moment stuff 
-is in.
-
-3) Once the shift-table-test is done and you get it working with shifts, apply it to jobs/restaurant, too
-
 TESTING/DEBUGGING...
 
-4) Test/Debug offline version
-5) Deploy
-6) Test/Debug online version
-7) Give to friends to start using.  Think of ways to get the word out other than just Facebook.
--Make sure they have the sample login so they can see how the financial summary works
+-Try to input fake/incorrect data on every field
+	-Floats and ints can be too big to push to DB
+	-Floats and ints can be submitted as a negative number
+	-All dropdowns can be submitted without selecting something
+	-Make certain fields mandatory before you can submit - decide which ones, match it with DB
+
+-Make sure updating/deleting shifts/jobs is all happening as intended
+
+-Change the "select the same date if you're still working here" on the job form to "leave blank if you're still there"
+	-Add a boolean to the db, stillWorkingHere
+	-If endDate === NULL, stillWorkingHere = true
+
+-Decide how to handle early A.M. out-times AND matching in- and out-times
+
+-Look at your models to make sure there aren't any duplicated/unnecessary fields
+
+-Remove "shiftSuccess" and "jobSuccess" files, and implement a replacement
+
+-Finish/polish the financial summary
+	-Finish the code for it
+	-Make it look not-awful
+-Finish/polish the shifts table
+	-Format TimeIn items
+-Finish/polish the jobs table
+	-Format StartDate items
+
+-The better the site looks, the better the UX will be.  Friends will help, but we don't want them to begrudge it.
+
+-Go through your project directory and delete anything you're no longer using
+
+-Make loginFailure more than just "404 page goes here"
+
+
+
+* Deploy
+
+* Test/Debug online version
+
+* Give to friends to start using.  Think of ways to get the word out other than just Facebook.
+	-Make sure they have the sample login so they can see how the financial summary works
+	-Write an email to everyone explaining how it works, plans for the future, etc
 
 ___________________________________________________________________
 

@@ -168,6 +168,7 @@ $.post("/financialSummary", userIdObj)
     $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
     $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
     $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
+    $("#mainDiv").append("<br>Number of Tip percent entries = " + countTipPercent);
 });
 
 ///////////////////////////////////////

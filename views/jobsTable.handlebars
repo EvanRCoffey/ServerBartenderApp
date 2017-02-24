@@ -3,20 +3,21 @@
       <table class="bordered">
         <thead>
           <tr>
-              <th>Date</th>
-              <th>Time In</th>
+              <th>Start Date</th>
               <th>Job Name</th>
+              <th>Wage</th>
               <th>Edit/Delete</th>
+              <th></th>
           </tr>
         </thead>
 
         <tbody>
-         {{#each allShifts}}
+         {{#each allJobs}}
           <tr>
-            <td>{{this.shiftDate}}</td>
-            <td>{{this.timeIn}}</td>
+            <td>{{this.startDate}}</td>
             <td>{{this.job_name}}</td>
-            <td><form action="/editShift{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
+            <td>${{this.wage}}</td>
+            <td><form action="/editJob{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
           </tr>
         {{/each}}
         </tbody>

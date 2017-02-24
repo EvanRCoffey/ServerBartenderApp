@@ -82,9 +82,9 @@ router.get("/job", loggedIn, function(req, res, next) {
     res.render("job", req);
 });
 
-router.get("/restaurant", loggedIn, function(req, res, next) {
-    res.render("restaurant", req);
-});
+// router.get("/restaurant", loggedIn, function(req, res, next) {
+//     res.render("restaurant", req);
+// });
 
 //Testing out a shifts table.
 //Added a raw:true option to cut down the garbage.
@@ -105,6 +105,15 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
 
     
        res.render("shiftsTable", dataObject);
+     });
+ });
+
+router.get("/jobsTable", loggedIn, function(req, res, next) {
+    db.Job.findAll({ where: {user_id: req.user.id}}).then(function(dbUser) {
+      var dataObject = {
+          allJobs: dbUser
+        };
+       res.render("jobsTable", dataObject);
      });
  });
 
@@ -277,17 +286,17 @@ router.post("/newJob", loggedIn, function(req, res, next) {
     });
 });
 
-router.post("/newRestaurant",loggedIn, function(req, res, next) {
-    db.Restaurant.create({
-        restaurant_id: 0,
-        restaurant_name: req.body.restaurant_name,
-        defaultMenu: 1,
-        isReal: true
-    }).then(function(dbUser) {
-        console.log(dbUser);
-        res.render("restaurantSuccess");
-    });
-});
+// router.post("/newRestaurant",loggedIn, function(req, res, next) {
+//     db.Restaurant.create({
+//         restaurant_id: 0,
+//         restaurant_name: req.body.restaurant_name,
+//         defaultMenu: 1,
+//         isReal: true
+//     }).then(function(dbUser) {
+//         console.log(dbUser);
+//         res.render("restaurantSuccess");
+//     });
+// });
 
 router.post("/editShift", function(req, res) {
   var shiftData = req.body;
@@ -306,17 +315,18 @@ router.post("/editJob", function(req, res) {
     where: {id:jobData.id}
   }).then(function(dbUser) {
     console.log(dbUser);
+    res.render("jobSuccess");
   });
 });
 
-router.post("/editRestaurant", function(req, res) {
-  var restaurantData = req.body;
-  db.Restaurant.update(restaurantData, {
-    where: {id:restaurantData.id}
-  }).then(function(dbUser) {
-    console.log(dbUser);
-  });
-});
+// router.post("/editRestaurant", function(req, res) {
+//   var restaurantData = req.body;
+//   db.Restaurant.update(restaurantData, {
+//     where: {id:restaurantData.id}
+//   }).then(function(dbUser) {
+//     console.log(dbUser);
+//   });
+// });
 
 router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
@@ -333,12 +343,12 @@ router.post("/deleteJob", function(req, res) {
   });
 });
 
-router.post("/deleteRestaurant", function(req, res) {
-  var restaurantData = req.body;
-  db.Restaurant.destroy({where: {id: restaurantData.id}}).then(function(dbUser) {
-    console.log(dbUser);
-  });
-});
+// router.post("/deleteRestaurant", function(req, res) {
+//   var restaurantData = req.body;
+//   db.Restaurant.destroy({where: {id: restaurantData.id}}).then(function(dbUser) {
+//     console.log(dbUser);
+//   });
+// });
 
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -383,6 +393,19 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
         console.log(date)
        dbUser[0].shiftDate = date
         res.render("shiftEditor", dbUser[0]);
+     });
+});
+
+//Grabs a shift with a given id, for use with shift editor
+router.get("/editJob:id", loggedIn, function(req, res, next) {
+  var JobID = req.params.id;
+      db.Job.findAll({ where: {user_id: req.user.id, id: JobID},
+    raw: true
+    }).then(function(dbUser) {
+        var date = moment(dbUser[0].jobDate).format('YYYY-MM-DD')
+        console.log(date)
+       dbUser[0].jobDate = date
+        res.render("jobEditor", dbUser[0]);
      });
 });
 

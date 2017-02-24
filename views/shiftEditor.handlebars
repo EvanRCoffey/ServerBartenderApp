@@ -91,11 +91,11 @@
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input type="range" min="0" max="95" value="48" step="1" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan"></span><br><br>
+            <input type="range" min="0" max="95" value="48" step="1" class="timeRun" id="inTime" oninput="showInTime(this.value)"/><br><span id="inTimeSpan">In-time: {{this.timeIn}}</span><br><br>
             <input id='inTimeHidden' type="hidden" name="inTime" value={{this.timeIn}}>
 
             <!--timeOut TIMESTAMP NOT NULL-->
-          <input  type="range" min="0" max="95" value="48" step="1" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan"></span><br><br>
+          <input  type="range" min="0" max="95" value="48" step="1" class="timeRun" id="outTime" oninput="showOutTime(this.value)"/><br><span id="outTimeSpan">Out-time: {{this.timeOut}}</span><br><br>
             <input id='outTimeHidden' type="hidden" name="outTime" value={{this.timeOut}}>
 
             <!--shiftType VARCHAR(32)-->
