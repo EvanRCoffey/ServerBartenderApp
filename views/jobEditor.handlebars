@@ -6,7 +6,9 @@
             </div>
         </div>
 
-        <form class="col s12" method="POST" action="/updateJob">
+        <form class="col s12" method="POST" action="/editJob">
+
+            <input id='jobIdHidden' type="hidden" name="jobIdHidden" value={{this.id}}>
 
             <div class="row">
                 <div class="input-field col s12">
@@ -56,7 +58,7 @@
             </div>
         </form>
         
-        <form action="/deleteShift{{this.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Job</button></form>
+        <form action="/deleteJob{{this.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Job</button></form>
 
     </div>
 </div>
