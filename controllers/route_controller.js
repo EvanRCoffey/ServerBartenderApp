@@ -40,10 +40,6 @@ router.get("/", function(req, res) {
    res.render("home", req);
 });
 
-router.get("/alt", function(req, res) {
-res.sendFile(path.join(__dirname, "../public/alt.html"));
-});
-
 router.get("/login", function(req, res) {
     res.render("login", req);
 });
@@ -311,7 +307,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
 //     });
 // });
 
-router.post("/editShift", function(req, res) {
+router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
   console.log(shiftData);
   db.Shift.update(shiftData, {
@@ -322,7 +318,7 @@ router.post("/editShift", function(req, res) {
   });
 });
 
-router.post("/editJob", function(req, res) {
+router.post("/editJob", loggedIn, function(req, res, next) {
     var jobData = req.body;
     if (jobData.endDate === "") {
         jobData.stillWorkingHere = true;
@@ -380,28 +376,28 @@ router.post("/deleteJob:id", loggedIn, function(req, res, next) {
 //
 
 //Grabs all shifts for a user, for use with financial summary
-router.post("/financialSummary", function(req, res) {
+router.post("/financialSummary", loggedIn, function(req, res, next) {
   console.log(req.body);
 
-  db.Shift.findAll({where: {UserId: req.body.userID}}).then(function(dbUser) {
+  db.Shift.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
     res.json(dbUser);
   });
 });
 
 //Grabs all shifts of a given date, for use with edit shift button
-router.post("/shiftByDate", function(req, res) {
-  console.log(req.body);
+// router.post("/shiftByDate", function(req, res) {
+//   console.log(req.body);
 
-  db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
-    res.json(dbUser);
-  });
-});
+//   db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
+//     res.json(dbUser);
+//   });
+// });
 
 //Grabs all jobs for a user, for use with the job selector dropdown
-router.post("/allJobs", function(req, res) {
+router.post("/allJobs", loggedIn, function(req, res, next) {
     console.log(req.body);
 
-    db.Job.findAll({where: {UserId: req.body.userID}}).then(function(dbUser) {
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
         res.json(dbUser);
     });
 });
