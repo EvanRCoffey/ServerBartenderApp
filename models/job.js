@@ -19,3 +19,6 @@ module.exports = function(sequelize, DataTypes) {
     });
 	return Job;
 }
+
+// User.hasMany(Post, {foreignKey: 'user_id'})
+// Post.belongsTo(User, {foreignKey: 'user_id'})
