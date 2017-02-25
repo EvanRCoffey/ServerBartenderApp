@@ -90,12 +90,12 @@ router.get("/job", loggedIn, function(req, res, next) {
 router.get("/shiftsTable", loggedIn, function(req, res, next) {
     db.Shift.findAll({ where: {UserId: req.user.id},
         include: [ db.Job ],
-    raw: false, // Will order by shiftDate on an associated User
-     order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+        raw: false, // Will order by shiftDate on an associated User
+        order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
         console.log('shift')
         console.log(dbUser)
-      var dataObject = {
-          allShifts: dbUser
+        var dataObject = {
+            allShifts: dbUser
         };
 
         //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
@@ -297,9 +297,6 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             res.render("success");     
         });
     }
-
-
-    
 });
 
 // router.post("/newRestaurant",loggedIn, function(req, res, next) {
@@ -318,7 +315,7 @@ router.post("/editShift", function(req, res) {
   var shiftData = req.body;
   console.log(shiftData);
   db.Shift.update(shiftData, {
-    where: {id:shiftData.id}
+    where: {id:shiftData.shiftIdHidden}
   }).then(function(dbUser) {
     console.log(dbUser);
     res.render("success");
@@ -326,13 +323,22 @@ router.post("/editShift", function(req, res) {
 });
 
 router.post("/editJob", function(req, res) {
-  var jobData = req.body;
-  db.Job.update(jobData, {
-    where: {id:jobData.id}
-  }).then(function(dbUser) {
-    console.log(dbUser);
-    res.render("success");
-  });
+    var jobData = req.body;
+    if (jobData.endDate === "") {
+        jobData.stillWorkingHere = true;
+        delete jobData.endDate;
+        db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
+            console.log(dbUser);
+            res.render("success");     
+        });
+    }
+    else {
+        jobData.stillWorkingHere = false;
+        db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
+            console.log(dbUser);
+            res.render("success");     
+        });
+    }
 });
 
 // router.post("/editRestaurant", function(req, res) {
@@ -352,10 +358,11 @@ router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   });
 });
 
-router.post("/deleteJob", function(req, res) {
-  var jobData = req.body;
-  db.Job.destroy({where: {id: jobData.id}}).then(function(dbUser) {
-    console.log(dbUser);
+router.post("/deleteJob:id", loggedIn, function(req, res, next) {
+  var JobID = req.params.id;
+  db.Job.destroy({where: {UserId: req.user.id, id: JobID}}).then(function(dbUser) {
+    console.log("Job deleted!");
+    res.redirect('/jobsTable');
   });
 });
 
@@ -401,15 +408,21 @@ router.post("/allJobs", function(req, res) {
 
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
-  var ShiftID = req.params.id;
-      db.Shift.findAll({ where: {UserId: req.user.id, id: ShiftID},
-    raw: true
-    }).then(function(dbUser) {
-        var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-        console.log(date)
-       dbUser[0].shiftDate = date
-        res.render("shiftEditor", dbUser[0]);
-     });
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser2) {
+        var dataObject = {
+            jobs: dbUser2
+        };
+        var ShiftID = req.params.id;
+        db.Shift.findAll({ where: {UserId: req.user.id, id: ShiftID},
+        raw: true
+        }).then(function(dbUser) {
+            var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
+            console.log(date)
+            dbUser[0].shiftDate = date;
+            dbUser[0].jobs = dataObject.jobs;
+            res.render("shiftEditor", dbUser[0]);
+        });
+    });
 });
 
 //Grabs a shift with a given id, for use with shift editor
@@ -418,9 +431,12 @@ router.get("/editJob:id", loggedIn, function(req, res, next) {
       db.Job.findAll({ where: {UserId: req.user.id, id: JobID},
     raw: true
     }).then(function(dbUser) {
-        var date = moment(dbUser[0].jobDate).format('YYYY-MM-DD')
+        var date = moment(dbUser[0].startDate).format('YYYY-MM-DD')
         console.log(date)
-       dbUser[0].jobDate = date
+       dbUser[0].startDate = date
+       var date2 = moment(dbUser[0].endDate).format('YYYY-MM-DD')
+        console.log(date2)
+       dbUser[0].endDate = date2
         res.render("jobEditor", dbUser[0]);
      });
 });
