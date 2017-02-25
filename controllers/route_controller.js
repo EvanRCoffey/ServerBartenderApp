@@ -90,12 +90,12 @@ router.get("/job", loggedIn, function(req, res, next) {
 router.get("/shiftsTable", loggedIn, function(req, res, next) {
     db.Shift.findAll({ where: {UserId: req.user.id},
         include: [ db.Job ],
-    raw: false, // Will order by shiftDate on an associated User
-     order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+        raw: false, // Will order by shiftDate on an associated User
+        order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
         console.log('shift')
         console.log(dbUser)
-      var dataObject = {
-          allShifts: dbUser
+        var dataObject = {
+            allShifts: dbUser
         };
 
         //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
