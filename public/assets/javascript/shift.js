@@ -48,8 +48,15 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
     }
 }
 
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
+function validateForm() {
+    var password = $("#password").val().trim()
+    var passwordCheck = $("#passwordCheck").val().trim()
+
+    if (password !== passwordCheck) {
+        displayErrorMessage()
+        return false
+    }
+}
 
 
 // //////////////////////////////

@@ -97,10 +97,10 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
         };
 
          console.log('dataobject')
-        console.log(dataObject.allShifts[0].shiftDate.toString())
+        console.log(moment.utc(dataObject.allShifts[0].shiftDate).add(18, 'hours').format('ll'))
         //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
         for (var i = 0; i < dataObject.allShifts.length; i++) {
-            dataObject.allShifts[i].shiftDate = dataObject.allShifts[i].shiftDate.toString().substr(0, 15)
+            dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
         }
 
     
