@@ -38,6 +38,7 @@ function fillTimeArray(){
 
 //Janky function that sets the repopulated value of a dropdown.
 populateDropdown('#shiftTypePopulate', '#shiftType')
+// populateDropdown('#JobIdHidden', '#jobID')
 
 function populateDropdown(hiddenTarget, dropdownTarget) {
     //checks if exists.
