@@ -1,0 +1,3 @@
+when you add a burger, increment that user's burgers_purchased
+
+get customers to display

@@ -1,6 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Shift = sequelize.define("Shift", {
-        job_name: DataTypes.STRING,
         shiftDate: DataTypes.DATEONLY,
         timeIn: DataTypes.TIME,
         timeOut: DataTypes.TIME,

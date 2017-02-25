@@ -1,8 +1,11 @@
 //There are a couple things that still need to be fixed
 
 //1)Eventually, all shifts will be attached to a job, where we will find the wage.  For now, it's always 2.13.
+    //User selects job, pull that job from the DB, get its wage, set that wage to hourlyWage
 //2)Still need to find the total span of time worked.  For now, it's always 26 days.
+    //Use moment for this, Mills said
 //3)Not 100% sure the earlier-than-in-time out-times are being handled correctly.
+    //This won't be an issue once we fix the sliders
 
 
 ///////////////////////////////////////

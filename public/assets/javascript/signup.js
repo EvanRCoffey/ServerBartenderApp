@@ -11,5 +11,3 @@ function validateForm() {
 function displayErrorMessage() {
     $('form').append('<p class="signUpError">Password does not match. Please Try again.</p>')
 }
-
-
