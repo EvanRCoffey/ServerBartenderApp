@@ -85,19 +85,19 @@ router.get("/job", loggedIn, function(req, res, next) {
 // router.get("/restaurant", loggedIn, function(req, res, next) {
 //     res.render("restaurant", req);
 // });
-
 //Testing out a shifts table.
 //Added a raw:true option to cut down the garbage.
 router.get("/shiftsTable", loggedIn, function(req, res, next) {
     db.Shift.findAll({ where: {UserId: req.user.id},
-    raw: true, // Will order by shiftDate on an associated User
+        include: [ db.Job ],
+    raw: false, // Will order by shiftDate on an associated User
      order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+        console.log('shift')
+        console.log(dbUser)
       var dataObject = {
           allShifts: dbUser
         };
 
-         console.log('dataobject')
-        console.log(moment.utc(dataObject.allShifts[0].shiftDate).add(18, 'hours').format('ll'))
         //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
         for (var i = 0; i < dataObject.allShifts.length; i++) {
             dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
