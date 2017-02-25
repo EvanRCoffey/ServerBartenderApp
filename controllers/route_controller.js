@@ -236,7 +236,6 @@ router.post("/sendFeedback", function(req, res) {
 
 router.post("/newShift", loggedIn, function(req, res, next) {
     db.Shift.create({
-        UserId: req.user.id,
         shiftDate: req.body.shiftDate,
         timeIn: req.body.inTime,
         timeOut: req.body.outTime,
@@ -253,8 +252,8 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         comments: req.body.comments,
         breakthroughs: req.body.breakthroughs,
         isReal: false,
-        job_name: req.body.job_name,
-        JobId: 1
+        JobId: req.body.job_id,
+        UserId: req.user.id
     }).then(function(dbUser) {
         console.log(dbUser);
 

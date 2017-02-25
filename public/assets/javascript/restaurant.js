@@ -1,6 +1,3 @@
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
-
 // $('.restaurantSubmitBtn').on('click', function(event) {
 //     event.preventDefault();
 //     console.log(event);

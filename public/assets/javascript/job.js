@@ -6,8 +6,6 @@ $('.datepicker').pickadate({
     hiddenName:true
 });
 
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
 
 // $('.jobSubmitBtn').on('click', function(event) {
 //     event.preventDefault();

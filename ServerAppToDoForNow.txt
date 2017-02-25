@@ -9,16 +9,17 @@ TESTING/DEBUGGING...
 -Make sure updating/deleting shifts/jobs is all happening as intended
 
 -Decide how to handle early A.M. out-times AND matching in- and out-times
+	-We'll write code to make the second slider always be at least 15 minutes after the first.
 
 -When you add a new shift, you need to save the JobId.  You'll need to find the id of the job that's been selected.
 
--Finish/polish the financial summary
+-Finish/polish the financial summary (instructions in financialSummaryTest.js)
+
+-Make a menu table in the database
 
 -Format TimeIn items on shift table and StartDate items on job table
 
 -If you can make the site look better without spending much time on it, do so
-
--Make loginFailure more than just "404 page goes here"
 
 
 

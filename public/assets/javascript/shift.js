@@ -48,9 +48,6 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
     }
 }
 
-//This allows the slideout navbar to function.
-$(".button-collapse").sideNav();
-
 
 // //////////////////////////////
 // //EDIT SHIFT
