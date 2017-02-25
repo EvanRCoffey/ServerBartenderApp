@@ -402,24 +402,94 @@ router.post("/allJobs", loggedIn, function(req, res, next) {
     });
 });
 
-//Grabs a shift with a given id, for use with shift editor
+// router.get("/shiftsTable", loggedIn, function(req, res, next) {
+//     db.Shift.findAll({ where: {UserId: req.user.id},
+//         include: [ db.Job ],
+//         raw: false, // Will order by shiftDate on an associated User
+//         order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
+//         console.log('shift')
+//         console.log(dbUser)
+//         var dataObject = {
+//             allShifts: dbUser
+//         };
+
+
+// // Grabs a shift with a given id, for use with shift editor
+// router.get("/editShift:id", loggedIn, function(req, res, next) {
+//     db.Shift.findAll({where: {id: req.params.id},
+//         include: { model: db.Job,
+//         where: {UserId: req.user.id}}
+//     }).then(function(dbUser) {
+//         console.log('jobjob')
+//         console.log(dbUser[0].Job)
+//             var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
+//             dbUser[0].shiftDate = date;
+//             var dataObject = {
+//                 shift: dbUser[0],
+//                 job: dbUser[0].Job
+//             }
+//             // console.log(dataObject.job)
+//             res.render("shiftEditor", dataObject);
+//         });
+//     });
+// Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
-    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser2) {
-        var dataObject = {
-            jobs: dbUser2
-        };
-        var ShiftID = req.params.id;
-        db.Shift.findAll({ where: {UserId: req.user.id, id: ShiftID},
-        raw: true
-        }).then(function(dbUser) {
+    db.Shift.findAll({
+        include: { model: db.Job,
+        where: {UserId: req.user.id}}
+    }).then(function(dbUser) {
+        console.log('jobjob')
+        console.log(dbUser[0].Job)
             var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-            console.log(date)
             dbUser[0].shiftDate = date;
-            dbUser[0].jobs = dataObject.jobs;
-            res.render("shiftEditor", dbUser[0]);
+            var dataObject = {
+                shift: dbUser[0],
+                job: dbUser[0].Job
+            }
+            // console.log(dataObject.job)
+            res.render("shiftEditor", dataObject);
         });
     });
-});
+
+// app.get('/users', (req, res) => {  
+//     db.users.findAll({
+//       include: [
+//         {
+//           model: db.posts,
+//           include: [
+//             {
+//               model: db.comments
+//             }
+//           ]
+//         }
+//       ]
+
+
+// router.get("/editShift:id", loggedIn, function(req, res, next) {
+//     db.Shift.findAll({where: {id: req.params.id}
+//     }), db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+//         console.log('jobjob')
+//         console.log(dbUser)
+//             var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
+//             dbUser[0].shiftDate = date;
+//             var dataObject = {
+//                 shift: dbUser[0],
+//                 job: dbUser[0].Job
+//             }
+//             // console.log(dataObject.job)
+//             res.render("shiftEditor", dataObject);
+//         });
+//     });
+
+  //  models.Posts.findAll({
+  //      attributes: ['id', 'title', 'content', 'author'],
+  //      where: { isPublished: true },
+  //      order: '"updatedAt" DESC'
+  //  }),
+  //  models.MenuItems.findAll({
+  //      where: { isActive: true },
+  //  })
+  // ])
 
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editJob:id", loggedIn, function(req, res, next) {
