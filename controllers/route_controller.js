@@ -50,7 +50,7 @@ router.get("/feedback", function(req, res) {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/loginFailure',
-    successRedirect: '/shift'
+    successRedirect: '/dashboard'
 }))
 
 router.get("/signup", function(req, res) {
@@ -63,6 +63,10 @@ router.get("/passwordReset", function(req, res) {
 
 router.get("/updateAccount", loggedIn, function(req, res, next) {
     res.render("updateAccount", req);
+});
+
+router.get("/dashboard", loggedIn, function(req, res, next) {
+    res.render("dashboard", req);
 });
 
 router.get("/shift", loggedIn, function(req, res, next) {
@@ -257,7 +261,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
             var dataObject = {
               jobs: dbUser
             };
-            res.render("success", dataObject);
+            res.render("dashboard", dataObject);
         });
     });
 });
@@ -275,7 +279,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             comments: req.body.comments
         }).then(function(dbUser) {
             console.log(dbUser);
-            res.render("success");     
+            res.render("dashboard");     
         });
     }
     else {
@@ -290,7 +294,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             comments: req.body.comments
         }).then(function(dbUser) {
             console.log(dbUser);
-            res.render("success");     
+            res.render("dashboard");     
         });
     }
 });
@@ -303,7 +307,7 @@ router.post("/newJob", loggedIn, function(req, res, next) {
 //         isReal: true
 //     }).then(function(dbUser) {
 //         console.log(dbUser);
-//         res.render("success");
+//         res.render("dashboard");
 //     });
 // });
 
@@ -314,7 +318,7 @@ router.post("/editShift", loggedIn, function(req, res, next) {
     where: {id:shiftData.shiftIdHidden}
   }).then(function(dbUser) {
     console.log(dbUser);
-    res.render("success");
+    res.render("dashboard");
   });
 });
 
@@ -325,14 +329,14 @@ router.post("/editJob", loggedIn, function(req, res, next) {
         delete jobData.endDate;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
             console.log(dbUser);
-            res.render("success");     
+            res.render("dashboard");     
         });
     }
     else {
         jobData.stillWorkingHere = false;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
             console.log(dbUser);
-            res.render("success");     
+            res.render("dashboard");     
         });
     }
 });
