@@ -6,6 +6,8 @@ $('.datepicker').pickadate({
     hiddenName:true
 });
 
+$('.datepicker').pickadate('picker').set('select', $('#startDateHidden').val(), { format: 'dddd mmm dd, yyyy' })
+
 //Allows the delete modal to open on the shift editor page.
 $('.modal').modal();
 

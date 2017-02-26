@@ -7,7 +7,11 @@ $('.datepicker').pickadate({
 });
 
 //This grabs a hidden value passed by handlebars and sets/formats the calendar to that value.
-$('.datepicker').pickadate('picker').set('select', $('#hiddenCal').val(), { format: 'dddd mmm dd, yyyy' })
+// $('.datepicker').pickadate('picker').set('select', $('#hiddenCal').val(), { format: 'dddd mmm dd, yyyy' })
+
+var Calinput = $('.datepicker').pickadate()
+var picker = Calinput.pickadate('picker')
+picker.set('select', $('#hiddenCal').val(), { format: 'yyyy-mm-dd' })
 
 $(document).ready(function() {
     $('select').material_select();

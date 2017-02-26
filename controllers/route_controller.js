@@ -334,7 +334,7 @@ router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
   console.log(shiftData);
   db.Shift.update(shiftData, {
-    where: {id:shiftData.shiftIdHidden}
+    where: {id:shiftData.shiftID}
   }).then(function(dbUser) {
     var dataObject = {
         message: 'Shift Updated'
@@ -445,7 +445,7 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
         ])
         .spread(function(shift, jobs) {
             //Reformat before sending to Render
-               shift[0].shiftDate = moment(shift[0].shiftDate).format('YYYY-MM-DD')
+               shift[0].shiftDate = moment(shift[0].shiftDate).add(18, 'hours').format('YYYY-MM-DD')
                shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
                shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
              var dataObject = {
