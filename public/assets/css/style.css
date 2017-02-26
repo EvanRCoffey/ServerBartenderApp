@@ -37,3 +37,11 @@ button.tableEditButton {
 	padding-top: 80px;
 	text-align: center;
 }
+
+.formEditButton{
+	text-align: center;
+}
+
+input[type=range]+.thumb.active {
+	display: none !important;
+}

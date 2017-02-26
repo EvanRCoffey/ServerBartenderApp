@@ -3,9 +3,9 @@
     <table class="bordered">
       <thead>
         <tr>
-            <th>Start Date</th>
             <th>Job Name</th>
-            <th>Wage</th>
+            <th>Start Date</th>
+      <!--       <th>Wage</th> -->
             <th>Edit/Delete</th>
             <th></th>
         </tr>
@@ -14,10 +14,10 @@
       <tbody>
        {{#each allJobs}}
         <tr>
-          <td>{{this.startDate}}</td>
-          <td>{{this.job_name}}</td>
-          <td>${{this.wage}}</td>
-          <td><form action="/editJob{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
+        <td>{{this.job_name}}</td>
+        <td>{{this.startDate}}</td>
+      <!--   <td>${{this.wage}}</td> -->
+          <td><form  class="formEditButton" action="/editJob{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
         </tr>
       {{/each}}
       </tbody>

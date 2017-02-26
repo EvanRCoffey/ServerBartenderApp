@@ -118,6 +118,10 @@ router.get("/jobsTable", loggedIn, function(req, res, next) {
       var dataObject = {
           allJobs: dbUser
         };
+ //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allJobs.length; i++) {
+            dataObject.allJobs[i].startDate = moment.utc(dataObject.allJobs[i].startDate).add(18, 'hours').format('ll')
+        }
        res.render("jobsTable", dataObject);
      });
  });
