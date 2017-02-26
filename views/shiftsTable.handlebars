@@ -16,7 +16,7 @@
           <td>{{this.shiftDate}}</td>
           <td>{{this.timeIn}}</td>
           <td>{{this.Job.job_name}}</td>
-          <td><form action="/editShift{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
+          <td><form class="formEditButton" action="/editShift{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
         </tr>
       {{/each}}
       </tbody>

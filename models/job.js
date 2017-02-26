@@ -10,7 +10,10 @@ module.exports = function(sequelize, DataTypes) {
 	}, {
       classMethods: {
       	associate: function(models) {
-            Job.belongsTo(models.User);
+            Job.belongsTo(models.User, {
+            	foreignKey: 'id',
+            	as: 'User_Id'
+            });
         },
         associate: function(models) {
           	Job.hasMany(models.Shift);
@@ -20,5 +23,7 @@ module.exports = function(sequelize, DataTypes) {
 	return Job;
 }
 
-// User.hasMany(Post, {foreignKey: 'user_id'})
-// Post.belongsTo(User, {foreignKey: 'user_id'})
+// global.db.Customer.belongsTo(global.db.StateType, {
+//     foreignKey: 'cst_state_type',
+//     as: 'state_type'
+// });

@@ -7,3 +7,45 @@ button.tableEditButton {
 	background-color: white;
 	color: gray;
 }
+
+.dashMessage {
+	text-align: center;
+	animation:dashMessage 0.5s 1;
+    -webkit-animation:dashMessage 0.5s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:3s;
+    -webkit-animation-delay:3s; 
+    -webkit-animation-fill-mode: forwards;
+}
+
+.messageContainer {
+	margin-bottom: 0px !important;
+}
+
+@keyframes dashMessage{
+    from {opacity :1;}
+    to {opacity :0;}
+}
+
+@-webkit-keyframes dashMessage{
+    from {opacity :1;}
+    to {opacity :0;}
+}
+
+.loginFailContainer{
+	padding-top: 80px;
+	text-align: center;
+}
+
+.formEditButton{
+	text-align: center;
+}
+
+input[type=range]+.thumb.active {
+	display: none !important;
+}
+
+.side-nav {
+	width: 180px;
+}

@@ -53,6 +53,10 @@ router.post("/login", passport.authenticate('local', {
     successRedirect: '/dashboard'
 }))
 
+router.get("/loginFailure", function(req, res) {
+    res.render("loginFailure", req);
+});
+
 router.get("/signup", function(req, res) {
     res.render("signup", req);
 });
@@ -92,18 +96,19 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
         include: [ db.Job ],
         raw: false, // Will order by shiftDate on an associated User
         order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-        console.log('shift')
-        console.log(dbUser)
         var dataObject = {
             allShifts: dbUser
         };
 
-        //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
         for (var i = 0; i < dataObject.allShifts.length; i++) {
             dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
+            dataObject.allShifts[i].timeIn = moment(dataObject.allShifts[i].timeIn, 'hh:mm:ss').format('h:mm A')
         }
 
-    
+        // moment().format('MMMM Do YYYY, h:mm:ss a');
+
+        console.log(dataObject.allShifts[0])
        res.render("shiftsTable", dataObject);
      });
  });
@@ -113,6 +118,10 @@ router.get("/jobsTable", loggedIn, function(req, res, next) {
       var dataObject = {
           allJobs: dbUser
         };
+ //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allJobs.length; i++) {
+            dataObject.allJobs[i].startDate = moment.utc(dataObject.allJobs[i].startDate).add(18, 'hours').format('ll')
+        }
        res.render("jobsTable", dataObject);
      });
  });
@@ -161,6 +170,7 @@ router.post("/newUser", function(req, res, next) {
 //User types in their old password, and can then update any of thier login credintials.
 //It then logs them out and asks relog in. This prevents potentional conflicts/exploits.
 router.post("/updateAccount", loggedIn, function(req, res, next) {
+    console.log(bcrypt.compareSync(req.body.old_password, req.user.user_password))
     if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
         var updateUser = {
             user_email: req.body.user_email,
@@ -175,6 +185,9 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
             req.logout();
             res.redirect('/login');
         });
+    } else {
+         req.message = 'Invalid Password'
+         res.render("updateAccount", req);
     }
 });
 
@@ -261,6 +274,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
             var dataObject = {
               jobs: dbUser
             };
+            dataObject.message = 'Shift Added'
             res.render("dashboard", dataObject);
         });
     });
@@ -269,6 +283,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
 router.post("/newJob", loggedIn, function(req, res, next) {
     console.log(req.body.endDate);
     if (req.body.endDate === "") {
+        console.log(req.user.id)
         db.Job.create({
             UserId: req.user.id,
             job_name: req.body.job_name,
@@ -278,8 +293,10 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             stillWorkingHere: true,
             comments: req.body.comments
         }).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+            var dataObject = {
+                message: 'Job Added'
+            }
+            res.render("dashboard", dataObject);     
         });
     }
     else {
@@ -293,8 +310,10 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             stillWorkingHere: false,
             comments: req.body.comments
         }).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+              var dataObject = {
+                message: 'Job Added'
+            }
+            res.render("dashboard", dataObject);      
         });
     }
 });
@@ -317,9 +336,12 @@ router.post("/editShift", loggedIn, function(req, res, next) {
   db.Shift.update(shiftData, {
     where: {id:shiftData.shiftIdHidden}
   }).then(function(dbUser) {
-    console.log(dbUser);
-    res.render("dashboard");
-  });
+    var dataObject = {
+        message: 'Shift Updated'
+    }
+    res.render("dashboard", dataObject);
+    });
+
 });
 
 router.post("/editJob", loggedIn, function(req, res, next) {
@@ -328,15 +350,20 @@ router.post("/editJob", loggedIn, function(req, res, next) {
         jobData.stillWorkingHere = true;
         delete jobData.endDate;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+             var dataObject = {
+                message: 'Job Updated'
+            }
+            res.render("dashboard", dataObject);     
         });
     }
     else {
         jobData.stillWorkingHere = false;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
             console.log(dbUser);
-            res.render("dashboard");     
+               var dataObject = {
+                message: 'Job Updated'
+            }
+            res.render("dashboard", dataObject);    
         });
     }
 });
@@ -406,23 +433,29 @@ router.post("/allJobs", loggedIn, function(req, res, next) {
     });
 });
 
-//Grabs a shift with a given id, for use with shift editor
+// Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
-    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser2) {
-        var dataObject = {
-            jobs: dbUser2
-        };
-        var ShiftID = req.params.id;
-        db.Shift.findAll({ where: {UserId: req.user.id, id: ShiftID},
-        raw: true
-        }).then(function(dbUser) {
-            var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-            console.log(date)
-            dbUser[0].shiftDate = date;
-            dbUser[0].jobs = dataObject.jobs;
-            res.render("shiftEditor", dbUser[0]);
-        });
-    });
+    db.sequelize.Promise.all([
+            db.Shift.findAll({
+                where: { id: req.params.id }
+            }),
+            db.Job.findAll({
+                where: { UserId: req.user.id },
+            })
+        ])
+        .spread(function(shift, jobs) {
+            //Reformat before sending to Render
+               shift[0].shiftDate = moment(shift[0].shiftDate).format('YYYY-MM-DD')
+               shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
+               shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
+             var dataObject = {
+                shift: shift[0],
+                job: jobs
+            }
+             
+             res.render("shiftEditor", dataObject)
+     });
+      
 });
 
 //Grabs a shift with a given id, for use with shift editor
