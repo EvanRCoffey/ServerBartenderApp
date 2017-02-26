@@ -11,7 +11,13 @@ $('.datepicker').pickadate({
 
 var Calinput = $('.datepicker').pickadate()
 var picker = Calinput.pickadate('picker')
+//Defaults to today
+picker.set('select', moment().format('yyyy-mm-dd'), { format: 'yyyy-mm-dd' })
+
+//Checks for hidden value passed via handlebars then updates.
+if($('#hiddenCal').val()){
 picker.set('select', $('#hiddenCal').val(), { format: 'yyyy-mm-dd' })
+}
 
 $(document).ready(function() {
     $('select').material_select();
@@ -22,6 +28,7 @@ function showInTime(newValue) {
     $("#inTimeSpan").text("In-time: " + timeArray[newValue])
     var inTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
     $('#inTimeHidden').val(inTime)
+    $('#outTime').val(newValue)
 }
 
 function showOutTime(newValue) {
