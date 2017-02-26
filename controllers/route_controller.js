@@ -53,6 +53,10 @@ router.post("/login", passport.authenticate('local', {
     successRedirect: '/dashboard'
 }))
 
+router.get("/loginFailure", function(req, res) {
+    res.render("loginFailure", req);
+});
+
 router.get("/signup", function(req, res) {
     res.render("signup", req);
 });
@@ -262,6 +266,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
             var dataObject = {
               jobs: dbUser
             };
+            dataObject.message = 'Shift Added'
             res.render("dashboard", dataObject);
         });
     });
@@ -280,8 +285,10 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             stillWorkingHere: true,
             comments: req.body.comments
         }).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+            var dataObject = {
+                message: 'Job Added'
+            }
+            res.render("dashboard", dataObject);     
         });
     }
     else {
@@ -295,8 +302,10 @@ router.post("/newJob", loggedIn, function(req, res, next) {
             stillWorkingHere: false,
             comments: req.body.comments
         }).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+              var dataObject = {
+                message: 'Job Added'
+            }
+            res.render("dashboard", dataObject);      
         });
     }
 });
@@ -319,9 +328,12 @@ router.post("/editShift", loggedIn, function(req, res, next) {
   db.Shift.update(shiftData, {
     where: {id:shiftData.shiftIdHidden}
   }).then(function(dbUser) {
-    console.log(dbUser);
-    res.render("dashboard");
-  });
+    var dataObject = {
+        message: 'Shift Updated'
+    }
+    res.render("dashboard", dataObject);
+    });
+
 });
 
 router.post("/editJob", loggedIn, function(req, res, next) {
@@ -330,15 +342,20 @@ router.post("/editJob", loggedIn, function(req, res, next) {
         jobData.stillWorkingHere = true;
         delete jobData.endDate;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
-            console.log(dbUser);
-            res.render("dashboard");     
+             var dataObject = {
+                message: 'Job Updated'
+            }
+            res.render("dashboard", dataObject);     
         });
     }
     else {
         jobData.stillWorkingHere = false;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
             console.log(dbUser);
-            res.render("dashboard");     
+               var dataObject = {
+                message: 'Job Updated'
+            }
+            res.render("dashboard", dataObject);    
         });
     }
 });
