@@ -6,6 +6,14 @@ $('.datepicker').pickadate({
     hiddenName:true
 });
 
+//Allows the delete modal to open on the shift editor page.
+$('.modal').modal();
+
+function closeModal(){
+$('#modal1').modal('close');
+}
+
+
 
 // $('.jobSubmitBtn').on('click', function(event) {
 //     event.preventDefault();
