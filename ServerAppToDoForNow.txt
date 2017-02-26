@@ -1,25 +1,19 @@
 TESTING/DEBUGGING...
 
--Try to input fake/incorrect data on every field
-	-All dropdowns can be submitted without selecting something
-	-Make certain fields mandatory before you can submit - decide which ones, match it with DB
-
-
-
-
-
-
-
--Decide how to handle early A.M. out-times AND matching in- and out-times
-	-We'll write code to make the second slider always be at least 15 minutes after the first.
-
--Format TimeIn items on shift table and StartDate items on job table
-
--Finish/polish the financial summary (instructions in financialSummaryTest.js)
+"required" has been inserted into shift.handlebars and job.handlebars on the fields deemed necessary.
+	-put "required" into shiftEdit and jobEdit in the same places
+	-write "if" clauses for the other fields OR get "allowNull: true" to work
 
 * Deploy
 
-* Test/Debug online version
+* Test/Debug online version (some of these can be done later)
+
+	-Decide how to handle early A.M. out-times AND matching in- and out-times
+		-We'll write code to make the second slider always be at least 15 minutes after the first.
+
+	-Format TimeIn items on shift table and StartDate items on job table
+
+	-Finish/polish the financial summary (instructions in financialSummaryTest.js)
 
 * Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 	-Make sure they have the sample login so they can see how the financial summary works
@@ -47,4 +41,4 @@ ___________________________________________________________________
 
 WHENEVER...
 
-See if Sarah can get a bunch of data for you since she's admin at Fleming's.  Make sure that's legal, first.
+See if Sarah can get a bunch of data for you since she's admin at Fleming's.  It's legal if you take out all identifiers
