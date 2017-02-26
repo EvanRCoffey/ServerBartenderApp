@@ -170,6 +170,7 @@ router.post("/newUser", function(req, res, next) {
 //User types in their old password, and can then update any of thier login credintials.
 //It then logs them out and asks relog in. This prevents potentional conflicts/exploits.
 router.post("/updateAccount", loggedIn, function(req, res, next) {
+    console.log(bcrypt.compareSync(req.body.old_password, req.user.user_password))
     if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
         var updateUser = {
             user_email: req.body.user_email,
@@ -184,6 +185,9 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
             req.logout();
             res.redirect('/login');
         });
+    } else {
+         req.message = 'Invalid Password'
+         res.render("updateAccount", req);
     }
 });
 

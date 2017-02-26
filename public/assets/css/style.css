@@ -45,3 +45,7 @@ button.tableEditButton {
 input[type=range]+.thumb.active {
 	display: none !important;
 }
+
+.side-nav {
+	width: 180px;
+}
