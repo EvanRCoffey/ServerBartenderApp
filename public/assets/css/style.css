@@ -46,8 +46,16 @@ input[type=range]+.thumb.active {
 	display: none !important;
 }
 
-
-
 .side-nav {
 	width: 180px;
+}
+
+.beta {
+	font-weight: 700;
+	font-size: 12px;
+	opacity: .5;
+}
+
+.brand-logo {
+	font-size: 24px !important;
 }
