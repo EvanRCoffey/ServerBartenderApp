@@ -6,6 +6,9 @@ $('.datepicker').pickadate({
     hiddenName:true
 });
 
+//This grabs a hidden value passed by handlebars and sets/formats the calendar to that value.
+$('.datepicker').pickadate('picker').set('select', $('#hiddenCal').val(), { format: 'dddd mmm dd, yyyy' })
+
 $(document).ready(function() {
     $('select').material_select();
     // prepareJobDropdown();
@@ -38,7 +41,7 @@ function fillTimeArray(){
 
 //Janky function that sets the repopulated value of a dropdown.
 populateDropdown('#shiftTypePopulate', '#shiftType')
-// populateDropdown('#JobIdHidden', '#jobID')
+populateDropdown('#JobIdHidden', '#jobID')
 
 function populateDropdown(hiddenTarget, dropdownTarget) {
     //checks if exists.

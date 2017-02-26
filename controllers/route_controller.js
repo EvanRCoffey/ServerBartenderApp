@@ -92,18 +92,19 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
         include: [ db.Job ],
         raw: false, // Will order by shiftDate on an associated User
         order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-        console.log('shift')
-        console.log(dbUser)
         var dataObject = {
             allShifts: dbUser
         };
 
-        //Hideous loop that converts the UTC time in the DB to a string and truncates it for each object.
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
         for (var i = 0; i < dataObject.allShifts.length; i++) {
             dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
+            dataObject.allShifts[i].timeIn = moment(dataObject.allShifts[i].timeIn, 'hh:mm:ss').format('h:mm A')
         }
 
-    
+        // moment().format('MMMM Do YYYY, h:mm:ss a');
+
+        console.log(dataObject.allShifts[0])
        res.render("shiftsTable", dataObject);
      });
  });
@@ -269,6 +270,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
 router.post("/newJob", loggedIn, function(req, res, next) {
     console.log(req.body.endDate);
     if (req.body.endDate === "") {
+        console.log(req.user.id)
         db.Job.create({
             UserId: req.user.id,
             job_name: req.body.job_name,
@@ -406,94 +408,30 @@ router.post("/allJobs", loggedIn, function(req, res, next) {
     });
 });
 
-// router.get("/shiftsTable", loggedIn, function(req, res, next) {
-//     db.Shift.findAll({ where: {UserId: req.user.id},
-//         include: [ db.Job ],
-//         raw: false, // Will order by shiftDate on an associated User
-//         order: [['shiftDate', 'DESC']]}).then(function(dbUser) {
-//         console.log('shift')
-//         console.log(dbUser)
-//         var dataObject = {
-//             allShifts: dbUser
-//         };
-
-
-// // Grabs a shift with a given id, for use with shift editor
-// router.get("/editShift:id", loggedIn, function(req, res, next) {
-//     db.Shift.findAll({where: {id: req.params.id},
-//         include: { model: db.Job,
-//         where: {UserId: req.user.id}}
-//     }).then(function(dbUser) {
-//         console.log('jobjob')
-//         console.log(dbUser[0].Job)
-//             var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-//             dbUser[0].shiftDate = date;
-//             var dataObject = {
-//                 shift: dbUser[0],
-//                 job: dbUser[0].Job
-//             }
-//             // console.log(dataObject.job)
-//             res.render("shiftEditor", dataObject);
-//         });
-//     });
 // Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
-    db.Shift.findAll({
-        include: { model: db.Job,
-        where: {UserId: req.user.id}}
-    }).then(function(dbUser) {
-        console.log('jobjob')
-        console.log(dbUser[0].Job)
-            var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-            dbUser[0].shiftDate = date;
-            var dataObject = {
-                shift: dbUser[0],
-                job: dbUser[0].Job
+    db.sequelize.Promise.all([
+            db.Shift.findAll({
+                where: { id: req.params.id }
+            }),
+            db.Job.findAll({
+                where: { UserId: req.user.id },
+            })
+        ])
+        .spread(function(shift, jobs) {
+            //Reformat before sending to Render
+               shift[0].shiftDate = moment(shift[0].shiftDate).format('YYYY-MM-DD')
+               shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
+               shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
+             var dataObject = {
+                shift: shift[0],
+                job: jobs
             }
-            // console.log(dataObject.job)
-            res.render("shiftEditor", dataObject);
-        });
-    });
-
-// app.get('/users', (req, res) => {  
-//     db.users.findAll({
-//       include: [
-//         {
-//           model: db.posts,
-//           include: [
-//             {
-//               model: db.comments
-//             }
-//           ]
-//         }
-//       ]
-
-
-// router.get("/editShift:id", loggedIn, function(req, res, next) {
-//     db.Shift.findAll({where: {id: req.params.id}
-//     }), db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
-//         console.log('jobjob')
-//         console.log(dbUser)
-//             var date = moment(dbUser[0].shiftDate).format('YYYY-MM-DD')
-//             dbUser[0].shiftDate = date;
-//             var dataObject = {
-//                 shift: dbUser[0],
-//                 job: dbUser[0].Job
-//             }
-//             // console.log(dataObject.job)
-//             res.render("shiftEditor", dataObject);
-//         });
-//     });
-
-  //  models.Posts.findAll({
-  //      attributes: ['id', 'title', 'content', 'author'],
-  //      where: { isPublished: true },
-  //      order: '"updatedAt" DESC'
-  //  }),
-  //  models.MenuItems.findAll({
-  //      where: { isActive: true },
-  //  })
-  // ])
+             
+             res.render("shiftEditor", dataObject)
+     });
+      
+});
 
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editJob:id", loggedIn, function(req, res, next) {
