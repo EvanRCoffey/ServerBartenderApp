@@ -6,7 +6,16 @@ $('.datepicker').pickadate({
     hiddenName:true
 });
 
-$('.datepicker').pickadate('picker').set('select', $('#startDateHidden').val(), { format: 'dddd mmm dd, yyyy' })
+var Calinput = $('.datepicker').pickadate()
+var picker = Calinput.pickadate('picker')
+//Defaults to today
+picker.set('select', moment().format('yyyy-mm-dd'), { format: 'yyyy-mm-dd' })
+
+//Checks for hidden value passed via handlebars then updates.
+if($('#startDateHidden').val()){
+picker.set('select', $('#startDateHidden').val(), { format: 'yyyy-mm-dd' })
+}
+
 
 //Allows the delete modal to open on the shift editor page.
 $('.modal').modal();

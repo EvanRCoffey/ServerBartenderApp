@@ -464,10 +464,10 @@ router.get("/editJob:id", loggedIn, function(req, res, next) {
       db.Job.findAll({ where: {UserId: req.user.id, id: JobID},
     raw: true
     }).then(function(dbUser) {
-        var date = moment(dbUser[0].startDate).format('YYYY-MM-DD')
+        var date = moment(dbUser[0].startDate).add(18, 'hours').format('YYYY-MM-DD')
         console.log(date)
        dbUser[0].startDate = date
-       var date2 = moment(dbUser[0].endDate).format('YYYY-MM-DD')
+       var date2 = moment(dbUser[0].endDate).add(18, 'hours').format('YYYY-MM-DD')
         console.log(date2)
        dbUser[0].endDate = date2
         res.render("jobEditor", dbUser[0]);
