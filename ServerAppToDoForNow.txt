@@ -2,6 +2,8 @@ NOW...
 
 -Write code to make the second slider always be later than the first [Mills]
 
+
+
 THEN...
 
 * Once you finish all the above tasks, deploy
@@ -11,6 +13,8 @@ THEN...
 * Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 	-Make sure they have the sample login so they can see how the financial summary works
 	-Write an email to everyone explaining how it works, plans for the future, etc
+
+
 
 AT SOME POINT...
 
