@@ -7,7 +7,7 @@
         </div>
     
     <!--   need to modify the route/query so this updates the shift. -->
-        <form class="col s12" method="POST" action="/editShift">
+        <form class="col s12" method="POST" id="shiftForm" onsubmit="return shiftValidate()" action="/editShift">
 
             <input id='JobIdHidden' type="hidden" name="shiftIdHidden" value="{{this.shift.JobId}}">
 
@@ -123,10 +123,6 @@
     <div class="col s6">
             <button class="btn waves-effect waves-light" type="submit">Update Shift</button>
     </div>
-    <div class="col s6">
-              <button data-target="modal1" class="btn">Delete Shift</button>
-    </div>
-    
     </div>
         </form>
 
@@ -135,16 +131,22 @@
     </div>
 </div>
 
-  <div id="modal1" class="modal">
+
+  <div id="timeEqual" class="modal">
     <div class="modal-content">
-      <h5>Are you sure you want to delete this Shift?</h5>
-      <div class="row">
-      <form action="/deleteShift{{this.shift.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Shift</button></form>
-      </div>
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Nevermind</button>
+      <h5>In-Time and Out-Time cannot be the same.</h5>
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
     </div>
   </div>
 
-     
+<div id="timeLess" class="modal">
+<div class="modal-content">
+      <h5>In-Time is before Out-Time.</h5>
+      <div class="row">
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+       </div>
+       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
+      </div>
+  </div>
 
 <script type="text/javascript" src="./javascript/shift.js"></script>

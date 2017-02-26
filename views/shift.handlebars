@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <form class="col s12" method="POST" action="/newShift">
+        <form class="col s12" id="shiftForm" method="POST"  onsubmit="return shiftValidate()" action="/newShift">
 
         {{#unless jobs}}
       <!-- This section only shows when no jobs. -->
@@ -131,7 +131,7 @@
             <label>Shift type</label>
             
             {{#if jobs}}
-            <button class="btn waves-effect waves-light" type="submit">Create New Shift</button>
+            <button class="btn waves-effect waves-light shiftSubmit" type="submit">Create New Shift</button>
             {{/if}}
 
             {{#unless jobs}}
@@ -141,5 +141,24 @@
         </form>
     </div>
 </div>
+
+{{#if jobs}}
+  <div id="timeEqual" class="modal">
+    <div class="modal-content">
+      <h5>In-Time and Out-Time cannot be the same.</h5>
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+    </div>
+  </div>
+
+<div id="timeLess" class="modal">
+<div class="modal-content">
+      <h5>In-Time is before Out-Time.</h5>
+      <div class="row">
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+      </div>
+       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
+    </div>
+  </div>
+  {{/if}}
 
 <script type="text/javascript" src="./javascript/shift.js"></script>

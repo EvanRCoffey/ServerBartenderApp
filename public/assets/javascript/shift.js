@@ -24,29 +24,35 @@ $(document).ready(function() {
     // prepareJobDropdown();
 });
 
+//dirty global vars for Time sliders
+var inTime
+var outTime
+var timeStartArray = []
 function showInTime(newValue) {
-    $("#inTimeSpan").text("In-time: " + timeArray[newValue])
-    var inTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $("#inTimeSpan").text("In-time: " + timeStartArray[newValue])
+    inTime = moment(timeStartArray[newValue], 'LT').format('HH:mm:ss')
     $('#inTimeHidden').val(inTime)
-    $('#outTime').val(newValue)
 }
 
+
+
+ // $('#slider-range').slider( "option", "min", $('.middle_container').find('.start_price').val() );
+ // $('#slider-range').slider( "option", "max", $('.middle_container').find('.end_price').val() );
+
 function showOutTime(newValue) {
-    $("#outTimeSpan").text("Out-time: " + timeArray[newValue])
-    var outTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $("#outTimeSpan").text("Out-time: " + timeStartArray[newValue])
+    outTime = moment(timeStartArray[newValue], 'LT').format('HH:mm:ss')
     $('#outTimeHidden').val(outTime)
 }
 
-var timeArray = []
-
-fillTimeArray()
+fillStartArray()
 
 //This just fills the timeArray. I send the result to a global var so this function doesn't run everytime.
-function fillTimeArray(){
+function fillStartArray(){
     //Push start time to array
-    timeArray.push(moment().startOf('day').format('LT'))
-    for (var i = 0; i < 95; i++) {
-        timeArray.push(moment(timeArray[i], 'LT').add(15, 'minutes').format('LT'))
+    timeStartArray.push(moment().startOf('day').format('LT'))
+    for (var i = 0; i < 152; i++) {
+        timeStartArray.push(moment(timeStartArray[i], 'LT').add(15, 'minutes').format('LT'))
     }
 }
 
@@ -67,7 +73,26 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
 $('.modal').modal();
 
 function closeModal(){
-$('#modal1').modal('close');
+$('.modal').modal('close');
+}
+
+var timeConfirmed = false
+
+function shiftValidate(){
+    if(inTime === outTime){
+        $('#timeEqual').modal('open');
+        return false
+    } else if (moment(inTime, 'HH:mm:ss').isAfter(moment(outTime, 'HH:mm:ss')) && !timeConfirmed) { 
+        $('#timeLess').modal('open');
+        console.log('time less')
+        return false
+    }
+}
+
+function submitForm(){
+    console.log('submit!')
+    timeConfirmed = true
+    $('#shiftForm').submit();
 }
 
 
