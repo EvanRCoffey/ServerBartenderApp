@@ -52,6 +52,13 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
     }
 }
 
+//Allows the delete modal to open on the shift editor page.
+$('.modal').modal();
+
+function closeModal(){
+$('#modal1').modal('close');
+}
+
 
 // //////////////////////////////
 // //EDIT SHIFT
