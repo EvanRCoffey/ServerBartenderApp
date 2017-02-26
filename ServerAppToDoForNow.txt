@@ -1,23 +1,26 @@
-TESTING/DEBUGGING...
+NOW...
 
-"required" has been inserted into shift.handlebars and job.handlebars on the fields deemed necessary.
-	-put "required" into shiftEdit and jobEdit in the same places
-	-write "if" clauses for the other fields OR get "allowNull: true" to work
+-Write code to make the second slider always be later than the first [Mills]
 
-* Deploy
+THEN...
 
-* Test/Debug online version (some of these can be done later)
+* Once you finish all the above tasks, deploy
 
-	-Decide how to handle early A.M. out-times AND matching in- and out-times
-		-We'll write code to make the second slider always be at least 15 minutes after the first.
-
-	-Format TimeIn items on shift table and StartDate items on job table
-
-	-Finish/polish the financial summary (instructions in financialSummaryTest.js)
+* Test/Debug online version
 
 * Give to friends to start using.  Think of ways to get the word out other than just Facebook.
 	-Make sure they have the sample login so they can see how the financial summary works
 	-Write an email to everyone explaining how it works, plans for the future, etc
+
+AT SOME POINT...
+
+-Finish/polish the financial summary (instructions in financialSummaryTest.js) [Evan]
+
+-Two different calendar outputs on jobEditor.handlebars [Mills]
+
+-When a user deletes a job, this is what should happen:
+	1) With an extra level of validation, make sure the user understands what they're doing
+	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedbyUser:false}}"
 
 ___________________________________________________________________
 

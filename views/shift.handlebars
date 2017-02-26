@@ -28,9 +28,9 @@
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
-                    <option value="" disabled selected>Click here to choose a job</option>
+                    <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}">{{this.job_name}}</option>
+                        <option value="{{this.id}}" selected>{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
@@ -122,9 +122,11 @@
             <select name="shiftType" id="shiftType">
               <option value="" disabled selected>Click here to choose the shift type</option>
               <option value="breakfast">Breakfast</option>
+              <option value="brunch">Brunch</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
               <option value="double">Double</option>
+              <option value="openToClose">Open to Close</option>
             </select>
             <label>Shift type</label>
             

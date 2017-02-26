@@ -248,6 +248,18 @@ router.post("/sendFeedback", function(req, res) {
 //
 
 router.post("/newShift", loggedIn, function(req, res, next) {
+    if (req.body.shiftType === "") {req.body.shiftType = null}
+    if (req.body.largestTip === "") {req.body.largestTip = null}
+    if (req.body.smallestTip === "") {req.body.smallestTip = null}
+    if (req.body.stiffed === "") {req.body.stiffed = null}
+    if (req.body.bwl === "") {req.body.bwl = null}
+    if (req.body.tipout === "") {req.body.tipout = null}
+    if (req.body.tipPercent === "") {req.body.tipPercent = null}
+    if (req.body.ppa === "") {req.body.ppa = null}
+    if (req.body.comments === "") {req.body.comments = null}
+    if (req.body.breakthroughs === "") {req.body.breakthroughs = null}
+    if (req.body.shiftDate === "") {req.body.shiftDate = "2017-01-01"}
+    
     db.Shift.create({
         shiftDate: req.body.shiftDate,
         timeIn: req.body.inTime,

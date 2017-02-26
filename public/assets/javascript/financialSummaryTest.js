@@ -6,6 +6,7 @@
     //Use moment for this, Mills said
 //3)Not 100% sure the earlier-than-in-time out-times are being handled correctly.
     //This won't be an issue once we fix the sliders
+    //4)[OPTIONAL] Go ahead and implement the range-of-dates functionality
 
 
 ///////////////////////////////////////
