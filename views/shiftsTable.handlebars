@@ -12,7 +12,7 @@
 
       <tbody>
        {{#each allShifts}}
-        <tr>
+        <tr class="tableShow">
           <td>{{this.shiftDate}}</td>
           <td>{{this.timeIn}}</td>
           <td>{{this.Job.job_name}}</td>
@@ -21,6 +21,7 @@
       {{/each}}
       </tbody>
     </table>
+    <div class="bottomSpacer"></div>
   </div>
 </div>
 <div class="row stickyBottom">

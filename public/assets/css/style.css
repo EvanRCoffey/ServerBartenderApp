@@ -69,3 +69,15 @@ input[type=range]+.thumb.active {
 	bottom: 0px;
 	background-color: rgba(255,255,255,.9);
 }
+
+.bottomSpacer {
+	height: 64px;
+}
+
+.tableShow {
+	background-color: blue;
+}
+
+.tableHide {
+	background-color: red;
+}
