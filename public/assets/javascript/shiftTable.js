@@ -1,4 +1,4 @@
-  var slider = document.getElementById('dateSlider');
+var slider = document.getElementById('dateSlider');
   noUiSlider.create(slider, {
    start: [20, 80],
    connect: true,
@@ -6,10 +6,8 @@
    range: {
      'min': 0,
      'max': 100
-   }
+   },
+   format: wNumb({
+     decimals: 0
+   })
   });
-
-  // ,
-  //  format: wNumb({
-  //    decimals: 0
-  //  })

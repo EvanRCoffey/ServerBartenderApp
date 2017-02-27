@@ -59,3 +59,13 @@ input[type=range]+.thumb.active {
 .brand-logo {
 	font-size: 24px !important;
 }
+
+.stickyBottom{
+	text-align: center;
+	margin: auto;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0px;
+	background-color: rgba(255,255,255,.9);
+}
