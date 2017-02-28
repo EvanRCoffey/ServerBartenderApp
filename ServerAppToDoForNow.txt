@@ -1,44 +1,26 @@
-TESTING/DEBUGGING...
+MILLS
 
-"required" has been inserted into shift.handlebars and job.handlebars on the fields deemed necessary.
-	-put "required" into shiftEdit and jobEdit in the same places
-	-write "if" clauses for the other fields OR get "allowNull: true" to work
+-Adding date range slider to shift table
+-Colors/logos for the website
+-Make spreadsheet for shift data
 
-* Deploy
+EVAN
 
-* Test/Debug online version (some of these can be done later)
+-Finish/polish the financial summary
+	-Once Mills makes the spreadsheet, input all of the fake shift data using a dummy account
+	-Debug (you can start this process now, but having the spreadsheet would help a lot)
+	-Once it's all working, ship it to Mills to make it look nice
+	-Once it looks nice, update the site and send the dummy account info to all users
 
-	-Decide how to handle early A.M. out-times AND matching in- and out-times
-		-We'll write code to make the second slider always be at least 15 minutes after the first.
-
-	-Format TimeIn items on shift table and StartDate items on job table
-
-	-Finish/polish the financial summary (instructions in financialSummaryTest.js)
-
-* Give to friends to start using.  Think of ways to get the word out other than just Facebook.
-	-Make sure they have the sample login so they can see how the financial summary works
-	-Write an email to everyone explaining how it works, plans for the future, etc
-
+-See if Sarah can get a bunch of data for you since she's admin at Fleming's.  It's legal if you take out all identifiers
+-Decide on the JSON structure for the menus - see the back of the descriptions/ingredients page
 ___________________________________________________________________
 
 NEXT STEPS...
 
 *Goals manager 
-
 *Goal checker
-
 *Timeline creator
-
 *Menu manager
-
 *Flash card quizzer
-
 *Quiz maker
-
-*Anything else?  Missing group project requirements?  Any ideas for improvements?
-
-___________________________________________________________________
-
-WHENEVER...
-
-See if Sarah can get a bunch of data for you since she's admin at Fleming's.  It's legal if you take out all identifiers
