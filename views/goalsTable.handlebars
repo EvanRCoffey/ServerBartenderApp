@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col s12">
+    <table class="bordered">
+    
+      <thead>
+        <tr>
+          <th>Goal Name</th>
+          <th>Goal Deadline</th>
+          <th class="formEditButton">Edit/Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each allGoals}}
+        <tr>
+        <td>{{this.goalName}}</td>
+        <td>{{this.goalDeadline}}</td>
+          <td><form  class="formEditButton" action="/editGoal{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
+        </tr>
+        {{/each}}
+      </tbody>
+
+    </table>
+  </div>
+</div>
+

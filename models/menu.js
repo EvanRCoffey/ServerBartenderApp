@@ -1,7 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
     var Menu = sequelize.define("Menu", {
         menuName: DataTypes.STRING,
+        comments: {type: DataTypes.TEXT, allowNull: true},
         menuJSON: DataTypes.JSON,
+        criJSON: DataTypes.JSON
     }, {
         classMethods: {
             associate: function(models) {
