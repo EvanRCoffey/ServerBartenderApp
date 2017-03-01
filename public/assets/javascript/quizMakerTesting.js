@@ -126,7 +126,11 @@ if (addOns>0) {numQ9++}
 if (commonSauces>0) {numQ10Sauce++}
 if (commonDressings>0) {numQ10Dressing++}
 
+////////////////////////
+//QUIZ QUESTION CREATION
+////////////////////////
 
+//QuizQuestion Constructor
 function QuizQuestion(question, fourAnswersArray, correctAnswersIndexesArray, qnum) {
   this.question = question;
   this.fourAnswersArray = fourAnswersArray;
@@ -134,16 +138,15 @@ function QuizQuestion(question, fourAnswersArray, correctAnswersIndexesArray, qn
   this.qnum = qnum;
 }
 
-// //Sample QuizQuestion object...
-// var sampleQuestion = "What is 2 + 2?";
-// var sampleFourAnswersArray = [22, 4, 2.2, 9000];
-// var sampleCorrectAnswersIndexesArray = [1];
-// var sampleQNum = 1;
+//Sample QuizQuestion object is created and sent to the console
+var sampleQuestion = "What is 2 + 2?";
+var sampleFourAnswersArray = [22, 4, 2.2, 9000];
+var sampleCorrectAnswersIndexesArray = [1];
+var sampleQNum = 1;
+var sampleQ = new QuizQuestion(sampleQuestion, sampleFourAnswersArray, sampleCorrectAnswersIndexesArray, sampleQNum);
+console.log(sampleQ);
 
-// var sampleQ = new QuizQuestion(sampleQuestion, sampleFourAnswersArray, sampleCorrectAnswersIndexesArray, sampleQNum);
-
-// console.log(sampleQ);
-
+//Variables for setting up quiz questions
 var cheapOrExpensive = "";
 var itemType "";
 var canSpend = 0.01;
@@ -328,6 +331,10 @@ if (uniqueQType === 6 && firstSixQs > 7) {
 	}
 }
 
+//////////////////////////
+//USER SELECTS QUIZ LENGTH
+//////////////////////////
+
 if (thirtyQuiz) {
 	//Message user, let them select from 10, 20, 30 qs (or cancel)
 }
@@ -344,6 +351,14 @@ else {
 	//Tell user there isn't enough data in this menu to give a quiz.
 }
 
-//////////////////////////////////////////
-//GIVE THE QUIZ, THEN SHOW A STATUS REPORT
-//////////////////////////////////////////
+//////////////////////
+//CREATE SELECTED QUIZ
+//////////////////////
+
+///////////
+//GIVE QUIZ
+///////////
+
+//////////////
+//QUIZ RESULTS
+//////////////

@@ -1,30 +1,34 @@
 MILLS
 
--Colors/logos for the website
--Make spreadsheet for shift data
+	-Add graphs and shit to financial summary (by Friday)
+	-Menu builder (this weekend)
+	-Implement the design/UI pass (early next week)
+	-Debugging and presentation prep (finishing up next week)
 
 EVAN
 
--Finish/polish the financial summary
-	-Once Mills makes the spreadsheet, input all of the fake shift data using a dummy account
-	-Debug (you can start this process now, but having the spreadsheet would help a lot)
-	-Once it's all working, ship it to Mills to make it look nice
-	-Once it looks nice, update the site and send the dummy account info to all users
+	---WHENEVER---
 
--Finish the goal checker
-	-Finish debugging it
-	-Edit each of the four goalStatus options, preferably each as modal popups
-	-Get the goalStatus to update correctly
-  
--When a user deletes a job, this is what should happen:
-  	1) With an extra level of validation, make sure the user understands what they're doing
- 	f2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
-___________________________________________________________________
+		-Finish the goal checker
+			-Finish debugging it
+			-Edit each of the four goalStatus options, preferably each as modal popups
+			-Get the goalStatus to update correctly in all four cases
 
-NEXT STEPS...
+		-When a user deletes a job, this is what should happen:
+		  	1) With an extra level of validation, make sure the user understands what they're doing
+		 	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
+		
+		-When a user deletes a menu, do the same as above, without cascading
 
-*Timeline creator
-*Menu manager
-*Flash card quizzer
-*Quiz maker
-*Anything else?  Missing group project requirements?  Ideas for improvements?
+
+	---NOT YET---
+
+		-Once you finish the goals and goal checker, start the timeline creator
+
+		-Once Mills finishes his updates to financial summary, finish/polish it the rest of the way
+			-Input all of the fake shift data using a dummy account
+			-Debug thoroughly
+			-Update the site and send the dummy account info to all users so they can look
+
+		-Once Mills finishes the menu builder, build the quiz maker and flash card
+			-Quiz maker already started: "./public/assets/javascript/quizMakerTesting.js"
