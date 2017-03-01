@@ -12,11 +12,13 @@ EVAN
 	-Once it looks nice, update the site and send the dummy account info to all users
 
 -Finish the goal checker
-  -Make the modal popup with all of the various options for goals with passed deadlines
+	-Finish debugging it
+	-Edit each of the four goalStatus options, preferably each as modal popups
+	-Get the goalStatus to update correctly
   
 -When a user deletes a job, this is what should happen:
-  1) With an extra level of validation, make sure the user understands what they're doing
-  2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
+  	1) With an extra level of validation, make sure the user understands what they're doing
+ 	f2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
 ___________________________________________________________________
 
 NEXT STEPS...

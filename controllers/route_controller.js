@@ -73,6 +73,10 @@ router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
 
+router.get("/goalCheckerTest", loggedIn, function(req, res, next) {
+    res.render("goalCheckerTest", req);
+});
+
 router.post("/dashboardWithMessage", loggedIn, function(req, res, next) {
     var dataObject = {
         message: req.message
@@ -159,7 +163,7 @@ router.get("/goals", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allGoals.length; i++) {
             dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
         }
-        res.JSON(dataObject);
+        res.json(dataObject);
     });
 });
 
