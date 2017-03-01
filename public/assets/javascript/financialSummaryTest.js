@@ -1,178 +1,228 @@
-//There are a couple things that still need to be fixed
-
-//1)Eventually, all shifts will be attached to a job, where we will find the wage.  For now, it's always 2.13.
-    //User selects job, pull that job from the DB, get its wage, set that wage to hourlyWage
-//2)Still need to find the total span of time worked.  For now, it's always 26 days.
-    //Use moment for this, Mills said
-//3)Not 100% sure the earlier-than-in-time out-times are being handled correctly.
-    //This won't be an issue once we fix the sliders
-    //4)[OPTIONAL] Go ahead and implement the range-of-dates functionality
-
-
-///////////////////////////////////////
-//VARIABLES
-///////////////////////////////////////
-
-//Variables to fill after pulling from the database
-var hourlyWage = 2.13;  //Eventually, all shifts will be associated to a job.  For now, use 2.13.
-var totalWalkedWith = 0;
-var totalHoursWorked = 0;
-var totalBWL = 0;
-var totalPPA = 0;
-var totalSales = 0;
-var totalTipout = 0;
-var totalTipPercent = 0;
-// var firstShiftDate = 0; 
-// var lastShiftDate = 0;
-
-//Counter variables
-var countShifts = 0;
-var countBWL = 0;
-var countPPA = 0;
-var countSales = 0;
-var countTipout = 0;
-var countTipPercent = 0;
-var countStiffed = 0;
-
-//Target variables to be calculated while going through shifts
-var bestTip = 0;
-var worstTip = 99999;
-var longestShift = 0;
-var shortestShift = 99999;
-var mostWalkedWithShift = 0;
-var leastWalkedWithShift = 99999;
+//Make sure the in-times and out-times are being set correctly using moment, taken from the sliders that Mills will implement
 
 ///////////////////////////////////////
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
+//Not sure what this is really for... the userID is checked on the post, regardless of what object is sent
 var userIdObj = {
-    userID: 1
+    userID: 0;
 }
 
 $.post("/financialSummary", userIdObj)
 .done(function(data) {
 
+    //This array will hold one financial summary for each job
+    var finishedSummaries = [];
+
+    //This array is used to store all jobIds for a user
+    var jobIDArray = [];
+    
+    for (var i = 0; i < data.length; i++) {
+        if (!jobIDArray.includes(data[i].JobId)) {
+            jobIDArray.push(data[i].JobId);
+        }
+    }
+
     var shifts = [];
 
+    //Fill the shifts array with all shifts
     for (var i = 0; i < data.length; i++) {
         shifts.push(data[i]);
     }
 
-    for (var i = 0; i < shifts.length; i++) {
-        countShifts++;
+    //At this point, jobIDArray should hold the JobIds for which you should do a financial summary
+    //You will run the rest of the code once for each JobId
+    //In the end, you should have a unique object for each job holding the financial summary results for that job
 
-        totalWalkedWith += shifts[i].totalWalkedWith;
-        if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
-        if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
+    //For each unique job ID...
+    for (var k = 0; k < jobIDArray.length; k++) {
 
-        //If out-time > in-time (i.e., if shift ended before midnight)
-        if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
-            totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
-            if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-            if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+        //Variables to fill after pulling from the database
+        var hourlyWage = 0;
+        var totalWalkedWith = 0;
+        var totalHoursWorked = 0;
+        var totalBWL = 0;
+        var totalPPA = 0;
+        var totalSales = 0;
+        var totalTipout = 0;
+        var totalTipPercent = 0;
+
+        //Get these two from the span-of-dates sliders set before running the financial summary
+        var firstShiftDate;
+        var lastShiftDate;
+
+        //Counter variables
+        var countShifts = 0;
+        var countBWL = 0;
+        var countPPA = 0;
+        var countSales = 0;
+        var countTipout = 0;
+        var countTipPercent = 0;
+        var countStiffed = 0;
+
+        //Target variables to be calculated while going through shifts
+        var bestTip = 0;
+        var worstTip = 99999;
+        var longestShift = 0;
+        var shortestShift = 99999;
+        var mostWalkedWithShift = 0;
+        var leastWalkedWithShift = 99999;
+
+        //For each shift in the shifts array...
+        for (var i = 0; i < shifts.length; i++) {
+            //If the job ID matches, 
+            if (shifts[i].JobId === jobIDArray[k]) {
+                countShifts++;
+
+                totalWalkedWith += shifts[i].totalWalkedWith;
+                if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
+                if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
+
+                //If out-time > in-time (i.e., if shift ended before midnight)
+                if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
+                    totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
+                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                }
+
+                //If out-time < in-time (i.e., if shift ended after midnight)
+                else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
+                    totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
+                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                }
+
+                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
+                if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
+
+                if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
+
+                if (shifts[i].bwl != "NULL") {
+                    totalBWL += shifts[i].bwl;
+                    countBWL++;
+                }
+                    
+                if (shifts[i].ppa != "NULL") {
+                    totalPPA += shifts[i].ppa;
+                    countPPA++;
+                }
+                    
+                if (shifts[i].sales != "NULL") {
+                    totalSales += shifts[i].sales;
+                    countSales++;
+                }
+                    
+                if (shifts[i].tipout != "NULL") {
+                    totalTipout += shifts[i].tipout;
+                    countTipout++;
+                }
+                    
+                if (shifts[i].tipPercent != "NULL") {
+                    totalTipPercent += shifts[i].tipPercent;
+                    countTipPercent++;
+                }
+
+                hourlyWage = shifts[i].wage;
+            }
         }
 
-        //If out-time < in-time (i.e., if shift ended after midnight)
-        else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
-            totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
-            if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-            if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+        ///////////////////////////////////////
+        //PREPARE FINANCIAL SUMMARY VARIABLES
+        ///////////////////////////////////////
+
+        //This currently holds the number of minutes worked.  Correcting that here.
+        totalHoursWorked = totalHoursWorked/60;
+
+        var numDays = lastShiftDate - firstShiftDate;  //Use moment for this
+        var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
+        var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
+        var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
+        var avgShiftLength = totalHoursWorked / countShifts;
+        var avgShiftsPerWeek = countShifts / (numDays / 7);
+        var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
+        var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
+        var avgTipout = totalTipout / countTipout;
+        var avgTipPercent = totalTipPercent / countTipPercent;
+        var avgBWL = totalBWL / countBWL;
+        var avgPPA = totalPPA / countPPA;
+        var avgSales = totalSales / countSales;
+
+        ///////////////////////////////////////
+        //DISPLAY FINANCIAL SUMMARY DATA
+        ///////////////////////////////////////
+
+        $("#mainDiv").append("<br>********************************");
+        $("#mainDiv").append("<br>Job " + k);
+        $("#mainDiv").append("<br>Total walked with = $" + totalWalkedWith.toFixed(2));
+        $("#mainDiv").append("<br>Total earned, including hourly wage (before taxes) = $" + totalEarnedBeforeTaxes.toFixed(2));
+        $("#mainDiv").append("<br>Average hourly walked with = $" + avgHourlyWalkedWith.toFixed(2));
+        $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
+        $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
+        $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
+        $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
+        $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
+        $("#mainDiv").append("<br>Average tipout = $" + avgTipout.toFixed(2));
+        $("#mainDiv").append("<br>Average tip percent = " + avgTipPercent.toFixed(2) + "%");
+        $("#mainDiv").append("<br>Average BWL = " + avgBWL.toFixed(2) + "%");
+        $("#mainDiv").append("<br>Average PPA = $" + avgPPA.toFixed(2));
+        $("#mainDiv").append("<br>Average sales = $" + avgSales.toFixed(2));
+        $("#mainDiv").append("<br>Best tip = $" + bestTip.toFixed(2));
+        $("#mainDiv").append("<br>Worst (non-zero) tip = $" + worstTip.toFixed(2));
+        $("#mainDiv").append("<br>Number of times stiffed = " + countStiffed);
+        $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
+        $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
+        $("#mainDiv").append("<br>Most walked with shift = $" + mostWalkedWithShift.toFixed(2));
+        $("#mainDiv").append("<br>Least walked with shift = $" + leastWalkedWithShift.toFixed(2));
+        // $("#mainDiv").append("<br>********************************")
+        $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
+        // $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
+        // $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
+        // $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
+        // $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
+        // $("#mainDiv").append("<br>Number of Tip percent entries = " + countTipPercent);
+
+        //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
+        var summaryObj = {
+            totalWalkedWith: totalWalkedWith.toFixed(2),
+            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes.toFixed(2),
+            totalHoursWorked: totalHoursWorked.toFixed(2),
+            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes,
+            avgHourlyWalkedWith: avgHourlyWalkedWith,
+            avgHourlyTotal: avgHourlyTotal,
+            avgShiftLength: avgShiftLength,
+            avgShiftsPerWeek: avgShiftsPerWeek,
+            avgShiftsPerMonth: avgShiftsPerMonth,
+            avgHoursPerWeek: avgHoursPerWeek,
+            avgTipout: avgTipout,
+            avgTipPercent: avgTipPercent,
+            avgBWL: avgBWL,
+            avgPPA: avgPPA,
+            avgSales: avgSales,
+            bestTip: bestTip,
+            worstTip: worstTip,
+            longestShift: longestShift,
+            shortestShift: shortestShift,
+            mostWalkedWithShift: mostWalkedWithShift,
+            leastWalkedWithShift: leastWalkedWithShift,
+            hourlyWage: hourlyWage,
+            totalBWL: totalBWL,
+            totalPPA: totalPPA,
+            totalSales: totalSales,
+            totalTipout: totalTipout,
+            totalTipPercent: totalTipPercent,
+            countBWL: countBWL,
+            countPPA: countPPA,
+            countSales: countSales,
+            countTipout: countTipout,
+            countTipPercent: countTipPercent
+            countShifts: countShifts,
+            countStiffed: countStiffed,
+            numDays: numDays
         }
 
-        //If they're the same, log the error and move on.
-        else if (convertTimeToInt(shifts[i].timeOut) = convertTimeToInt(shifts[i].timeIn)) {console.log("inTime and outTime are the same")};
-
-        //If shifts[i].shiftDate is before firstShiftDate, update firstShiftDate
-        //If shifts[i].shiftDate is after lastShiftDate, update lastShiftDate
-
-        if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
-        if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
-
-        if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
-
-        if (shifts[i].bwl != "NULL") {
-            totalBWL += shifts[i].bwl;
-            countBWL++;
-        }
-            
-        if (shifts[i].ppa != "NULL") {
-            totalPPA += shifts[i].ppa;
-            countPPA++;
-        }
-            
-        if (shifts[i].sales != "NULL") {
-            totalSales += shifts[i].sales;
-            countSales++;
-        }
-            
-        if (shifts[i].tipout != "NULL") {
-            totalTipout += shifts[i].tipout;
-            countTipout++;
-        }
-            
-        if (shifts[i].tipPercent != "NULL") {
-            totalTipPercent += shifts[i].tipPercent;
-            countTipPercent++;
-        }
+        finishedSummaries.push(summaryObj)
     }
-
-    ///////////////////////////////////////
-    //PREPARE FINANCIAL SUMMARY VARIABLES
-    ///////////////////////////////////////
-
-    //totalHoursWorked currently holds the number of minutes worked.  Correcting that here.
-    totalHoursWorked = totalHoursWorked/60;
-
-    // var numDays = lastShiftDate - firstShiftDate;  //This only works if the dates are translated to ints somehow
-    var numDays = 26;  //For now, this will be hardcoded.
-    var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
-    var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
-    var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
-    var avgShiftLength = totalHoursWorked / countShifts;
-    var avgShiftsPerWeek = countShifts / (numDays / 7);
-    var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
-    var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
-    var avgTipout = totalTipout / countTipout;
-    var avgTipPercent = totalTipPercent / countTipPercent;
-    var avgBWL = totalBWL / countBWL;
-    var avgPPA = totalPPA / countPPA;
-    var avgSales = totalSales / countSales;
-
-    ///////////////////////////////////////
-    //DISPLAY FINANCIAL SUMMARY DATA
-    ///////////////////////////////////////
-
-    $("#mainDiv").append("<br>********************************");
-    $("#mainDiv").append("<br>Total earned (before taxes) = $" + totalEarnedBeforeTaxes.toFixed(2));
-    $("#mainDiv").append("<br>Average hourly walked with = $" + avgHourlyWalkedWith.toFixed(2));
-    $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
-    $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
-    $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
-    $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
-    $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-    $("#mainDiv").append("<br>Average tipout = $" + avgTipout.toFixed(2));
-    $("#mainDiv").append("<br>Average tip percent = " + avgTipPercent.toFixed(2) + "%");
-    $("#mainDiv").append("<br>Average BWL = " + avgBWL.toFixed(2) + "%");
-    $("#mainDiv").append("<br>Average PPA = $" + avgPPA.toFixed(2));
-    $("#mainDiv").append("<br>Average sales = $" + avgSales.toFixed(2));
-    $("#mainDiv").append("<br>Best tip = $" + bestTip.toFixed(2));
-    $("#mainDiv").append("<br>Worst (non-zero) tip = $" + worstTip.toFixed(2));
-    $("#mainDiv").append("<br>Number of times stiffed = " + countStiffed);
-    $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
-    $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
-    $("#mainDiv").append("<br>Most walked with shift = $" + mostWalkedWithShift.toFixed(2));
-    $("#mainDiv").append("<br>Least walked with shift = $" + leastWalkedWithShift.toFixed(2));
-    // $("#mainDiv").append("<br>********************************")
-    // $("#mainDiv").append("<br>firstShiftDate = " firstShiftDate.toFixed(2));
-    // $("#mainDiv").append("<br>lastShiftDate = " lastShiftDate.toFixed(2));
-    $("#mainDiv").append("<br>********************************")
-    $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
-    $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
-    $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
-    $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
-    $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
-    $("#mainDiv").append("<br>Number of Tip percent entries = " + countTipPercent);
 });
 
 ///////////////////////////////////////

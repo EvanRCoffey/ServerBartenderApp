@@ -1,51 +1,28 @@
-NOW...
+MILLS
 
--Write code to make the second slider always be later than the first [Mills]
+-Colors/logos for the website
+-Make spreadsheet for shift data
 
+EVAN
 
+-Finish/polish the financial summary
+	-Once Mills makes the spreadsheet, input all of the fake shift data using a dummy account
+	-Debug (you can start this process now, but having the spreadsheet would help a lot)
+	-Once it's all working, ship it to Mills to make it look nice
+	-Once it looks nice, update the site and send the dummy account info to all users
 
-THEN...
-
-* Once you finish all the above tasks, deploy
-
-* Test/Debug online version
-
-* Give to friends to start using.  Think of ways to get the word out other than just Facebook.
-	-Make sure they have the sample login so they can see how the financial summary works
-	-Write an email to everyone explaining how it works, plans for the future, etc
-
-
-
-AT SOME POINT...
-
--Finish/polish the financial summary (instructions in financialSummaryTest.js) [Evan]
-
--Two different calendar outputs on jobEditor.handlebars [Mills]
-
+-Finish the goal checker
+  -Make the modal popup with all of the various options for goals with passed deadlines
+  
 -When a user deletes a job, this is what should happen:
-	1) With an extra level of validation, make sure the user understands what they're doing
-	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedbyUser:false}}"
-
+  1) With an extra level of validation, make sure the user understands what they're doing
+  2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
 ___________________________________________________________________
 
 NEXT STEPS...
 
-*Goals manager 
-
-*Goal checker
-
 *Timeline creator
-
 *Menu manager
-
 *Flash card quizzer
-
 *Quiz maker
-
-*Anything else?  Missing group project requirements?  Any ideas for improvements?
-
-___________________________________________________________________
-
-WHENEVER...
-
-See if Sarah can get a bunch of data for you since she's admin at Fleming's.  It's legal if you take out all identifiers
+*Anything else?  Missing group project requirements?  Ideas for improvements?
