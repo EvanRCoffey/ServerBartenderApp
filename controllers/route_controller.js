@@ -73,6 +73,13 @@ router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
 
+router.post("/dashboardWithMessage", loggedIn, function(req, res, next) {
+    var dataObject = {
+        message: req.message
+    }
+    res.render("dashboard", dataObject);
+});
+
 router.get("/shift", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
@@ -84,6 +91,10 @@ router.get("/shift", loggedIn, function(req, res, next) {
 
 router.get("/job", loggedIn, function(req, res, next) {
     res.render("job", req);
+});
+
+router.get("/goal", loggedIn, function(req, res, next) {
+    res.render("goal", req);
 });
 
 // router.get("/restaurant", loggedIn, function(req, res, next) {
@@ -125,6 +136,32 @@ router.get("/jobsTable", loggedIn, function(req, res, next) {
        res.render("jobsTable", dataObject);
      });
  });
+
+router.get("/goalsTable", loggedIn, function(req, res, next) {
+    db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
+        var dataObject = {
+            allGoals: dbUser
+        };
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allGoals.length; i++) {
+            dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
+        }
+        res.render("goalsTable", dataObject);
+    });
+});
+
+router.get("/goals", loggedIn, function(req, res, next) {
+    db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
+        var dataObject = {
+            allGoals: dbUser
+        };
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allGoals.length; i++) {
+            dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
+        }
+        res.JSON(dataObject);
+    });
+});
 
 router.get("/financialSummaryTest", loggedIn, function(req, res, next) {
     res.render("financialSummaryTest", req);
@@ -248,6 +285,18 @@ router.post("/sendFeedback", function(req, res) {
 //
 
 router.post("/newShift", loggedIn, function(req, res, next) {
+    if (req.body.shiftType === "") {req.body.shiftType = null}
+    if (req.body.largestTip === "") {req.body.largestTip = null}
+    if (req.body.smallestTip === "") {req.body.smallestTip = null}
+    if (req.body.stiffed === "") {req.body.stiffed = null}
+    if (req.body.bwl === "") {req.body.bwl = null}
+    if (req.body.tipout === "") {req.body.tipout = null}
+    if (req.body.tipPercent === "") {req.body.tipPercent = null}
+    if (req.body.ppa === "") {req.body.ppa = null}
+    if (req.body.comments === "") {req.body.comments = null}
+    if (req.body.breakthroughs === "") {req.body.breakthroughs = null}
+    if (req.body.shiftDate === "") {req.body.shiftDate = "2017-01-01"}
+    
     db.Shift.create({
         shiftDate: req.body.shiftDate,
         timeIn: req.body.inTime,
@@ -318,6 +367,30 @@ router.post("/newJob", loggedIn, function(req, res, next) {
     }
 });
 
+router.post("/newGoal", loggedIn, function(req, res, next) {
+    //Called when you post a new goal
+    var goalStatus = {
+        completed: false,
+        abandoned: false,
+        extended: false,
+        modified: false
+    }
+    db.Goal.create({
+    UserId: req.user.id,
+        goalName: req.body.goalName,
+        goalDeadline: req.body.goalDeadline,
+        goalStatus: goalStatus,
+        goalText: req.body.goalText,
+        comments: req.body.comments,
+        isReal: false
+    }).then(function(dbUser) {
+        var dataObject = {
+            message: 'Goal Added'
+        }
+        res.render("dashboard", dataObject);     
+    });
+});
+
 // router.post("/newRestaurant",loggedIn, function(req, res, next) {
 //     db.Restaurant.create({
 //         restaurant_id: 0,
@@ -334,7 +407,7 @@ router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
   console.log(shiftData);
   db.Shift.update(shiftData, {
-    where: {id:shiftData.shiftIdHidden}
+    where: {id:shiftData.shiftID}
   }).then(function(dbUser) {
     var dataObject = {
         message: 'Shift Updated'
@@ -368,6 +441,17 @@ router.post("/editJob", loggedIn, function(req, res, next) {
     }
 });
 
+router.post("/editGoal", loggedIn, function(req, res, next) {
+    //Called when you edit an existing goal
+    var goalData = req.body;
+    db.Goal.update(goalData, {where: {id:goalData.goalIdHidden}}).then(function(dbUser) {
+         var dataObject = {
+            message: 'Goal Updated'
+        }
+        res.render("dashboard", dataObject);     
+    });
+});
+
 // router.post("/editRestaurant", function(req, res) {
 //   var restaurantData = req.body;
 //   db.Restaurant.update(restaurantData, {
@@ -380,7 +464,7 @@ router.post("/editJob", loggedIn, function(req, res, next) {
 router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
   db.Shift.destroy({where: {UserId: req.user.id, id: ShiftID}}).then(function(dbUser) {
-    console.log("Shift deleted!");
+    console.log("Shift deleted");
     res.redirect('/shiftsTable')
   });
 });
@@ -388,9 +472,18 @@ router.post("/deleteShift:id", loggedIn, function(req, res, next) {
 router.post("/deleteJob:id", loggedIn, function(req, res, next) {
   var JobID = req.params.id;
   db.Job.destroy({where: {UserId: req.user.id, id: JobID}}).then(function(dbUser) {
-    console.log("Job deleted!");
+    console.log("Job deleted");
     res.redirect('/jobsTable');
   });
+});
+
+router.post("/deleteGoal:id", loggedIn, function(req, res, next) {
+    //Called when you delete a shift with a provided ID
+    var GoalID = req.params.id;
+    db.Goal.destroy({where: {UserId: req.user.id, id: GoalID}}).then(function(dbUser) {
+        console.log("Goal deleted");
+        res.redirect('/goalsTable');
+    });
 });
 
 // router.post("/deleteRestaurant", function(req, res) {
@@ -445,7 +538,7 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
         ])
         .spread(function(shift, jobs) {
             //Reformat before sending to Render
-               shift[0].shiftDate = moment(shift[0].shiftDate).format('YYYY-MM-DD')
+               shift[0].shiftDate = moment(shift[0].shiftDate).add(18, 'hours').format('YYYY-MM-DD')
                shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
                shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
              var dataObject = {
@@ -460,18 +553,33 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
 
 //Grabs a shift with a given id, for use with shift editor
 router.get("/editJob:id", loggedIn, function(req, res, next) {
-  var JobID = req.params.id;
-      db.Job.findAll({ where: {UserId: req.user.id, id: JobID},
-    raw: true
+    var JobID = req.params.id;
+    db.Job.findAll({ 
+        where: {UserId: req.user.id, id: JobID},
+        raw: true
     }).then(function(dbUser) {
-        var date = moment(dbUser[0].startDate).format('YYYY-MM-DD')
+        var date = moment(dbUser[0].startDate).add(18, 'hours').format('YYYY-MM-DD')
         console.log(date)
-       dbUser[0].startDate = date
-       var date2 = moment(dbUser[0].endDate).format('YYYY-MM-DD')
+        dbUser[0].startDate = date
+        var date2 = moment(dbUser[0].endDate).add(18, 'hours').format('YYYY-MM-DD')
         console.log(date2)
-       dbUser[0].endDate = date2
+        dbUser[0].endDate = date2
         res.render("jobEditor", dbUser[0]);
-     });
+    });
+});
+
+router.get("/editGoal:id", loggedIn, function(req, res, next) {
+    //Called when you grab a shift with a provided ID, for use with goal editor
+    var GoalID = req.params.id;
+    db.Goal.findAll({ 
+        where: {UserId: req.user.id, id: GoalID},
+        raw: true
+    }).then(function(dbUser) {
+        var date = moment(dbUser[0].goalDeadline).add(18, 'hours').format('YYYY-MM-DD');
+        console.log(date);
+        dbUser[0].goalDeadline = date;
+        res.render("goalEditor", dbUser[0]);
+    });
 });
 
 //Keep this at the end of the router section.

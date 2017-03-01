@@ -12,12 +12,12 @@ var picker = Calinput.pickadate('picker')
 picker.set('select', moment().format('yyyy-mm-dd'), { format: 'yyyy-mm-dd' })
 
 //Checks for hidden value passed via handlebars then updates.
-if($('#startDateHidden').val()){
-picker.set('select', $('#startDateHidden').val(), { format: 'yyyy-mm-dd' })
+if($('#goalDeadlineHidden').val()){
+picker.set('select', $('#goalDeadlineHidden').val(), { format: 'yyyy-mm-dd' })
 }
 
 
-//Allows the delete modal to open on the shift editor page.
+//Allows the delete modal to open on the goal editor page.
 $('.modal').modal();
 
 function closeModal(){

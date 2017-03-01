@@ -8,6 +8,12 @@ module.exports = function(sequelize, DataTypes) {
 	}, {
       classMethods: {
         associate: function(models) {
+          User.hasMany(models.Goal);
+        },
+        associate: function(models) {
+          User.hasMany(models.Menu);
+        },
+        associate: function(models) {
           User.hasMany(models.Shift);
         },
         associate: function(models) {

@@ -11,18 +11,31 @@
             </div>
         </div>
 
-        <form class="col s12" method="POST" action="/newShift">
+        <form class="col s12" id="shiftForm" method="POST"  onsubmit="return shiftValidate()" action="/newShift">
 
+        {{#unless jobs}}
+      <!-- This section only shows when no jobs. -->
+                <div class="input-field col s12">
+                <select name="job_id" id="noJob" required>
+                    <option value="" disabled selected>Please create a Job First</option>
+                </select>
+                <label>Job Selector</label>
+                <a href="/job"><h5>Click here to create a job.</h5></a>
+            </div>
+         {{/unless}}
+            
+            {{#if jobs}}
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
-                    <option value="" disabled selected>Click here to choose a job</option>
+                    <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}">{{this.job_name}}</option>
+                        <option value="{{this.id}}" selected>{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
             </div>
+            {{/if}}
 
             <!--totalWalkedWith DECIMAL(10,2)-->
             <div class="input-field col s12">
@@ -109,17 +122,43 @@
             <select name="shiftType" id="shiftType">
               <option value="" disabled selected>Click here to choose the shift type</option>
               <option value="breakfast">Breakfast</option>
+              <option value="brunch">Brunch</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
               <option value="double">Double</option>
+              <option value="openToClose">Open to Close</option>
             </select>
             <label>Shift type</label>
+            
+            {{#if jobs}}
+            <button class="btn waves-effect waves-light shiftSubmit" type="submit">Create New Shift</button>
+            {{/if}}
 
-            <button class="btn waves-effect waves-light" type="submit">Create New Shift</button>
-
+            {{#unless jobs}}
+            <button class="btn waves-effect waves-light disabled">Create New Shift</button>
+            {{/unless}}
             <div class="row"></div>
         </form>
     </div>
 </div>
+
+{{#if jobs}}
+  <div id="timeEqual" class="modal">
+    <div class="modal-content">
+      <h5>In-Time and Out-Time cannot be the same.</h5>
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+    </div>
+  </div>
+
+<div id="timeLess" class="modal">
+<div class="modal-content">
+      <h5>In-Time is before Out-Time.</h5>
+      <div class="row">
+      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+      </div>
+       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
+    </div>
+  </div>
+  {{/if}}
 
 <script type="text/javascript" src="./javascript/shift.js"></script>

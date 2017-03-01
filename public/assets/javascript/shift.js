@@ -7,35 +7,52 @@ $('.datepicker').pickadate({
 });
 
 //This grabs a hidden value passed by handlebars and sets/formats the calendar to that value.
-$('.datepicker').pickadate('picker').set('select', $('#hiddenCal').val(), { format: 'dddd mmm dd, yyyy' })
+// $('.datepicker').pickadate('picker').set('select', $('#hiddenCal').val(), { format: 'dddd mmm dd, yyyy' })
+
+var Calinput = $('.datepicker').pickadate()
+var picker = Calinput.pickadate('picker')
+//Defaults to today
+picker.set('select', moment().format('yyyy-mm-dd'), { format: 'yyyy-mm-dd' })
+
+//Checks for hidden value passed via handlebars then updates.
+if($('#hiddenCal').val()){
+picker.set('select', $('#hiddenCal').val(), { format: 'yyyy-mm-dd' })
+}
 
 $(document).ready(function() {
     $('select').material_select();
     // prepareJobDropdown();
 });
 
+//dirty global vars for Time sliders
+var inTime
+var outTime
+var timeStartArray = []
 function showInTime(newValue) {
-    $("#inTimeSpan").text("In-time: " + timeArray[newValue])
-    var inTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $("#inTimeSpan").text("In-time: " + timeStartArray[newValue])
+    inTime = moment(timeStartArray[newValue], 'LT').format('HH:mm:ss')
     $('#inTimeHidden').val(inTime)
 }
 
+
+
+ // $('#slider-range').slider( "option", "min", $('.middle_container').find('.start_price').val() );
+ // $('#slider-range').slider( "option", "max", $('.middle_container').find('.end_price').val() );
+
 function showOutTime(newValue) {
-    $("#outTimeSpan").text("Out-time: " + timeArray[newValue])
-    var outTime = moment(timeArray[newValue], 'LT').format('HH:mm:ss')
+    $("#outTimeSpan").text("Out-time: " + timeStartArray[newValue])
+    outTime = moment(timeStartArray[newValue], 'LT').format('HH:mm:ss')
     $('#outTimeHidden').val(outTime)
 }
 
-var timeArray = []
-
-fillTimeArray()
+fillStartArray()
 
 //This just fills the timeArray. I send the result to a global var so this function doesn't run everytime.
-function fillTimeArray(){
+function fillStartArray(){
     //Push start time to array
-    timeArray.push(moment().startOf('day').format('LT'))
-    for (var i = 0; i < 95; i++) {
-        timeArray.push(moment(timeArray[i], 'LT').add(15, 'minutes').format('LT'))
+    timeStartArray.push(moment().startOf('day').format('LT'))
+    for (var i = 0; i < 152; i++) {
+        timeStartArray.push(moment(timeStartArray[i], 'LT').add(15, 'minutes').format('LT'))
     }
 }
 
@@ -50,6 +67,32 @@ function populateDropdown(hiddenTarget, dropdownTarget) {
         //Sets the value in the dropdown based on the prepopulated hidden value.
         $(dropdownTarget + ' option[value =' + setValue + ']').prop('selected', true);
     }
+}
+
+//Allows the delete modal to open on the shift editor page.
+$('.modal').modal();
+
+function closeModal(){
+$('.modal').modal('close');
+}
+
+var timeConfirmed = false
+
+function shiftValidate(){
+    if(inTime === outTime){
+        $('#timeEqual').modal('open');
+        return false
+    } else if (moment(inTime, 'HH:mm:ss').isAfter(moment(outTime, 'HH:mm:ss')) && !timeConfirmed) { 
+        $('#timeLess').modal('open');
+        console.log('time less')
+        return false
+    }
+}
+
+function submitForm(){
+    console.log('submit!')
+    timeConfirmed = true
+    $('#shiftForm').submit();
 }
 
 
