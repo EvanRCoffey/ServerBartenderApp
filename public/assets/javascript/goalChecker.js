@@ -1,28 +1,22 @@
-//goalChecker todo
-
-//1) Find out how to get today's date from moment
-//2) Find out how to compare today's date to a date from a goal using moment
-//3) Build a modal popup for changing the status of goals with passed deadlines
-//4) Build a modal popup for going either to the goals table or to the dashboard (edit the two functions)
-//5) When there are no goals, send the user to the dashboard with the message "You should set some goals!"
-
 //Each time a user logs in, get all of that user's goals, then...
 $.get("/goals").then(function(goals) {
 
 	var deadlinesUpcoming = [];
 	var deadlinesPassed = [];
 
-	var today;	//Get today from moment, I'm assuming
+	var today = moment();
 
+	//Pushes all goals to either deadlinesUpcoming[] or deadlinesPassed[]
 	for (var i = 0; i<goals.length; i++) {
-		if (goals[i].goalDeadline > today && goals[i].goalStatus.complete === false) {  //Might need moment here, too
+		if ((today.diff(goals[i].goalDeadline, 'days') > 0) && goals[i].goalStatus.complete === false) {
 			deadlinesUpcoming.push(goals[i]);
 		}
-		else if (goalDeadline <= today) {  //Might need moment here, too
+		else if ((today.diff(goals[i].goalDeadline, 'days') > 0)) {
 			deadlinesPassed.push(goals[i]);
 		}
 	}
 
+	//If there are deadlines that have passed, present them, one modal popup at a time, to have their status changed
 	if (deadlinesPassed.length > 0) {
 		for (var i = 0; i<deadlinesPassed.length; i++) {
 			//Prompt user to change goal status:
@@ -33,24 +27,37 @@ $.get("/goals").then(function(goals) {
 		}
 	}
 
+	//If there are deadlines that haven't yet passed, make a modal popup with two options: 1)dashboard, 2)goals table
 	if (deadlinesUpcoming.length > 0) {
 		//Modal popup with two options, plus the message "You've got some goals with upcoming deadlines."
-			//Option 1 - go to the goals table
-			//Option 2 - go to the dashboard
+		//If you'd like to have this modal happen ON the dashboard page, replace "goToDashboard()" with "closeModal()"
+		var jQueryModalString = '<div id="modal1" class="modal"><div class="modal-content"><h5>You\'ve got goals with upcoming deadlines...</h5><div class="row"></div><button class="btn waves-effect waves-light" onclick="goToDashboard()">Got it.  Take me to the dashboard.</button><button class="btn waves-effect waves-light" onclick="goToGoalsTable()">Oh snap!  Take me to the goals table, then.</button></div></div>'
+
+		$('.modal').modal();	//Allows the user-option modal to open on the goal checker page.
+		$("#mainDiv").append(jQueryModalString);	//(HOPEFULLY) Modal pops up with two choices
 	}
 
+	//If there are no deadlines that haven't yet passed, go straight to the dashboard
 	else if(deadlinesUpcoming.length === 0) {
-		//Go straight to the dashboard with the message "You should set some goals!"
-	}
-
-	function editGoalButton() {
-		//render goalEditor.handlebars with that goal
-			//(OPTIONAL)After the goal is submitted for updating, instead of redirecting to the dashboard like normal, redirect to the goal checker page, except this time don't do anything with the goals whose deadlines are passed
+		var messageObj = {
+			message: "You should set some goals!"
+		}
+		$.post("/dashboardWithMessage", messageObj);
 	}
 	
-	function goToDashboardButton() {
-		//render dashboard.handlebars
+	function goToDashboard() {
+		var messageObj = {
+			message: "We'll check your goals again next time you login."
+		}
+		$.post("/dashboardWithMessage", messageObj);
 	}
+
+	function goToGoalsTable() {
+		$.get("/goalsTable");
+	}
+
+	function closeModal(){
+		$('#modal1').modal('close');
+	}
+
 });
-	
-

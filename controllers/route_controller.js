@@ -73,6 +73,13 @@ router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
 
+router.post("/dashboardWithMessage", loggedIn, function(req, res, next) {
+    var dataObject = {
+        message: req.message
+    }
+    res.render("dashboard", dataObject);
+});
+
 router.get("/shift", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
@@ -131,7 +138,6 @@ router.get("/jobsTable", loggedIn, function(req, res, next) {
  });
 
 router.get("/goalsTable", loggedIn, function(req, res, next) {
-
     db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
         var dataObject = {
             allGoals: dbUser
@@ -141,6 +147,19 @@ router.get("/goalsTable", loggedIn, function(req, res, next) {
             dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
         }
         res.render("goalsTable", dataObject);
+    });
+});
+
+router.get("/goals", loggedIn, function(req, res, next) {
+    db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
+        var dataObject = {
+            allGoals: dbUser
+        };
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allGoals.length; i++) {
+            dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
+        }
+        res.JSON(dataObject);
     });
 });
 
