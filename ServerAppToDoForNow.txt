@@ -1,6 +1,6 @@
 MILLS
 
-	-Add graphs and shit to financial summary (by Friday)
+	-Add graphs and shit to financial summary and make it look nice (by Friday)
 	-Menu builder (this weekend)
 	-Implement the design/UI pass (early next week)
 	-Debugging and presentation prep (finishing up next week)
@@ -9,10 +9,7 @@ EVAN
 
 	---WHENEVER---
 
-		-Finish the goal checker
-			-Finish debugging it
-			-Edit each of the four goalStatus options, preferably each as modal popups
-			-Get the goalStatus to update correctly in all four cases
+		-Start the timeline creator
 
 		-When a user deletes a job, this is what should happen:
 		  	1) With an extra level of validation, make sure the user understands what they're doing
@@ -20,10 +17,7 @@ EVAN
 		
 		-When a user deletes a menu, do the same as above, without cascading
 
-
 	---NOT YET---
-
-		-Once you finish the goals and goal checker, start the timeline creator
 
 		-Once Mills finishes his updates to financial summary, finish/polish it the rest of the way
 			-Input all of the fake shift data using a dummy account

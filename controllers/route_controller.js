@@ -50,7 +50,7 @@ router.get("/feedback", function(req, res) {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/loginFailure',
-    successRedirect: '/dashboard'
+    successRedirect: '/dashboardWithGoalChecker'
 }))
 
 router.get("/loginFailure", function(req, res) {
@@ -73,8 +73,8 @@ router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
 
-router.get("/dashboard2", loggedIn, function(req, res, next) {
-    res.render("dashboard", req.params.message);
+router.get("/dashboardWithGoalChecker", loggedIn, function(req, res, next) {
+    res.render("dashboardWithGoalChecker", req);
 })
 
 router.get("/goalCheckerTest", loggedIn, function(req, res, next) {
@@ -378,7 +378,7 @@ router.post("/newGoal", loggedIn, function(req, res, next) {
         modified: false
     }
     db.Goal.create({
-    UserId: req.user.id,
+        UserId: req.user.id,
         goalName: req.body.goalName,
         goalDeadline: req.body.goalDeadline,
         goalStatus: goalStatus,
@@ -446,12 +446,44 @@ router.post("/editJob", loggedIn, function(req, res, next) {
 router.post("/editGoal", loggedIn, function(req, res, next) {
     //Called when you edit an existing goal
     var goalData = req.body;
+
+    console.log(goalData.goalStatusNumber);
+
+    if (goalData.goalStatusNumber === '1') {
+        console.log("Setting goalStatus to completed:true");
+        var goalStatus = {completed: true, abandoned: false, extended: false, modified: false}
+    }
+    if (goalData.goalStatusNumber === '2') {
+        console.log("Setting goalStatus to abandoned:true");
+        var goalStatus = {completed: false, abandoned: true, extended: false, modified: false}
+    }
+    if (goalData.goalStatusNumber === '3') {
+        console.log("Setting goalStatus to extended:true");
+        var goalStatus = {completed: false, abandoned: false, extended: true, modified: false}
+    }
+    if (goalData.goalStatusNumber === '4') {
+        console.log("Setting goalStatus to modified:true");
+        var goalStatus = {completed: false, abandoned: false, extended: false, modified: true}
+    }
+
+    console.log("goalStatus: ");
+    console.log(goalStatus)
+
+    goalData.goalStatus = goalStatus;
+
     db.Goal.update(goalData, {where: {id:goalData.goalIdHidden}}).then(function(dbUser) {
-         var dataObject = {
+        var dataObject = {
             message: 'Goal Updated'
         }
         res.render("dashboard", dataObject);     
     });
+
+    // db.Goal.update({comments: goalData.comments, goalStatus: goalData.goalStatus}, {where: {id:goalData.goalIdHidden}}).then(function(dbUser) {
+    //     var dataObject = {
+    //         message: 'Goal Updated'
+    //     }
+    //     res.render("dashboard", dataObject);     
+    // });
 });
 
 // router.post("/editRestaurant", function(req, res) {
