@@ -73,15 +73,12 @@ router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
 
+router.get("/dashboard2", loggedIn, function(req, res, next) {
+    res.render("dashboard", req.params.message);
+})
+
 router.get("/goalCheckerTest", loggedIn, function(req, res, next) {
     res.render("goalCheckerTest", req);
-});
-
-router.post("/dashboardWithMessage", loggedIn, function(req, res, next) {
-    var dataObject = {
-        message: req.message
-    }
-    res.render("dashboard", dataObject);
 });
 
 router.get("/shift", loggedIn, function(req, res, next) {
@@ -163,6 +160,7 @@ router.get("/goals", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allGoals.length; i++) {
             dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
         }
+        console.log(dataObject.allGoals[0]);
         res.json(dataObject);
     });
 });
