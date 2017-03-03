@@ -420,7 +420,7 @@ $.post("/financialSummary").done(function(data) {
             "minorGridEnabled": true
         },
         "dataProvider": data
-    }
+    });
 });
 
 //Sets initial viewable classes since amCharts won't let you do it natively.
