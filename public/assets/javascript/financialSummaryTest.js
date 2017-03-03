@@ -238,27 +238,23 @@ var chart = AmCharts.makeChart("chartdiv", {
      "responsive": {
     "enabled": true
     },
+    "addClassNames" :true,
     "precision": 2,
     "valueAxes": [{
         "id": "v1",
         "position": "left",
         "autoGridCount": true
-    }, {
-        "id": "v2",
-        "title": "Market Days",
-        "gridAlpha": 0,
-        "position": "right",
-        "autoGridCount": false
     }],
     "graphs": [{
         "id": "totalWalkedWith",
+        "classNameField": "totalWalkedWith",
         "valueAxis": "v1",
         "bullet": "round",
         "bulletBorderAlpha": 1,
         "bulletColor": "#FFFFFF",
         "bulletSize": 5,
         "hideBulletsCount": 50,
-        "lineThickness": 2,
+        "lineThickness": 1,
         "lineColor": "#20acd4",
         "type": "smoothedLine",
         "title": "Total Walked With",
@@ -268,6 +264,7 @@ var chart = AmCharts.makeChart("chartdiv", {
     },
     {
         "id": "tipout",
+        "classNameField": "tipout",
         "valueAxis": "v1",
         "bullet": "round",
         "bulletBorderAlpha": 1,
@@ -281,21 +278,124 @@ var chart = AmCharts.makeChart("chartdiv", {
         "useLineColorForBulletBorder": true,
         "valueField": "tipout",
         "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    }, {
-        "id": "g2",
-        "valueAxis": "v2",
+    },
+    {
+        "id": "bwl",
+        "classNameField": "bwl",
+        "valueAxis": "v1",
         "bullet": "round",
         "bulletBorderAlpha": 1,
         "bulletColor": "#FFFFFF",
         "bulletSize": 5,
         "hideBulletsCount": 50,
         "lineThickness": 2,
-        "lineColor": "#e1ede9",
+        "lineColor": "red",
         "type": "smoothedLine",
-        "dashLength": 5,
-        "title": "Market Days ALL",
+        "title": "BWL",
         "useLineColorForBulletBorder": true,
-        "valueField": "market2",
+        "valueField": "bwl",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "largestTip",
+        "classNameField": "largestTip",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "Largest Tip",
+        "useLineColorForBulletBorder": true,
+        "valueField": "largestTip",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "ppa",
+        "classNameField": "ppa",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "PPA",
+        "useLineColorForBulletBorder": true,
+        "valueField": "ppa",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "sales",
+        "classNameField": "sales",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "Sales",
+        "useLineColorForBulletBorder": true,
+        "valueField": "sales",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "stiffed",
+        "classNameField": "stiffed",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "Stiffed",
+        "useLineColorForBulletBorder": true,
+        "valueField": "stiffed",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "tipPercent",
+        "classNameField": "tipPercent",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "Tip Percent",
+        "useLineColorForBulletBorder": true,
+        "valueField": "tipPercent",
+        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+    },
+    {
+        "id": "smallestTip",
+        "classNameField": "smallestTip",
+        "valueAxis": "v1",
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "lineColor": "red",
+        "type": "smoothedLine",
+        "title": "Smallest Tip",
+        "useLineColorForBulletBorder": true,
+        "valueField": "smallestTip",
         "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
     }],
     "chartScrollbar": {
@@ -313,36 +413,29 @@ var chart = AmCharts.makeChart("chartdiv", {
         "autoGridCount": true,
         "color": "#AAAAAA"
     },
-    "chartCursor": {
-        "pan": true,
-        "valueLineEnabled": true,
-        "valueLineBalloonEnabled": true,
-        "cursorAlpha": 0,
-        "valueLineAlpha": 0.2
-    },
     "categoryField": "shiftDate",
     "categoryAxis": {
         "parseDates": false,
         "dashLength": 1,
         "minorGridEnabled": true
     },
-    "legend": {
-        "useGraphSettings": true,
-        "position": "bottom"
-    },
-    "balloon": {
-        "borderThickness": 1,
-        "shadowAlpha": 0
-    },
-    "export": {
-        "enabled": true
-    },
     "dataProvider": data
 });
+//Sets initial viewable classes since amCharts won't let you do it natively.
+$('.amcharts-graph-ppa, .amcharts-graph-bwl, .amcharts-graph-tipout, .amcharts-graph-tipPercent, .amcharts-graph-stiffed, .amcharts-graph-smallestTip, .amcharts-graph-largestTip, .amcharts-graph-sales').addClass('hideChart')
 
-$('tspan').css('display', 'none')
+$('.amcharts-chart-div').find('a').addClass('superHide')
 
 });
+
+$('.lever').on('click', function(){
+    var target = $(this).attr("data")
+    $(target).fadeToggle();
+})
+
+
+
+
 
 ///////////////////////////////////////
 //HELPER FUNCTIONS

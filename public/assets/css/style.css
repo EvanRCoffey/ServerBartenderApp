@@ -107,3 +107,41 @@ input[type=range]+.thumb.active {
 	height: 500px;
 }
 
+.amcharts-graph-totalWalkedWith{
+	opacity: 1;
+}
+
+.amcharts-scrollbar-label{
+	display: none;
+}
+
+.summaryLegend {
+	border-bottom-style: solid;
+}
+
+.amcharts-graph-stroke {
+	-webkit-transition: width 1s;
+    transition: width 1s;
+    display: block;
+}
+
+.fadeChart{
+	opacity: 0;
+}
+
+.hideChart{
+	display: none;
+}
+
+.superHide{
+	display: none !important;
+}
+
+.showChart{
+	display: block;
+	opacity: 1;
+}
+
+.amcharts-balloon-div{
+	display: none;
+}
