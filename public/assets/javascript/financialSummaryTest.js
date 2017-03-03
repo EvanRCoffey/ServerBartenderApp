@@ -152,26 +152,26 @@ $.post("/financialSummary")
 
             $("#mainDiv").append("<br>********************************");
             $("#mainDiv").append("<br>Job " + k);
-            $("#mainDiv").append("<br>Total walked with = $" + totalWalkedWith.toFixed(2));
-            $("#mainDiv").append("<br>Total earned, including hourly wage (before taxes) = $" + totalEarnedBeforeTaxes.toFixed(2));
-            $("#mainDiv").append("<br>Average hourly walked with = $" + avgHourlyWalkedWith.toFixed(2));
+            $("#mainDiv").text("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
+            $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
+            $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
             $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
             $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
             $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
             $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
             $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-            $("#mainDiv").append("<br>Average tipout = $" + avgTipout.toFixed(2));
-            $("#mainDiv").append("<br>Average tip percent = " + avgTipPercent.toFixed(2) + "%");
-            $("#mainDiv").append("<br>Average BWL = " + avgBWL.toFixed(2) + "%");
-            $("#mainDiv").append("<br>Average PPA = $" + avgPPA.toFixed(2));
-            $("#mainDiv").append("<br>Average sales = $" + avgSales.toFixed(2));
-            $("#mainDiv").append("<br>Best tip = $" + bestTip.toFixed(2));
-            $("#mainDiv").append("<br>Worst (non-zero) tip = $" + worstTip.toFixed(2));
-            $("#mainDiv").append("<br>Number of times stiffed = " + countStiffed);
+            $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
+            $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
+            $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
+            $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
+            $(".salesVal").text("Average $" + avgSales.toFixed(2));
+            $(".largestTipVal").text("$" + bestTip.toFixed(2));
+            $(".smallestTipVal").text("$" + worstTip.toFixed(2));
+            $(".stiffedVal").text("Number of times = " + countStiffed);
             $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
             $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
-            $("#mainDiv").append("<br>Most walked with shift = $" + mostWalkedWithShift.toFixed(2));
-            $("#mainDiv").append("<br>Least walked with shift = $" + leastWalkedWithShift.toFixed(2));
+            $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
+            $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
             // $("#mainDiv").append("<br>********************************")
             $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
             // $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
