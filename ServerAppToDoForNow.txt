@@ -20,7 +20,6 @@ EVAN
 	---NOT YET---
 
 		-Once Mills finishes his updates to financial summary, finish/polish it the rest of the way
-			-Input all of the fake shift data using a dummy account
 			-Debug thoroughly
 			-Update the site and send the dummy account info to all users so they can look
 

@@ -6,7 +6,7 @@
 
 //Not sure what this is really for... the userID is checked on the post, regardless of what object is sent
 var userIdObj = {
-    userID: 0;
+    userID: 0
 }
 
 $.post("/financialSummary", userIdObj)
@@ -215,7 +215,7 @@ $.post("/financialSummary", userIdObj)
             countPPA: countPPA,
             countSales: countSales,
             countTipout: countTipout,
-            countTipPercent: countTipPercent
+            countTipPercent: countTipPercent,
             countShifts: countShifts,
             countStiffed: countStiffed,
             numDays: numDays

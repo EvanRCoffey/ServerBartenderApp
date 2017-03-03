@@ -77,10 +77,6 @@ router.get("/dashboardWithGoalChecker", loggedIn, function(req, res, next) {
     res.render("dashboardWithGoalChecker", req);
 })
 
-router.get("/goalCheckerTest", loggedIn, function(req, res, next) {
-    res.render("goalCheckerTest", req);
-});
-
 router.get("/shift", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
