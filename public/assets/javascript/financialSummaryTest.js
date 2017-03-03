@@ -4,240 +4,135 @@
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
-<<<<<<< HEAD
 //Not sure what this is really for... the userID is checked on the post, regardless of what object is sent
 var userIdObj = {
     userID: 0
 }
-=======
->>>>>>> e068882383e062aaa5dba8a0c9e9fe48e42b9751
 
+$.post("/financialSummary").done(function(data) {
+    //This array will hold one financial summary for each job
+    var finishedSummaries = [];
 
-$.post("/financialSummary")
-    .done(function(data) {
+    //This array is used to store all jobIds for a user
+    var jobIDArray = [];
 
-
-        //This array will hold one financial summary for each job
-        var finishedSummaries = [];
-
-        //This array is used to store all jobIds for a user
-        var jobIDArray = [];
-
-        for (var i = 0; i < data.length; i++) {
-            if (!jobIDArray.includes(data[i].JobId)) {
-                jobIDArray.push(data[i].JobId);
-            }
+    for (var i = 0; i < data.length; i++) {
+        if (!jobIDArray.includes(data[i].JobId)) {
+            jobIDArray.push(data[i].JobId);
         }
+    }
 
-        var shifts = [];
+    var shifts = [];
 
-        //Fill the shifts array with all shifts
-        for (var i = 0; i < data.length; i++) {
-            shifts.push(data[i]);
-        }
+    //Fill the shifts array with all shifts
+    for (var i = 0; i < data.length; i++) {
+        shifts.push(data[i]);
+    }
 
-        //At this point, jobIDArray should hold the JobIds for which you should do a financial summary
-        //You will run the rest of the code once for each JobId
-        //In the end, you should have a unique object for each job holding the financial summary results for that job
+    //At this point, jobIDArray should hold the JobIds for which you should do a financial summary
+    //You will run the rest of the code once for each JobId
+    //In the end, you should have a unique object for each job holding the financial summary results for that job
 
-        //For each unique job ID...
-        for (var k = 0; k < jobIDArray.length; k++) {
+    //For each unique job ID...
+    for (var k = 0; k < jobIDArray.length; k++) {
 
-            //Variables to fill after pulling from the database
-            var hourlyWage = 0;
-            var totalWalkedWith = 0;
-            var totalHoursWorked = 0;
-            var totalBWL = 0;
-            var totalPPA = 0;
-            var totalSales = 0;
-            var totalTipout = 0;
-            var totalTipPercent = 0;
+        //Variables to fill after pulling from the database
+        var hourlyWage = 0;
+        var totalWalkedWith = 0;
+        var totalHoursWorked = 0;
+        var totalBWL = 0;
+        var totalPPA = 0;
+        var totalSales = 0;
+        var totalTipout = 0;
+        var totalTipPercent = 0;
 
-            //Get these two from the span-of-dates sliders set before running the financial summary
-            var firstShiftDate;
-            var lastShiftDate;
+        //Get these two from the span-of-dates sliders set before running the financial summary
+        var firstShiftDate;
+        var lastShiftDate;
 
-            //Counter variables
-            var countShifts = 0;
-            var countBWL = 0;
-            var countPPA = 0;
-            var countSales = 0;
-            var countTipout = 0;
-            var countTipPercent = 0;
-            var countStiffed = 0;
+        //Counter variables
+        var countShifts = 0;
+        var countBWL = 0;
+        var countPPA = 0;
+        var countSales = 0;
+        var countTipout = 0;
+        var countTipPercent = 0;
+        var countStiffed = 0;
 
-            //Target variables to be calculated while going through shifts
-            var bestTip = 0;
-            var worstTip = 99999;
-            var longestShift = 0;
-            var shortestShift = 99999;
-            var mostWalkedWithShift = 0;
-            var leastWalkedWithShift = 99999;
+        //Target variables to be calculated while going through shifts
+        var bestTip = 0;
+        var worstTip = 99999;
+        var longestShift = 0;
+        var shortestShift = 99999;
+        var mostWalkedWithShift = 0;
+        var leastWalkedWithShift = 99999;
 
-            //For each shift in the shifts array...
-            for (var i = 0; i < shifts.length; i++) {
-                //If the job ID matches, 
-                if (shifts[i].JobId === jobIDArray[k]) {
-                    countShifts++;
+        //For each shift in the shifts array...
+        for (var i = 0; i < shifts.length; i++) {
+            //If the job ID matches, 
+            if (shifts[i].JobId === jobIDArray[k]) {
+                countShifts++;
 
-                    totalWalkedWith += shifts[i].totalWalkedWith;
-                    if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
-                    if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
+                totalWalkedWith += shifts[i].totalWalkedWith;
+                if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
+                if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
 
-                    //If out-time > in-time (i.e., if shift ended before midnight)
-                    if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
-                        totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
-                        if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                        if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                    }
-
-                    //If out-time < in-time (i.e., if shift ended after midnight)
-                    else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
-                        totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
-                        if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                        if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                    }
-
-                    if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
-                    if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
-
-                    if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
-
-                    if (shifts[i].bwl != "NULL") {
-                        totalBWL += shifts[i].bwl;
-                        countBWL++;
-                    }
-
-                    if (shifts[i].ppa != "NULL") {
-                        totalPPA += shifts[i].ppa;
-                        countPPA++;
-                    }
-
-                    if (shifts[i].sales != "NULL") {
-                        totalSales += shifts[i].sales;
-                        countSales++;
-                    }
-
-                    if (shifts[i].tipout != "NULL") {
-                        totalTipout += shifts[i].tipout;
-                        countTipout++;
-                    }
-
-                    if (shifts[i].tipPercent != "NULL") {
-                        totalTipPercent += shifts[i].tipPercent;
-                        countTipPercent++;
-                    }
-
-                    hourlyWage = shifts[i].wage;
+                //If out-time > in-time (i.e., if shift ended before midnight)
+                if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
+                    totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
+                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
                 }
+
+                //If out-time < in-time (i.e., if shift ended after midnight)
+                else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
+                    totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
+                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                }
+
+                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
+                if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
+
+                if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
+
+                if (shifts[i].bwl != "NULL") {
+                    totalBWL += shifts[i].bwl;
+                    countBWL++;
+                }
+
+                if (shifts[i].ppa != "NULL") {
+                    totalPPA += shifts[i].ppa;
+                    countPPA++;
+                }
+
+                if (shifts[i].sales != "NULL") {
+                    totalSales += shifts[i].sales;
+                    countSales++;
+                }
+
+                if (shifts[i].tipout != "NULL") {
+                    totalTipout += shifts[i].tipout;
+                    countTipout++;
+                }
+
+                if (shifts[i].tipPercent != "NULL") {
+                    totalTipPercent += shifts[i].tipPercent;
+                    countTipPercent++;
+                }
+
+                hourlyWage = shifts[i].wage;
             }
-
-            ///////////////////////////////////////
-            //PREPARE FINANCIAL SUMMARY VARIABLES
-            ///////////////////////////////////////
-
-            //This currently holds the number of minutes worked.  Correcting that here.
-            totalHoursWorked = totalHoursWorked / 60;
-
-            var numDays = lastShiftDate - firstShiftDate; //Use moment for this
-            var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
-            var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
-            var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
-            var avgShiftLength = totalHoursWorked / countShifts;
-            var avgShiftsPerWeek = countShifts / (numDays / 7);
-            var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
-            var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
-            var avgTipout = totalTipout / countTipout;
-            var avgTipPercent = totalTipPercent / countTipPercent;
-            var avgBWL = totalBWL / countBWL;
-            var avgPPA = totalPPA / countPPA;
-            var avgSales = totalSales / countSales;
-
-            ///////////////////////////////////////
-            //DISPLAY FINANCIAL SUMMARY DATA
-            ///////////////////////////////////////
-
-            $("#mainDiv").append("<br>********************************");
-            $("#mainDiv").append("<br>Job " + k);
-            $("#mainDiv").text("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
-            $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
-            $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
-            $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
-            $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
-            $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
-            $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
-            $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-            $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
-            $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
-            $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
-            $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
-            $(".salesVal").text("Average $" + avgSales.toFixed(2));
-            $(".largestTipVal").text("$" + bestTip.toFixed(2));
-            $(".smallestTipVal").text("$" + worstTip.toFixed(2));
-            $(".stiffedVal").text("Number of times = " + countStiffed);
-            $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
-            $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
-            $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
-            $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
-            // $("#mainDiv").append("<br>********************************")
-            $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
-            // $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
-            // $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
-            // $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
-            // $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
-            // $("#mainDiv").append("<br>Number of Tip percent entries = " + countTipPercent);
-
-            //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
-            var summaryObj = {
-                totalWalkedWith: totalWalkedWith.toFixed(2),
-                totalEarnedBeforeTaxes: totalEarnedBeforeTaxes.toFixed(2),
-                totalHoursWorked: totalHoursWorked.toFixed(2),
-                totalEarnedBeforeTaxes: totalEarnedBeforeTaxes,
-                avgHourlyWalkedWith: avgHourlyWalkedWith,
-                avgHourlyTotal: avgHourlyTotal,
-                avgShiftLength: avgShiftLength,
-                avgShiftsPerWeek: avgShiftsPerWeek,
-                avgShiftsPerMonth: avgShiftsPerMonth,
-                avgHoursPerWeek: avgHoursPerWeek,
-                avgTipout: avgTipout,
-                avgTipPercent: avgTipPercent,
-                avgBWL: avgBWL,
-                avgPPA: avgPPA,
-                avgSales: avgSales,
-                bestTip: bestTip,
-                worstTip: worstTip,
-                longestShift: longestShift,
-                shortestShift: shortestShift,
-                mostWalkedWithShift: mostWalkedWithShift,
-                leastWalkedWithShift: leastWalkedWithShift,
-                hourlyWage: hourlyWage,
-                totalBWL: totalBWL,
-                totalPPA: totalPPA,
-                totalSales: totalSales,
-                totalTipout: totalTipout,
-                totalTipPercent: totalTipPercent,
-                countBWL: countBWL,
-                countPPA: countPPA,
-                countSales: countSales,
-                countTipout: countTipout,
-                countTipPercent: countTipPercent,
-                countShifts: countShifts,
-                countStiffed: countStiffed,
-                numDays: numDays
-            }
-
-            finishedSummaries.push(summaryObj)
         }
 
-<<<<<<< HEAD
         ///////////////////////////////////////
         //PREPARE FINANCIAL SUMMARY VARIABLES
         ///////////////////////////////////////
 
         //This currently holds the number of minutes worked.  Correcting that here.
-        totalHoursWorked = totalHoursWorked/60;
+        totalHoursWorked = totalHoursWorked / 60;
 
-        var numDays = lastShiftDate - firstShiftDate;  //Use moment for this
+        var numDays = lastShiftDate - firstShiftDate; //Use moment for this
         var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
         var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
         var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
@@ -257,26 +152,26 @@ $.post("/financialSummary")
 
         $("#mainDiv").append("<br>********************************");
         $("#mainDiv").append("<br>Job " + k);
-        $("#mainDiv").append("<br>Total walked with = $" + totalWalkedWith.toFixed(2));
-        $("#mainDiv").append("<br>Total earned, including hourly wage (before taxes) = $" + totalEarnedBeforeTaxes.toFixed(2));
-        $("#mainDiv").append("<br>Average hourly walked with = $" + avgHourlyWalkedWith.toFixed(2));
+        $("#mainDiv").text("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
+        $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
+        $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
         $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
         $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
         $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
         $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
         $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-        $("#mainDiv").append("<br>Average tipout = $" + avgTipout.toFixed(2));
-        $("#mainDiv").append("<br>Average tip percent = " + avgTipPercent.toFixed(2) + "%");
-        $("#mainDiv").append("<br>Average BWL = " + avgBWL.toFixed(2) + "%");
-        $("#mainDiv").append("<br>Average PPA = $" + avgPPA.toFixed(2));
-        $("#mainDiv").append("<br>Average sales = $" + avgSales.toFixed(2));
-        $("#mainDiv").append("<br>Best tip = $" + bestTip.toFixed(2));
-        $("#mainDiv").append("<br>Worst (non-zero) tip = $" + worstTip.toFixed(2));
-        $("#mainDiv").append("<br>Number of times stiffed = " + countStiffed);
+        $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
+        $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
+        $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
+        $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
+        $(".salesVal").text("Average $" + avgSales.toFixed(2));
+        $(".largestTipVal").text("$" + bestTip.toFixed(2));
+        $(".smallestTipVal").text("$" + worstTip.toFixed(2));
+        $(".stiffedVal").text("Number of times = " + countStiffed);
         $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
         $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
-        $("#mainDiv").append("<br>Most walked with shift = $" + mostWalkedWithShift.toFixed(2));
-        $("#mainDiv").append("<br>Least walked with shift = $" + leastWalkedWithShift.toFixed(2));
+        $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
+        $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
         // $("#mainDiv").append("<br>********************************")
         $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
         // $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
@@ -322,213 +217,216 @@ $.post("/financialSummary")
             countShifts: countShifts,
             countStiffed: countStiffed,
             numDays: numDays
-=======
-        //Chart Stuff
-
-        //First have to format the date into what amCharts wants.
-        for (var i = 0; i < data.length; i++) {
-            data[i].shiftDate = AmCharts.stringToDate(data[i].shiftDate, "YYYY-MM-DD")
-            data[i].shiftDate = AmCharts.formatDate(new Date(data[i].shiftDate), "MMM DD YY");
->>>>>>> e068882383e062aaa5dba8a0c9e9fe48e42b9751
         }
-        console.log(data)
 
-var chart = AmCharts.makeChart("chartdiv", {
-    "type": "serial",
-    "theme": "light",
-    "dataDateFormat": "YYYY-MM-DD",
-     "responsive": {
-    "enabled": true
-    },
-    "addClassNames" :true,
-    "precision": 2,
-    "valueAxes": [{
-        "id": "v1",
-        "position": "left",
-        "autoGridCount": true
-    }],
-    "graphs": [{
-        "id": "totalWalkedWith",
-        "classNameField": "totalWalkedWith",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 1,
-        "lineColor": "#20acd4",
-        "type": "smoothedLine",
-        "title": "Total Walked With",
-        "useLineColorForBulletBorder": true,
-        "valueField": "totalWalkedWith",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "tipout",
-        "classNameField": "tipout",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Tip Out",
-        "useLineColorForBulletBorder": true,
-        "valueField": "tipout",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "bwl",
-        "classNameField": "bwl",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "BWL",
-        "useLineColorForBulletBorder": true,
-        "valueField": "bwl",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "largestTip",
-        "classNameField": "largestTip",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Largest Tip",
-        "useLineColorForBulletBorder": true,
-        "valueField": "largestTip",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "ppa",
-        "classNameField": "ppa",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "PPA",
-        "useLineColorForBulletBorder": true,
-        "valueField": "ppa",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "sales",
-        "classNameField": "sales",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Sales",
-        "useLineColorForBulletBorder": true,
-        "valueField": "sales",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "stiffed",
-        "classNameField": "stiffed",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Stiffed",
-        "useLineColorForBulletBorder": true,
-        "valueField": "stiffed",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "tipPercent",
-        "classNameField": "tipPercent",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Tip Percent",
-        "useLineColorForBulletBorder": true,
-        "valueField": "tipPercent",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    },
-    {
-        "id": "smallestTip",
-        "classNameField": "smallestTip",
-        "valueAxis": "v1",
-        "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
-        "lineThickness": 2,
-        "lineColor": "red",
-        "type": "smoothedLine",
-        "title": "Smallest Tip",
-        "useLineColorForBulletBorder": true,
-        "valueField": "smallestTip",
-        "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
-    }],
-    "chartScrollbar": {
-        "graph": "totalWalkedWith",
-        "oppositeAxis": false,
-        "offset": 30,
-        "scrollbarHeight": 50,
-        "backgroundAlpha": 0,
-        "selectedBackgroundAlpha": 0.1,
-        "selectedBackgroundColor": "#888888",
-        "graphFillAlpha": 0,
-        "graphLineAlpha": 0.5,
-        "selectedGraphFillAlpha": 0,
-        "selectedGraphLineAlpha": 1,
-        "autoGridCount": true,
-        "color": "#AAAAAA"
-    },
-    "categoryField": "shiftDate",
-    "categoryAxis": {
-        "parseDates": false,
-        "dashLength": 1,
-        "minorGridEnabled": true
-    },
-    "dataProvider": data
+        finishedSummaries.push(summaryObj)
+    }
+
+    //Chart Stuff
+
+    //First have to format the date into what amCharts wants.
+    for (var i = 0; i < data.length; i++) {
+        data[i].shiftDate = AmCharts.stringToDate(data[i].shiftDate, "YYYY-MM-DD")
+        data[i].shiftDate = AmCharts.formatDate(new Date(data[i].shiftDate), "MMM DD YY");
+    }
+    console.log(data)
+
+    var chart = AmCharts.makeChart("chartdiv", {
+        "type": "serial",
+        "theme": "light",
+        "dataDateFormat": "YYYY-MM-DD",
+         "responsive": {
+        "enabled": true
+        },
+        "addClassNames" :true,
+        "precision": 2,
+        "valueAxes": [{
+            "id": "v1",
+            "position": "left",
+            "autoGridCount": true
+        }],
+        "graphs": [{
+            "id": "totalWalkedWith",
+            "classNameField": "totalWalkedWith",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 1,
+            "lineColor": "#20acd4",
+            "type": "smoothedLine",
+            "title": "Total Walked With",
+            "useLineColorForBulletBorder": true,
+            "valueField": "totalWalkedWith",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "tipout",
+            "classNameField": "tipout",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Tip Out",
+            "useLineColorForBulletBorder": true,
+            "valueField": "tipout",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "bwl",
+            "classNameField": "bwl",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "BWL",
+            "useLineColorForBulletBorder": true,
+            "valueField": "bwl",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "largestTip",
+            "classNameField": "largestTip",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Largest Tip",
+            "useLineColorForBulletBorder": true,
+            "valueField": "largestTip",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "ppa",
+            "classNameField": "ppa",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "PPA",
+            "useLineColorForBulletBorder": true,
+            "valueField": "ppa",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "sales",
+            "classNameField": "sales",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Sales",
+            "useLineColorForBulletBorder": true,
+            "valueField": "sales",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "stiffed",
+            "classNameField": "stiffed",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Stiffed",
+            "useLineColorForBulletBorder": true,
+            "valueField": "stiffed",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "tipPercent",
+            "classNameField": "tipPercent",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Tip Percent",
+            "useLineColorForBulletBorder": true,
+            "valueField": "tipPercent",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        },
+        {
+            "id": "smallestTip",
+            "classNameField": "smallestTip",
+            "valueAxis": "v1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "lineColor": "red",
+            "type": "smoothedLine",
+            "title": "Smallest Tip",
+            "useLineColorForBulletBorder": true,
+            "valueField": "smallestTip",
+            "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
+        }],
+        "chartScrollbar": {
+            "graph": "totalWalkedWith",
+            "oppositeAxis": false,
+            "offset": 30,
+            "scrollbarHeight": 50,
+            "backgroundAlpha": 0,
+            "selectedBackgroundAlpha": 0.1,
+            "selectedBackgroundColor": "#888888",
+            "graphFillAlpha": 0,
+            "graphLineAlpha": 0.5,
+            "selectedGraphFillAlpha": 0,
+            "selectedGraphLineAlpha": 1,
+            "autoGridCount": true,
+            "color": "#AAAAAA"
+        },
+        "categoryField": "shiftDate",
+        "categoryAxis": {
+            "parseDates": false,
+            "dashLength": 1,
+            "minorGridEnabled": true
+        },
+        "dataProvider": data
+    }
 });
+
 //Sets initial viewable classes since amCharts won't let you do it natively.
 $('.amcharts-graph-ppa, .amcharts-graph-bwl, .amcharts-graph-tipout, .amcharts-graph-tipPercent, .amcharts-graph-stiffed, .amcharts-graph-smallestTip, .amcharts-graph-largestTip, .amcharts-graph-sales').addClass('hideChart')
 
 $('.amcharts-chart-div').find('a').addClass('superHide')
-
-});
 
 $('.lever').on('click', function(){
     var target = $(this).attr("data")
