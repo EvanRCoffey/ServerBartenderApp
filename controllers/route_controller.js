@@ -69,14 +69,6 @@ router.get("/updateAccount", loggedIn, function(req, res, next) {
     res.render("updateAccount", req);
 });
 
-router.get("/dashboard", loggedIn, function(req, res, next) {
-    res.render("dashboard", req);
-});
-
-router.get("/dashboardWithGoalChecker", loggedIn, function(req, res, next) {
-    res.render("dashboardWithGoalChecker", req);
-})
-
 router.get("/shift", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
@@ -94,9 +86,6 @@ router.get("/goal", loggedIn, function(req, res, next) {
     res.render("goal", req);
 });
 
-// router.get("/restaurant", loggedIn, function(req, res, next) {
-//     res.render("restaurant", req);
-// });
 //Testing out a shifts table.
 //Added a raw:true option to cut down the garbage.
 router.get("/shiftsTable", loggedIn, function(req, res, next) {
@@ -161,8 +150,20 @@ router.get("/goals", loggedIn, function(req, res, next) {
     });
 });
 
+router.get("/dashboard", loggedIn, function(req, res, next) {
+    res.render("dashboard", req);
+});
+
+router.get("/dashboardWithGoalChecker", loggedIn, function(req, res, next) {
+    res.render("dashboardWithGoalChecker", req);
+})
+
 router.get("/financialSummaryTest", loggedIn, function(req, res, next) {
     res.render("financialSummaryTest", req);
+});
+
+router.get("/timeline", loggedIn, function(req, res, next) {
+    res.render("timeline", req);
 });
 
 //Logs user out and returns to homepage.
@@ -389,18 +390,6 @@ router.post("/newGoal", loggedIn, function(req, res, next) {
     });
 });
 
-// router.post("/newRestaurant",loggedIn, function(req, res, next) {
-//     db.Restaurant.create({
-//         restaurant_id: 0,
-//         restaurant_name: req.body.restaurant_name,
-//         defaultMenu: 1,
-//         isReal: true
-//     }).then(function(dbUser) {
-//         console.log(dbUser);
-//         res.render("dashboard");
-//     });
-// });
-
 router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
   console.log(shiftData);
@@ -482,15 +471,6 @@ router.post("/editGoal", loggedIn, function(req, res, next) {
     // });
 });
 
-// router.post("/editRestaurant", function(req, res) {
-//   var restaurantData = req.body;
-//   db.Restaurant.update(restaurantData, {
-//     where: {id:restaurantData.id}
-//   }).then(function(dbUser) {
-//     console.log(dbUser);
-//   });
-// });
-
 router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
   db.Shift.destroy({where: {UserId: req.user.id, id: ShiftID}}).then(function(dbUser) {
@@ -515,13 +495,6 @@ router.post("/deleteGoal:id", loggedIn, function(req, res, next) {
         res.redirect('/goalsTable');
     });
 });
-
-// router.post("/deleteRestaurant", function(req, res) {
-//   var restaurantData = req.body;
-//   db.Restaurant.destroy({where: {id: restaurantData.id}}).then(function(dbUser) {
-//     console.log(dbUser);
-//   });
-// });
 
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -581,7 +554,7 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
       
 });
 
-//Grabs a shift with a given id, for use with shift editor
+//Grabs a job with a given id
 router.get("/editJob:id", loggedIn, function(req, res, next) {
     var JobID = req.params.id;
     db.Job.findAll({ 
@@ -598,8 +571,9 @@ router.get("/editJob:id", loggedIn, function(req, res, next) {
     });
 });
 
+//Grabs a goal with a given id
 router.get("/editGoal:id", loggedIn, function(req, res, next) {
-    //Called when you grab a shift with a provided ID, for use with goal editor
+    //Called when you grab a goal with a provided ID, for use with goal editor
     var GoalID = req.params.id;
     db.Goal.findAll({ 
         where: {UserId: req.user.id, id: GoalID},
@@ -610,6 +584,20 @@ router.get("/editGoal:id", loggedIn, function(req, res, next) {
         dbUser[0].goalDeadline = date;
         res.render("goalEditor", dbUser[0]);
     });
+});
+
+//Grabs all shifts for a user, for use with the timeline
+router.post("/timelineCreator", loggedIn, function(req, res, next) {
+    db.Shift.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+        res.json(dbUser);
+  });
+});
+
+//Grabs all goals for a user, for use with the timeline
+router.post("/timelineGoals", loggedIn, function(req, res, next) {
+    db.Goal.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+        res.json(dbUser);
+  });
 });
 
 //Keep this at the end of the router section.

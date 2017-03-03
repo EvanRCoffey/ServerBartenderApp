@@ -1,5 +1,9 @@
 //Make sure the in-times and out-times are being set correctly using moment, taken from the sliders that Mills will implement
 
+//lastShiftDate
+//firstShiftDate
+//numDays (difference between lastShiftDate and firstShiftDate)
+
 ///////////////////////////////////////
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
@@ -28,10 +32,6 @@ $.post("/financialSummary").done(function(data) {
     for (var i = 0; i < data.length; i++) {
         shifts.push(data[i]);
     }
-
-    //At this point, jobIDArray should hold the JobIds for which you should do a financial summary
-    //You will run the rest of the code once for each JobId
-    //In the end, you should have a unique object for each job holding the financial summary results for that job
 
     //For each unique job ID...
     for (var k = 0; k < jobIDArray.length; k++) {
@@ -150,35 +150,35 @@ $.post("/financialSummary").done(function(data) {
         //DISPLAY FINANCIAL SUMMARY DATA
         ///////////////////////////////////////
 
-        $("#mainDiv").append("<br>********************************");
-        $("#mainDiv").append("<br>Job " + k);
-        $("#mainDiv").text("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
-        $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
-        $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
-        $("#mainDiv").append("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
-        $("#mainDiv").append("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
-        $("#mainDiv").append("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
-        $("#mainDiv").append("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
-        $("#mainDiv").append("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-        $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
-        $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
-        $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
-        $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
-        $(".salesVal").text("Average $" + avgSales.toFixed(2));
-        $(".largestTipVal").text("$" + bestTip.toFixed(2));
-        $(".smallestTipVal").text("$" + worstTip.toFixed(2));
-        $(".stiffedVal").text("Number of times = " + countStiffed);
-        $("#mainDiv").append("<br>Longest shift = " + longestShift + " minutes");
-        $("#mainDiv").append("<br>Shortest shift = " + shortestShift + " minutes");
-        $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
-        $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
-        // $("#mainDiv").append("<br>********************************")
-        $("#mainDiv").append("<br>Span of days between first and last shift = " + numDays);
-        // $("#mainDiv").append("<br>Number of BWL entries = " + countBWL);
-        // $("#mainDiv").append("<br>Number of PPA entries = " + countPPA);
-        // $("#mainDiv").append("<br>Number of Sales entries= " + countSales);
-        // $("#mainDiv").append("<br>Number of Tipout entries = " + countTipout);
-        // $("#mainDiv").append("<br>Number of Tip percent entries = " + countTipPercent);
+        // console.log("<br>********************************");
+        // console.log("<br>Job " + k);
+        // console.log("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
+        // $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
+        // $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
+        // console.log("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
+        // console.log("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
+        // console.log("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
+        // console.log("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
+        // console.log("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
+        // $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
+        // $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
+        // $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
+        // $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
+        // $(".salesVal").text("Average $" + avgSales.toFixed(2));
+        // $(".largestTipVal").text("$" + bestTip.toFixed(2));
+        // $(".smallestTipVal").text("$" + worstTip.toFixed(2));
+        // $(".stiffedVal").text("Number of times = " + countStiffed);
+        // console.log("<br>Longest shift = " + longestShift + " minutes");
+        // console.log("<br>Shortest shift = " + shortestShift + " minutes");
+        // $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
+        // $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
+        // console.log("<br>********************************")
+        // console.log("<br>Span of days between first and last shift = " + numDays);
+        // console.log("<br>Number of BWL entries = " + countBWL);
+        // console.log("<br>Number of PPA entries = " + countPPA);
+        // console.log("<br>Number of Sales entries= " + countSales);
+        // console.log("<br>Number of Tipout entries = " + countTipout);
+        // console.log("<br>Number of Tip percent entries = " + countTipPercent);
 
         //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
         var summaryObj = {
@@ -219,8 +219,17 @@ $.post("/financialSummary").done(function(data) {
             numDays: numDays
         }
 
+        //In the end, you should have an array which contains a unique object for each job, holding the financial summary results for that job
         finishedSummaries.push(summaryObj)
     }
+
+
+    // //Logs contents of finishedSummaries[]
+    // for (var i = 0; i<finishedSummaries.length; i++) {
+    //     console.log(finishedSummaries[i]);
+    // }
+
+
 
     //Chart Stuff
 
