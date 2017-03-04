@@ -500,8 +500,8 @@ var criJSON = {
 
 var menuName = "Test Menu One";
 var comments = "No comments";
-var menuJSON = bigJSON;
-//criJSON is already criJSON
+var menuJSON = JSON.stringify(bigJSON);
+criJSON = JSON.stringify(criJSON)
 var UserId = 1;
 var JobId = 1;
 

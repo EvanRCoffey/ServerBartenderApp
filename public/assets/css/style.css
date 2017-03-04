@@ -135,6 +135,7 @@ input[type=range]+.thumb.active {
 
 .superHide{
 	display: none !important;
+	opacity: 0;
 }
 
 .showChart{

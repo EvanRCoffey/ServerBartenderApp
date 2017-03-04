@@ -15,6 +15,9 @@ var userIdObj = {
 
 $.post("/financialSummary").done(function(data) {
 
+
+    var startDate
+    var endDate
 //Initiate Slider
 var slider = document.getElementById('dateSlider');
 noUiSlider.create(slider, {
@@ -51,13 +54,12 @@ noUiSlider.create(slider, {
         shifts.push(data[i]);
     }
 
-    //For each unique job ID...
-    for (var k = 0; k < jobIDArray.length; k++) {
-
-        //Variables to fill after pulling from the database
+    shifts = shifts.reverse()
+    function updateAverage() {
         var hourlyWage = 0;
         var totalWalkedWith = 0;
         var totalHoursWorked = 0;
+        var averageWalkedWith = 0;
         var totalBWL = 0;
         var totalPPA = 0;
         var totalSales = 0;
@@ -65,8 +67,8 @@ noUiSlider.create(slider, {
         var totalTipPercent = 0;
 
         //Get these two from the span-of-dates sliders set before running the financial summary
-        var firstShiftDate;
-        var lastShiftDate;
+        var firstShiftDate
+        var lastShiftDate
 
         //Counter variables
         var countShifts = 0;
@@ -84,14 +86,14 @@ noUiSlider.create(slider, {
         var shortestShift = 99999;
         var mostWalkedWithShift = 0;
         var leastWalkedWithShift = 99999;
-
-        //For each shift in the shifts array...
-        for (var i = 0; i < shifts.length; i++) {
-            //If the job ID matches, 
-            if (shifts[i].JobId === jobIDArray[k]) {
-                countShifts++;
+    for (var i = startDate; i < endDate ; i++) {
+        //Variables to fill after pulling from the database
+                
 
                 totalWalkedWith += shifts[i].totalWalkedWith;
+
+                averageWalkedWith = totalWalkedWith / (endDate - startDate)
+
                 if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
                 if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
 
@@ -108,11 +110,10 @@ noUiSlider.create(slider, {
                     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
                     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
                 }
-
-                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
+                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip; };
                 if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
 
-                if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
+                countStiffed += shifts[i].stiffed;
 
                 if (shifts[i].bwl != "NULL") {
                     totalBWL += shifts[i].bwl;
@@ -140,7 +141,7 @@ noUiSlider.create(slider, {
                 }
 
                 hourlyWage = shifts[i].wage;
-            }
+            
         }
 
         ///////////////////////////////////////
@@ -158,63 +159,31 @@ noUiSlider.create(slider, {
         var avgShiftsPerWeek = countShifts / (numDays / 7);
         var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
         var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
-        var avgTipout = totalTipout / countTipout;
-        var avgTipPercent = totalTipPercent / countTipPercent;
-        var avgBWL = totalBWL / countBWL;
-        var avgPPA = totalPPA / countPPA;
-        var avgSales = totalSales / countSales;
+        var avgTipout = totalTipout / (endDate - startDate)
+        var avgTipPercent = totalTipPercent / (endDate - startDate);
+        var avgBWL = totalBWL / (endDate - startDate);
+        var avgPPA = totalPPA / (endDate - startDate);
+        var avgSales = totalSales / (endDate - startDate);
 
-        ///////////////////////////////////////
-        //DISPLAY FINANCIAL SUMMARY DATA
-        ///////////////////////////////////////
 
-        // console.log("<br>********************************");
-        // console.log("<br>Job " + k);
-        // console.log("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
-        // $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
-        // $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
-        // console.log("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
-        // console.log("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
-        // console.log("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
-        // console.log("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
-        // console.log("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-        // $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
-        // $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
-        // $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
-        // $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
-        // $(".salesVal").text("Average $" + avgSales.toFixed(2));
-        // $(".largestTipVal").text("$" + bestTip.toFixed(2));
-        // $(".smallestTipVal").text("$" + worstTip.toFixed(2));
-        // $(".stiffedVal").text("Number of times = " + countStiffed);
-        // console.log("<br>Longest shift = " + longestShift + " minutes");
-        // console.log("<br>Shortest shift = " + shortestShift + " minutes");
-        // $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
-        // $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
-        // console.log("<br>********************************")
-        // console.log("<br>Span of days between first and last shift = " + numDays);
-        // console.log("<br>Number of BWL entries = " + countBWL);
-        // console.log("<br>Number of PPA entries = " + countPPA);
-        // console.log("<br>Number of Sales entries= " + countSales);
-        // console.log("<br>Number of Tipout entries = " + countTipout);
-        // console.log("<br>Number of Tip percent entries = " + countTipPercent);
+
 
         //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
         var summaryObj = {
             totalWalkedWith: totalWalkedWith.toFixed(2),
-            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes.toFixed(2),
             totalHoursWorked: totalHoursWorked.toFixed(2),
-            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes,
             avgHourlyWalkedWith: avgHourlyWalkedWith,
             avgHourlyTotal: avgHourlyTotal,
             avgShiftLength: avgShiftLength,
             avgShiftsPerWeek: avgShiftsPerWeek,
             avgShiftsPerMonth: avgShiftsPerMonth,
             avgHoursPerWeek: avgHoursPerWeek,
-            avgTipout: avgTipout,
-            avgTipPercent: avgTipPercent,
-            avgBWL: avgBWL,
-            avgPPA: avgPPA,
-            avgSales: avgSales,
+            avgTipout: avgTipout.toFixed(2),
+            avgTipPercent: avgTipPercent.toFixed(2),
+            averageWalkedWith: averageWalkedWith.toFixed(2),
+            avgBWL: avgBWL.toFixed(2),
+            avgPPA: avgPPA.toFixed(2),
+            avgSales: avgSales.toFixed(2),
             bestTip: bestTip,
             worstTip: worstTip,
             longestShift: longestShift,
@@ -238,7 +207,21 @@ noUiSlider.create(slider, {
         }
 
         //In the end, you should have an array which contains a unique object for each job, holding the financial summary results for that job
-        finishedSummaries.push(summaryObj)
+        // finishedSummaries.push(summaryObj)
+
+        ///////////////////////////////////////
+        //DISPLAY FINANCIAL SUMMARY DATA
+        ///////////////////////////////////////
+        $(".totalEarnedVal").text('$' + summaryObj.totalWalkedWith);
+        $(".averageWalkedVal").text('$' + summaryObj.averageWalkedWith);
+        $(".avgSalesVal").text('$' + summaryObj.avgSales);
+        $(".largestTipVal").text('$' + summaryObj.bestTip);
+        $(".smallestTipVal").text('$' + summaryObj.worstTip);
+        $(".stiffedVal").text(summaryObj.countStiffed);
+        $(".avgTipPercentVal").text(summaryObj.avgTipPercent + '%');
+        $(".avgTipOutVal").text('$' + summaryObj.avgTipout);
+        $(".avgBwlVal").text('$' + summaryObj.avgBWL);
+        $(".avgPPAVal").text('$' + summaryObj.avgPPA);
     }
 
 
@@ -265,7 +248,7 @@ noUiSlider.create(slider, {
         "enabled": true
         },
         "addClassNames" :true,
-        "precision": 2,
+        "precision": 1,
         "valueAxes": [{
             "id": "v1",
             "position": "left",
@@ -448,10 +431,15 @@ noUiSlider.create(slider, {
         "dataProvider": data.reverse()
     });
 
+for (var i = 0; i < data.length; i++) {
+    console.log(data[i].largestTip)
+}
+
+
 //Date slider actions section.
 slider.noUiSlider.on('update', function() {
-    var startDate = slider.noUiSlider.get()[0]
-    var endDate = slider.noUiSlider.get()[1]
+    startDate = slider.noUiSlider.get()[0]
+    endDate = slider.noUiSlider.get()[1]
 
     chart.zoomToIndexes(startDate, endDate)
 
@@ -460,6 +448,7 @@ slider.noUiSlider.on('update', function() {
 
     $('.date1').text(startDateFormat)
     $('.date2').text(endDateFormat)
+    updateAverage()
 })
 
 //Sets initial visible state of graphs, leaving only first one on.

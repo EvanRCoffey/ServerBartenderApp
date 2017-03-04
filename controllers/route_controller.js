@@ -620,7 +620,7 @@ router.post("/newMenu", loggedIn, function(req, res, next) {
         comments: req.body.comments,
         menuJSON: req.body.menuJSON,
         criJSON: req.body.criJSON,
-        UserId: req.body.UserId,
+        UserId: req.user.id,
         JobId: req.body.JobId
     }).then(function(dbUser) {
         res.json(dbUser);
