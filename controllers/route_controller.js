@@ -13,7 +13,16 @@ var db = require("../models");
 var router = express.Router();
 
 var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+        extended: false,
+     parameterLimit: 1000000,
+     limit: 1024 * 1024 * 10
+}));
+app.use(bodyParser.json({
+        extended: false,
+     parameterLimit: 1000000,
+     limit: 1024 * 1024 * 10
+}));
 
 var moment = require('moment');
 
@@ -605,6 +614,7 @@ router.get("/menuJSON", loggedIn, function(req, res, next) {
 })
 
 router.post("/newMenu", loggedIn, function(req, res, next) {
+    console.log(req.body)
     db.Menu.create({
         menuName: req.body.menuName,
         comments: req.body.comments,
