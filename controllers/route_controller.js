@@ -600,6 +600,23 @@ router.post("/timelineGoals", loggedIn, function(req, res, next) {
   });
 });
 
+router.get("/menuJSON", loggedIn, function(req, res, next) {
+    res.render("menuJSON", req);
+})
+
+router.post("/newMenu", loggedIn, function(req, res, next) {
+    db.Menu.create({
+        menuName: req.body.menuName,
+        comments: req.body.comments,
+        menuJSON: req.body.menuJSON,
+        criJSON: req.body.criJSON,
+        UserId: req.body.UserId,
+        JobId: req.body.JobId
+    }).then(function(dbUser) {
+        res.json(dbUser);
+  });
+});
+
 //Keep this at the end of the router section.
 //If nothing is found this is sent.
 router.get('*', function(req, res) {

@@ -11,6 +11,8 @@ EVAN
 
 	---WHENEVER---
 
+		-Put a fake menu or two into the DB (put a route that creates a menu in menuJSON.js)
+
 		-When a user deletes a job, this is what should happen:
 		  	1) With an extra level of validation, make sure the user understands what they're doing
 		 	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
