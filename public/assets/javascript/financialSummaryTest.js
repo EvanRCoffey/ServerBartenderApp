@@ -14,6 +14,24 @@ var userIdObj = {
 }
 
 $.post("/financialSummary").done(function(data) {
+
+//Initiate Slider
+var slider = document.getElementById('dateSlider');
+noUiSlider.create(slider, {
+    start: [0, data.length - 1],
+    connect: true,
+    behaviour: 'drag',
+    step: 1,
+    range: {
+        'min': 0,
+        'max': data.length - 1
+    },
+    format: wNumb({
+        decimals: 0
+    })
+});
+
+
     //This array will hold one financial summary for each job
     var finishedSummaries = [];
 
@@ -236,9 +254,8 @@ $.post("/financialSummary").done(function(data) {
     //First have to format the date into what amCharts wants.
     for (var i = 0; i < data.length; i++) {
         data[i].shiftDate = AmCharts.stringToDate(data[i].shiftDate, "YYYY-MM-DD")
-        data[i].shiftDate = AmCharts.formatDate(new Date(data[i].shiftDate), "MMM DD YY");
     }
-    console.log(data)
+
 
     var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
@@ -407,40 +424,78 @@ $.post("/financialSummary").done(function(data) {
             "valueField": "smallestTip",
             "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
         }],
-        "chartScrollbar": {
-            "graph": "totalWalkedWith",
-            "oppositeAxis": false,
-            "offset": 30,
-            "scrollbarHeight": 50,
-            "backgroundAlpha": 0,
-            "selectedBackgroundAlpha": 0.1,
-            "selectedBackgroundColor": "#888888",
-            "graphFillAlpha": 0,
-            "graphLineAlpha": 0.5,
-            "selectedGraphFillAlpha": 0,
-            "selectedGraphLineAlpha": 1,
-            "autoGridCount": true,
-            "color": "#AAAAAA"
-        },
+        // "chartScrollbar": {
+        //     "graph": "totalWalkedWith",
+        //     "oppositeAxis": false,
+        //     "offset": 30,
+        //     "scrollbarHeight": 50,
+        //     "backgroundAlpha": 0,
+        //     "selectedBackgroundAlpha": 0.1,
+        //     "selectedBackgroundColor": "#888888",
+        //     "graphFillAlpha": 0,
+        //     "graphLineAlpha": 0.5,
+        //     "selectedGraphFillAlpha": 0,
+        //     "selectedGraphLineAlpha": 1,
+        //     "autoGridCount": true,
+        //     "color": "#AAAAAA"
+        // },
         "categoryField": "shiftDate",
         "categoryAxis": {
-            "parseDates": false,
+            "parseDates": true,
             "dashLength": 1,
-            "minorGridEnabled": true
+            "minorGridEnabled": false
         },
-        "dataProvider": data
+        "dataProvider": data.reverse()
     });
-});
 
-//Sets initial viewable classes since amCharts won't let you do it natively.
-$('.amcharts-graph-ppa, .amcharts-graph-bwl, .amcharts-graph-tipout, .amcharts-graph-tipPercent, .amcharts-graph-stiffed, .amcharts-graph-smallestTip, .amcharts-graph-largestTip, .amcharts-graph-sales').addClass('hideChart')
+//Date slider actions section.
+slider.noUiSlider.on('update', function() {
+    var startDate = slider.noUiSlider.get()[0]
+    var endDate = slider.noUiSlider.get()[1]
 
-$('.amcharts-chart-div').find('a').addClass('superHide')
+    chart.zoomToIndexes(startDate, endDate)
 
+    var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
+    var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
+
+    $('.date1').text(startDateFormat)
+    $('.date2').text(endDateFormat)
+})
+
+//Sets initial visible state of graphs, leaving only first one on.
+    AmCharts.ready(function() {
+    for ( var i = 1; i < chart.graphs.length; i++ ){
+    console.log('wat')
+    chart.hideGraph(chart.graphs[i])
+}
+    })
+
+
+
+//Toggles the viewable graphs.
 $('.lever').on('click', function(){
     var target = $(this).attr("data")
-    $(target).fadeToggle();
+    var graphed = $(this).attr("graphed")
+    var toggle = $(this)
+
+     for( var i = 0; i < chart.graphs.length; i++ ) {
+            if(target === chart.graphs[i].id && graphed === 'true'){
+              chart.hideGraph(chart.graphs[i])
+              toggle.attr("graphed", 'false')
+            } else if (target === chart.graphs[i].id && graphed === 'false'){
+              chart.showGraph(chart.graphs[i])
+              toggle.attr("graphed", 'true')
+            }
+  }
 })
+
+
+
+});
+
+
+
+$('.amcharts-chart-div').find('a').addClass('superHide')
 
 
 
