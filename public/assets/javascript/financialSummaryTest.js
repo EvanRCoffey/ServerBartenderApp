@@ -18,8 +18,9 @@ $.post("/financialSummary").done(function(data) {
 //Initiate Slider
 var slider = document.getElementById('dateSlider');
 noUiSlider.create(slider, {
-    start: [data.length -30, data.length - 1],
+    start: [0, data.length - 1],
     connect: true,
+    behaviour: 'drag',
     step: 1,
     range: {
         'min': 0,
@@ -453,8 +454,40 @@ slider.noUiSlider.on('update', function() {
     var endDate = slider.noUiSlider.get()[1]
 
     chart.zoomToIndexes(startDate, endDate)
+
+    var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
+    var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
+
+    $('.date1').text(startDateFormat)
+    $('.date2').text(endDateFormat)
 })
 
+//Sets initial visible state of graphs, leaving only first one on.
+    AmCharts.ready(function() {
+    for ( var i = 1; i < chart.graphs.length; i++ ){
+    console.log('wat')
+    chart.hideGraph(chart.graphs[i])
+}
+    })
+
+
+
+//Toggles the viewable graphs.
+$('.lever').on('click', function(){
+    var target = $(this).attr("data")
+    var graphed = $(this).attr("graphed")
+    var toggle = $(this)
+
+     for( var i = 0; i < chart.graphs.length; i++ ) {
+            if(target === chart.graphs[i].id && graphed === 'true'){
+              chart.hideGraph(chart.graphs[i])
+              toggle.attr("graphed", 'false')
+            } else if (target === chart.graphs[i].id && graphed === 'false'){
+              chart.showGraph(chart.graphs[i])
+              toggle.attr("graphed", 'true')
+            }
+  }
+})
 
 
 
@@ -462,16 +495,7 @@ slider.noUiSlider.on('update', function() {
 
 
 
-
-//Sets initial viewable classes since amCharts won't let you do it natively.
-$('.amcharts-graph-ppa, .amcharts-graph-bwl, .amcharts-graph-tipout, .amcharts-graph-tipPercent, .amcharts-graph-stiffed, .amcharts-graph-smallestTip, .amcharts-graph-largestTip, .amcharts-graph-sales').addClass('hideChart')
-
 $('.amcharts-chart-div').find('a').addClass('superHide')
-
-$('.lever').on('click', function(){
-    var target = $(this).attr("data")
-    $(target).fadeToggle();
-})
 
 
 
