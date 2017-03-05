@@ -1,8 +1,6 @@
 MILLS
 
-	-Finish financial summary (by Friday)
-		-Pull dates from sliders
-		-Fix graph bugs
+	-Finish the financial summary page
 	-Menu builder (this weekend)
 	-Implement the design/UI pass (early next week)
 	-Debugging and presentation prep (finishing up next week)
@@ -11,7 +9,7 @@ EVAN
 
 	---WHENEVER---
 
-		-Put a fake menu or two into the DB (put a route that creates a menu in menuJSON.js)
+		-Get to work on the flash cards and quiz maker, using double-parsed menu JSON objects
 
 		-When a user deletes a job, this is what should happen:
 		  	1) With an extra level of validation, make sure the user understands what they're doing
@@ -19,12 +17,6 @@ EVAN
 			-When a user deletes a menu, do the same as above, without cascading
 
 	---NOT YET---
-
-		-Once Mills figures out how to get the dates from the sliders in the financial summary page
-			-Finish debugging the financial summary (see .js file - only date stuff left, it seems)
-
-		-Once Mills finishes the menu builder, build the quiz maker and flash card
-			-Quiz maker already started: "./public/assets/javascript/quizMakerTesting.js"
 
 		-Once you chat with Mills about how the timeline should be laid out, continue building the timeline creator
 			-Queries built - all comments/breakthroughs and goals are being put into arrays/objects, ready for use

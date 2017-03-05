@@ -8,28 +8,23 @@
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
-//Not sure what this is really for... the userID is checked on the post, regardless of what object is sent
-var userIdObj = {
-    userID: 0
-}
-
 $.post("/financialSummary").done(function(data) {
 
-//Initiate Slider
-var slider = document.getElementById('dateSlider');
-noUiSlider.create(slider, {
-    start: [0, data.length - 1],
-    connect: true,
-    behaviour: 'drag',
-    step: 1,
-    range: {
-        'min': 0,
-        'max': data.length - 1
-    },
-    format: wNumb({
-        decimals: 0
-    })
-});
+    //Initiate Slider
+    var slider = document.getElementById('dateSlider');
+    noUiSlider.create(slider, {
+        start: [0, data.length - 1],
+        connect: true,
+        behaviour: 'drag',
+        step: 1,
+        range: {
+            'min': 0,
+            'max': data.length - 1
+        },
+        format: wNumb({
+            decimals: 0
+        })
+    });
 
 
     //This array will hold one financial summary for each job
@@ -241,13 +236,10 @@ noUiSlider.create(slider, {
         finishedSummaries.push(summaryObj)
     }
 
-
     // //Logs contents of finishedSummaries[]
     // for (var i = 0; i<finishedSummaries.length; i++) {
     //     console.log(finishedSummaries[i]);
     // }
-
-
 
     //Chart Stuff
 
@@ -255,7 +247,6 @@ noUiSlider.create(slider, {
     for (var i = 0; i < data.length; i++) {
         data[i].shiftDate = AmCharts.stringToDate(data[i].shiftDate, "YYYY-MM-DD")
     }
-
 
     var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
@@ -424,21 +415,6 @@ noUiSlider.create(slider, {
             "valueField": "smallestTip",
             "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
         }],
-        // "chartScrollbar": {
-        //     "graph": "totalWalkedWith",
-        //     "oppositeAxis": false,
-        //     "offset": 30,
-        //     "scrollbarHeight": 50,
-        //     "backgroundAlpha": 0,
-        //     "selectedBackgroundAlpha": 0.1,
-        //     "selectedBackgroundColor": "#888888",
-        //     "graphFillAlpha": 0,
-        //     "graphLineAlpha": 0.5,
-        //     "selectedGraphFillAlpha": 0,
-        //     "selectedGraphLineAlpha": 1,
-        //     "autoGridCount": true,
-        //     "color": "#AAAAAA"
-        // },
         "categoryField": "shiftDate",
         "categoryAxis": {
             "parseDates": true,
@@ -448,58 +424,47 @@ noUiSlider.create(slider, {
         "dataProvider": data.reverse()
     });
 
-//Date slider actions section.
-slider.noUiSlider.on('update', function() {
-    var startDate = slider.noUiSlider.get()[0]
-    var endDate = slider.noUiSlider.get()[1]
+    //Date slider actions section.
+    slider.noUiSlider.on('update', function() {
+        var startDate = slider.noUiSlider.get()[0]
+        var endDate = slider.noUiSlider.get()[1]
 
-    chart.zoomToIndexes(startDate, endDate)
+        chart.zoomToIndexes(startDate, endDate)
 
-    var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
-    var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
+        var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
+        var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
 
-    $('.date1').text(startDateFormat)
-    $('.date2').text(endDateFormat)
-})
-
-//Sets initial visible state of graphs, leaving only first one on.
-    AmCharts.ready(function() {
-    for ( var i = 1; i < chart.graphs.length; i++ ){
-    console.log('wat')
-    chart.hideGraph(chart.graphs[i])
-}
+        $('.date1').text(startDateFormat)
+        $('.date2').text(endDateFormat)
     })
 
+    //Sets initial visible state of graphs, leaving only first one on.
+    AmCharts.ready(function() {
+        for ( var i = 1; i < chart.graphs.length; i++ ){
+            chart.hideGraph(chart.graphs[i]);
+        }
+    })
 
+    //Toggles the viewable graphs.
+    $('.lever').on('click', function(){
+        var target = $(this).attr("data")
+        var graphed = $(this).attr("graphed")
+        var toggle = $(this)
 
-//Toggles the viewable graphs.
-$('.lever').on('click', function(){
-    var target = $(this).attr("data")
-    var graphed = $(this).attr("graphed")
-    var toggle = $(this)
-
-     for( var i = 0; i < chart.graphs.length; i++ ) {
-            if(target === chart.graphs[i].id && graphed === 'true'){
-              chart.hideGraph(chart.graphs[i])
-              toggle.attr("graphed", 'false')
-            } else if (target === chart.graphs[i].id && graphed === 'false'){
-              chart.showGraph(chart.graphs[i])
-              toggle.attr("graphed", 'true')
+         for( var i = 0; i < chart.graphs.length; i++ ) {
+            if (target === chart.graphs[i].id && graphed === 'true') {
+                chart.hideGraph(chart.graphs[i])
+                toggle.attr("graphed", 'false')
+            } else if (target === chart.graphs[i].id && graphed === 'false') {
+                chart.showGraph(chart.graphs[i])
+                toggle.attr("graphed", 'true')
             }
-  }
-})
-
-
+        }
+    })
 
 });
 
-
-
 $('.amcharts-chart-div').find('a').addClass('superHide')
-
-
-
-
 
 ///////////////////////////////////////
 //HELPER FUNCTIONS
