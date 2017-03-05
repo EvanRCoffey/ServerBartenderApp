@@ -10,6 +10,7 @@
 
 $.post("/financialSummary").done(function(data) {
 
+<<<<<<< HEAD
     //Initiate Slider
     var slider = document.getElementById('dateSlider');
     noUiSlider.create(slider, {
@@ -25,6 +26,28 @@ $.post("/financialSummary").done(function(data) {
             decimals: 0
         })
     });
+=======
+
+    var startDate
+    var endDate
+//Initiate Slider
+var slider = document.getElementById('dateSlider');
+noUiSlider.create(slider, {
+    start: [0, data.length - 1],
+    connect: true,
+    behaviour: 'drag',
+    step: 1,
+    range: {
+        'min': 0,
+        'max': data.length - 1
+    },
+    format: wNumb({
+        decimals: 0
+    })
+});
+>>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
+
+    
 
 
     //This array will hold one financial summary for each job
@@ -43,16 +66,17 @@ $.post("/financialSummary").done(function(data) {
 
     //Fill the shifts array with all shifts
     for (var i = 0; i < data.length; i++) {
-        shifts.push(data[i]);
+        shifts.unshift(data[i]);
     }
 
-    //For each unique job ID...
-    for (var k = 0; k < jobIDArray.length; k++) {
 
-        //Variables to fill after pulling from the database
+
+
+    function updateAverage() {
         var hourlyWage = 0;
         var totalWalkedWith = 0;
         var totalHoursWorked = 0;
+        var averageWalkedWith = 0;
         var totalBWL = 0;
         var totalPPA = 0;
         var totalSales = 0;
@@ -60,8 +84,8 @@ $.post("/financialSummary").done(function(data) {
         var totalTipPercent = 0;
 
         //Get these two from the span-of-dates sliders set before running the financial summary
-        var firstShiftDate;
-        var lastShiftDate;
+        var firstShiftDate
+        var lastShiftDate
 
         //Counter variables
         var countShifts = 0;
@@ -79,35 +103,50 @@ $.post("/financialSummary").done(function(data) {
         var shortestShift = 99999;
         var mostWalkedWithShift = 0;
         var leastWalkedWithShift = 99999;
+    for (var i = startDate; i < endDate ; i++) {
+        //Variables to fill after pulling from the database
+            var timeIn = moment(shifts[i].timeIn, "hh:mm:ss");
+            var timeOut = moment(shifts[i].timeOut, "hh:mm:ss");
+          
+            var duration = moment.duration(timeOut.diff(timeIn));
+            var hours = parseInt(duration.asHours());
+            
+            totalHoursWorked += hours
 
-        //For each shift in the shifts array...
-        for (var i = 0; i < shifts.length; i++) {
-            //If the job ID matches, 
-            if (shifts[i].JobId === jobIDArray[k]) {
-                countShifts++;
+            
+
+
+
+
+//             var firstDay = moment(shifts[])
+//             var a = moment([2007, 0, 29]);
+// var b = moment([2007, 0, 28]);
+// a.diff(b, 'days') 
 
                 totalWalkedWith += shifts[i].totalWalkedWith;
+
+                averageWalkedWith = totalWalkedWith / (endDate - startDate)
+
                 if (shifts[i].totalWalkedWith > mostWalkedWithShift) { mostWalkedWithShift = shifts[i].totalWalkedWith };
                 if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
 
                 //If out-time > in-time (i.e., if shift ended before midnight)
-                if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
-                    totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
-                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                }
+                // if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
+                //     totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
+                //     if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                //     if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                // }
 
                 //If out-time < in-time (i.e., if shift ended after midnight)
-                else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
-                    totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
-                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                }
-
-                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip };
+                // else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
+                //     totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
+                //     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                //     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                // }
+                if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip; };
                 if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
 
-                if (shifts[i].stiffed > 0) { countStiffed += shifts[i].stiffed };
+                countStiffed += shifts[i].stiffed;
 
                 if (shifts[i].bwl != "NULL") {
                     totalBWL += shifts[i].bwl;
@@ -135,87 +174,49 @@ $.post("/financialSummary").done(function(data) {
                 }
 
                 hourlyWage = shifts[i].wage;
-            }
+            
         }
 
         ///////////////////////////////////////
         //PREPARE FINANCIAL SUMMARY VARIABLES
         ///////////////////////////////////////
-
-        //This currently holds the number of minutes worked.  Correcting that here.
-        totalHoursWorked = totalHoursWorked / 60;
-
+            console.log(totalHoursWorked)
         var numDays = lastShiftDate - firstShiftDate; //Use moment for this
         var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
         var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
         var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
-        var avgShiftLength = totalHoursWorked / countShifts;
+        var avgShiftLength = totalHoursWorked / (endDate - startDate);
         var avgShiftsPerWeek = countShifts / (numDays / 7);
         var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
         var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
-        var avgTipout = totalTipout / countTipout;
-        var avgTipPercent = totalTipPercent / countTipPercent;
-        var avgBWL = totalBWL / countBWL;
-        var avgPPA = totalPPA / countPPA;
-        var avgSales = totalSales / countSales;
-
-        ///////////////////////////////////////
-        //DISPLAY FINANCIAL SUMMARY DATA
-        ///////////////////////////////////////
-
-        // console.log("<br>********************************");
-        // console.log("<br>Job " + k);
-        // console.log("$" + totalWalkedWith.toFixed(2)); //This will be an average of dates shown.
-        // $(".totalEarnedVal").text("$" + totalEarnedBeforeTaxes.toFixed(2));
-        // $("#hourlyVal").append("$" + avgHourlyWalkedWith.toFixed(2));
-        // console.log("<br>Average hourly total earned (before taxes) = $" + avgHourlyTotal.toFixed(2));
-        // console.log("<br>Average shift length = " + avgShiftLength.toFixed(2) + " hours");
-        // console.log("<br>Average number of shifts per week = " + avgShiftsPerWeek.toFixed(2));
-        // console.log("<br>Average number of shifts per month = " + avgShiftsPerMonth.toFixed(2));
-        // console.log("<br>Average number of hours per week = " + avgHoursPerWeek.toFixed(2));
-        // $(".tipOutVal").text("Average $" + avgTipout.toFixed(2));
-        // $(".tipPercentVal").text("Average " + avgTipPercent.toFixed(2) + "%");
-        // $(".bwlVal").text("Average " + avgBWL.toFixed(2) + "%");
-        // $(".ppaVal").text("Average $" + avgPPA.toFixed(2));
-        // $(".salesVal").text("Average $" + avgSales.toFixed(2));
-        // $(".largestTipVal").text("$" + bestTip.toFixed(2));
-        // $(".smallestTipVal").text("$" + worstTip.toFixed(2));
-        // $(".stiffedVal").text("Number of times = " + countStiffed);
-        // console.log("<br>Longest shift = " + longestShift + " minutes");
-        // console.log("<br>Shortest shift = " + shortestShift + " minutes");
-        // $(".highestWalkedVal").text("$" + mostWalkedWithShift.toFixed(2));
-        // $(".lowestWalkedVal").text("$" + leastWalkedWithShift.toFixed(2));
-        // console.log("<br>********************************")
-        // console.log("<br>Span of days between first and last shift = " + numDays);
-        // console.log("<br>Number of BWL entries = " + countBWL);
-        // console.log("<br>Number of PPA entries = " + countPPA);
-        // console.log("<br>Number of Sales entries= " + countSales);
-        // console.log("<br>Number of Tipout entries = " + countTipout);
-        // console.log("<br>Number of Tip percent entries = " + countTipPercent);
-
+        var avgTipout = totalTipout / (endDate - startDate)
+        var avgTipPercent = totalTipPercent / (endDate - startDate);
+        var avgBWL = totalBWL / (endDate - startDate);
+        var avgPPA = totalPPA / (endDate - startDate);
+        var avgSales = totalSales / (endDate - startDate);
+            console.log(endDate - startDate)
         //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
         var summaryObj = {
             totalWalkedWith: totalWalkedWith.toFixed(2),
-            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes.toFixed(2),
             totalHoursWorked: totalHoursWorked.toFixed(2),
-            totalEarnedBeforeTaxes: totalEarnedBeforeTaxes,
-            avgHourlyWalkedWith: avgHourlyWalkedWith,
+            avgHourlyWalkedWith: avgHourlyWalkedWith.toFixed(2),
             avgHourlyTotal: avgHourlyTotal,
             avgShiftLength: avgShiftLength,
             avgShiftsPerWeek: avgShiftsPerWeek,
             avgShiftsPerMonth: avgShiftsPerMonth,
             avgHoursPerWeek: avgHoursPerWeek,
-            avgTipout: avgTipout,
-            avgTipPercent: avgTipPercent,
-            avgBWL: avgBWL,
-            avgPPA: avgPPA,
-            avgSales: avgSales,
+            avgTipout: avgTipout.toFixed(2),
+            avgTipPercent: avgTipPercent.toFixed(2),
+            averageWalkedWith: averageWalkedWith.toFixed(2),
+            avgBWL: avgBWL.toFixed(2),
+            avgPPA: avgPPA.toFixed(2),
+            avgSales: avgSales.toFixed(2),
             bestTip: bestTip,
             worstTip: worstTip,
             longestShift: longestShift,
             shortestShift: shortestShift,
-            mostWalkedWithShift: mostWalkedWithShift,
-            leastWalkedWithShift: leastWalkedWithShift,
+            mostWalkedWithShift: mostWalkedWithShift.toFixed(2),
+            leastWalkedWithShift: leastWalkedWithShift.toFixed(2),
             hourlyWage: hourlyWage,
             totalBWL: totalBWL,
             totalPPA: totalPPA,
@@ -233,9 +234,34 @@ $.post("/financialSummary").done(function(data) {
         }
 
         //In the end, you should have an array which contains a unique object for each job, holding the financial summary results for that job
-        finishedSummaries.push(summaryObj)
+        // finishedSummaries.push(summaryObj)
+
+        ///////////////////////////////////////
+        //DISPLAY FINANCIAL SUMMARY DATA
+        ///////////////////////////////////////
+        $(".totalEarnedVal").text('$' + summaryObj.totalWalkedWith);
+        $(".averageWalkedVal").text('$' + summaryObj.averageWalkedWith);
+        $(".avgSalesVal").text('$' + summaryObj.avgSales);
+        $(".largestTipVal").text('$' + summaryObj.bestTip);
+        $(".smallestTipVal").text('$' + summaryObj.worstTip);
+        $(".stiffedVal").text(summaryObj.countStiffed);
+        $(".avgTipPercentVal").text(summaryObj.avgTipPercent + '%');
+        $(".avgTipOutVal").text('$' + summaryObj.avgTipout);
+        $(".avgBwlVal").text('$' + summaryObj.avgBWL);
+        $(".avgPPAVal").text('$' + summaryObj.avgPPA);
+        $(".mostWalkedVal").text('$' + summaryObj.mostWalkedWithShift);
+        $(".leastWalkedVal").text('$' + summaryObj.leastWalkedWithShift);
+        $(".avgHourlyVal").text('$' + summaryObj.avgHourlyWalkedWith);
+        $(".totalHoursVal").text(summaryObj.totalHoursWorked + ' hours');
+        $(".avgShiftLengthVal").text(summaryObj.avgShiftLength + ' hours');
     }
 
+<<<<<<< HEAD
+=======
+  
+
+
+>>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
     // //Logs contents of finishedSummaries[]
     // for (var i = 0; i<finishedSummaries.length; i++) {
     //     console.log(finishedSummaries[i]);
@@ -250,13 +276,15 @@ $.post("/financialSummary").done(function(data) {
 
     var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
+        'zoomOutText': '',
+        'fontFamily' : 'Roboto',
         "theme": "light",
         "dataDateFormat": "YYYY-MM-DD",
          "responsive": {
         "enabled": true
         },
         "addClassNames" :true,
-        "precision": 2,
+        "precision": 1,
         "valueAxes": [{
             "id": "v1",
             "position": "left",
@@ -283,6 +311,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "tipout",
             "classNameField": "tipout",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -300,6 +329,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "bwl",
             "classNameField": "bwl",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -317,6 +347,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "largestTip",
             "classNameField": "largestTip",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -334,6 +365,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "ppa",
             "classNameField": "ppa",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -351,6 +383,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "sales",
             "classNameField": "sales",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -368,6 +401,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "stiffed",
             "classNameField": "stiffed",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -375,7 +409,7 @@ $.post("/financialSummary").done(function(data) {
             "hideBulletsCount": 50,
             "lineThickness": 2,
             "lineColor": "red",
-            "type": "smoothedLine",
+            "type": "column",
             "title": "Stiffed",
             "useLineColorForBulletBorder": true,
             "valueField": "stiffed",
@@ -385,6 +419,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "tipPercent",
             "classNameField": "tipPercent",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -402,6 +437,7 @@ $.post("/financialSummary").done(function(data) {
             "id": "smallestTip",
             "classNameField": "smallestTip",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -424,16 +460,36 @@ $.post("/financialSummary").done(function(data) {
         "dataProvider": data.reverse()
     });
 
+<<<<<<< HEAD
     //Date slider actions section.
     slider.noUiSlider.on('update', function() {
         var startDate = slider.noUiSlider.get()[0]
         var endDate = slider.noUiSlider.get()[1]
 
         chart.zoomToIndexes(startDate, endDate)
+=======
+AmCharts.ready(function() {
+    $('.amcharts-chart-div').find('a').addClass('superHide')
+
+})
+
+
+
+
+
+//Date slider actions section.
+slider.noUiSlider.on('update', function() {
+    startDate = slider.noUiSlider.get()[0]
+    endDate = slider.noUiSlider.get()[1]
+
+    $('.amcharts-chart-div').find('a').addClass('superHide')
+    chart.zoomToIndexes(startDate, endDate)
+>>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
 
         var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
         var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
 
+<<<<<<< HEAD
         $('.date1').text(startDateFormat)
         $('.date2').text(endDateFormat)
     })
@@ -458,13 +514,60 @@ $.post("/financialSummary").done(function(data) {
             } else if (target === chart.graphs[i].id && graphed === 'false') {
                 chart.showGraph(chart.graphs[i])
                 toggle.attr("graphed", 'true')
+=======
+    $('.date1').text(startDateFormat)
+    $('.date2').text(endDateFormat)
+    updateAverage()
+})
+
+//Sets initial visible state of graphs, leaving only first one on.
+//  for ( var i = 1; i < chart.graphs.length; i++ ){
+//     console.log('wat')
+//     chart.hideGraph(chart.graphs[i])
+// }
+
+//     AmCharts.ready(function() {
+//     for ( var i = 1; i < chart.graphs.length; i++ ){
+//     console.log('wat')
+//     chart.hideGraph(chart.graphs[i])
+// }
+//     $('.amcharts-chart-div').find('a').addClass('superHide')
+//     })
+
+
+
+//Toggles the viewable graphs.
+$('.lever').on('click', function(){
+    var target = $(this).attr("data")
+    var graphed = $(this).attr("graphed")
+    var toggle = $(this)
+
+     for( var i = 0; i < chart.graphs.length; i++ ) {
+            if(target === chart.graphs[i].id && graphed === 'true'){
+              chart.hideGraph(chart.graphs[i])
+              toggle.attr("graphed", 'false')
+              $('.amcharts-chart-div').find('a').addClass('superHide')
+            } else if (target === chart.graphs[i].id && graphed === 'false'){
+    
+              chart.showGraph(chart.graphs[i])
+              toggle.attr("graphed", 'true')
+              $('.amcharts-chart-div').find('a').addClass('superHide')
+>>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
             }
         }
     })
 
 });
 
+<<<<<<< HEAD
 $('.amcharts-chart-div').find('a').addClass('superHide')
+=======
+
+
+$( window ).resize(function() {
+  $('.amcharts-chart-div').find('a').addClass('superHide')
+});
+>>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
 
 ///////////////////////////////////////
 //HELPER FUNCTIONS

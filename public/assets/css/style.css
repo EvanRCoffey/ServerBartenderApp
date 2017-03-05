@@ -117,6 +117,7 @@ input[type=range]+.thumb.active {
 
 .summaryLegend {
 	border-bottom-style: solid;
+	min-width: 20px;
 }
 
 .amcharts-graph-stroke {
@@ -135,6 +136,7 @@ input[type=range]+.thumb.active {
 
 .superHide{
 	display: none !important;
+	opacity: 0;
 }
 
 .showChart{
