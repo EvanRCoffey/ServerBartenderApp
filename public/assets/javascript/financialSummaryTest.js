@@ -34,6 +34,8 @@ noUiSlider.create(slider, {
     })
 });
 
+    
+
 
     //This array will hold one financial summary for each job
     var finishedSummaries = [];
@@ -51,10 +53,12 @@ noUiSlider.create(slider, {
 
     //Fill the shifts array with all shifts
     for (var i = 0; i < data.length; i++) {
-        shifts.push(data[i]);
+        shifts.unshift(data[i]);
     }
 
-    shifts = shifts.reverse()
+
+
+
     function updateAverage() {
         var hourlyWage = 0;
         var totalWalkedWith = 0;
@@ -88,7 +92,23 @@ noUiSlider.create(slider, {
         var leastWalkedWithShift = 99999;
     for (var i = startDate; i < endDate ; i++) {
         //Variables to fill after pulling from the database
-                
+            var timeIn = moment(shifts[i].timeIn, "hh:mm:ss");
+            var timeOut = moment(shifts[i].timeOut, "hh:mm:ss");
+          
+            var duration = moment.duration(timeOut.diff(timeIn));
+            var hours = parseInt(duration.asHours());
+            
+            totalHoursWorked += hours
+
+            
+
+
+
+
+//             var firstDay = moment(shifts[])
+//             var a = moment([2007, 0, 29]);
+// var b = moment([2007, 0, 28]);
+// a.diff(b, 'days') 
 
                 totalWalkedWith += shifts[i].totalWalkedWith;
 
@@ -98,18 +118,18 @@ noUiSlider.create(slider, {
                 if (shifts[i].totalWalkedWith < leastWalkedWithShift) { leastWalkedWithShift = shifts[i].totalWalkedWith };
 
                 //If out-time > in-time (i.e., if shift ended before midnight)
-                if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
-                    totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
-                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                    if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
-                }
+                // if (convertTimeToInt(shifts[i].timeOut) > convertTimeToInt(shifts[i].timeIn)) {
+                //     totalHoursWorked += (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn));
+                //     if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) > longestShift) { longestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                //     if ((convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) < shortestShift) { shortestShift = (convertTimeToInt(shifts[i].timeOut) - convertTimeToInt(shifts[i].timeIn)) };
+                // }
 
                 //If out-time < in-time (i.e., if shift ended after midnight)
-                else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
-                    totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
-                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                    if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
-                }
+                // else if (convertTimeToInt(shifts[i].timeOut) < convertTimeToInt(shifts[i].timeIn)) {
+                //     totalHoursWorked += ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut));
+                //     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) > longestShift) { longestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                //     if (((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) < shortestShift) { shortestShift = ((1425 - convertTimeToInt(shifts[i].timeIn)) + convertTimeToInt(shifts[i].timeOut)) };
+                // }
                 if (shifts[i].largestTip > bestTip) { bestTip = shifts[i].largestTip; };
                 if (shifts[i].smallestTip < worstTip) { worstTip = shifts[i].smallestTip };
 
@@ -147,15 +167,12 @@ noUiSlider.create(slider, {
         ///////////////////////////////////////
         //PREPARE FINANCIAL SUMMARY VARIABLES
         ///////////////////////////////////////
-
-        //This currently holds the number of minutes worked.  Correcting that here.
-        totalHoursWorked = totalHoursWorked / 60;
-
+            console.log(totalHoursWorked)
         var numDays = lastShiftDate - firstShiftDate; //Use moment for this
         var totalEarnedBeforeTaxes = totalWalkedWith + (totalHoursWorked * hourlyWage);
         var avgHourlyWalkedWith = totalWalkedWith / totalHoursWorked;
         var avgHourlyTotal = avgHourlyWalkedWith + hourlyWage;
-        var avgShiftLength = totalHoursWorked / countShifts;
+        var avgShiftLength = totalHoursWorked / (endDate - startDate);
         var avgShiftsPerWeek = countShifts / (numDays / 7);
         var avgShiftsPerMonth = countShifts / (numDays / 30.4375);
         var avgHoursPerWeek = totalHoursWorked / (numDays / 7);
@@ -164,15 +181,12 @@ noUiSlider.create(slider, {
         var avgBWL = totalBWL / (endDate - startDate);
         var avgPPA = totalPPA / (endDate - startDate);
         var avgSales = totalSales / (endDate - startDate);
-
-
-
-
+            console.log(endDate - startDate)
         //MAKE THE OBJECT HERE FOR JOBIDARRAY[k]
         var summaryObj = {
             totalWalkedWith: totalWalkedWith.toFixed(2),
             totalHoursWorked: totalHoursWorked.toFixed(2),
-            avgHourlyWalkedWith: avgHourlyWalkedWith,
+            avgHourlyWalkedWith: avgHourlyWalkedWith.toFixed(2),
             avgHourlyTotal: avgHourlyTotal,
             avgShiftLength: avgShiftLength,
             avgShiftsPerWeek: avgShiftsPerWeek,
@@ -188,8 +202,8 @@ noUiSlider.create(slider, {
             worstTip: worstTip,
             longestShift: longestShift,
             shortestShift: shortestShift,
-            mostWalkedWithShift: mostWalkedWithShift,
-            leastWalkedWithShift: leastWalkedWithShift,
+            mostWalkedWithShift: mostWalkedWithShift.toFixed(2),
+            leastWalkedWithShift: leastWalkedWithShift.toFixed(2),
             hourlyWage: hourlyWage,
             totalBWL: totalBWL,
             totalPPA: totalPPA,
@@ -222,7 +236,14 @@ noUiSlider.create(slider, {
         $(".avgTipOutVal").text('$' + summaryObj.avgTipout);
         $(".avgBwlVal").text('$' + summaryObj.avgBWL);
         $(".avgPPAVal").text('$' + summaryObj.avgPPA);
+        $(".mostWalkedVal").text('$' + summaryObj.mostWalkedWithShift);
+        $(".leastWalkedVal").text('$' + summaryObj.leastWalkedWithShift);
+        $(".avgHourlyVal").text('$' + summaryObj.avgHourlyWalkedWith);
+        $(".totalHoursVal").text(summaryObj.totalHoursWorked + ' hours');
+        $(".avgShiftLengthVal").text(summaryObj.avgShiftLength + ' hours');
     }
+
+  
 
 
     // //Logs contents of finishedSummaries[]
@@ -242,6 +263,8 @@ noUiSlider.create(slider, {
 
     var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
+        'zoomOutText': '',
+        'fontFamily' : 'Roboto',
         "theme": "light",
         "dataDateFormat": "YYYY-MM-DD",
          "responsive": {
@@ -275,6 +298,7 @@ noUiSlider.create(slider, {
             "id": "tipout",
             "classNameField": "tipout",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -292,6 +316,7 @@ noUiSlider.create(slider, {
             "id": "bwl",
             "classNameField": "bwl",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -309,6 +334,7 @@ noUiSlider.create(slider, {
             "id": "largestTip",
             "classNameField": "largestTip",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -326,6 +352,7 @@ noUiSlider.create(slider, {
             "id": "ppa",
             "classNameField": "ppa",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -343,6 +370,7 @@ noUiSlider.create(slider, {
             "id": "sales",
             "classNameField": "sales",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -360,6 +388,7 @@ noUiSlider.create(slider, {
             "id": "stiffed",
             "classNameField": "stiffed",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -367,7 +396,7 @@ noUiSlider.create(slider, {
             "hideBulletsCount": 50,
             "lineThickness": 2,
             "lineColor": "red",
-            "type": "smoothedLine",
+            "type": "column",
             "title": "Stiffed",
             "useLineColorForBulletBorder": true,
             "valueField": "stiffed",
@@ -377,6 +406,7 @@ noUiSlider.create(slider, {
             "id": "tipPercent",
             "classNameField": "tipPercent",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -394,6 +424,7 @@ noUiSlider.create(slider, {
             "id": "smallestTip",
             "classNameField": "smallestTip",
             "valueAxis": "v1",
+            'hidden': true,
             "bullet": "round",
             "bulletBorderAlpha": 1,
             "bulletColor": "#FFFFFF",
@@ -407,21 +438,6 @@ noUiSlider.create(slider, {
             "valueField": "smallestTip",
             "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"
         }],
-        // "chartScrollbar": {
-        //     "graph": "totalWalkedWith",
-        //     "oppositeAxis": false,
-        //     "offset": 30,
-        //     "scrollbarHeight": 50,
-        //     "backgroundAlpha": 0,
-        //     "selectedBackgroundAlpha": 0.1,
-        //     "selectedBackgroundColor": "#888888",
-        //     "graphFillAlpha": 0,
-        //     "graphLineAlpha": 0.5,
-        //     "selectedGraphFillAlpha": 0,
-        //     "selectedGraphLineAlpha": 1,
-        //     "autoGridCount": true,
-        //     "color": "#AAAAAA"
-        // },
         "categoryField": "shiftDate",
         "categoryAxis": {
             "parseDates": true,
@@ -431,9 +447,13 @@ noUiSlider.create(slider, {
         "dataProvider": data.reverse()
     });
 
-for (var i = 0; i < data.length; i++) {
-    console.log(data[i].largestTip)
-}
+AmCharts.ready(function() {
+    $('.amcharts-chart-div').find('a').addClass('superHide')
+
+})
+
+
+
 
 
 //Date slider actions section.
@@ -441,6 +461,7 @@ slider.noUiSlider.on('update', function() {
     startDate = slider.noUiSlider.get()[0]
     endDate = slider.noUiSlider.get()[1]
 
+    $('.amcharts-chart-div').find('a').addClass('superHide')
     chart.zoomToIndexes(startDate, endDate)
 
     var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
@@ -452,12 +473,18 @@ slider.noUiSlider.on('update', function() {
 })
 
 //Sets initial visible state of graphs, leaving only first one on.
-    AmCharts.ready(function() {
-    for ( var i = 1; i < chart.graphs.length; i++ ){
-    console.log('wat')
-    chart.hideGraph(chart.graphs[i])
-}
-    })
+//  for ( var i = 1; i < chart.graphs.length; i++ ){
+//     console.log('wat')
+//     chart.hideGraph(chart.graphs[i])
+// }
+
+//     AmCharts.ready(function() {
+//     for ( var i = 1; i < chart.graphs.length; i++ ){
+//     console.log('wat')
+//     chart.hideGraph(chart.graphs[i])
+// }
+//     $('.amcharts-chart-div').find('a').addClass('superHide')
+//     })
 
 
 
@@ -471,9 +498,12 @@ $('.lever').on('click', function(){
             if(target === chart.graphs[i].id && graphed === 'true'){
               chart.hideGraph(chart.graphs[i])
               toggle.attr("graphed", 'false')
+              $('.amcharts-chart-div').find('a').addClass('superHide')
             } else if (target === chart.graphs[i].id && graphed === 'false'){
+    
               chart.showGraph(chart.graphs[i])
               toggle.attr("graphed", 'true')
+              $('.amcharts-chart-div').find('a').addClass('superHide')
             }
   }
 })
@@ -484,7 +514,9 @@ $('.lever').on('click', function(){
 
 
 
-$('.amcharts-chart-div').find('a').addClass('superHide')
+$( window ).resize(function() {
+  $('.amcharts-chart-div').find('a').addClass('superHide')
+});
 
 
 
