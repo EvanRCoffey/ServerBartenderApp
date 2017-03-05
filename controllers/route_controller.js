@@ -613,6 +613,12 @@ router.get("/menuJSON", loggedIn, function(req, res, next) {
     res.render("menuJSON", req);
 })
 
+router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
+    db.Menu.findOne({ where: {id: req.body.id} }).then(function(dbUser) {
+        res.json(dbUser);
+    });
+})
+
 router.post("/newMenu", loggedIn, function(req, res, next) {
     console.log(req.body)
     db.Menu.create({
