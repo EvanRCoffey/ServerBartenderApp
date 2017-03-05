@@ -277,6 +277,20 @@ noUiSlider.create(slider, {
             "position": "left",
             "autoGridCount": true
         }],
+        "balloon": {
+        "borderThickness": 1,
+        "shadowAlpha": 0
+    },
+    "chartCursor": {
+        "pan": true,
+        "valueLineEnabled": false,
+        "valueLineBalloonEnabled": false,
+        "cursorAlpha":1,
+        "cursorColor":"#258cbb",
+        "limitToGraph":"v1",
+        "valueLineAlpha":0.2,
+        "valueZoomable":true
+    },
         "graphs": [{
             "id": "totalWalkedWith",
             "classNameField": "totalWalkedWith",

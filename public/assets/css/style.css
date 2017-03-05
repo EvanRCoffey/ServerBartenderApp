@@ -47,7 +47,7 @@ input[type=range]+.thumb.active {
 }
 
 .side-nav {
-	width: 180px;
+	width: 200px;
 }
 
 .beta {
@@ -80,18 +80,32 @@ input[type=range]+.thumb.active {
 	height: 64px;
 }
 
-.shiftTableRow {
-	display: table-row;
-	overflow-y: auto;
-	-webkit-transition: height .1s;
-    transition: height .1s;
-    -webkit-transition: opacity .1s;
-    transition: opacity .1s;
+.autoRow {
+	padding: 15px;
+	overflow-y: hidden;
+	-webkit-transition: height 1s;
+    transition: height 1s;
+    -webkit-transition: padding 1s;
+    transition: padding 1s;
+}
+
+.shiftd {
+	padding: 0px;
+	-webkit-transition: padding 1s;
+    transition: padding 1s;
+    -webkit-transition: height 1s;
+    transition: height 1s;
+}
+
+.shiftRow{
+	    -webkit-transition: height 1s;
+    transition: height 1s;
 }
 
 .tableShow {
+	height: 21px;
+	padding: 15px;
 	opacity: 1;
-	display: table-row;
 }
 
 .tableHide {
@@ -107,32 +121,11 @@ input[type=range]+.thumb.active {
 	height: 500px;
 }
 
-.amcharts-graph-totalWalkedWith{
-	opacity: 1;
-}
-
-.amcharts-scrollbar-label{
-	display: none;
-}
-
 .summaryLegend {
 	border-bottom-style: solid;
 	min-width: 20px;
 }
 
-.amcharts-graph-stroke {
-	-webkit-transition: width 1s;
-    transition: width 1s;
-    display: block;
-}
-
-.fadeChart{
-	opacity: 0;
-}
-
-.hideChart{
-	display: none;
-}
 
 .superHide{
 	display: none !important;
@@ -144,6 +137,3 @@ input[type=range]+.thumb.active {
 	opacity: 1;
 }
 
-.amcharts-balloon-div{
-	display: none;
-}
