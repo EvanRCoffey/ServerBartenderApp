@@ -78,6 +78,15 @@ router.get("/updateAccount", loggedIn, function(req, res, next) {
     res.render("updateAccount", req);
 });
 
+router.get("/menuBuilder", loggedIn, function(req, res, next) {
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+      var dataObject = {
+          jobs: dbUser
+        };
+       res.render("menuBuilder", dataObject);
+     });
+});
+
 router.get("/shift", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
