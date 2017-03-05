@@ -85,8 +85,6 @@ input[type=range]+.thumb.active {
 	overflow-y: hidden;
 	-webkit-transition: height 1s;
     transition: height 1s;
-    -webkit-transition: opacity 1s;
-    transition: opacity 1s;
     -webkit-transition: padding 1s;
     transition: padding 1s;
 }
@@ -95,13 +93,19 @@ input[type=range]+.thumb.active {
 	padding: 0px;
 	-webkit-transition: padding 1s;
     transition: padding 1s;
+    -webkit-transition: height 1s;
+    transition: height 1s;
+}
+
+.shiftRow{
+	    -webkit-transition: height 1s;
+    transition: height 1s;
 }
 
 .tableShow {
 	height: 21px;
 	padding: 15px;
 	opacity: 1;
-	display: table-row;
 }
 
 .tableHide {
