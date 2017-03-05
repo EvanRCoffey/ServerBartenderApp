@@ -47,7 +47,7 @@ input[type=range]+.thumb.active {
 }
 
 .side-nav {
-	width: 180px;
+	width: 200px;
 }
 
 .beta {
@@ -107,32 +107,11 @@ input[type=range]+.thumb.active {
 	height: 500px;
 }
 
-.amcharts-graph-totalWalkedWith{
-	opacity: 1;
-}
-
-.amcharts-scrollbar-label{
-	display: none;
-}
-
 .summaryLegend {
 	border-bottom-style: solid;
 	min-width: 20px;
 }
 
-.amcharts-graph-stroke {
-	-webkit-transition: width 1s;
-    transition: width 1s;
-    display: block;
-}
-
-.fadeChart{
-	opacity: 0;
-}
-
-.hideChart{
-	display: none;
-}
 
 .superHide{
 	display: none !important;
@@ -144,6 +123,3 @@ input[type=range]+.thumb.active {
 	opacity: 1;
 }
 
-.amcharts-balloon-div{
-	display: none;
-}
