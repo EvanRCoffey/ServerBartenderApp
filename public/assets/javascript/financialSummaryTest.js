@@ -8,25 +8,13 @@
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
+//Not sure what this is really for... the userID is checked on the post, regardless of what object is sent
+var userIdObj = {
+    userID: 0
+}
+
 $.post("/financialSummary").done(function(data) {
 
-<<<<<<< HEAD
-    //Initiate Slider
-    var slider = document.getElementById('dateSlider');
-    noUiSlider.create(slider, {
-        start: [0, data.length - 1],
-        connect: true,
-        behaviour: 'drag',
-        step: 1,
-        range: {
-            'min': 0,
-            'max': data.length - 1
-        },
-        format: wNumb({
-            decimals: 0
-        })
-    });
-=======
 
     var startDate
     var endDate
@@ -45,7 +33,6 @@ noUiSlider.create(slider, {
         decimals: 0
     })
 });
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
 
     
 
@@ -256,16 +243,15 @@ noUiSlider.create(slider, {
         $(".avgShiftLengthVal").text(summaryObj.avgShiftLength + ' hours');
     }
 
-<<<<<<< HEAD
-=======
   
 
 
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
     // //Logs contents of finishedSummaries[]
     // for (var i = 0; i<finishedSummaries.length; i++) {
     //     console.log(finishedSummaries[i]);
     // }
+
+
 
     //Chart Stuff
 
@@ -273,6 +259,7 @@ noUiSlider.create(slider, {
     for (var i = 0; i < data.length; i++) {
         data[i].shiftDate = AmCharts.stringToDate(data[i].shiftDate, "YYYY-MM-DD")
     }
+
 
     var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
@@ -460,14 +447,6 @@ noUiSlider.create(slider, {
         "dataProvider": data.reverse()
     });
 
-<<<<<<< HEAD
-    //Date slider actions section.
-    slider.noUiSlider.on('update', function() {
-        var startDate = slider.noUiSlider.get()[0]
-        var endDate = slider.noUiSlider.get()[1]
-
-        chart.zoomToIndexes(startDate, endDate)
-=======
 AmCharts.ready(function() {
     $('.amcharts-chart-div').find('a').addClass('superHide')
 
@@ -484,37 +463,10 @@ slider.noUiSlider.on('update', function() {
 
     $('.amcharts-chart-div').find('a').addClass('superHide')
     chart.zoomToIndexes(startDate, endDate)
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
 
-        var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
-        var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
+    var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
+    var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
 
-<<<<<<< HEAD
-        $('.date1').text(startDateFormat)
-        $('.date2').text(endDateFormat)
-    })
-
-    //Sets initial visible state of graphs, leaving only first one on.
-    AmCharts.ready(function() {
-        for ( var i = 1; i < chart.graphs.length; i++ ){
-            chart.hideGraph(chart.graphs[i]);
-        }
-    })
-
-    //Toggles the viewable graphs.
-    $('.lever').on('click', function(){
-        var target = $(this).attr("data")
-        var graphed = $(this).attr("graphed")
-        var toggle = $(this)
-
-         for( var i = 0; i < chart.graphs.length; i++ ) {
-            if (target === chart.graphs[i].id && graphed === 'true') {
-                chart.hideGraph(chart.graphs[i])
-                toggle.attr("graphed", 'false')
-            } else if (target === chart.graphs[i].id && graphed === 'false') {
-                chart.showGraph(chart.graphs[i])
-                toggle.attr("graphed", 'true')
-=======
     $('.date1').text(startDateFormat)
     $('.date2').text(endDateFormat)
     updateAverage()
@@ -552,22 +504,23 @@ $('.lever').on('click', function(){
               chart.showGraph(chart.graphs[i])
               toggle.attr("graphed", 'true')
               $('.amcharts-chart-div').find('a').addClass('superHide')
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
             }
-        }
-    })
+  }
+})
+
+
 
 });
 
-<<<<<<< HEAD
-$('.amcharts-chart-div').find('a').addClass('superHide')
-=======
 
 
 $( window ).resize(function() {
   $('.amcharts-chart-div').find('a').addClass('superHide')
 });
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
+
+
+
+
 
 ///////////////////////////////////////
 //HELPER FUNCTIONS

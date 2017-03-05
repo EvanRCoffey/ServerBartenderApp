@@ -501,15 +501,9 @@ var criJSON = {
 var menuName = "Test Menu One";
 var comments = "No comments";
 var menuJSON = JSON.stringify(bigJSON);
-<<<<<<< HEAD
 criJSON = JSON.stringify(criJSON);
 var UserId = 1; 	//Update this
 var JobId = 1;		//Update this
-=======
-criJSON = JSON.stringify(criJSON)
-var UserId = 1;
-var JobId = 1;
->>>>>>> bdf28f9020f86fc66682475487d9eeae9ee891e4
 
 var menuObj = {
 	menuName: menuName,
