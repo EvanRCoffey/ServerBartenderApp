@@ -30,7 +30,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var popApps = [];
 	var popEnts = [];
 	var popDesserts = [];
-
 	var allQ1App = [];
 	var allQ1Ent = [];
 	var allApp = [];
@@ -105,7 +104,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 			if ((reParsedMenuJson[1][i].descriptors.vegetarian) && (!uniqueAppDescr.includes("vegetarian"))) {uniqueAppDescr.push("vegetarian"), vegApps.push(reParsedMenuJson[1][i]);};
 		}
 	}
-
 
 	//For each app, for each ingredient that's marked true, if it's not in uniqueAppIngr[], push it
 	var numAppIngr = 6;
@@ -353,44 +351,35 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	if (commonSauces.length>0) {numQ10Sauce++}
 	if (commonDressings.length>0) {numQ10Dressing++}
 
-	// console.log(numQ1App);
-	// console.log(numQ1Ent);
-	// console.log(numQ2App);
-	// console.log(numQ2Ent);
-	// console.log(numQ3App);
-	// console.log(numQ3Ent);
-	// console.log(numQ3Des);
-	// console.log(numQ4App);
-	// console.log(numQ4Ent);
-	// console.log(numQ4Des);
-	// console.log(numQ5);
-	// console.log(numQ6);
-	// console.log(numQ7App);
-	// console.log(numQ7Ent);
-	// console.log(numQ8);
-	// console.log(numQ9);
-	// console.log(numQ10Sauce);
-	// console.log(numQ10Dressing);
+	console.log(numQ1App);
+	console.log(numQ1Ent);
+	console.log(numQ2App);
+	console.log(numQ2Ent);
+	console.log(numQ3App);
+	console.log(numQ3Ent);
+	console.log(numQ3Des);
+	console.log(numQ4App);
+	console.log(numQ4Ent);
+	console.log(numQ4Des);
+	console.log(numQ5);
+	console.log(numQ6);
+	console.log(numQ7App);
+	console.log(numQ7Ent);
+	console.log(numQ8);
+	console.log(numQ9);
+	console.log(numQ10Sauce);
+	console.log(numQ10Dressing);
 
-	////////////////////////
-	//QUIZ QUESTION CREATION
-	////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QUESTION CREATION BEGINS HERE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//QuizQuestion Constructor
-	function QuizQuestion(question, fourAnswersArray, correctAnswersIndexesArray, qnum) {
+	function QuizQuestion(question, fourAnswersArray, correctAnswersIndexesArray) {
 	  this.question = question;
 	  this.fourAnswersArray = fourAnswersArray;
 	  this.correctAnswersIndexesArray = correctAnswersIndexesArray;
-	  this.qnum = qnum;
 	}
-
-	//Sample QuizQuestion object is created and sent to the console
-	var sampleQuestion = "What is 2 + 2?";
-	var sampleFourAnswersArray = [22, 4, 2.2, 9000];
-	var sampleCorrectAnswersIndexesArray = [1];
-	var sampleQNum = 1;
-	var sampleQ = new QuizQuestion(sampleQuestion, sampleFourAnswersArray, sampleCorrectAnswersIndexesArray, sampleQNum);
-	// console.log(sampleQ);
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -406,7 +395,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//Find highest and lowest prices in allQ1App, store them in topPrice and bottomPrice
 	//Also, store those two items' names in topItemName and bottomItemName
-
 	for (var i = 0; i<allQ1App.length; i++) {
 		var priceChanged = false;
 		if (parseFloat(allQ1App[i].price) < bottomPrice) {
@@ -437,9 +425,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(topItemName);
-	var sampleQNum = 1;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
 
 	var sampleQ = "What's your cheapest appetizer?";
@@ -448,11 +434,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(bottomItemName);
-	var sampleQNum = 2;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	//Randomize the order of the four quiz questions
-
 	console.log(thisQArray);
 
 	//////////////////////
@@ -469,7 +452,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//Find highest and lowest prices in allQ1Ent, store them in topPrice and bottomPrice
 	//Also, store those two items' names in topItemName and bottomItemName
-
 	for (var i = 0; i<allQ1Ent.length; i++) {
 		var priceChanged = false;
 		if (parseFloat(allQ1Ent[i].price) < bottomPrice) {
@@ -500,9 +482,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(topItemName);
-	var sampleQNum = 3;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
 
 	var sampleQ = "What's your cheapest entree?";
@@ -511,11 +491,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(bottomItemName);
-	var sampleQNum = 4;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	//Randomize the order of the four quiz questions
-	
 	console.log(thisQArray);
 
 	//////////////////////
@@ -528,7 +505,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var sampleCorrectAnswers = [];
 	var sampleFourAnswers = [];
 
-	//Sort allApp by price
+	//Sort allApp[] by price
 	allApp.sort(function(a, b){
 	    return a.price-b.price;
 	})
@@ -548,11 +525,9 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	sampleFourAnswers.push(incorrectItem2);
 	sampleCorrectAnswers.push(correctItem1);
 	sampleCorrectAnswers.push(correctItem2);
-	var sampleQNum = 5;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-
 	console.log(thisQArray);
 
 	//////////////////////
@@ -585,11 +560,9 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	sampleFourAnswers.push(incorrectItem2);
 	sampleCorrectAnswers.push(correctItem1);
 	sampleCorrectAnswers.push(correctItem2);
-	var sampleQNum = 6;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-
 	console.log(thisQArray);
 
 	//////////////////////
@@ -651,11 +624,9 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 7;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -718,11 +689,9 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 8;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -776,11 +745,9 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 9;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -832,11 +799,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 10;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -888,11 +852,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 11;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -941,11 +902,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 12;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1022,11 +980,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 13;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1072,11 +1027,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 14;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1122,11 +1074,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 15;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1172,11 +1121,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 16;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1222,11 +1168,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 17;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1272,11 +1215,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 18;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1331,11 +1271,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
-		var sampleQNum = 19;
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-		//Randomize the order of the four quiz questions
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-
 		console.log(thisQArray);
 	}
 
@@ -1355,11 +1292,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	if (addOns.length === 1) {sampleCorrectAnswers.push("1")};
 	if (addOns.length === 0) {sampleCorrectAnswers.push("No entree add-ons")};
 
-	var sampleQNum = 20;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-
 	console.log(thisQArray);
 
 	//////////////////////
@@ -1399,11 +1333,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleFourAnswers.push(randomSauce4);
 	}
 	
-	var sampleQNum = 21;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-
 	console.log(thisQArray);
 
 	//////////////////////
@@ -1443,13 +1374,135 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleFourAnswers.push(randomDressing4);
 	}
 	
-
-	var sampleQNum = 22;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-
 	console.log(thisQArray);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QUESTION CREATION ENDS HERE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////
+	//QUIZ SIZE OPTIONS ARE DETERMINED
+	//////////////////////////////////
+
+	//Finding the number of unique types of questions available (up to 10)...
+	var uniqueQType = 0;
+	if ((numQ1App + numQ1Ent) > 0) {uniqueQType++}
+	if ((numQ2App + numQ2Ent) > 0) {uniqueQType++}
+	if ((numQ3App + numQ3Ent + numQ3Des) > 0) {uniqueQType++}
+	if ((numQ4App + numQ4Ent + numQ4Des) > 0) {uniqueQType++}
+	if (numQ5 > 0) {uniqueQType++}
+	if (numQ6 > 0) {uniqueQType++}
+	if ((numQ7App + numQ7Ent) > 0) {uniqueQType++}
+	if (numQ8 > 0) {uniqueQType++}
+	if (numQ9 > 0) {uniqueQType++}
+	if ((numQ10Dressing + numQ10Sauce) > 0) {uniqueQType++}
+
+	var tenQuiz = false;
+	var twentyQuiz = false;
+	var thirtyQuiz = false;
+
+	//Determining what quizzes can be made with the given menu...
+	var firstSixQs = numQ1App + numQ1Ent + numQ2App + numQ2Ent + numQ3App + numQ3Ent + numQ3Des + numQ4App + numQ4Ent + numQ4Des + numQ5 + numQ6;
+
+	//If 10 unique question types...
+	if (uniqueQType === 10) {
+		console.log("10 unique question types");
+		tenQuiz = true;
+		if (firstSixQs > 13) {
+			twentyQuiz = true;
+			if (firstSixQs > 23) {
+				thirtyQuiz = true;
+			}
+		}
+	}
+
+	//If 9 unique question types...
+	if (uniqueQType === 9 && firstSixQs > 4) {
+		console.log("9 unique question types");
+		tenQuiz = true;
+		if (firstSixQs > 14) {
+			twentyQuiz = true;
+			if (firstSixQs > 24) {
+				thirtyQuiz = true;
+			}
+		}
+	}
+
+	//If 8 unique question types...
+	if (uniqueQType === 8 && firstSixQs > 5) {
+		console.log("8 unique question types");
+		tenQuiz = true;
+		if (firstSixQs > 15) {
+			twentyQuiz = true;
+			if (firstSixQs > 25) {
+				thirtyQuiz = true;
+			}
+		}
+	}
+
+	//If 7 unique question types...
+	if (uniqueQType === 7 && firstSixQs > 6) {
+		console.log("7 unique question types");
+		tenQuiz = true;
+		if (firstSixQs > 16) {
+			twentyQuiz = true;
+			if (firstSixQs > 26) {
+				thirtyQuiz = true;
+			}
+		}
+	}
+
+	//If 6 unique question types...
+	if (uniqueQType === 6 && firstSixQs > 7) {
+		console.log("6 unique question types");
+		tenQuiz = true;
+		if (firstSixQs > 17) {
+			twentyQuiz = true;
+			if (firstSixQs > 27) {
+				thirtyQuiz = true;
+			}
+		}
+	}
+
+	if (thirtyQuiz) {
+		//Message user, let them select from 10, 20, 30 qs (or cancel)
+		console.log("Thirty quiz available");
+	}
+
+	if (twentyQuiz) {
+		//Message user, let them select from 10, 20 qs (or cancel)
+		console.log("Twenty quiz available");
+	}
+
+	if (tenQuiz) {
+		//Message user, let them select 10 qs (or cancel)
+		console.log("Ten quiz available");
+	}
+
+	else {
+		//Tell user there isn't enough data in this menu to give a quiz.
+		console.log("No quiz available");
+	}
+
+	//////////////////////////
+	//USER SELECTS QUIZ LENGTH
+	//////////////////////////
+
+	//////////////////////
+	//CREATE SELECTED QUIZ
+	//////////////////////
+
+	///////////
+	//GIVE QUIZ
+	///////////
+
+	//////////////
+	//GIVE RESULTS
+	//////////////
+
+
 })
 
 //////////////////

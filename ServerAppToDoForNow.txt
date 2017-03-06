@@ -1,27 +1,36 @@
 MILLS
 
-	-Menu builder (this weekend)
-	-Implement the design/UI pass (early next week)
-	-Debugging and presentation prep (finishing up next week)
+	-Menu builder
+	-Implement the design/UI pass
+	-Debugging and presentation prep
 
 EVAN
 
-	---WHENEVER---
+	-Quiz Maker
+		-Fix allergens and secret items section
+		-Randomize the order of the four quiz questions before completing each one
+		-Make all possible quiz questions (not just one of each type)
 
-		-Get to work on the flash cards and quiz maker, using double-parsed menu JSON objects
+		-THEN, give the quiz!
+			-User selects quiz length
+			-Create selected quiz
+			-Give created quiz
+			-Give results
 
-		-When a user deletes a job, this is what should happen:
-		  	1) With an extra level of validation, make sure the user understands what they're doing
-		 	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
-			-When a user deletes a menu, do the same as above, without cascading
+		-Eventually, you'll need to get it to work with any user and any menu
 
-	---NOT YET---
+	-Flash Cards
 
-		-Once you chat with Mills about how the timeline should be laid out, continue building the timeline creator
-			-Queries built - all comments/breakthroughs and goals are being put into arrays/objects, ready for use
-			-Prebuilt display using amcharts???
+	-When a user deletes a job, this is what should happen:
+	  	1) With an extra level of validation, make sure the user understands what they're doing
+	 	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
+		-When a user deletes a menu, do the same as above, without cascading
+
+	-Once you chat with Mills about how the timeline should be laid out, continue building the timeline creator
+		-Queries built - all comments/breakthroughs and goals are being put into arrays/objects, ready for use
+		-Prebuilt display using amcharts???
 
 
 EITHER
 
-	-Add testing to the project?  Unless Mills already did this.
+	-Add testing to the project
