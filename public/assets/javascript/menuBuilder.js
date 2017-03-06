@@ -1,47 +1,145 @@
-//Checks for hidden value passed via handlebars then updates.
-if($('#hiddenCal').val()){
-picker.set('select', $('#hiddenCal').val(), { format: 'yyyy-mm-dd' })
+
+$('.testButton').on('click', function(){
+    $('.CRIpanel').addClass('showDiv')
+})
+
+
+var CRImakerSource = [
+{
+  name: 'a1',
+  text: 'A1 Steak Sauce'  
+},{
+  name: 'balsVin',
+  text: 'Balsamic Vinegar'  
+},{
+  name: 'bbqSauce',
+  text: 'BBQ Sauce'  
+},{
+  name: 'blueCheese',
+  text: 'Blue Cheese'  
+},{
+  name: 'bottledSparkling',
+  text: 'Bottled Sparkling Water'  
+},{
+  name: 'bottledStill',
+  text: 'Bottled Water'  
+},{
+  name: 'caesar',
+  text: 'Caesar Dressing'  
+},{
+  name: 'cappuccino',
+  text: 'Cappuccino'  
+},{
+  name: 'clubSoda',
+  text: 'Club Soda'  
+},{
+  name: 'cocktailSauce',
+  text: 'Cocktail Sauce'  
+},{
+  name: 'coffeeDecaf',
+  text: 'Decaf Coffee'  
+},{
+  name: 'coffeeRegular',
+  text: 'Regular Coffee'  
+},{
+  name: 'espressoDecaf',
+  text: 'Decaf Espresso'  
+},{
+  name: 'espressoRegular',
+  text: 'Regular Espresso'  
+},{
+  name: 'french',
+  text: 'French Dressing'  
+},{
+  name: 'greek',
+  text: 'Greek Dressing'  
+},{
+  name: 'heinz57',
+  text: 'Heinz 57'  
+},{
+  name: 'honeyMustard',
+  text: 'Honey Mustard'  
+},{
+  name: 'hotSauce',
+  text: 'Hot Sauce'  
+},{
+  name: 'hotTea',
+  text: 'Hot Tea'  
+},{
+  name: 'italian',
+  text: 'Italian Dressing'  
+},{
+  name: 'ketchup',
+  text: 'Ketchup'  
+},{
+  name: 'lemons',
+  text: 'Lemons'  
+},{
+  name: 'limes',
+  text: 'Limes'  
+},{
+  name: 'marinara',
+  text: 'Marinara'  
+},{
+  name: 'mayonnaise',
+  text: 'Mayonnaise'  
+},{
+  name: 'mustardSpicy',
+  text: 'Spicy Mustard'  
+},{
+  name: 'mustardYellow',
+  text: 'Yellow Mustard'  
+},{
+  name: 'oilAndVin',
+  text: 'Oil & Vinegar'  
+},{
+  name: 'otherVin',
+  text: 'Other Vinegar'  
+},{
+  name: 'ranch',
+  text: 'Ranch Dressing'  
+},{
+  name: 'salsa',
+  text: 'Salsa'  
+},{
+  name: 'soySauce',
+  text: 'Soy Sauce'  
+},{
+  name: 'thousandIsland',
+  text: 'Thousand Island Dressing'  
+},{
+  name: 'toGoBoxes',
+  text: 'To-Go Boxes'  
+},{
+  name: 'toGoCups',
+  text: 'To-Go Cups'  
+},{
+  name: 'toGoutensils',
+  text: 'To-Go utensils'  
 }
+]
+
+CLIformMaker(CRImakerSource)
+
+function CLIformMaker(object){
+    for (var i = 0; i < object.length; i++) {
+        $('.CRI').append("<div class='col s6 m4 l4'><input type='checkbox' class='filled-in' id='filled-in-box"+i+"' name ='"+object[i].name+"'/><label class='checkboxLabel' for='filled-in-box"+i+"'>"+object[i].text+"</label></div>")
+    }
+    $('.collapsible').collapsible({
+      accordion : false
+    });
+}
+
+
+    $('.collapsible').collapsible({
+      accordion : false
+    });
 
 $(document).ready(function() {
     $('select').material_select();
-    // prepareJobDropdown();
 });
 
+    
 
-populateDropdown('#JobIdHidden', '#jobID')
 
-function populateDropdown(hiddenTarget, dropdownTarget) {
-    //checks if exists.
-    if ($(hiddenTarget).val()) {
-        var setValue = $(hiddenTarget).val()
-        //Sets the value in the dropdown based on the prepopulated hidden value.
-        $(dropdownTarget + ' option[value =' + setValue + ']').prop('selected', true);
-    }
-}
-
-//Allows the delete modal to open on the shift editor page.
-$('.modal').modal();
-
-function closeModal(){
-$('.modal').modal('close');
-}
-
-var timeConfirmed = false
-
-function shiftValidate(){
-    if(inTime === outTime){
-        $('#timeEqual').modal('open');
-        return false
-    } else if (moment(inTime, 'HH:mm:ss').isAfter(moment(outTime, 'HH:mm:ss')) && !timeConfirmed) { 
-        $('#timeLess').modal('open');
-        console.log('time less')
-        return false
-    }
-}
-
-$('.testButton').on('click', function(){
-    var form = $('#menuForm').serializeArray()
-    console.log(form)
-})
 

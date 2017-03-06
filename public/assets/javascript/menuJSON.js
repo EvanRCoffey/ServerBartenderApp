@@ -497,13 +497,15 @@ var criJSON = {
 	lemons: Math.random()<.5,
 	limes: Math.random()<.5
 }
-
+console.log(criJSON)
 var menuName = "Test Menu One";
 var comments = "No comments";
 var menuJSON = JSON.stringify(bigJSON);
 criJSON = JSON.stringify(criJSON);
 var UserId = 1; 	//Update this
 var JobId = 1;		//Update this
+
+
 
 var menuObj = {
 	menuName: menuName,
@@ -514,22 +516,23 @@ var menuObj = {
 	JobId: JobId
 }
 
-// $.post("/newMenu", menuObj).then(function(data) {
-// 	console.log(data);
-// })
+$.post("/newMenu", menuObj).then(function(data) {
+	console.log(data);
+})
 
 var idObj = {
 	id: 1
 }
 
-$.post("/checkMenuJSON", idObj).then(function(data2) {
-	var parsedCriJson = JSON.parse(data2.criJSON);
-	var parsedMenuJson = JSON.parse(data2.menuJSON);
-	var reParsedCriJson = JSON.parse(parsedCriJson);
-	var reParsedMenuJson = JSON.parse(parsedMenuJson);
-	console.log(reParsedMenuJson);
-	console.log(reParsedCriJson);
-})
+// $.post("/checkMenuJSON", idObj).then(function(data2) {
+// 	console.log(data2)
+// 	var parsedCriJson = JSON.parse(data2.criJSON);
+// 	var parsedMenuJson = JSON.parse(data2.menuJSON);
+// 	var reParsedCriJson = JSON.parse(parsedCriJson);
+// 	var reParsedMenuJson = JSON.parse(parsedMenuJson);
+// 	console.log(reParsedMenuJson);
+// 	console.log(reParsedCriJson);
+// })
 
 // ////////////////
 // //MENU SELECTION

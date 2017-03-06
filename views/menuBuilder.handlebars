@@ -9,32 +9,39 @@
 
         <form class="col s12" id="menuForm">
 
+
+
+            <!--jobID INT-->
+                  {{#if jobs}}
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
-                    <option value="" disabled>Choose a Job for this Menu</option>
+                    <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}">{{this.job_name}}</option>
+                        <option value="{{this.id}}" selected>{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
             </div>
+            {{/if}}
 
-            <!--totalWalkedWith DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <p>
-      <input type="checkbox" class="filled-in" id='filled-in-box' name ='item1'/>
-      <label class="checkboxLabel" for="filled-in-box">Filled in</label>
-      <input type="checkbox" class="filled-in" id='filled-in-box2' name ='item2'/>
-      <label class="checkboxLabel" for="filled-in-box2">Filled in</label>
-      <input type="checkbox" class="filled-in" id='filled-in-box3' name ='item3'/>
-      <label class="checkboxLabel" for="filled-in-box3">Filled in</label>
-    </p>
-            </div>
+        <div class="row">
+
+            <div class="input-field col s12 CRIpanel menuBuilderPanel">
+              <ul class="collapsible" data-collapsible="expandable">
+            <li>
+              <div class="collapsible-header active">Commonly Requested Items</div>
+              <div class="collapsible-body CRI"><h5>Pick some commonly requested items.</h5></div>
+            </li>
+          </ul>
+        </div>
+        </div>
         
     
-             <div class="testButton">Test</div>
+    <div class="testButton">Test it!</div>
+           
         </form>
+     <!--      <div class="testButton">Test</div> -->
     </div>
 </div>
 

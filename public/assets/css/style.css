@@ -137,3 +137,18 @@ input[type=range]+.thumb.active {
 	opacity: 1;
 }
 
+.menuBuilderPanel{
+	max-height: 0px;
+	overflow-y: hidden;
+	-webkit-transition: max-height 3s;
+    transition: max-height 3s;
+}
+
+.showDiv{
+	max-height: 5000px;
+}
+
+.CRI {
+ overflow: auto;
+}
+
