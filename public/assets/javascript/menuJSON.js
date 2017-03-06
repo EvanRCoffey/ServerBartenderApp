@@ -14,12 +14,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//MENU SELECTION
 	////////////////
 
-	var appsWithPrice = 0;
-	var entsWithPrice = 0;
-	var numApps = 0;
-	var numEnts = 0;
-	var numSides = 0;
-	var numDesserts = 0;
 	var uniqueAppDescr = [];
 	var uniqueAppIngr = [];
 	var uniqueEntDescr = [];
@@ -27,67 +21,66 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var uniqueDesDescr = [];
 	var uniqueDesIngr = [];
 	var uniqueAllVio = [];
-	var vegApps = 0;
-	var vegEnts = 0;
+	var vegApps = [];
+	var vegEnts = [];
 	var commonSauces = [];
 	var commonDressings = [];
-	var secretItems = 0;
-	var addOns = 0;
-	var popApps = 0;
-	var popEnts = 0;
-	var popDesserts = 0;
+	var secretItems = [];
+	var addOns = [];
+	var popApps = [];
+	var popEnts = [];
+	var popDesserts = [];
 
 	var allQ1App = [];
 	var allQ1Ent = [];
 	var allApp = [];
 	var allEnt = [];
-	var allDes = []
-	var allQ10Sauce = [];
-	var allQ10Dressing = [];
+	var allDes = [];
 
-	//Once user selects menu, increment all of the above variables appropriately...
+	//User selects menu, then...
 
-	//For each app, if it has a price, increment appsWithPrice and push that app to allQ1App
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
-		if (parseFloat(reParsedMenuJson[1][i].price) > 0) {
-			appsWithPrice++;
-			allQ1App.push(reParsedMenuJson[1][i]);
-		}
-	}
-
-	//For each ent, if it has a price, increment entsWithPrice and push that ent to allEnt
+	//For each entree...
 	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
+		//Push the ent to allEnt[]
+		allEnt.push(reParsedMenuJson[0][i]);
+		//Push the ent to popEnts if appropriate
+		if (reParsedMenuJson[0][i].descriptors.popular) {
+			popEnts.push(reParsedMenuJson[0][i]);
+		}
+		//Increment entsWithPrice and push the app to allQ1Ent[] if appropriate
 		if (parseFloat(reParsedMenuJson[0][i].price) > 0) {
-			entsWithPrice++;
 			allQ1Ent.push(reParsedMenuJson[0][i]);
 		}
 	}
 
-	//For each app, increment numApps
+	//For each appetizer...
 	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
-		numApps++;
+		//Push the app to allApp[]
 		allApp.push(reParsedMenuJson[1][i]);
+		//Push the app to popApps if appropriate
+		if (reParsedMenuJson[1][i].descriptors.popular) {
+			popApps.push(reParsedMenuJson[1][i]);
+		}
+		//Increment appsWithPrice and push the app to allQ1App[] if appropriate
+		if (parseFloat(reParsedMenuJson[1][i].price) > 0) {
+			allQ1App.push(reParsedMenuJson[1][i]);
+		}
 	}
 
-	//For each ent, increment numEnts
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
-		numEnts++;
-		allEnt.push(reParsedMenuJson[0][i]);
-	}
-
-
-	//For each side, increment numSides
-	for (var i = 0; i<reParsedMenuJson[3].length; i++) {
-		numSides++;
-	}
-
-
-	//For each dessert, increment numDesserts
+	//For each dessert...
 	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
-		numDesserts++;
+		//Push the dessert to allDes[]
 		allDes.push(reParsedMenuJson[2][i]);
+		//Push the dessert to popDesserts if appropriate
+		if (reParsedMenuJson[2][i].descriptors.popular) {
+			popDesserts.push(reParsedMenuJson[2][i]);
+		}
 	}
 
+	//For each addOn, push that addOn to addOns[]
+	for (var i = 0; i<reParsedMenuJson[4].length; i++) {
+		addOns.push(reParsedMenuJson[4][i]);
+	}
 
 	//For each app, for each descriptor that's marked true, if it's not in uniqueAppDescr[], push it
 	var numAppDescr = 17;
@@ -109,7 +102,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 			if ((reParsedMenuJson[1][i].descriptors.spicy) && (!uniqueAppDescr.includes("spicy"))) {uniqueAppDescr.push("spicy")};
 			if ((reParsedMenuJson[1][i].descriptors.sweet) && (!uniqueAppDescr.includes("sweet"))) {uniqueAppDescr.push("sweet")};
 			if ((reParsedMenuJson[1][i].descriptors.toShare) && (!uniqueAppDescr.includes("toShare"))) {uniqueAppDescr.push("toShare")};
-			if ((reParsedMenuJson[1][i].descriptors.vegetarian) && (!uniqueAppDescr.includes("vegetarian"))) {uniqueAppDescr.push("vegetarian")};
+			if ((reParsedMenuJson[1][i].descriptors.vegetarian) && (!uniqueAppDescr.includes("vegetarian"))) {uniqueAppDescr.push("vegetarian"), vegApps.push(reParsedMenuJson[1][i]);};
 		}
 	}
 
@@ -147,7 +140,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 			if ((reParsedMenuJson[0][i].descriptors.spicy) && (!uniqueEntDescr.includes("spicy"))) {uniqueEntDescr.push("spicy")};
 			if ((reParsedMenuJson[0][i].descriptors.sweet) && (!uniqueEntDescr.includes("sweet"))) {uniqueEntDescr.push("sweet")};
 			if ((reParsedMenuJson[0][i].descriptors.toShare) && (!uniqueEntDescr.includes("toShare"))) {uniqueEntDescr.push("toShare")};
-			if ((reParsedMenuJson[0][i].descriptors.vegetarian) && (!uniqueEntDescr.includes("vegetarian"))) {uniqueEntDescr.push("vegetarian")};
+			if ((reParsedMenuJson[0][i].descriptors.vegetarian) && (!uniqueEntDescr.includes("vegetarian"))) {uniqueEntDescr.push("vegetarian"), vegEnts.push(reParsedMenuJson[0][i]);};
 		}
 	}
 
@@ -189,46 +182,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		}
 	}
 
-	//For each app, if the "vegetarian" descriptor is marked true, increment vegApps
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
-		if (reParsedMenuJson[1][i].descriptors.vegetarian) {
-			vegApps++;
-		}
-	}
-
-	//For each entree, if the "vegetarian" descriptor is marked true, increment vegEnts
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
-		if (reParsedMenuJson[0][i].descriptors.vegetarian) {
-			vegEnts++;
-		}
-	}
-
-	//For each addOn, increment addOns
-	for (var i = 0; i<reParsedMenuJson[4].length; i++) {
-		addOns++;
-	}
-
-	//For each app, if "popular" is marked true, increment popApps
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
-		if (reParsedMenuJson[1][i].descriptors.popular) {
-			popApps++;
-		}
-	}
-
-	//For each entree, if "popular" is marked true, increment popEnts
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
-		if (reParsedMenuJson[0][i].descriptors.popular) {
-			popEnts++;
-		}
-	}
-
-	//For each dessert, if "popular" is marked true, increment popDesserts
-	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
-		if (reParsedMenuJson[2][i].descriptors.popular) {
-			popDesserts++;
-		}
-	}
-
 	//For each sauce that's marked true, if it's not in commonSauces[], push it
 	if ((reParsedCriJson.a1) && (!commonSauces.includes("a1"))) {commonSauces.push("a1")};
 	if ((reParsedCriJson.bbqSauce) && (!commonSauces.includes("bbqSauce"))) {commonSauces.push("bbqSauce")};
@@ -257,7 +210,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	if ((reParsedCriJson.thousandIsland) && (!commonDressings.includes("thousandIsland"))) {commonDressings.push("thousandIsland")};
 
 	// //For every item, for each allergen that's marked true, if it's not in uniqueAllVio[], push it
-	// //For every item, if secret is true, increment secretItems
+	// //For every item, if secret is true, push that item to secretItems[]
 	// var numAllergensPlusSecret = 10;
 	// for (var i = 0; i<3; i++) {
 	// 	for (var j = 0; j<numAllergensPlusSecret; j++) {
@@ -270,12 +223,12 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	// 		if ((reParsedMenuJson[i][j].allergyViolations.soy) && (!uniqueAllVio.includes("soy"))) {uniqueAllVio.push("soy")};
 	// 		if ((reParsedMenuJson[i][j].allergyViolations.treeNuts) && (!uniqueAllVio.includes("treeNuts"))) {uniqueAllVio.push("treeNuts")};
 	// 		if ((reParsedMenuJson[i][j].allergyViolations.wheat) && (!uniqueAllVio.includes("wheat"))) {uniqueAllVio.push("wheat")};
-	// 		//For every item, if secret is true, increment secretItems
-	// 		if (reParsedMenuJson[i][j].secret) {secretItems++}
+	// 		//For every item, if secret is true, push that item to secretItems[]
+	// 		if (reParsedMenuJson[i][j].secret) {secretItems.push(reParsedMenuJson[i][j])}
 	// 	}
 	// }
 
-	//Hardcoding the next two values to proceed with testing.  No idea why the above code isn't working, even after console.logging to investigate
+	//Hardcoding this to proceed with testing.  No idea why the above code isn't working, even after console.logging to investigate
 	uniqueAllVio.push("eggs");
 	uniqueAllVio.push("fish");
 	uniqueAllVio.push("gluten");
@@ -285,14 +238,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	uniqueAllVio.push("soy");
 	uniqueAllVio.push("treeNuts");
 	uniqueAllVio.push("wheat");
-	secretItems = 0;
 
-	console.log(appsWithPrice);
-	console.log(entsWithPrice);
-	// console.log(numApps);
-	// console.log(numEnts);
-	// console.log(numSides);
-	// console.log(numDesserts);
 	// console.log(uniqueAppDescr);
 	// console.log(uniqueAppIngr);
 	// console.log(uniqueEntDescr);
@@ -334,7 +280,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var numQ10Dressing = 0;
 
 	//If there are at least three apps with a price, add two to Q1App and two to Q2App
-	if (appsWithPrice > 3) {
+	if (allQ1App.length > 3) {
 		numQ1App++;
 		numQ1App++;
 		numQ2App++;
@@ -342,7 +288,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	//If there are at least three ents with a price, add two to Q1Ent and two to Q2Ent
-	if (entsWithPrice > 3) {
+	if (allQ1Ent.length > 3) {
 		numQ1Ent++;
 		numQ1Ent++;
 		numQ2Ent++;
@@ -350,32 +296,32 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	//If there is at least one unique ____ descriptor/ingredient and at least three ____s, add one to Q3/Q4____ for each descriptor/ingredient
-	if (uniqueAppDescr.length > 0 && numApps > 3) {
+	if (uniqueAppDescr.length > 0 && allApp.length > 3) {
 		for (var i = 0; i<uniqueAppDescr.length; i++) {
 			numQ3App++;
 		}
 	}
-	if (uniqueAppIngr.length > 0 && numApps > 3) {
+	if (uniqueAppIngr.length > 0 && allApp.length > 3) {
 		for (var i = 0; i<uniqueAppIngr.length; i++) {
 			numQ4App++;
 		}
 	}
-	if (uniqueEntDescr.length > 0 && numEnts > 3) {
+	if (uniqueEntDescr.length > 0 && allEnt.length > 3) {
 		for (var i = 0; i<uniqueEntDescr.length; i++) {
 			numQ3Ent++;
 		}
 	}
-	if (uniqueEntIngr.length > 0 && numEnts > 3) {
+	if (uniqueEntIngr.length > 0 && allEnt.length > 3) {
 		for (var i = 0; i<uniqueEntIngr.length; i++) {
 			numQ4Ent++;
 		}
 	}
-	if (uniqueDesDescr.length > 0 && numDesserts > 3) {
+	if (uniqueDesDescr.length > 0 && allDes.length > 3) {
 		for (var i = 0; i<uniqueDesDescr.length; i++) {
 			numQ3Des++;
 		}
 	}
-	if (uniqueDesIngr.length > 0 && numDesserts > 3) {
+	if (uniqueDesIngr.length > 0 && allDes.length > 3) {
 		for (var i = 0; i<uniqueDesIngr.length; i++) {
 			numQ4Des++;
 		}
@@ -389,19 +335,19 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	//If there is at least one popular app/ent/side/dessert, add one/two/three/four to Q6
-	if (popApps>0 && numApps>3) {numQ6++}
-	if (popEnts>0 && numEnts>3) {numQ6++}
-	if (popDesserts>0 && numDesserts>3) {numQ6++}
+	if (popApps.length>0 && allApp.length>3) {numQ6++}
+	if (popEnts.length>0 && allEnt.length>3) {numQ6++}
+	if (popDesserts.length>0 && allDes.length>3) {numQ6++}
 
 	//If there is at least one vegetarian app/ent, add one to Q7App/Ent
-	if (vegApps>0 && numApps>3){numQ7App++}
-	if (vegEnts>0 && numEnts>3){numQ7Ent++}
+	if (vegApps.length>0 && allApp.length>3){numQ7App++}
+	if (vegEnts.length>0 && allEnt.length>3){numQ7Ent++}
 
 	//If there is at least one secret item, add one to Q8
-	if (secretItems>0) {numQ8++}
+	if (secretItems.length>0) {numQ8++}
 
 	//If there is at least one add-on, add one to Q9
-	if (addOns>0) {numQ9++}
+	if (addOns.length>0) {numQ9++}
 
 	//If there is at least one common sauce/dressing, add one to Q10Sauce/Dressing
 	if (commonSauces.length>0) {numQ10Sauce++}
@@ -700,12 +646,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 7;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
-	thisQArray.push(x);
+	else if (hasThing.length === 0) {
+		console.log("No " + randomThing + " appetizers");
+	}
 
-	console.log(thisQArray);
+	if (hasThing.length > 0) {
+		var sampleQNum = 7;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -761,12 +713,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 8;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
-	thisQArray.push(x);
+	else if (hasThing.length === 0) {
+		console.log("No " + randomThing + " entrees");
+	}
 
-	console.log(thisQArray);
+	if (hasThing.length > 0) {
+		var sampleQNum = 8;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -813,12 +771,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 9;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
-	thisQArray.push(x);
+	else if (hasThing.length === 0) {
+		console.log("No " + randomThing + " desserts");
+	}
 
-	console.log(thisQArray);
+	if (hasThing.length > 0) {
+		var sampleQNum = 9;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -863,12 +827,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 10;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
-	thisQArray.push(x);
+	else if (hasThing.length === 0) {
+		console.log("No appetizers with " + randomThing);
+	}
 
-	console.log(thisQArray);
+	if (hasThing.length > 0) {
+		var sampleQNum = 10;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -913,12 +883,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 11;
-	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
-	//Randomize the order of the four quiz questions
-	thisQArray.push(x);
+	else if (hasThing.length === 0) {
+		console.log("No entrees with " + randomThing);
+	}
 
-	console.log(thisQArray);
+	if (hasThing.length > 0) {
+		var sampleQNum = 11;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
@@ -960,7 +936,426 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(hasThing[0].name);
 	}
 
-	var sampleQNum = 12;
+	else if (hasThing.length === 0) {
+		console.log("No desserts with " + randomThing);
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 12;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make all Q5
+	//////////////////////
+
+	var randomThing = uniqueAllVio[Math.floor(Math.random() * uniqueAllVio.length)];
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "I'm allergic to " + randomThing + ".  Are any of these unsafe for me to eat?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allApp.length; i++) {
+		if (randomThing === "eggs") { if (allApp[i].allergyViolations.eggs) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "fish") { if (allApp[i].allergyViolations.fish) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "gluten") { if (allApp[i].allergyViolations.gluten) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "milk") { if (allApp[i].allergyViolations.milk) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "peanuts") { if (allApp[i].allergyViolations.peanuts) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "shellfish") { if (allApp[i].allergyViolations.shellfish) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "soy") { if (allApp[i].allergyViolations.soy) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "treeNuts") { if (allApp[i].allergyViolations.treeNuts) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+		else if (randomThing === "wheat") { if (allApp[i].allergyViolations.wheat) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
+	}
+	for (var i=0; i<allEnt.length; i++) {
+		if (randomThing === "eggs") { if (allEnt[i].allergyViolations.eggs) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "fish") { if (allEnt[i].allergyViolations.fish) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "gluten") { if (allEnt[i].allergyViolations.gluten) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "milk") { if (allEnt[i].allergyViolations.milk) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "peanuts") { if (allEnt[i].allergyViolations.peanuts) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "shellfish") { if (allEnt[i].allergyViolations.shellfish) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "soy") { if (allEnt[i].allergyViolations.soy) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "treeNuts") { if (allEnt[i].allergyViolations.treeNuts) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+		else if (randomThing === "wheat") { if (allEnt[i].allergyViolations.wheat) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
+	}
+	for (var i=0; i<allDes.length; i++) {
+		if (randomThing === "eggs") { if (allDes[i].allergyViolations.eggs) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "fish") { if (allDes[i].allergyViolations.fish) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "gluten") { if (allDes[i].allergyViolations.gluten) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "milk") { if (allDes[i].allergyViolations.milk) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "peanuts") { if (allDes[i].allergyViolations.peanuts) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "shellfish") { if (allDes[i].allergyViolations.shellfish) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "soy") { if (allDes[i].allergyViolations.soy) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "treeNuts") { if (allDes[i].allergyViolations.treeNuts) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+		else if (randomThing === "wheat") { if (allDes[i].allergyViolations.wheat) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No food with " + randomThing);
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 13;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make one app Q6
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "I want an appetizer.  What's popular?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allApp.length; i++) {
+		if (allApp[i].descriptors.popular) {hasThing.push(allApp[i])}
+		else {noThing.push(allApp[i])}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No popular appetizers");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 14;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make one ent Q6
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "I want an entree.  What's popular?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allEnt.length; i++) {
+		if (allEnt[i].descriptors.popular) {hasThing.push(allEnt[i])}
+		else {noThing.push(allEnt[i])}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No popular entrees");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 15;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make one des Q6
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "I want a dessert.  What's popular?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allDes.length; i++) {
+		if (allDes[i].descriptors.popular) {hasThing.push(allDes[i])}
+		else {noThing.push(allDes[i])}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No popular desserts");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 16;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make one Q7App
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "Do you have any vegetarian appetizers?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allApp.length; i++) {
+		if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i])}
+		else {noThing.push(allApp[i])}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No vegetarian appetizers");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 17;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make one Q7Ent
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "Do you have any vegetarian entrees?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allEnt.length; i++) {
+		if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i])}
+		else {noThing.push(allEnt[i])}
+	}
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No vegetarian entrees");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 18;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make all Q8
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "Do you have any secret items?  (Select all that apply)";
+
+	var hasThing = [];
+	var noThing = [];
+	for (var i=0; i<allEnt.length; i++) {
+		if (allEnt[i].secret) {hasThing.push(allEnt[i])}
+		else {noThing.push(allEnt[i])}
+	}
+	for (var i=0; i<allApp.length; i++) {
+		if (allApp[i].secret) {hasThing.push(allApp[i])}
+		else {noThing.push(allApp[i])}
+	}
+	for (var i=0; i<allDes.length; i++) {
+		if (allDes[i].secret) {hasThing.push(allDes[i])}
+		else {noThing.push(allDes[i])}
+	}
+
+	if (hasThing.length >= 3) {
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+		sampleCorrectAnswers.push(sampleFourAnswers[0]);
+		sampleCorrectAnswers.push(sampleFourAnswers[1]);
+		sampleCorrectAnswers.push(sampleFourAnswers[2]);
+	}
+	else if (hasThing.length === 2) {
+		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[1].name);
+		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[1].name);
+	}
+	else if (hasThing.length === 1) {
+		sampleFourAnswers.push(hasThing[0].name);
+		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+		sampleCorrectAnswers.push(hasThing[0].name);
+	}
+
+	else if (hasThing.length === 0) {
+		console.log("No secret items");
+	}
+
+	if (hasThing.length > 0) {
+		var sampleQNum = 19;
+		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+		//Randomize the order of the four quiz questions
+		thisQArray.push(x);
+
+		console.log(thisQArray);
+	}
+
+	//////////////////////
+	//QUESTIONS BEING MADE
+	//Make all Q9
+	//////////////////////
+
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = ["3 or more", "2", "1", "No entree add-ons"];
+	var sampleQ = "Do you have any entree add-ons?  If so, how many options are there?";
+
+	if (addOns.length >= 3) {sampleCorrectAnswers.push("3 or more")};
+	if (addOns.length === 2) {sampleCorrectAnswers.push("2")};
+	if (addOns.length === 1) {sampleCorrectAnswers.push("1")};
+	if (addOns.length === 0) {sampleCorrectAnswers.push("No entree add-ons")};
+
+	var sampleQNum = 20;
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
 	//Randomize the order of the four quiz questions
 	thisQArray.push(x);
@@ -969,61 +1364,97 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q5
-	//////////////////////
-
-
-	//////////////////////
-	//QUESTIONS BEING MADE
-	//Make all Q6
-	//////////////////////
-
-
-	//////////////////////
-	//QUESTIONS BEING MADE
-	//Make all Q7App
-	//////////////////////
-
-
-
-	//////////////////////
-	//QUESTIONS BEING MADE
-	//Make all Q7Ent
-	//////////////////////
-
-
-
-	//////////////////////
-	//QUESTIONS BEING MADE
-	//Make all Q8
-	//////////////////////
-
-	//////////////////////
-	//QUESTIONS BEING MADE
-	//Make all Q9
-	//////////////////////
-
-
-	//////////////////////
-	//QUESTIONS BEING MADE
 	//Make all Q10Sauces
 	//////////////////////
 
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "Do you have any of these common sauces? (Select all that apply)";
+	var saucesArray = ["a1","bbqSauce","cocktailSauce","heinz57","hotSauce","ketchup","marinara","mayonnaise","mustardSpicy","mustardYellow","salsa","soySauce"];
 
+	//Get four random sauces for answers - for now, there might be duplicates
+	var randomSauce1 = saucesArray[Math.floor(Math.random() * saucesArray.length)];
+	var randomSauce2 = saucesArray[Math.floor(Math.random() * saucesArray.length)];
+	var randomSauce3 = saucesArray[Math.floor(Math.random() * saucesArray.length)];
+	var randomSauce4 = saucesArray[Math.floor(Math.random() * saucesArray.length)];
+
+	//Check commonSauces[] for each of those four sauces
+	var atLeastOneMatch = false;
+	if (commonSauces.includes(randomSauce1)) {sampleCorrectAnswers.push(randomSauce1), atLeastOneMatch = true;};
+	if (commonSauces.includes(randomSauce2)) {sampleCorrectAnswers.push(randomSauce2), atLeastOneMatch = true;};
+	if (commonSauces.includes(randomSauce3)) {sampleCorrectAnswers.push(randomSauce3), atLeastOneMatch = true;};
+	if (commonSauces.includes(randomSauce4)) {sampleCorrectAnswers.push(randomSauce4)};
+
+	//Push those variables to sampleFourAnswers[]; include a "None of the above" if the first three didn't match
+	sampleFourAnswers.push(randomSauce1);
+	sampleFourAnswers.push(randomSauce2);
+	sampleFourAnswers.push(randomSauce3);
+	if (!atLeastOneMatch) {
+		sampleFourAnswers.push("None of the above");
+		sampleCorrectAnswers.push("None of the above");
+	}
+	else {
+		sampleFourAnswers.push(randomSauce4);
+	}
+	
+	var sampleQNum = 21;
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+	//Randomize the order of the four quiz questions
+	thisQArray.push(x);
+
+	console.log(thisQArray);
 
 	//////////////////////
 	//QUESTIONS BEING MADE
 	//Make all Q10Dressings
 	//////////////////////
 
+	var thisQArray = [];
+	var incorrectAnswers = [];
+	var sampleCorrectAnswers = [];
+	var sampleFourAnswers = [];
+	var sampleQ = "Do you have any of these common dressings? (Select all that apply)";
+	var dressingsArray = ["balsVin","blueCheese","caesar","french","greek","honeyMustard","italian","oilAndVin","otherVin","ranch","thousandIsland"];
 
+	//Get four random dressings for answers - for now, there might be duplicates
+	var randomDressing1 = dressingsArray[Math.floor(Math.random() * dressingsArray.length)];
+	var randomDressing2 = dressingsArray[Math.floor(Math.random() * dressingsArray.length)];
+	var randomDressing3 = dressingsArray[Math.floor(Math.random() * dressingsArray.length)];
+	var randomDressing4 = dressingsArray[Math.floor(Math.random() * dressingsArray.length)];
 
+	//Check commonDressings[] for each of those four dressings
+	var atLeastOneMatch = false;
+	if (commonDressings.includes(randomDressing1)) {sampleCorrectAnswers.push(randomDressing1), atLeastOneMatch = true;};
+	if (commonDressings.includes(randomDressing2)) {sampleCorrectAnswers.push(randomDressing2), atLeastOneMatch = true;};
+	if (commonDressings.includes(randomDressing3)) {sampleCorrectAnswers.push(randomDressing3), atLeastOneMatch = true;};
+	if (commonDressings.includes(randomDressing4)) {sampleCorrectAnswers.push(randomDressing4)};
+
+	//Push those variables to sampleFourAnswers[]; include a "None of the above" if the first three didn't match
+	sampleFourAnswers.push(randomDressing1);
+	sampleFourAnswers.push(randomDressing2);
+	sampleFourAnswers.push(randomDressing3);
+	if (!atLeastOneMatch) {
+		sampleFourAnswers.push("None of the above");
+		sampleCorrectAnswers.push("None of the above");
+	}
+	else {
+		sampleFourAnswers.push(randomDressing4);
+	}
+	
+
+	var sampleQNum = 22;
+	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers, sampleQNum);
+	//Randomize the order of the four quiz questions
+	thisQArray.push(x);
+
+	console.log(thisQArray);
 })
 
-
-
-
-
+//////////////////
+//HELPER FUNCTIONS
+//////////////////
 
 function returnIncorrectName(incorrectAnswers, sampleFourAnswers) {
 	var randInc = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
@@ -1040,531 +1471,3 @@ function returnCorrectName(correctAnswers, sampleFourAnswers) {
 	}
 	else {return returnCorrectName(correctAnswers, sampleFourAnswers)}
 }
-
-
-
-
-
-
-
-//THE CODE BELOW HERE WILL CREATE A MENU OBJECT FITTING THE PARAMETERS FOUND THROUGHOUT
-
-// var bigJSON = [];
-
-// //Create an array of numberOfEntries items with random booleans and evenly divided prices from lowestPrice to highestPrice
-// var itemsArray = [];
-// var numberOfEntries = 15;
-// var highestPrice = 25;
-// var lowestPrice = 14;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries; i++) {
-// 	var name = "Entree " + (i + 1);
-// 	var price = (highestPrice - (((highestPrice - lowestPrice)/numberOfEntries) * i)).toFixed(2);
-// 	var quickDescr = "A delicious entree made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius entree made with lots and lots of food - #" + (i + 1);
-
-// 	var appEntIng = {
-// 		beef: Math.random()<.5,
-// 		chicken: Math.random()<.5,
-// 		pork: Math.random()<.5,
-// 		seafood: Math.random()<.5,
-// 		lamb: Math.random()<.5,
-// 		otherProtein: Math.random()<.5
-// 	}
-
-// 	var appEntDescr = {
-// 		cheesy: Math.random()<.5,
-// 		fresh: Math.random()<.5,
-// 		fried: Math.random()<.5,
-// 		hearty: Math.random()<.5,
-// 		indulgent: Math.random()<.5,
-// 		light: Math.random()<.5,
-// 		plain: Math.random()<.5,
-// 		raw: Math.random()<.5,
-// 		salty: Math.random()<.5,
-// 		spicy: Math.random()<.5,
-// 		sweet: Math.random()<.5,
-// 		healthy: Math.random()<.5,
-// 		aLaCarteOrBiteSize: Math.random()<.5,
-// 		servedCold: Math.random()<.5,
-// 		toShare: Math.random()<.5,
-// 		popular: Math.random()<.5,
-// 		vegetarian: Math.random()<.5
-// 	}
-
-// 	var allergens = {
-// 		milk: Math.random()<.5,
-// 		eggs: Math.random()<.5,
-// 		fish: Math.random()<.5,
-// 		shellfish: Math.random()<.5,
-// 		treeNuts: Math.random()<.5,
-// 		peanuts: Math.random()<.5,
-// 		wheat: Math.random()<.5,
-// 		soy: Math.random()<.5,
-// 		gluten: Math.random()<.5
-// 	}
-
-// 	var menuJSON = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		ingredients: appEntIng,		
-// 		descriptors: appEntDescr,	
-// 		secret: secret,	
-// 		allergyViolations: allergens
-// 	}
-// 	itemsArray.push(menuJSON)
-// }
-// bigJSON.push(itemsArray);
-
-// //Create an array of numberOfEntries items with random booleans and evenly divided prices from lowestPrice to highestPrice
-// var itemsArray = [];
-// var numberOfEntries = 10;
-// var highestPrice = 14;
-// var lowestPrice = 7;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries; i++) {
-// 	var name = "Appetizer " + (i + 1);
-// 	var price = (highestPrice - (((highestPrice - lowestPrice)/numberOfEntries) * i)).toFixed(2);
-// 	var quickDescr = "A delicious appetizer made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius appetizer made with lots and lots of food - #" + (i + 1);
-
-// 	var appEntIng = {
-// 		beef: Math.random()<.5,
-// 		chicken: Math.random()<.5,
-// 		pork: Math.random()<.5,
-// 		seafood: Math.random()<.5,
-// 		lamb: Math.random()<.5,
-// 		otherProtein: Math.random()<.5
-// 	}
-
-// 	var appEntDescr = {
-// 		cheesy: Math.random()<.5,
-// 		fresh: Math.random()<.5,
-// 		fried: Math.random()<.5,
-// 		hearty: Math.random()<.5,
-// 		indulgent: Math.random()<.5,
-// 		light: Math.random()<.5,
-// 		plain: Math.random()<.5,
-// 		raw: Math.random()<.5,
-// 		salty: Math.random()<.5,
-// 		spicy: Math.random()<.5,
-// 		sweet: Math.random()<.5,
-// 		healthy: Math.random()<.5,
-// 		aLaCarteOrBiteSize: Math.random()<.5,
-// 		servedCold: Math.random()<.5,
-// 		toShare: Math.random()<.5,
-// 		popular: Math.random()<.5,
-// 		vegetarian: Math.random()<.5
-// 	}
-
-// 	var allergens = {
-// 		milk: Math.random()<.5,
-// 		eggs: Math.random()<.5,
-// 		fish: Math.random()<.5,
-// 		shellfish: Math.random()<.5,
-// 		treeNuts: Math.random()<.5,
-// 		peanuts: Math.random()<.5,
-// 		wheat: Math.random()<.5,
-// 		soy: Math.random()<.5,
-// 		gluten: Math.random()<.5
-// 	}
-
-// 	var menuJSON = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		ingredients: appEntIng,		
-// 		descriptors: appEntDescr,
-// 		secret: secret,			
-// 		allergyViolations: allergens
-// 	}
-// 	itemsArray.push(menuJSON)
-// }
-
-// bigJSON.push(itemsArray);
-
-// //Create an array of numberOfEntries items with random booleans and evenly divided prices from lowestPrice to highestPrice
-// var itemsArray = [];
-// var numberOfEntries = 7;
-// var highestPrice = 10.75;
-// var lowestPrice = 6.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries; i++) {
-// 	var name = "Dessert " + (i + 1);
-// 	var price = (highestPrice - (((highestPrice - lowestPrice)/numberOfEntries) * i)).toFixed(2);
-// 	var quickDescr = "A delicious dessert made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius dessert made with lots and lots of food - #" + (i + 1);
-
-// 	//Desserts Ingredients
-// 	var dessertsIng = {
-// 		cake: Math.random()<.5,
-// 		pie: Math.random()<.5,
-// 		iceCream: Math.random()<.5
-// 	}
-
-// 	//Desserts Descriptors
-// 	var dessertsDescr = {
-// 		chocolatey: Math.random()<.5,
-// 		fruity: Math.random()<.5,
-// 		light: Math.random()<.5,
-// 		rich: Math.random()<.5,
-// 		tart: Math.random()<.5,
-// 		toShare: Math.random()<.5,
-// 		popular: Math.random()<.5,
-// 		healthy: Math.random()<.5
-// 	}
-
-// 	//Allergens
-// 	var allergens = {
-// 		milk: Math.random()<.5,
-// 		eggs: Math.random()<.5,
-// 		fish: Math.random()<.5,
-// 		shellfish: Math.random()<.5,
-// 		treeNuts: Math.random()<.5,
-// 		peanuts: Math.random()<.5,
-// 		wheat: Math.random()<.5,
-// 		soy: Math.random()<.5,
-// 		gluten: Math.random()<.5
-// 	}
-
-// 	var menuJSON = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		ingredients: dessertsIng,		
-// 		descriptors: dessertsDescr,	
-// 		secret: secret,		
-// 		allergyViolations: allergens
-// 	}
-// 	itemsArray.push(menuJSON)
-// }
-
-// bigJSON.push(itemsArray);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 8;
-// var highestPrice2 = 6.25;
-// var lowestPrice2 = 11.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Side " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious side made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius side made with lots and lots of food - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 4;
-// var highestPrice2 = 6.99;
-// var lowestPrice2 = 3.99;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "AddOn " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious add-on made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius add-on made with lots and lots of food - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 6;
-// var highestPrice2 = 9.89;
-// var lowestPrice2 = 7.98;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Soup or Salad " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious soup or salad made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius soup or salad made with lots and lots of food - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 4;
-// var highestPrice2 = 7.50;
-// var lowestPrice2 = 5.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Kids menu item " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious kids menu item made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius kids menu item made with lots and lots of food - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 4;
-// var highestPrice2 = 10.50;
-// var lowestPrice2 = 9.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "otherFood " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious otherFood made with food - #" + (i + 1);
-// 	var detailedDescr = "A delicioius otherFood made with lots and lots of food - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 15;
-// var highestPrice2 = 18.25;
-// var lowestPrice2 = 7.50;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Wine " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious wine - #" + (i + 1);
-// 	var detailedDescr = "A delicioius wine - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 10;
-// var highestPrice2 = 8.75;
-// var lowestPrice2 = 4.50;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Beer " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious beer - #" + (i + 1);
-// 	var detailedDescr = "A delicioius beer - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 10;
-// var highestPrice2 = 14.50;
-// var lowestPrice2 = 7.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Cocktail " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious cocktail - #" + (i + 1);
-// 	var detailedDescr = "A delicioius cocktail - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 3;
-// var highestPrice2 = 8.25;
-// var lowestPrice2 = 5.75;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "Non-alcoholic drink " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious non-alcoholic - #" + (i + 1);
-// 	var detailedDescr = "A delicioius non-alcoholic - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 4;
-// var highestPrice2 = 12.50;
-// var lowestPrice2 = 8.25;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "After-dinner drink " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious after-dinner drink - #" + (i + 1);
-// 	var detailedDescr = "A delicioius after-dinner drink - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
-// var itemsArray2 = [];
-// var numberOfEntries2 = 3;
-// var highestPrice2 = 9.80;
-// var lowestPrice2 = 7.24;
-// var secret = false;
-// for (var i = 0; i<numberOfEntries2; i++) {
-// 	var name = "otherDrink " + (i + 1);
-// 	var price = (highestPrice2 - (((highestPrice2 - lowestPrice2)/numberOfEntries2) * i)).toFixed(2);
-// 	var quickDescr = "A delicious otherDrink - #" + (i + 1);
-// 	var detailedDescr = "A delicioius otherDrink - #" + (i + 1);
-
-// 	var menuJSON2 = {
-// 		name: name,
-// 		price: price,
-// 		quickDescr: quickDescr,
-// 		detailedDescr: detailedDescr,
-// 		secret: secret
-// 	}
-// 	itemsArray2.push(menuJSON2)
-// }
-
-// bigJSON.push(itemsArray2);
-
-// var criJSON = {
-// 	ketchup: Math.random()<.5,
-// 	mustardYellow: Math.random()<.5,
-// 	mustardSpicy: Math.random()<.5,
-// 	mayonnaise: Math.random()<.5,
-// 	hotSauce: Math.random()<.5,
-// 	a1: Math.random()<.5,
-// 	heinz57: Math.random()<.5,
-// 	soySauce: Math.random()<.5,
-// 	bbqSauce: Math.random()<.5,
-// 	salsa: Math.random()<.5,
-// 	marinara: Math.random()<.5,
-// 	cocktailSauce: Math.random()<.5,
-// 	ranch: Math.random()<.5,
-// 	honeyMustard: Math.random()<.5,
-// 	balsVin: Math.random()<.5,
-// 	otherVin: Math.random()<.5,
-// 	oilAndVin: Math.random()<.5,
-// 	caesar: Math.random()<.5,
-// 	italian: Math.random()<.5,
-// 	french: Math.random()<.5,
-// 	blueCheese: Math.random()<.5,
-// 	thousandIsland: Math.random()<.5,
-// 	greek: Math.random()<.5,
-// 	toGoBoxes: Math.random()<.5,
-// 	toGoutensils: Math.random()<.5,
-// 	toGoCups: Math.random()<.5,
-// 	clubSoda: Math.random()<.5,
-// 	coffeeRegular: Math.random()<.5,
-// 	coffeeDecaf: Math.random()<.5,
-// 	espressoRegular: Math.random()<.5,
-// 	espressoDecaf: Math.random()<.5,
-// 	cappuccino: Math.random()<.5,
-// 	hotTea: Math.random()<.5,
-// 	bottledSparkling: Math.random()<.5,
-// 	bottledStill: Math.random()<.5,
-// 	lemons: Math.random()<.5,
-// 	limes: Math.random()<.5
-// }
-
-// var menuName = "Test Menu One";
-// var comments = "No comments";
-// var menuJSON = JSON.stringify(bigJSON);
-// criJSON = JSON.stringify(criJSON);
-// var UserId = 1; 	//Update this
-// var JobId = 1;		//Update this
-
-// var menuObj = {
-// 	menuName: menuName,
-// 	comments: comments,
-// 	menuJSON: menuJSON,
-// 	criJSON: criJSON,
-// 	UserId: UserId,
-// 	JobId: JobId
-// }
-
-// $.post("/newMenu", menuObj).then(function(data) {
-// 	console.log(data);
-// })
