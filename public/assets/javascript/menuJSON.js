@@ -497,7 +497,7 @@ var criJSON = {
 	lemons: Math.random()<.5,
 	limes: Math.random()<.5
 }
-console.log(criJSON)
+console.log(bigJSON)
 var menuName = "Test Menu One";
 var comments = "No comments";
 var menuJSON = JSON.stringify(bigJSON);

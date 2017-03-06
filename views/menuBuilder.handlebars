@@ -12,40 +12,75 @@
 
 
             <!--jobID INT-->
-                  {{#if jobs}}
+            {{#if jobs}}
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
                     <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}" selected>{{this.job_name}}</option>
+                        <option value="{{this.id}}">{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
             </div>
             {{/if}}
-
+        <div class="col s12 menuFormHolder">
         <div class="row">
 
-            <div class="input-field col s12 CRIpanel menuBuilderPanel">
+            <div class="input-field col s12 CRIpanel">
               <ul class="collapsible" data-collapsible="expandable">
             <li>
-              <div class="collapsible-header active">Commonly Requested Items</div>
+              <div class="collapsible-header">Commonly Requested Items</div>
               <div class="collapsible-body CRI"><h5>Pick some commonly requested items.</h5></div>
             </li>
           </ul>
         </div>
         </div>
+
+        <div class="row">
+        <div class="EntreeHolder">
+        <div class="menuCategoryDivider"></div>
+        <h4 class="menuCategoryHeader">Entrees</h4>
+        </div>
         
-    
-    <div class="testButton">Test it!</div>
-           
+         <button class="btn waves-effect waves-light addEntreeBtn">Add Entree Item</button>
+
+         </div>
+
+
+        </div>   <!-- End Menuform holder -->
         </form>
-     <!--      <div class="testButton">Test</div> -->
+
+        <div class="row">
+          <div class="input-field col s12">
+    <select class="categorySelector" onchange="addCategory(this);">
+    <option value="" disabled selected>Add Menu Category</option>
+      <optgroup label="Food">
+        <option value="entree">Entrees</option>
+        <option value="appetizer">Appetizers</option>
+        <option value="dessert">Desserts</option>
+        <option value="sides">Sides</option>
+        <option value="addOn">Add-Ons</option>
+        <option value="soupOrSalad">Soups and Salads</option>
+        <option value="kidsMenu">Kids Menu</option>
+        <option value="otherFood">Other Food</option>
+      </optgroup>
+      <optgroup label="Drink">
+        <option value="wine">Wine</option>
+        <option value="beer">Beer</option>
+        <option value="cocktails">Cocktails</option>
+        <option value="nonAlcoholic">Non-Alcoholic</option>
+        <option value="afterDinnerDrink">After Dinner Drinks</option>
+        <option value="otherDrink">Other Drinks</option>
+      </optgroup>
+    </select>
+    <label>Create new Menu Category.</label>
+  </div>
+  </div>
     </div>
 </div>
 
-  <div id="timeEqual" class="modal">
+ <div id="timeEqual" class="modal">
     <div class="modal-content">
       <h5>In-Time and Out-Time cannot be the same.</h5>
       <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
