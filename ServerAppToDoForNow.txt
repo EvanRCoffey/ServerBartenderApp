@@ -1,6 +1,5 @@
 MILLS
 
-	-Finish the financial summary page
 	-Menu builder (this weekend)
 	-Implement the design/UI pass (early next week)
 	-Debugging and presentation prep (finishing up next week)
@@ -21,3 +20,8 @@ EVAN
 		-Once you chat with Mills about how the timeline should be laid out, continue building the timeline creator
 			-Queries built - all comments/breakthroughs and goals are being put into arrays/objects, ready for use
 			-Prebuilt display using amcharts???
+
+
+EITHER
+
+	-Add testing to the project?  Unless Mills already did this.
