@@ -146,6 +146,7 @@ input[type=range]+.thumb.active {
 
 .showDiv{
 	max-height: 5000px;
+	/*overflow-y: visible;*/
 }
 
 .menuOverflow {
@@ -168,5 +169,10 @@ input[type=range]+.thumb.active {
 	width: 100%;
 	height: 500px;
 	background-color: red;
+}
+
+input.itemTitle{
+	width: 80%;
+	font-size: 20px;
 }
 

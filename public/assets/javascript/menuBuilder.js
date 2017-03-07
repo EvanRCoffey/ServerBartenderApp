@@ -1,4 +1,6 @@
 var globalIter = 0
+var ItemIter = 0
+var checkboxIter = 0
 
 //Initializes materializes silly javascript functions.
 $(document).ready(function() {
@@ -28,7 +30,7 @@ $(document).ready(function() {
 //It removes the dropdown option to prevent duplicating categories.
 function addCategory(e) {
     if (e.value === 'entree') {
-        addEntreeCategory()
+        createCategorySection('Entrees', 'Entrees', 'Add Entry Item')
     } else if (e.value === 'appetizer') {
         addAppetizerCategory()
     } else if (e.value === 'dessert') {
@@ -66,7 +68,7 @@ function addCategory(e) {
 
 function addEntreeCategory() {
     $('.menuFormHolder').append(entreeCategoryHTML)
-     $('.collapsible').collapsible()
+   
 }
 
 function addAppetizerCategory() {
@@ -340,94 +342,172 @@ var CRImakerSource = [{
 }, {
     name: 'toGoutensils',
     text: 'To-Go utensils'
-}]
+}] //Objects Hidden Here
 
 
 
-checkBoxMaker(CRImakerSource, '.CRI');
+checkBoxMaker(null, CRImakerSource, '.CRI');
 
-function checkBoxMaker(object, selector) {
-    for (var i = 0; i < object.length; i++) {
-        $(selector).append("<div class='col s6 m4 l4'><input type='checkbox' class='filled-in' id='filled-in-box" + globalIter + "' name ='" + object[i].name + "'/><label class='checkboxLabel' for='filled-in-box" + globalIter + "'>" + object[i].text + "</label></div>")
+$('.menuFormHolder').on('click', '.addItemBtnEntrees', function(e) {
+    e.preventDefault();
+        createItemHolder('.Entrees')
+        createIntInput('price', 'Entree Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null)
+        checkBoxMaker('Descriptors', appEntDesc, null)
+        checkBoxMaker('Ingredients', appEntIng, null)
+        checkBoxMaker('Allergy Violations', allergiesList, null)       
+    
+
+    ItemIter++
+})
+
+// createTextInput('entree', 'Entree', 'form')
+// createIntInput('entreePrice', 'Entree Price', 'form')
+// checkBoxMaker('Commonly Requested Items', CRImakerSource, 'form');
+// createTextAreaInput('desc', 'fillthis', 'form')
+
+function checkBoxMaker(title, object, selector) {
+    if(!selector){
+        selector = '.itemholder'+ ItemIter 
+    }
+
+    if(title){ 
+        $(selector).append("<h5>"+title+"</h5>")
+    }
+        $(selector).append("<div class='row checkboxRow" + checkboxIter+ "'></div")
+ for (var i = 0; i < object.length; i++) {
+        $('.checkboxRow'+ checkboxIter).append("<div class='col s6 m4 l4'><input type='checkbox' class='filled-in' id='filled-in-box" + globalIter + "' name ='" + object[i].name + "'/><label class='checkboxLabel' for='filled-in-box" + globalIter + "'>" + object[i].text + "</label></div>")
         globalIter++
     }
+    checkboxIter++
     $('.collapsible').collapsible();
 }
 
 
+function createCategorySection(categoryTitle, categoryClass, buttonText){
+    var categoryHTML="";
+categoryHTML += "<div class=\"row\">";
+categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "        <li>";
+categoryHTML += "            <div class=\"collapsible-header menuCategoryHeader active\">";
+categoryHTML += "                <h4>"+categoryTitle+"<\/h4><\/div>";
+categoryHTML += "            <div class=\"collapsible-body menuOverflow\">";
+categoryHTML += "                <form class="+categoryClass+">";
+categoryHTML += "                <\/form>";
+categoryHTML += "                <div class=\"row\">";
+categoryHTML += "                    <div class=\" col s12\">";
+categoryHTML += "                        <button class=\"btn waves-effect waves-light addItemBtn"+categoryClass+"\">Add Entree Item<\/button>";
+categoryHTML += "                    <\/div>";
+categoryHTML += "                <\/div>";
+categoryHTML += "            <\/div>";
+categoryHTML += "        <\/li>";
+categoryHTML += "    <\/ul>";
+categoryHTML += "<\/div>";
+categoryHTML += "";
 
-var entreeCategoryHTML="";
-entreeCategoryHTML += "<div class=\"row\">";
-entreeCategoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
-entreeCategoryHTML += "        <li>";
-entreeCategoryHTML += "            <div class=\"collapsible-header menuCategoryHeader\">";
-entreeCategoryHTML += "                <h4>Entrees<\/h4><\/div>";
-entreeCategoryHTML += "            <div class=\"collapsible-body menuOverflow\">";
-entreeCategoryHTML += "                <div class=\"EntreeHolder\">";
-entreeCategoryHTML += "                <\/div>";
-entreeCategoryHTML += "                <div class=\"row\">";
-entreeCategoryHTML += "                    <div class=\" col s12\">";
-entreeCategoryHTML += "                        <button class=\"btn waves-effect waves-light addEntreeBtn\">Add Entree Item<\/button>";
-entreeCategoryHTML += "                    <\/div>";
-entreeCategoryHTML += "                <\/div>";
-entreeCategoryHTML += "            <\/div>";
-entreeCategoryHTML += "        <\/li>";
-entreeCategoryHTML += "    <\/ul>";
-entreeCategoryHTML += "<\/div>";
-
-var entreeItemHTML="";
-entreeItemHTML += "<div class=\"input-field col s12\">";
-entreeItemHTML += "    <input id=\"entreeName\" type=\"text\" required class=\"validate\" name=\"entreeName\">";
-entreeItemHTML += "    <label for=\"entreeName\">Entree Name<\/label>";
-entreeItemHTML += "<\/div>";
-entreeItemHTML += "<div class=\"input-field col s12\">";
-entreeItemHTML += "    <input name=\"entreePrice\" id=\"entreePrice\" type=\"number\" step=\"0.01\" min=\"0\" max=\"100000\" class=\"validate\">";
-entreeItemHTML += "    <label for=\"entreePrice\">Price<\/label>";
-entreeItemHTML += "<\/div>";
-entreeItemHTML += "<div class=\"input-field col s12\">";
-entreeItemHTML += "    <textarea name=\"entreeQuickDesc\" id=\"entreeQuickDesc\" class=\"materialize-textarea\"><\/textarea>";
-entreeItemHTML += "    <label for=\"entreeQuickDesc\">Quick Description<\/label>";
-entreeItemHTML += "<\/div>";
-entreeItemHTML += "<div class=\"input-field col s12\">";
-entreeItemHTML += "    <textarea name=\"entreeDetailedDesc\" id=\"entreeDetailedDesc\" class=\"materialize-textarea\"><\/textarea>";
-entreeItemHTML += "    <label for=\"entreeDetailedDesc\">Detailed Description<\/label>";
-entreeItemHTML += "<\/div>";
-entreeItemHTML += "<div class=\"col s12\">";
-entreeItemHTML += "    <h6 class ='secret'>Is this a secret item?<\/h6>";
-entreeItemHTML += "<\/div>";
-var entreeItemHTML2 = "<div class=\"col s12\">";
-entreeItemHTML2 += "    <h5>Entree Descriptors<\/h5>";
-entreeItemHTML2 += "<\/div>";
-var entreeItemHTML3 = "<div class=\"col s12\">";
-entreeItemHTML3 += "    <h5>Ingredients<\/h5>";
-entreeItemHTML3 += "<\/div>";
-var entreeItemHTML4 = "<div class=\"col s12\">";
-entreeItemHTML4 += "    <h5>Allergy Violations<\/h5>";
-entreeItemHTML4 += "<\/div>";
+$('.menuFormHolder').append(categoryHTML)
+$('.collapsible').collapsible()
+}
 
 
 
-
-
-
-$('.menuFormHolder').on('click', '.addEntreeBtn', function(e) {
-            e.preventDefault();
-            $('.EntreeHolder').append(entreeItemHTML)
-            checkBoxMaker(secretItem, '.EntreeHolder');
-            $('.EntreeHolder').append(entreeItemHTML2)
-            checkBoxMaker(appEntDesc, '.EntreeHolder');
-            $('.EntreeHolder').append(entreeItemHTML3)
-            checkBoxMaker(appEntIng, '.EntreeHolder');
-            $('.EntreeHolder').append(entreeItemHTML4)
-            checkBoxMaker(allergiesList, '.EntreeHolder');
-
-
+function createTextInput(name, labelText){
+var textInput="";
+textInput += "<div class=\"input-field col s12\">";
+textInput += "    <input id=\""+name+globalIter+"\"type=\"text\" required class=\"validate\" name="+name+">";
+textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+textInput += "<\/div>";
+textInput += "";
     
-    
+    $('.itemholder'+ ItemIter).append(textInput)
+    globalIter++
+}
 
-    setTimeout(function() { slideOut() }, 5)
-})
+
+
+function createTextAreaInput(name, labelText){
+var textInput="";
+textInput += "<div class=\"input-field col s12\">";
+textInput += "    <textarea id=\""+name+globalIter+"\" class=\"materialize-textarea \"name="+name+"></textarea>";
+textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+textInput += "<\/div>";
+textInput += "";
+    
+    $('.itemholder'+ ItemIter).append(textInput)
+    globalIter++
+}
+
+
+
+function createIntInput(name, labelText){
+var textInput="";
+textInput += "<div class=\"input-field col s12\">";
+textInput += "    <input id=\""+name+globalIter+"\"type=\"number\" step=\"0.01\" min=\"0\" max=\"100000\" required class=\"validate\" name="+name+">";
+textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+textInput += "<\/div>";
+textInput += "";
+    console.log('itemholder'+ ItemIter)
+    $('.itemholder'+ ItemIter).append(textInput)
+    globalIter++
+}
+
+
+
+function createItemHolder(target){
+    var categoryHTML="";
+categoryHTML += "<div class=\"row itemObject\">";
+categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "        <li>";
+categoryHTML += "            <div class=\"collapsible-header open"+ItemIter+"\">";
+categoryHTML += "                <input class=\"itemTitle\" name=\"name\" value=\"Enter Item Name\"></input><\/div>";
+categoryHTML += "            <div class=\"collapsible-body menuOverflow itemholder" +ItemIter +"\">";
+categoryHTML += "            <\/div>";
+categoryHTML += "        <\/li>";
+categoryHTML += "    <\/ul>";
+categoryHTML += "<\/div>";
+categoryHTML += "";
+
+$(target).append(categoryHTML)
+$('.open' + ItemIter).addClass("active");
+$('.collapsible').collapsible()
+}
+
+
 
 function slideOut() {
     $('.menuBuilderPanel').addClass('showDiv')
 }
+
+
+
+$('.itemTitle').on('click', function(e){
+    $(e).val("")
+    console.log('click')
+})
+
+
+
+$('.menuFormHolder').on('click', '.itemTitle', function(e) {
+    
+    e.stopPropagation();
+
+    if($(this).val() === "Enter Item Name"){
+     $(this).val("")     
+    }
+})
+
+
+$('.serialButton').on('click', function(){
+$('.itemObject').each(function(){
+
+var inputs = $(this).find(".itemTitle").val();
+console.log(inputs)
+
+ 
+
+
+ });
+
+})
