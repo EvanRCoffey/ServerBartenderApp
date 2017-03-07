@@ -1620,7 +1620,6 @@ function playFromBeginning (quizSize) {
 		///////////////////////////////////////////////////////////////////////
 
 		if (allQuizQuestions.q8Array.length === 1) {
-			console.log("q8");
 			var Question = {
 				question: allQuizQuestions.q8Array[0].question,
 				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
@@ -1634,7 +1633,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q9Array.length === 1) {
-			console.log("q9");
 			var Question = {
 				question: allQuizQuestions.q9Array[0].question,
 				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
@@ -1648,7 +1646,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q7EntArray.length === 1 || allQuizQuestions.q7AppArray.length === 1) {
-			console.log("q7");
 			var tempArray = [];
 			if (allQuizQuestions.q7EntArray.length === 1) {tempArray.push(allQuizQuestions.q7EntArray[0])}
 			if (allQuizQuestions.q7AppArray.length === 1) {tempArray.push(allQuizQuestions.q7AppArray[0])}
@@ -1659,7 +1656,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q10SaucesArray.length === 1 || allQuizQuestions.q10DressingsArray.length === 1) {
-			console.log("q10");
 			var tempArray = [];
 			if (allQuizQuestions.q10SaucesArray.length === 1) {tempArray.push(allQuizQuestions.q10SaucesArray[0])}
 			if (allQuizQuestions.q10DressingsArray.length === 1) {tempArray.push(allQuizQuestions.q10DressingsArray[0])}
@@ -1670,7 +1666,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q5Array.length > 0) {
-			console.log("q5");
 			var Question = {
 				question: allQuizQuestions.q5Array[0].question,
 				answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
@@ -1684,7 +1679,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
-			console.log("q6");
 			var tempArray = [];
 			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
 			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
@@ -1696,7 +1690,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
-			console.log("q1");
 			var tempArray = [];
 			if (allQuizQuestions.q1AppArray.length >= 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
 			if (allQuizQuestions.q1EntArray.length >= 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
@@ -1707,7 +1700,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
-			console.log("q2");
 			var tempArray = [];
 			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
 			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
@@ -1718,7 +1710,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
-			console.log("q3");
 			var tempArray = [];
 			if (allQuizQuestions.q3DesArray.length >= 1) {tempArray.push(allQuizQuestions.q3DesArray[0])}
 			if (allQuizQuestions.q3EntArray.length >= 1) {tempArray.push(allQuizQuestions.q3EntArray[0])}
@@ -1730,7 +1721,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
-			console.log("q4");
 			var tempArray = [];
 			if (allQuizQuestions.q4DesArray.length >= 1) {tempArray.push(allQuizQuestions.q4DesArray[0])}
 			if (allQuizQuestions.q4EntArray.length >= 1) {tempArray.push(allQuizQuestions.q4EntArray[0])}
@@ -1763,7 +1753,6 @@ function playFromBeginning (quizSize) {
 		//////////////////////////////////////////////////////////////////////////
 
 		if (allQuizQuestions.q8Array.length === 1) {
-			console.log("q8");
 			var Question = {
 				question: allQuizQuestions.q8Array[0].question,
 				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
@@ -1777,7 +1766,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q9Array.length === 1) {
-			console.log("q9");
 			var Question = {
 				question: allQuizQuestions.q9Array[0].question,
 				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
@@ -1791,7 +1779,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q7EntArray.length === 1 || allQuizQuestions.q7AppArray.length === 1) {
-			console.log("q7");
 			var tempArray = [];
 			if (allQuizQuestions.q7EntArray.length === 1) {tempArray.push(allQuizQuestions.q7EntArray[0])}
 			if (allQuizQuestions.q7AppArray.length === 1) {tempArray.push(allQuizQuestions.q7AppArray[0])}
@@ -1802,7 +1789,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q10SaucesArray.length === 1 || allQuizQuestions.q10DressingsArray.length === 1) {
-			console.log("q10");
 			var tempArray = [];
 			if (allQuizQuestions.q10SaucesArray.length === 1) {tempArray.push(allQuizQuestions.q10SaucesArray[0])}
 			if (allQuizQuestions.q10DressingsArray.length === 1) {tempArray.push(allQuizQuestions.q10DressingsArray[0])}
@@ -1813,18 +1799,151 @@ function playFromBeginning (quizSize) {
 		}
 
 		//Get up to three Q6
+		if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
+			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
+			if (allQuizQuestions.q6AppArray.length === 1) {tempArray.push(allQuizQuestions.q6AppArray[0])}
+			shuffle(tempArray);
+			for (var i=0; i<tempArray.length; i++) {
+				var tempArrayEntry = [];
+				tempArrayEntry.push(tempArray[i])
+				var Question = questionObjectTemplate(tempArrayEntry);
+				Question = getCorrectAnswerNumbers(Question);
+				randomizedQuiz.push(Question);
+			}	
+		}
 
 		//Get up to three Q1
+		if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q1AppArray.length === 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
+			if (allQuizQuestions.q1EntArray.length === 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
+			if (allQuizQuestions.q1AppArray.length === 2) {tempArray.push(allQuizQuestions.q1AppArray[0]), tempArray.push(allQuizQuestions.q1AppArray[1])}
+			if (allQuizQuestions.q1EntArray.length === 2) {tempArray.push(allQuizQuestions.q1EntArray[0]), tempArray.push(allQuizQuestions.q1EntArray[1])}
+			shuffle(tempArray);
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter < 3) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
 		//Get up to two Q2
+		if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
+			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
+			if (allQuizQuestions.q2AppArray.length === 2) {tempArray.push(allQuizQuestions.q2AppArray[0]), tempArray.push(allQuizQuestions.q2AppArray[1])}
+			if (allQuizQuestions.q2EntArray.length === 2) {tempArray.push(allQuizQuestions.q2EntArray[0]), tempArray.push(allQuizQuestions.q2EntArray[1])}
+			shuffle(tempArray);
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<2) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
 		//Get up to two Q5
+		if (allQuizQuestions.q5Array.length > 0) {
+			var counter = 0;
+			for (var i=0; i<allQuizQuestions.q5Array.length; i++) {
+				if (counter<2) {
+					var Question = {
+						question: allQuizQuestions.q5Array[0].question,
+						answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
+						answer2: allQuizQuestions.q5Array[0].fourAnswersArray[1],
+						answer3: allQuizQuestions.q5Array[0].fourAnswersArray[2],
+						answer4: allQuizQuestions.q5Array[0].fourAnswersArray[3],
+						correctAnswers: allQuizQuestions.q5Array[0].correctAnswersIndexesArray
+					}
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
 		//Get up to three Q3
+		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
+			var tempArray = [];
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q3DesArray[i]) {tempArray.push(allQuizQuestions.q3DesArray[i])}
+			}
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q3EntArray[i]) {tempArray.push(allQuizQuestions.q3EntArray[i])}
+			}
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q3AppArray[i]) {tempArray.push(allQuizQuestions.q3AppArray[i])}
+			}
+			shuffle(tempArray);
+
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<3) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
 		//Get up to three Q4
+		if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
+			var tempArray = [];
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q4DesArray[i]) {tempArray.push(allQuizQuestions.q4DesArray[i])}
+			}
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q4EntArray[i]) {tempArray.push(allQuizQuestions.q4EntArray[i])}
+			}
+			for (var i=0; i<3; i++) {
+				if (allQuizQuestions.q4AppArray[i]) {tempArray.push(allQuizQuestions.q4AppArray[i])}
+			}
+			shuffle(tempArray);
+
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<3) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
 		//Fill
+		if (randomizedQuiz.length === 20) {
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}
+		
+		else if (randomizedQuiz.length < 20) {
+			var questionsNeeded = 20 - randomizedQuiz.length;
+			randomizedQuiz = fillQuizQuestionsArray(questionsNeeded, randomizedQuiz);
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}
 		
 		shuffle(randomizedQuiz);
 		shuffle(randomizedQuiz);
@@ -1838,7 +1957,6 @@ function playFromBeginning (quizSize) {
 		//////////////////////////////////////////////////////////////////////////
 
 		if (allQuizQuestions.q8Array.length === 1) {
-			console.log("q8");
 			var Question = {
 				question: allQuizQuestions.q8Array[0].question,
 				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
@@ -1852,7 +1970,6 @@ function playFromBeginning (quizSize) {
 		}
 
 		if (allQuizQuestions.q9Array.length === 1) {
-			console.log("q9");
 			var Question = {
 				question: allQuizQuestions.q9Array[0].question,
 				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
@@ -1865,23 +1982,178 @@ function playFromBeginning (quizSize) {
 			randomizedQuiz.push(Question);
 		}
 
-		//Get up to two Q10
-
 		//Get up to two Q7
+		if (allQuizQuestions.q7EntArray.length === 1 || allQuizQuestions.q7AppArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q7EntArray.length === 1) {tempArray.push(allQuizQuestions.q7EntArray[0])}
+			if (allQuizQuestions.q7AppArray.length === 1) {tempArray.push(allQuizQuestions.q7AppArray[0])}
+			shuffle(tempArray);
+			for (var i=0; i<tempArray.length; i++) {
+				var tempArrayEntry = [];
+				tempArrayEntry.push(tempArray[i])
+				var Question = questionObjectTemplate(tempArrayEntry);
+				Question = getCorrectAnswerNumbers(Question);
+				randomizedQuiz.push(Question);
+			}	
+		}
+
+		//Get up to two Q10
+		if (allQuizQuestions.q10SaucesArray.length === 1 || allQuizQuestions.q10DressingsArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q10SaucesArray.length === 1) {tempArray.push(allQuizQuestions.q10SaucesArray[0])}
+			if (allQuizQuestions.q10DressingsArray.length === 1) {tempArray.push(allQuizQuestions.q10DressingsArray[0])}
+			shuffle(tempArray);
+			for (var i=0; i<tempArray.length; i++) {
+				var tempArrayEntry = [];
+				tempArrayEntry.push(tempArray[i])
+				var Question = questionObjectTemplate(tempArrayEntry);
+				Question = getCorrectAnswerNumbers(Question);
+				randomizedQuiz.push(Question);
+			}	
+		}
 
 		//Get up to three Q6
+		if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
+			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
+			if (allQuizQuestions.q6AppArray.length === 1) {tempArray.push(allQuizQuestions.q6AppArray[0])}
+			shuffle(tempArray);
+			for (var i=0; i<tempArray.length; i++) {
+				var tempArrayEntry = [];
+				tempArrayEntry.push(tempArray[i])
+				var Question = questionObjectTemplate(tempArrayEntry);
+				Question = getCorrectAnswerNumbers(Question);
+				randomizedQuiz.push(Question);
+			}	
+		}
 
-		//Get up to three Q1
+		//Get up to four Q1
+		if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q1AppArray.length === 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
+			if (allQuizQuestions.q1EntArray.length === 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
+			if (allQuizQuestions.q1AppArray.length === 2) {tempArray.push(allQuizQuestions.q1AppArray[0]), tempArray.push(allQuizQuestions.q1AppArray[1])}
+			if (allQuizQuestions.q1EntArray.length === 2) {tempArray.push(allQuizQuestions.q1EntArray[0]), tempArray.push(allQuizQuestions.q1EntArray[1])}
+			shuffle(tempArray);
+			for (var i=0; i<tempArray.length; i++) {
+				var tempArrayEntry = [];
+				tempArrayEntry.push(tempArray[i])
+				var Question = questionObjectTemplate(tempArrayEntry);
+				Question = getCorrectAnswerNumbers(Question);
+				randomizedQuiz.push(Question);
+			}
+		}
 
-		//Get up to two Q2
+		//Get up to three Q2
+		if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
+			var tempArray = [];
+			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
+			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
+			if (allQuizQuestions.q2AppArray.length === 2) {tempArray.push(allQuizQuestions.q2AppArray[0]), tempArray.push(allQuizQuestions.q2AppArray[1])}
+			if (allQuizQuestions.q2EntArray.length === 2) {tempArray.push(allQuizQuestions.q2EntArray[0]), tempArray.push(allQuizQuestions.q2EntArray[1])}
+			shuffle(tempArray);
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<3) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
-		//Get up to two Q5
+		//Get up to four Q5
+		if (allQuizQuestions.q5Array.length > 0) {
+			var counter = 0;
+			for (var i=0; i<allQuizQuestions.q5Array.length; i++) {
+				if (counter<4) {
+					var Question = {
+						question: allQuizQuestions.q5Array[0].question,
+						answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
+						answer2: allQuizQuestions.q5Array[0].fourAnswersArray[1],
+						answer3: allQuizQuestions.q5Array[0].fourAnswersArray[2],
+						answer4: allQuizQuestions.q5Array[0].fourAnswersArray[3],
+						correctAnswers: allQuizQuestions.q5Array[0].correctAnswersIndexesArray
+					}
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
-		//Get up to three Q3
+		//Get up to five Q3
+		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
+			var tempArray = [];
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q3DesArray[i]) {tempArray.push(allQuizQuestions.q3DesArray[i])}
+			}
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q3EntArray[i]) {tempArray.push(allQuizQuestions.q3EntArray[i])}
+			}
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q3AppArray[i]) {tempArray.push(allQuizQuestions.q3AppArray[i])}
+			}
+			shuffle(tempArray);
 
-		//Get up to three Q4
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<5) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
 
-		//Fill
+		//Get up to five Q4
+		if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
+			var tempArray = [];
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q4DesArray[i]) {tempArray.push(allQuizQuestions.q4DesArray[i])}
+			}
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q4EntArray[i]) {tempArray.push(allQuizQuestions.q4EntArray[i])}
+			}
+			for (var i=0; i<5; i++) {
+				if (allQuizQuestions.q4AppArray[i]) {tempArray.push(allQuizQuestions.q4AppArray[i])}
+			}
+			shuffle(tempArray);
+
+			var counter = 0;
+			for (var i=0; i<tempArray.length; i++) {
+				if (counter<5) {
+					var tempArrayEntry = [];
+					tempArrayEntry.push(tempArray[i])
+					var Question = questionObjectTemplate(tempArrayEntry);
+					Question = getCorrectAnswerNumbers(Question);
+					randomizedQuiz.push(Question);
+					counter++;
+				}
+			}
+		}
+
+		//FILL
+		if (randomizedQuiz.length === 30) {
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}
+		
+		else if (randomizedQuiz.length < 30) {
+			var questionsNeeded = 30 - randomizedQuiz.length;
+			randomizedQuiz = fillQuizQuestionsArray(questionsNeeded, randomizedQuiz);
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}	
 		
 		shuffle(randomizedQuiz);
 		shuffle(randomizedQuiz);
@@ -1961,7 +2233,6 @@ function clickedTenQuiz() {
 function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 	for (var i = 0; i<questionsNeeded; i++) {
 		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
-			console.log("q3");
 			var tempArray = [];
 			if (allQuizQuestions.q3DesArray.length >= 1) {tempArray.push(allQuizQuestions.q3DesArray[0])}
 			if (allQuizQuestions.q3EntArray.length >= 1) {tempArray.push(allQuizQuestions.q3EntArray[0])}
@@ -1973,7 +2244,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 		}
 
 		else if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
-			console.log("q4");
 			var tempArray = [];
 			if (allQuizQuestions.q4DesArray.length >= 1) {tempArray.push(allQuizQuestions.q4DesArray[0])}
 			if (allQuizQuestions.q4EntArray.length >= 1) {tempArray.push(allQuizQuestions.q4EntArray[0])}
@@ -1985,7 +2255,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 		}
 
 		else if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
-			console.log("q1");
 			var tempArray = [];
 			if (allQuizQuestions.q1AppArray.length >= 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
 			if (allQuizQuestions.q1EntArray.length >= 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
@@ -1996,7 +2265,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 		}
 
 		else if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
-			console.log("q2");
 			var tempArray = [];
 			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
 			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
@@ -2007,7 +2275,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 		}
 		
 		else if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
-			console.log("q6");
 			var tempArray = [];
 			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
 			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
@@ -2019,7 +2286,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 		}
 		
 		else if (allQuizQuestions.q5Array.length > 0) {
-			console.log("q5");
 			var Question = {
 				question: allQuizQuestions.q5Array[0].question,
 				answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
@@ -2031,8 +2297,6 @@ function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
 			Question = getCorrectAnswerNumbers(Question);
 			randomizedQuiz.push(Question);
 		}
-
-		
 	}
 	shuffle(randomizedQuiz);
 	return randomizedQuiz;
@@ -2043,8 +2307,8 @@ function questionObjectTemplate(tempArray) {
 		question: tempArray[0].question,
 		answer1: tempArray[0].fourAnswersArray[0],
 		answer2: tempArray[0].fourAnswersArray[1],
-		answer3: tempArray[0].fourAnswersArray[2],
 		answer4: tempArray[0].fourAnswersArray[3],
+		answer3: tempArray[0].fourAnswersArray[2],
 		correctAnswers: tempArray[0].correctAnswersIndexesArray
 	}
 	return questionObject;

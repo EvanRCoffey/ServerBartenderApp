@@ -7,9 +7,6 @@ MILLS
 EVAN
 
 	-Quiz Maker
-		-Make the correct number of each type of question (see paper documents)
-			-20 quiz
-			-30 quiz
 		-Fix allergens and secret items section
 		-Get user identification and menu selection working
 		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
