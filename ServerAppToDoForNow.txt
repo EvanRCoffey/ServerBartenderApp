@@ -6,22 +6,19 @@ MILLS
 
 EVAN
 
-	-Quiz Maker
+	***Finish the Flash Cards (see flashCards.js comments)
+
+	***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)
+
+	***Finish the Quiz Maker
 		-Fix allergens and secret items section
 		-Get user identification and menu selection working
 		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
 
-	-Flash Cards
-
-	-When a user deletes a job, this is what should happen:
-	  	1) With an extra level of validation, make sure the user understands what they're doing
-	 	2) Don't actually delete the DB entries.  Add a boolean "deletedByUser" to the job and shift models, and when a job is "deleted", just change that flag to true and cascade to include all shifts associated with that job, as well.  Add something to all job/shift queries along the lines of "{where: {deletedByUser: false}}"
-		-When a user deletes a menu, do the same as above, without cascading
-
-	-Once you chat with Mills about how the timeline should be laid out, continue building the timeline creator
-		-Queries built - all comments/breakthroughs and goals are being put into arrays/objects, ready for use
-		-Prebuilt display using amcharts???
-
+	-Users shouldn't delete shifts, jobs or menus.  They should "delete" them.
+	  	1) Add an extra level of validation to each delete button
+	 	2) Add a boolean "deletedByUser" to the job, menu, and shift models
+	 	3) When something is "deleted", just change its "deletedByUser" flag to true.  When a user "deletes" a job, be sure to explain that shifts will also be deleted, during validation, and also be sure to cascade to include all of that job's shifts. Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
 
 EITHER
 

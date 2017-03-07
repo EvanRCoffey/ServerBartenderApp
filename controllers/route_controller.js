@@ -618,8 +618,12 @@ router.post("/timelineGoals", loggedIn, function(req, res, next) {
   });
 });
 
-router.get("/menuJSON", loggedIn, function(req, res, next) {
-    res.render("menuJSON", req);
+router.get("/quizMaker", loggedIn, function(req, res, next) {
+    res.render("quizMaker", req);
+})
+
+router.get("/flashCards", loggedIn, function(req, res, next) {
+    res.render("flashCards", req);
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
