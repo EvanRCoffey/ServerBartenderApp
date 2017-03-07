@@ -237,23 +237,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	uniqueAllVio.push("treeNuts");
 	uniqueAllVio.push("wheat");
 
-	// console.log(uniqueAppDescr);
-	// console.log(uniqueAppIngr);
-	// console.log(uniqueEntDescr);
-	// console.log(uniqueEntIngr);
-	// console.log(uniqueDesDescr);
-	// console.log(uniqueDesIngr);
-	// console.log(uniqueAllVio);
-	// console.log(vegApps);
-	// console.log(vegEnts);
-	// console.log(commonSauces);
-	// console.log(commonDressings);
-	// console.log(secretItems);
-	// console.log(addOns);
-	// console.log(popApps);
-	// console.log(popEnts);
-	// console.log(popDesserts);
-
 	///////////////
 	//MENU ANALYSIS
 	///////////////
@@ -351,25 +334,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	if (commonSauces.length>0) {numQ10Sauce++}
 	if (commonDressings.length>0) {numQ10Dressing++}
 
-	console.log(numQ1App);
-	console.log(numQ1Ent);
-	console.log(numQ2App);
-	console.log(numQ2Ent);
-	console.log(numQ3App);
-	console.log(numQ3Ent);
-	console.log(numQ3Des);
-	console.log(numQ4App);
-	console.log(numQ4Ent);
-	console.log(numQ4Des);
-	console.log(numQ5);
-	console.log(numQ6);
-	console.log(numQ7App);
-	console.log(numQ7Ent);
-	console.log(numQ8);
-	console.log(numQ9);
-	console.log(numQ10Sauce);
-	console.log(numQ10Dressing);
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //QUESTION CREATION BEGINS HERE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,9 +347,10 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q1App
+	//Make two Q1App
 	//////////////////////
 
+	var q1AppArray = [];
 	var thisQArray = [];
 	var topPrice = 0;
 	var topItemName = "";
@@ -425,6 +390,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(topItemName);
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
 
@@ -434,15 +400,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(bottomItemName);
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+
+	q1AppArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q1Ent
+	//Make two Q1Ent
 	//////////////////////
 
+	var q1EntArray = [];
 	var thisQArray = [];
 	var topPrice = 0;
 	var topItemName = "";
@@ -482,6 +451,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(topItemName);
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
 
@@ -491,15 +461,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
 	var sampleCorrectAnswers = [];
 	sampleCorrectAnswers.push(bottomItemName);
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	
+	q1EntArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q2App
+	//Make one Q2App
 	//////////////////////
 
+	var q2AppArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -526,15 +499,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	sampleCorrectAnswers.push(correctItem1);
 	sampleCorrectAnswers.push(correctItem2);
 	
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	
+	q2AppArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q2Ent
+	//Make one Q2Ent
 	//////////////////////
 
+	var q2EntArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -561,435 +537,466 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	sampleCorrectAnswers.push(correctItem1);
 	sampleCorrectAnswers.push(correctItem2);
 	
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	
+	q2EntArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q3App
+	//Make all Q3App - fill
 	//////////////////////
 
-	var randomThing = uniqueAppDescr[Math.floor(Math.random() * uniqueAppDescr.length)];
-
+	var q3AppArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for a(n) " + randomThing + " appetizer.  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueAppDescr.length; j++) {
+		var randomThing = uniqueAppDescr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allApp.length; i++) {
-		if (randomThing === "aLaCarteOrBiteSize") { if (allApp[i].descriptors.aLaCarteOrBiteSize) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "cheesy") { if (allApp[i].descriptors.cheesy) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "fresh") { if (allApp[i].descriptors.fresh) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "fried") { if (allApp[i].descriptors.fried) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "healthy") { if (allApp[i].descriptors.healthy) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "hearty") { if (allApp[i].descriptors.hearty) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "indulgent") { if (allApp[i].descriptors.indulgent) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "light") { if (allApp[i].descriptors.light) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "plain") { if (allApp[i].descriptors.plain) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "popular") { if (allApp[i].descriptors.popular) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "raw") { if (allApp[i].descriptors.raw) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "salty") { if (allApp[i].descriptors.salty) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "servedCold") { if (allApp[i].descriptors.servedCold) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "spicy") { if (allApp[i].descriptors.spicy) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "sweet") { if (allApp[i].descriptors.sweet) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "toShare") { if (allApp[i].descriptors.toShare) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "vegetarian") { if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for a(n) " + randomThing + " appetizer.  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No " + randomThing + " appetizers");
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allApp.length; i++) {
+			if (randomThing === "aLaCarteOrBiteSize") { if (allApp[i].descriptors.aLaCarteOrBiteSize) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "cheesy") { if (allApp[i].descriptors.cheesy) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "fresh") { if (allApp[i].descriptors.fresh) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "fried") { if (allApp[i].descriptors.fried) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "healthy") { if (allApp[i].descriptors.healthy) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "hearty") { if (allApp[i].descriptors.hearty) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "indulgent") { if (allApp[i].descriptors.indulgent) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "light") { if (allApp[i].descriptors.light) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "plain") { if (allApp[i].descriptors.plain) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "popular") { if (allApp[i].descriptors.popular) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "raw") { if (allApp[i].descriptors.raw) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "salty") { if (allApp[i].descriptors.salty) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "servedCold") { if (allApp[i].descriptors.servedCold) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "spicy") { if (allApp[i].descriptors.spicy) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "sweet") { if (allApp[i].descriptors.sweet) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "toShare") { if (allApp[i].descriptors.toShare) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "vegetarian") { if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No " + randomThing + " appetizers");
+		}
+
+		if (hasThing.length > 0) {
+			
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q3AppArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q3Ent
+	//Make all Q3Ent - fill
 	//////////////////////
 
-	var randomThing = uniqueEntDescr[Math.floor(Math.random() * uniqueEntDescr.length)];
-
+	var q3EntArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for a(n) " + randomThing + " entree.  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueEntDescr.length; j++) {
+		var randomThing = uniqueEntDescr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allEnt.length; i++) {
-		if (randomThing === "aLaCarteOrBiteSize") { if (allEnt[i].descriptors.aLaCarteOrBiteSize) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "cheesy") { if (allEnt[i].descriptors.cheesy) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "fresh") { if (allEnt[i].descriptors.fresh) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "fried") { if (allEnt[i].descriptors.fried) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "healthy") { if (allEnt[i].descriptors.healthy) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "hearty") { if (allEnt[i].descriptors.hearty) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "indulgent") { if (allEnt[i].descriptors.indulgent) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "light") { if (allEnt[i].descriptors.light) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "plain") { if (allEnt[i].descriptors.plain) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "popular") { if (allEnt[i].descriptors.popular) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "raw") { if (allEnt[i].descriptors.raw) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "salty") { if (allEnt[i].descriptors.salty) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "servedCold") { if (allEnt[i].descriptors.servedCold) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "spicy") { if (allEnt[i].descriptors.spicy) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "sweet") { if (allEnt[i].descriptors.sweet) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "toShare") { if (allEnt[i].descriptors.toShare) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "vegetarian") { if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for a(n) " + randomThing + " entree.  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No " + randomThing + " entrees");
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allEnt.length; i++) {
+			if (randomThing === "aLaCarteOrBiteSize") { if (allEnt[i].descriptors.aLaCarteOrBiteSize) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "cheesy") { if (allEnt[i].descriptors.cheesy) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "fresh") { if (allEnt[i].descriptors.fresh) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "fried") { if (allEnt[i].descriptors.fried) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "healthy") { if (allEnt[i].descriptors.healthy) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "hearty") { if (allEnt[i].descriptors.hearty) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "indulgent") { if (allEnt[i].descriptors.indulgent) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "light") { if (allEnt[i].descriptors.light) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "plain") { if (allEnt[i].descriptors.plain) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "popular") { if (allEnt[i].descriptors.popular) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "raw") { if (allEnt[i].descriptors.raw) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "salty") { if (allEnt[i].descriptors.salty) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "servedCold") { if (allEnt[i].descriptors.servedCold) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "spicy") { if (allEnt[i].descriptors.spicy) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "sweet") { if (allEnt[i].descriptors.sweet) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "toShare") { if (allEnt[i].descriptors.toShare) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "vegetarian") { if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No " + randomThing + " entrees");
+		}
+
+		if (hasThing.length > 0) {
+			
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q3EntArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q3Des
+	//Make all Q3Des - fill
 	//////////////////////
 
-	var randomThing = uniqueDesDescr[Math.floor(Math.random() * uniqueDesDescr.length)];
-
+	var q3DesArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for a(n) " + randomThing + " dessert.  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueDesDescr.length; j++) {
+		var randomThing = uniqueDesDescr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allDes.length; i++) {
-		if (randomThing === "chocolatey") { if (allDes[i].descriptors.chocolatey) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "fruity") { if (allDes[i].descriptors.fruity) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "healthy") { if (allDes[i].descriptors.healthy) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "light") { if (allDes[i].descriptors.light) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "popular") { if (allDes[i].descriptors.popular) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "rich") { if (allDes[i].descriptors.rich) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "tart") { if (allDes[i].descriptors.tart) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "toShare") { if (allDes[i].descriptors.toShare) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for a(n) " + randomThing + " dessert.  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No " + randomThing + " desserts");
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allDes.length; i++) {
+			if (randomThing === "chocolatey") { if (allDes[i].descriptors.chocolatey) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "fruity") { if (allDes[i].descriptors.fruity) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "healthy") { if (allDes[i].descriptors.healthy) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "light") { if (allDes[i].descriptors.light) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "popular") { if (allDes[i].descriptors.popular) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "rich") { if (allDes[i].descriptors.rich) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "tart") { if (allDes[i].descriptors.tart) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "toShare") { if (allDes[i].descriptors.toShare) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No " + randomThing + " desserts");
+		}
+
+		if (hasThing.length > 0) {
+			
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q3DesArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q4App
+	//Make all Q4App - fill
 	//////////////////////
 
-	var randomThing = uniqueAppIngr[Math.floor(Math.random() * uniqueAppIngr.length)];
-
+	var q4AppArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for an appetizer with " + randomThing + ".  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueAppIngr.length; j++) {
+		var randomThing = uniqueAppIngr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allApp.length; i++) {
-		if (randomThing === "beef") { if (allApp[i].ingredients.beef) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "chicken") { if (allApp[i].ingredients.chicken) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "lamb") { if (allApp[i].ingredients.lamb) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "otherProtein") { if (allApp[i].ingredients.otherProtein) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "pork") { if (allApp[i].ingredients.pork) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "seafood") { if (allApp[i].ingredients.seafood) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for an appetizer with " + randomThing + ".  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No appetizers with " + randomThing);
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allApp.length; i++) {
+			if (randomThing === "beef") { if (allApp[i].ingredients.beef) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "chicken") { if (allApp[i].ingredients.chicken) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "lamb") { if (allApp[i].ingredients.lamb) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "otherProtein") { if (allApp[i].ingredients.otherProtein) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "pork") { if (allApp[i].ingredients.pork) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "seafood") { if (allApp[i].ingredients.seafood) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No appetizers with " + randomThing);
+		}
+
+		if (hasThing.length > 0) {
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q4AppArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q4Ent
+	//Make all Q4Ent - fill
 	//////////////////////
 
-	var randomThing = uniqueEntIngr[Math.floor(Math.random() * uniqueEntIngr.length)];
-
+	var q4EntArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for an entree with " + randomThing + ".  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueEntIngr.length; j++) {
+		var randomThing = uniqueEntIngr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allEnt.length; i++) {
-		if (randomThing === "beef") { if (allEnt[i].ingredients.beef) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "chicken") { if (allEnt[i].ingredients.chicken) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "lamb") { if (allEnt[i].ingredients.lamb) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "otherProtein") { if (allEnt[i].ingredients.otherProtein) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "pork") { if (allEnt[i].ingredients.pork) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "seafood") { if (allEnt[i].ingredients.seafood) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for an entree with " + randomThing + ".  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No entrees with " + randomThing);
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allEnt.length; i++) {
+			if (randomThing === "beef") { if (allEnt[i].ingredients.beef) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "chicken") { if (allEnt[i].ingredients.chicken) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "lamb") { if (allEnt[i].ingredients.lamb) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "otherProtein") { if (allEnt[i].ingredients.otherProtein) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "pork") { if (allEnt[i].ingredients.pork) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "seafood") { if (allEnt[i].ingredients.seafood) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No entrees with " + randomThing);
+		}
+
+		if (hasThing.length > 0) {
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q4EntArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q4Des
+	//Make all Q4Des - fill
 	//////////////////////
 
-	var randomThing = uniqueDesIngr[Math.floor(Math.random() * uniqueDesIngr.length)];
-
+	var q4DesArray = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm in the mood for a dessert with " + randomThing + ".  What should I get?  (Select all that apply)";
+	for (var j = 0; j<uniqueDesIngr.length; j++) {
+		var randomThing = uniqueDesIngr[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allDes.length; i++) {
-		if (randomThing === "cake") { if (allDes[i].ingredients.cake) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "pie") { if (allDes[i].ingredients.pie) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "iceCream") { if (allDes[i].ingredients.iceCream) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm in the mood for a dessert with " + randomThing + ".  What should I get?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No desserts with " + randomThing);
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allDes.length; i++) {
+			if (randomThing === "cake") { if (allDes[i].ingredients.cake) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "pie") { if (allDes[i].ingredients.pie) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "iceCream") { if (allDes[i].ingredients.iceCream) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No desserts with " + randomThing);
+		}
+
+		if (hasThing.length > 0) {
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q4DesArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q5
+	//Make all Q5 - up to 9
 	//////////////////////
 
-	var randomThing = uniqueAllVio[Math.floor(Math.random() * uniqueAllVio.length)];
-
+	var q5Array = [];
 	var thisQArray = [];
-	var incorrectAnswers = [];
-	var sampleCorrectAnswers = [];
-	var sampleFourAnswers = [];
-	var sampleQ = "I'm allergic to " + randomThing + ".  Are any of these unsafe for me to eat?  (Select all that apply)";
+	for (var j = 0; j<uniqueAllVio.length; j++) {
+		var randomThing = uniqueAllVio[j];
 
-	var hasThing = [];
-	var noThing = [];
-	for (var i=0; i<allApp.length; i++) {
-		if (randomThing === "eggs") { if (allApp[i].allergyViolations.eggs) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "fish") { if (allApp[i].allergyViolations.fish) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "gluten") { if (allApp[i].allergyViolations.gluten) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "milk") { if (allApp[i].allergyViolations.milk) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "peanuts") { if (allApp[i].allergyViolations.peanuts) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "shellfish") { if (allApp[i].allergyViolations.shellfish) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "soy") { if (allApp[i].allergyViolations.soy) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "treeNuts") { if (allApp[i].allergyViolations.treeNuts) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-		else if (randomThing === "wheat") { if (allApp[i].allergyViolations.wheat) {hasThing.push(allApp[i]);} else {noThing.push(allApp[i]);}}
-	}
-	for (var i=0; i<allEnt.length; i++) {
-		if (randomThing === "eggs") { if (allEnt[i].allergyViolations.eggs) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "fish") { if (allEnt[i].allergyViolations.fish) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "gluten") { if (allEnt[i].allergyViolations.gluten) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "milk") { if (allEnt[i].allergyViolations.milk) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "peanuts") { if (allEnt[i].allergyViolations.peanuts) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "shellfish") { if (allEnt[i].allergyViolations.shellfish) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "soy") { if (allEnt[i].allergyViolations.soy) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "treeNuts") { if (allEnt[i].allergyViolations.treeNuts) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-		else if (randomThing === "wheat") { if (allEnt[i].allergyViolations.wheat) {hasThing.push(allEnt[i]);} else {noThing.push(allEnt[i]);}}
-	}
-	for (var i=0; i<allDes.length; i++) {
-		if (randomThing === "eggs") { if (allDes[i].allergyViolations.eggs) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "fish") { if (allDes[i].allergyViolations.fish) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "gluten") { if (allDes[i].allergyViolations.gluten) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "milk") { if (allDes[i].allergyViolations.milk) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "peanuts") { if (allDes[i].allergyViolations.peanuts) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "shellfish") { if (allDes[i].allergyViolations.shellfish) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "soy") { if (allDes[i].allergyViolations.soy) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "treeNuts") { if (allDes[i].allergyViolations.treeNuts) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-		else if (randomThing === "wheat") { if (allDes[i].allergyViolations.wheat) {hasThing.push(allDes[i]);} else {noThing.push(allDes[i]);}}
-	}
-	if (hasThing.length >= 3) {
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-		sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
-		sampleCorrectAnswers.push(sampleFourAnswers[0]);
-		sampleCorrectAnswers.push(sampleFourAnswers[1]);
-		sampleCorrectAnswers.push(sampleFourAnswers[2]);
-	}
-	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
-		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
-	}
-	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-	}
+		var incorrectAnswers = [];
+		var sampleCorrectAnswers = [];
+		var sampleFourAnswers = [];
+		var sampleQ = "I'm allergic to " + randomThing + ".  Are any of these unsafe for me to eat?  (Select all that apply)";
 
-	else if (hasThing.length === 0) {
-		console.log("No food with " + randomThing);
-	}
+		var hasThing = [];
+		var noThing = [];
+		for (var i=0; i<allApp.length; i++) {
+			if (randomThing === "eggs") { if (allApp[i].allergyViolations.eggs) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "fish") { if (allApp[i].allergyViolations.fish) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "gluten") { if (allApp[i].allergyViolations.gluten) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "milk") { if (allApp[i].allergyViolations.milk) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "peanuts") { if (allApp[i].allergyViolations.peanuts) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "shellfish") { if (allApp[i].allergyViolations.shellfish) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "soy") { if (allApp[i].allergyViolations.soy) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "treeNuts") { if (allApp[i].allergyViolations.treeNuts) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+			else if (randomThing === "wheat") { if (allApp[i].allergyViolations.wheat) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
+		}
+		for (var i=0; i<allEnt.length; i++) {
+			if (randomThing === "eggs") { if (allEnt[i].allergyViolations.eggs) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "fish") { if (allEnt[i].allergyViolations.fish) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "gluten") { if (allEnt[i].allergyViolations.gluten) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "milk") { if (allEnt[i].allergyViolations.milk) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "peanuts") { if (allEnt[i].allergyViolations.peanuts) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "shellfish") { if (allEnt[i].allergyViolations.shellfish) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "soy") { if (allEnt[i].allergyViolations.soy) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "treeNuts") { if (allEnt[i].allergyViolations.treeNuts) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+			else if (randomThing === "wheat") { if (allEnt[i].allergyViolations.wheat) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
+		}
+		for (var i=0; i<allDes.length; i++) {
+			if (randomThing === "eggs") { if (allDes[i].allergyViolations.eggs) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "fish") { if (allDes[i].allergyViolations.fish) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "gluten") { if (allDes[i].allergyViolations.gluten) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "milk") { if (allDes[i].allergyViolations.milk) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "peanuts") { if (allDes[i].allergyViolations.peanuts) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "shellfish") { if (allDes[i].allergyViolations.shellfish) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "soy") { if (allDes[i].allergyViolations.soy) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "treeNuts") { if (allDes[i].allergyViolations.treeNuts) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+			else if (randomThing === "wheat") { if (allDes[i].allergyViolations.wheat) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
+		}
+		if (hasThing.length >= 3) {
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
+			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			sampleCorrectAnswers.push(sampleFourAnswers[0]);
+			sampleCorrectAnswers.push(sampleFourAnswers[1]);
+			sampleCorrectAnswers.push(sampleFourAnswers[2]);
+		}
+		else if (hasThing.length === 2) {
+			sampleFourAnswers.push(hasThing[0]);
+			sampleFourAnswers.push(hasThing[1]);
+			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+			sampleCorrectAnswers.push(hasThing[1]);
+		}
+		else if (hasThing.length === 1) {
+			sampleFourAnswers.push(hasThing[0]);
+			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			sampleCorrectAnswers.push(hasThing[0]);
+		}
 
-	if (hasThing.length > 0) {
-		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
-		thisQArray.push(x);
-		console.log(thisQArray);
+		else if (hasThing.length === 0) {
+			console.log("No food with " + randomThing);
+		}
+
+		if (hasThing.length > 0) {
+			shuffle(sampleFourAnswers);
+			var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
+			thisQArray.push(x);
+		}
 	}
+	q5Array = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
 	//Make one app Q6
 	//////////////////////
 
+	var q6AppArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -999,8 +1006,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allApp.length; i++) {
-		if (allApp[i].descriptors.popular) {hasThing.push(allApp[i])}
-		else {noThing.push(allApp[i])}
+		if (allApp[i].descriptors.popular) {hasThing.push(allApp[i].name)}
+		else {noThing.push(allApp[i].name)}
 	}
 	if (hasThing.length >= 3) {
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
@@ -1010,16 +1017,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1027,9 +1034,10 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q6AppArray = thisQArray;
 	}
 
 	//////////////////////
@@ -1037,6 +1045,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//Make one ent Q6
 	//////////////////////
 
+	var q6EntArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1046,8 +1055,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allEnt.length; i++) {
-		if (allEnt[i].descriptors.popular) {hasThing.push(allEnt[i])}
-		else {noThing.push(allEnt[i])}
+		if (allEnt[i].descriptors.popular) {hasThing.push(allEnt[i].name)}
+		else {noThing.push(allEnt[i].name)}
 	}
 	if (hasThing.length >= 3) {
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
@@ -1057,16 +1066,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1074,9 +1083,10 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q6EntArray = thisQArray;
 	}
 
 	//////////////////////
@@ -1084,6 +1094,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//Make one des Q6
 	//////////////////////
 
+	var q6DesArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1093,8 +1104,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allDes.length; i++) {
-		if (allDes[i].descriptors.popular) {hasThing.push(allDes[i])}
-		else {noThing.push(allDes[i])}
+		if (allDes[i].descriptors.popular) {hasThing.push(allDes[i].name)}
+		else {noThing.push(allDes[i].name)}
 	}
 	if (hasThing.length >= 3) {
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
@@ -1104,16 +1115,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1121,9 +1132,10 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q6DesArray = thisQArray;
 	}
 
 	//////////////////////
@@ -1131,6 +1143,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//Make one Q7App
 	//////////////////////
 
+	var q7AppArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1140,8 +1153,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allApp.length; i++) {
-		if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i])}
-		else {noThing.push(allApp[i])}
+		if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i].name)}
+		else {noThing.push(allApp[i].name)}
 	}
 	if (hasThing.length >= 3) {
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
@@ -1151,16 +1164,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1168,9 +1181,10 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q7AppArray = thisQArray;
 	}
 
 	//////////////////////
@@ -1178,6 +1192,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//Make one Q7Ent
 	//////////////////////
 
+	var q7EntArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1187,8 +1202,8 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allEnt.length; i++) {
-		if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i])}
-		else {noThing.push(allEnt[i])}
+		if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i].name)}
+		else {noThing.push(allEnt[i].name)}
 	}
 	if (hasThing.length >= 3) {
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
@@ -1198,16 +1213,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1215,16 +1230,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q7EntArray = thisQArray;
 	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q8
+	//Make one Q8
 	//////////////////////
 
+	var q8Array = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1234,16 +1251,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var hasThing = [];
 	var noThing = [];
 	for (var i=0; i<allEnt.length; i++) {
-		if (allEnt[i].secret) {hasThing.push(allEnt[i])}
-		else {noThing.push(allEnt[i])}
+		if (allEnt[i].secret) {hasThing.push(allEnt[i].name)}
+		else {noThing.push(allEnt[i].name)}
 	}
 	for (var i=0; i<allApp.length; i++) {
-		if (allApp[i].secret) {hasThing.push(allApp[i])}
-		else {noThing.push(allApp[i])}
+		if (allApp[i].secret) {hasThing.push(allApp[i].name)}
+		else {noThing.push(allApp[i].name)}
 	}
 	for (var i=0; i<allDes.length; i++) {
-		if (allDes[i].secret) {hasThing.push(allDes[i])}
-		else {noThing.push(allDes[i])}
+		if (allDes[i].secret) {hasThing.push(allDes[i].name)}
+		else {noThing.push(allDes[i].name)}
 	}
 
 	if (hasThing.length >= 3) {
@@ -1254,16 +1271,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleCorrectAnswers.push(sampleFourAnswers[2]);
 	}
 	else if (hasThing.length === 2) {
-		sampleFourAnswers.push(hasThing[0].name);
-		sampleFourAnswers.push(hasThing[1].name);
+		sampleFourAnswers.push(hasThing[0]);
+		sampleFourAnswers.push(hasThing[1]);
 		for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
-		sampleCorrectAnswers.push(hasThing[1].name);
+		sampleCorrectAnswers.push(hasThing[0]);
+		sampleCorrectAnswers.push(hasThing[1]);
 	}
 	else if (hasThing.length === 1) {
-		sampleFourAnswers.push(hasThing[0].name);
+		sampleFourAnswers.push(hasThing[0]);
 		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
-		sampleCorrectAnswers.push(hasThing[0].name);
+		sampleCorrectAnswers.push(hasThing[0]);
 	}
 
 	else if (hasThing.length === 0) {
@@ -1271,16 +1288,18 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	if (hasThing.length > 0) {
+		shuffle(sampleFourAnswers);
 		var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 		thisQArray.push(x);
-		console.log(thisQArray);
+		q8Array = thisQArray;
 	}
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q9
+	//Make one Q9
 	//////////////////////
 
+	var q9Array = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1292,15 +1311,17 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	if (addOns.length === 1) {sampleCorrectAnswers.push("1")};
 	if (addOns.length === 0) {sampleCorrectAnswers.push("No entree add-ons")};
 
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	q9Array = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q10Sauces
+	//Make one Q10Sauces
 	//////////////////////
 
+	var q10SaucesArray = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1333,15 +1354,17 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleFourAnswers.push(randomSauce4);
 	}
 	
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	q10SaucesArray = thisQArray;
 
 	//////////////////////
 	//QUESTIONS BEING MADE
-	//Make all Q10Dressings
+	//Make one Q10Dressings
 	//////////////////////
 
+	var q10Dressings = [];
 	var thisQArray = [];
 	var incorrectAnswers = [];
 	var sampleCorrectAnswers = [];
@@ -1374,9 +1397,45 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		sampleFourAnswers.push(randomDressing4);
 	}
 	
+	shuffle(sampleFourAnswers);
 	var x = new QuizQuestion(sampleQ, sampleFourAnswers, sampleCorrectAnswers);
 	thisQArray.push(x);
-	console.log(thisQArray);
+	q10DressingsArray = thisQArray;
+
+	allQuizQuestions = {
+		q1AppArray:q1AppArray,
+		q1EntArray:q1EntArray,
+		q2AppArray:q2AppArray,
+		q2EntArray:q2EntArray,
+		q3AppArray:q3AppArray,
+		q3EntArray:q3EntArray,
+		q3DesArray:q3DesArray,
+		q4AppArray:q4AppArray,
+		q4EntArray:q4EntArray,
+		q4DesArray:q4DesArray,
+		q5Array:q5Array,
+		q6AppArray:q6AppArray,
+		q6EntArray:q6EntArray,
+		q6DesArray:q6DesArray,
+		q7AppArray:q7AppArray,
+		q7EntArray:q7EntArray,
+		q8Array:q8Array,
+		q9Array:q9Array,
+		q10SaucesArray:q10SaucesArray,
+		q10DressingsArray:q10DressingsArray
+	}
+
+	//Shuffle all arrays with more than one value
+	shuffle(allQuizQuestions.q1AppArray); shuffle(allQuizQuestions.q1AppArray);
+	shuffle(allQuizQuestions.q1EntArray); shuffle(allQuizQuestions.q1EntArray);
+	shuffle(allQuizQuestions.q3AppArray); shuffle(allQuizQuestions.q3AppArray);
+	shuffle(allQuizQuestions.q3EntArray); shuffle(allQuizQuestions.q3EntArray);
+	shuffle(allQuizQuestions.q4AppArray); shuffle(allQuizQuestions.q4AppArray);
+	shuffle(allQuizQuestions.q4EntArray); shuffle(allQuizQuestions.q4EntArray);
+	shuffle(allQuizQuestions.q4DesArray); shuffle(allQuizQuestions.q4DesArray);
+	shuffle(allQuizQuestions.q5Array); shuffle(allQuizQuestions.q5Array);
+
+	console.log(allQuizQuestions);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //QUESTION CREATION ENDS HERE
@@ -1408,7 +1467,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//If 10 unique question types...
 	if (uniqueQType === 10) {
-		console.log("10 unique question types");
 		tenQuiz = true;
 		if (firstSixQs > 13) {
 			twentyQuiz = true;
@@ -1420,7 +1478,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//If 9 unique question types...
 	if (uniqueQType === 9 && firstSixQs > 4) {
-		console.log("9 unique question types");
 		tenQuiz = true;
 		if (firstSixQs > 14) {
 			twentyQuiz = true;
@@ -1432,7 +1489,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//If 8 unique question types...
 	if (uniqueQType === 8 && firstSixQs > 5) {
-		console.log("8 unique question types");
 		tenQuiz = true;
 		if (firstSixQs > 15) {
 			twentyQuiz = true;
@@ -1444,7 +1500,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//If 7 unique question types...
 	if (uniqueQType === 7 && firstSixQs > 6) {
-		console.log("7 unique question types");
 		tenQuiz = true;
 		if (firstSixQs > 16) {
 			twentyQuiz = true;
@@ -1456,7 +1511,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	//If 6 unique question types...
 	if (uniqueQType === 6 && firstSixQs > 7) {
-		console.log("6 unique question types");
 		tenQuiz = true;
 		if (firstSixQs > 17) {
 			twentyQuiz = true;
@@ -1466,42 +1520,42 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		}
 	}
 
+	var numCorrect = 0;
+	var numIncorrect = 0;
+	var currentQuestion = {};
+	var randomizedQuiz = [];
+
 	if (thirtyQuiz) {
-		//Message user, let them select from 10, 20, 30 qs (or cancel)
-		console.log("Thirty quiz available");
+		//Put a button up for thirtyQuiz which calls clickedThirtyQuiz()
+		var thirtyQuizButtonString = '<div class="col-md-12"><button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizButton">Thirty Questions</button></div>';
+		$("#answersArea").append(thirtyQuizButtonString);
+		//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
+		var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
+		$("#answersArea").append(twentyQuizButtonString);
+		//Put a button up for tenQuiz which calls clickedTenQuiz()
+		var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
+		$("#answersArea").append(tenQuizButtonString);
 	}
 
-	if (twentyQuiz) {
-		//Message user, let them select from 10, 20 qs (or cancel)
-		console.log("Twenty quiz available");
+	else if (twentyQuiz) {
+		//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
+		var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
+		$("#answersArea").append(twentyQuizButtonString);
+		//Put a button up for tenQuiz which calls clickedTenQuiz()
+		var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
+		$("#answersArea").append(tenQuizButtonString);
 	}
 
-	if (tenQuiz) {
-		//Message user, let them select 10 qs (or cancel)
-		console.log("Ten quiz available");
+	else if (tenQuiz) {
+		//Put a button up for tenQuiz which calls clickedTenQuiz()
+		var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
+		$("#answersArea").append(tenQuizButtonString);
 	}
 
 	else {
 		//Tell user there isn't enough data in this menu to give a quiz.
 		console.log("No quiz available");
 	}
-
-	//////////////////////////
-	//USER SELECTS QUIZ LENGTH
-	//////////////////////////
-
-	//////////////////////
-	//CREATE SELECTED QUIZ
-	//////////////////////
-
-	///////////
-	//GIVE QUIZ
-	///////////
-
-	//////////////
-	//GIVE RESULTS
-	//////////////
-
 
 })
 
@@ -1523,4 +1577,475 @@ function returnCorrectName(correctAnswers, sampleFourAnswers) {
 		return randInc;
 	}
 	else {return returnCorrectName(correctAnswers, sampleFourAnswers)}
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function getCorrectAnswerNumbers(questionObj) {
+	for (var i = 0; i<questionObj.correctAnswers.length; i++) {
+		if (questionObj.correctAnswers[i] === questionObj.answer1) {questionObj.correctAnswers[i] = 1}
+		else if (questionObj.correctAnswers[i] === questionObj.answer2) {questionObj.correctAnswers[i] = 2}
+		else if (questionObj.correctAnswers[i] === questionObj.answer3) {questionObj.correctAnswers[i] = 3}
+		else if (questionObj.correctAnswers[i] === questionObj.answer4) {questionObj.correctAnswers[i] = 4}
+	}
+	return questionObj;
+}
+
+function playFromBeginning (quizSize) {
+	numCorrect = 0;
+	numIncorrect = 0;
+	currentQuestion = {};
+	randomizedQuiz = [];
+	if (quizSize === 10) {
+
+		///////////////////////////////////////////////////////////////////////
+		//Make ten questions based on guidlines - push each to randomizedQuiz[]
+		///////////////////////////////////////////////////////////////////////
+
+		if (allQuizQuestions.q8Array.length === 1) {
+			console.log("q8");
+			var Question = {
+				question: allQuizQuestions.q8Array[0].question,
+				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q8Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q8Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q8Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q8Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q9Array.length === 1) {
+			console.log("q9");
+			var Question = {
+				question: allQuizQuestions.q9Array[0].question,
+				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q9Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q9Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q9Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q9Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q7EntArray.length === 1 || allQuizQuestions.q7AppArray.length === 1) {
+			console.log("q7");
+			var tempArray = [];
+			if (allQuizQuestions.q7EntArray.length === 1) {tempArray.push(allQuizQuestions.q7EntArray[0])}
+			if (allQuizQuestions.q7AppArray.length === 1) {tempArray.push(allQuizQuestions.q7AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q10SaucesArray.length === 1 || allQuizQuestions.q10DressingsArray.length === 1) {
+			console.log("q10");
+			var tempArray = [];
+			if (allQuizQuestions.q10SaucesArray.length === 1) {tempArray.push(allQuizQuestions.q10SaucesArray[0])}
+			if (allQuizQuestions.q10DressingsArray.length === 1) {tempArray.push(allQuizQuestions.q10DressingsArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q5Array.length > 0) {
+			console.log("q5");
+			var Question = {
+				question: allQuizQuestions.q5Array[0].question,
+				answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q5Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q5Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q5Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q5Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
+			console.log("q6");
+			var tempArray = [];
+			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
+			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
+			if (allQuizQuestions.q6AppArray.length === 1) {tempArray.push(allQuizQuestions.q6AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
+			console.log("q1");
+			var tempArray = [];
+			if (allQuizQuestions.q1AppArray.length >= 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
+			if (allQuizQuestions.q1EntArray.length >= 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
+			console.log("q2");
+			var tempArray = [];
+			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
+			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
+			console.log("q3");
+			var tempArray = [];
+			if (allQuizQuestions.q3DesArray.length >= 1) {tempArray.push(allQuizQuestions.q3DesArray[0])}
+			if (allQuizQuestions.q3EntArray.length >= 1) {tempArray.push(allQuizQuestions.q3EntArray[0])}
+			if (allQuizQuestions.q3AppArray.length >= 1) {tempArray.push(allQuizQuestions.q3AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
+			console.log("q4");
+			var tempArray = [];
+			if (allQuizQuestions.q4DesArray.length >= 1) {tempArray.push(allQuizQuestions.q4DesArray[0])}
+			if (allQuizQuestions.q4EntArray.length >= 1) {tempArray.push(allQuizQuestions.q4EntArray[0])}
+			if (allQuizQuestions.q4AppArray.length >= 1) {tempArray.push(allQuizQuestions.q4AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (randomizedQuiz.length === 10) {
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}
+		
+		else if (randomizedQuiz.length < 10) {
+			var questionsNeeded = 10 - randomizedQuiz.length;
+			randomizedQuiz = fillQuizQuestionsArray(questionsNeeded, randomizedQuiz);
+			shuffle(randomizedQuiz);
+			shuffle(randomizedQuiz);
+			nextQuestion();
+		}	
+	}
+
+	if (quizSize === 20) {
+		
+		//////////////////////////////////////////////////////////////////////////
+		//Make twenty questions based on guidlines - push each to randomizedQuiz[]
+		//////////////////////////////////////////////////////////////////////////
+
+		if (allQuizQuestions.q8Array.length === 1) {
+			console.log("q8");
+			var Question = {
+				question: allQuizQuestions.q8Array[0].question,
+				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q8Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q8Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q8Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q8Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q9Array.length === 1) {
+			console.log("q9");
+			var Question = {
+				question: allQuizQuestions.q9Array[0].question,
+				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q9Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q9Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q9Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q9Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q7EntArray.length === 1 || allQuizQuestions.q7AppArray.length === 1) {
+			console.log("q7");
+			var tempArray = [];
+			if (allQuizQuestions.q7EntArray.length === 1) {tempArray.push(allQuizQuestions.q7EntArray[0])}
+			if (allQuizQuestions.q7AppArray.length === 1) {tempArray.push(allQuizQuestions.q7AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q10SaucesArray.length === 1 || allQuizQuestions.q10DressingsArray.length === 1) {
+			console.log("q10");
+			var tempArray = [];
+			if (allQuizQuestions.q10SaucesArray.length === 1) {tempArray.push(allQuizQuestions.q10SaucesArray[0])}
+			if (allQuizQuestions.q10DressingsArray.length === 1) {tempArray.push(allQuizQuestions.q10DressingsArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		//Get up to three Q6
+
+		//Get up to three Q1
+
+		//Get up to two Q2
+
+		//Get up to two Q5
+
+		//Get up to three Q3
+
+		//Get up to three Q4
+
+		//Fill
+		
+		shuffle(randomizedQuiz);
+		shuffle(randomizedQuiz);
+		nextQuestion();
+	}
+
+	if (quizSize === 30) {
+		
+		//////////////////////////////////////////////////////////////////////////
+		//Make thirty questions based on guidlines - push each to randomizedQuiz[]
+		//////////////////////////////////////////////////////////////////////////
+
+		if (allQuizQuestions.q8Array.length === 1) {
+			console.log("q8");
+			var Question = {
+				question: allQuizQuestions.q8Array[0].question,
+				answer1: allQuizQuestions.q8Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q8Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q8Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q8Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q8Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		if (allQuizQuestions.q9Array.length === 1) {
+			console.log("q9");
+			var Question = {
+				question: allQuizQuestions.q9Array[0].question,
+				answer1: allQuizQuestions.q9Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q9Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q9Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q9Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q9Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		//Get up to two Q10
+
+		//Get up to two Q7
+
+		//Get up to three Q6
+
+		//Get up to three Q1
+
+		//Get up to two Q2
+
+		//Get up to two Q5
+
+		//Get up to three Q3
+
+		//Get up to three Q4
+
+		//Fill
+		
+		shuffle(randomizedQuiz);
+		shuffle(randomizedQuiz);
+		nextQuestion();
+	}
+}
+
+function nextQuestion() {
+	if ((numCorrect + numIncorrect) === randomizedQuiz.length) {
+		//End-game status report
+		$("#messageArea").html("That's it, man!  Game over, man!  Game over!");
+		$("#answersArea").html("Total correct: " + numCorrect + "<br>");
+		$("#answersArea").append("Total incorrect: " + numIncorrect + "<br>");
+		$("#answersArea").append("Press the restart button to play again!<br><br>");
+		if ((numCorrect + numIncorrect) === 30) {
+			$("#answersArea").append('<button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="restart">Restart</button>');	
+		}
+		if ((numCorrect + numIncorrect) === 20) {
+			$("#answersArea").append('<button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="restart">Restart</button>');	
+		}
+		if ((numCorrect + numIncorrect) === 10) {
+			$("#answersArea").append('<button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="restart">Restart</button>');	
+		}	
+	}
+	else {
+		//Load the question object into current question
+		currentQuestion = randomizedQuiz[(numCorrect+numIncorrect)];
+		//Display next question in message area
+		$("#messageArea").html(currentQuestion.question);
+		//Display that question's answers in answers area
+		$("#answersArea").html('<button onclick="isCorrect(1)" type="button" class="btn btn-default" id="1">' + currentQuestion.answer1 + '</button><br><br>');
+		$("#answersArea").append('<button onclick="isCorrect(2)" type="button" class="btn btn-default" id="2">' + currentQuestion.answer2 + '</button><br><br>');
+		$("#answersArea").append('<button onclick="isCorrect(3)" type="button" class="btn btn-default" id="3">' + currentQuestion.answer3 + '</button><br><br>');
+		$("#answersArea").append('<button onclick="isCorrect(4)" type="button" class="btn btn-default" id="4">' + currentQuestion.answer4 + '</button><br><br>');
+	}
+}
+
+function isCorrect(number) {
+	//If the answer is correct....
+	if (currentQuestion.correctAnswers.includes(number)) {
+		//Display winning message in message area
+		$("#messageArea").html("Correct!");
+		//Increment correct answers
+		numCorrect++;
+	}
+	//If the answer is incorrect...
+	else {
+		//Display losing message in message area
+		$("#messageArea").html("Incorrect!");
+		//Increment incorrect answers
+		numIncorrect++;
+	}
+	caption();
+	//User clicks a button to see the next question
+	$("#answersArea").html('<button onclick="nextQuestion()" type="button" class="btn btn-default" id="nextQ">Continue</button>');
+}
+
+function caption() {
+	if (currentQuestion.correctAnswers.includes(1)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer1) + '<br><br>'}
+	if (currentQuestion.correctAnswers.includes(2)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer2) + '<br><br>'}
+	if (currentQuestion.correctAnswers.includes(3)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer3) + '<br><br>'}
+	if (currentQuestion.correctAnswers.includes(4)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer4) + '<br><br>'}
+}
+
+function clickedThirtyQuiz() {
+	playFromBeginning(30);
+}
+
+function clickedTwentyQuiz() {
+	playFromBeginning(20);
+}
+
+function clickedTenQuiz() {
+	playFromBeginning(10);
+}
+
+function fillQuizQuestionsArray(questionsNeeded, randomizedQuiz) {
+	for (var i = 0; i<questionsNeeded; i++) {
+		if (allQuizQuestions.q3DesArray.length >= 1 || allQuizQuestions.q3EntArray.length >= 1 || allQuizQuestions.q3AppArray.length >= 1) {
+			console.log("q3");
+			var tempArray = [];
+			if (allQuizQuestions.q3DesArray.length >= 1) {tempArray.push(allQuizQuestions.q3DesArray[0])}
+			if (allQuizQuestions.q3EntArray.length >= 1) {tempArray.push(allQuizQuestions.q3EntArray[0])}
+			if (allQuizQuestions.q3AppArray.length >= 1) {tempArray.push(allQuizQuestions.q3AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		else if (allQuizQuestions.q4DesArray.length >= 1 || allQuizQuestions.q4EntArray.length >= 1 || allQuizQuestions.q4AppArray.length >= 1) {
+			console.log("q4");
+			var tempArray = [];
+			if (allQuizQuestions.q4DesArray.length >= 1) {tempArray.push(allQuizQuestions.q4DesArray[0])}
+			if (allQuizQuestions.q4EntArray.length >= 1) {tempArray.push(allQuizQuestions.q4EntArray[0])}
+			if (allQuizQuestions.q4AppArray.length >= 1) {tempArray.push(allQuizQuestions.q4AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		else if (allQuizQuestions.q1AppArray.length >= 1 || allQuizQuestions.q1EntArray.length >= 1) {
+			console.log("q1");
+			var tempArray = [];
+			if (allQuizQuestions.q1AppArray.length >= 1) {tempArray.push(allQuizQuestions.q1AppArray[0])}
+			if (allQuizQuestions.q1EntArray.length >= 1) {tempArray.push(allQuizQuestions.q1EntArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		else if (allQuizQuestions.q2AppArray.length === 1 || allQuizQuestions.q2EntArray.length === 1) {
+			console.log("q2");
+			var tempArray = [];
+			if (allQuizQuestions.q2AppArray.length === 1) {tempArray.push(allQuizQuestions.q2AppArray[0])}
+			if (allQuizQuestions.q2EntArray.length === 1) {tempArray.push(allQuizQuestions.q2EntArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+		
+		else if (allQuizQuestions.q6DesArray.length === 1 || allQuizQuestions.q6EntArray.length === 1 || allQuizQuestions.q6AppArray.length === 1) {
+			console.log("q6");
+			var tempArray = [];
+			if (allQuizQuestions.q6DesArray.length === 1) {tempArray.push(allQuizQuestions.q6DesArray[0])}
+			if (allQuizQuestions.q6EntArray.length === 1) {tempArray.push(allQuizQuestions.q6EntArray[0])}
+			if (allQuizQuestions.q6AppArray.length === 1) {tempArray.push(allQuizQuestions.q6AppArray[0])}
+			shuffle(tempArray);
+			var Question = questionObjectTemplate(tempArray);
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+		
+		else if (allQuizQuestions.q5Array.length > 0) {
+			console.log("q5");
+			var Question = {
+				question: allQuizQuestions.q5Array[0].question,
+				answer1: allQuizQuestions.q5Array[0].fourAnswersArray[0],
+				answer2: allQuizQuestions.q5Array[0].fourAnswersArray[1],
+				answer3: allQuizQuestions.q5Array[0].fourAnswersArray[2],
+				answer4: allQuizQuestions.q5Array[0].fourAnswersArray[3],
+				correctAnswers: allQuizQuestions.q5Array[0].correctAnswersIndexesArray
+			}
+			Question = getCorrectAnswerNumbers(Question);
+			randomizedQuiz.push(Question);
+		}
+
+		
+	}
+	shuffle(randomizedQuiz);
+	return randomizedQuiz;
+}
+
+function questionObjectTemplate(tempArray) {
+	var questionObject = {
+		question: tempArray[0].question,
+		answer1: tempArray[0].fourAnswersArray[0],
+		answer2: tempArray[0].fourAnswersArray[1],
+		answer3: tempArray[0].fourAnswersArray[2],
+		answer4: tempArray[0].fourAnswersArray[3],
+		correctAnswers: tempArray[0].correctAnswersIndexesArray
+	}
+	return questionObject;
 }
