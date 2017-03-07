@@ -12,7 +12,7 @@
 
 
             <!--jobID INT-->
-            {{#if jobs}}
+       
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
@@ -23,7 +23,7 @@
                 </select>
                 <label>Job Selector</label>
             </div>
-            {{/if}}
+           
         <div class="col s12 menuFormHolder">
         <div class="row">
 
@@ -31,24 +31,14 @@
               <ul class="collapsible" data-collapsible="expandable">
             <li>
               <div class="collapsible-header">Commonly Requested Items</div>
-              <div class="collapsible-body CRI"><h5>Pick some commonly requested items.</h5></div>
+              <div class="collapsible-body menuOverflow CRI"><h5>Pick some commonly requested items.</h5></div>
             </li>
           </ul>
         </div>
         </div>
-
-        <div class="row">
-        <div class="EntreeHolder">
-        <div class="menuCategoryDivider"></div>
-        <h4 class="menuCategoryHeader">Entrees</h4>
-        </div>
         
-         <button class="btn waves-effect waves-light addEntreeBtn">Add Entree Item</button>
-
-         </div>
-
-
-        </div>   <!-- End Menuform holder -->
+        </div> <!-- End Menuform holder -->
+        </div>  
         </form>
 
         <div class="row">
@@ -77,24 +67,6 @@
     <label>Create new Menu Category.</label>
   </div>
   </div>
-    </div>
-</div>
 
- <div id="timeEqual" class="modal">
-    <div class="modal-content">
-      <h5>In-Time and Out-Time cannot be the same.</h5>
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
-    </div>
-  </div>
-
-<div id="timeLess" class="modal">
-<div class="modal-content">
-      <h5>In-Time is before Out-Time.</h5>
-      <div class="row">
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
-      </div>
-       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
-    </div>
-  </div>
 
 <script type="text/javascript" src="./javascript/menuBuilder.js"></script>

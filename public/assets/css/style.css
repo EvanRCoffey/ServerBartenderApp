@@ -148,8 +148,8 @@ input[type=range]+.thumb.active {
 	max-height: 5000px;
 }
 
-.CRI {
- overflow: auto;
+.menuOverflow {
+ overflow-y: auto;
 }
 
 .menuFormHolder{
@@ -164,7 +164,9 @@ input[type=range]+.thumb.active {
 	border-color: gray;
 }
 
-.testdiv{
+.testdiv {
+	width: 100%;
 	height: 500px;
+	background-color: red;
 }
 
