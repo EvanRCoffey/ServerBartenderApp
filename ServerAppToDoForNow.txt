@@ -20,6 +20,8 @@ EVAN
 	 	2) Add a boolean "deletedByUser" to the job, menu, and shift models
 	 	3) When something is "deleted", just change its "deletedByUser" flag to true.  When a user "deletes" a job, be sure to explain that shifts will also be deleted, during validation, and also be sure to cascade to include all of that job's shifts. Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
 
+	[Go to Flemings for happy hour at the bar to chat with people and get a copy of up-to-date menus]
+
 EITHER
 
 	-Add testing to the project

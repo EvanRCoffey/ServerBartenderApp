@@ -184,6 +184,10 @@ router.get("/timeline", loggedIn, function(req, res, next) {
     res.render("timeline", req);
 });
 
+router.get("/menuJSONCreator", loggedIn, function(req, res, next) {
+    res.render("menuJSONCreator", req);
+})
+
 //Logs user out and returns to homepage.
 router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();
