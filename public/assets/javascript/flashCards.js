@@ -3,8 +3,8 @@
 //Make all checkboxes
 //Make the button reference all of the checkboxes correctly
 //Build the html for "cardFront" and "cardBack", to apply with jQuery
-	//cardFront - item name + button
-	//cardBack - item stats + "knew it" button + "didn't know it" button
+	//entrees, sides, desserts - allergy violations, descriptors, ingredients, too
+	//can't continue because I don't understand the error "gotIt() is not a function"
 //Build status report with three buttons
 	//1)Study what I didn't know
 	//2)Study all selected cards again
@@ -17,7 +17,7 @@ var idObj = {
 }
 
 var entrees = [];
-var appetizers = [];	
+var appetizers = [];
 var desserts = [];
 var sides = [];
 var addOns = [];
@@ -30,7 +30,10 @@ var cocktails = [];
 var nonAlcoholicDrinks = [];
 var afterDinnerDrinks = [];
 var otherDrinks = [];
-
+var allFlashCards = [];
+var gotIt = [];
+var studyFurther = [];
+var flashcardONEARRAY = [];
 
 $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var parsedMenuJson = JSON.parse(data2.menuJSON);
@@ -182,8 +185,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 	var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks]
 
-	var allFlashCards = [];
-
 	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div>';
 	$("#area1").append(entireMenuButtonString);
 
@@ -207,22 +208,46 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//checbkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
 	//Make a checkbox for each index held in checkboxesToInclude[], plus a "Selected categories" button
 	//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
-	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">selectedCategories</button></div>';
-	$("#area1").append(allDrinksButtonString);
+	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
+	$("#area1").append(selectedCategoriesButtonString);
 });
 
 //////////////////
 //HELPER FUNCTIONS
 //////////////////
 
-function beginFlashCards(flashcardArr) {
+function showFlashCardFront() {
+	var objBeingUsed = flashcardONEARRAY[(gotIt.length + studyFurther.length)];
+	var frontOfCardString = '<p>Item name = "' + objBeingUsed.name + '"</p><button onclick="flipCardOver()" type="button" class="btn btn-default" id="flipCardOver">Flip card over</button>';
+	$("#area1").html(frontOfCardString);
+}
 
-	$("#area2").append("Caught up.");
 
-	//Show flash cards one at a time - 1) Item name with button, 2) Item stats with "knew it" button and "didn't know it" button
+//This is being called just fine
+function flipCardOver() {
+	var objBeingUsed = flashcardONEARRAY[(gotIt.length + studyFurther.length)];
+	var backOfCardString = '<p>Item name = "'+objBeingUsed.name+'"</p><p>Price = $"'+objBeingUsed.price+'"</p><p>Quick description = "'+objBeingUsed.quickDescr+'"</p><p>Detailed description = "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
+	$("#area1").html(backOfCardString);
+}
 
-	//After all flash cards done, give status report with three buttons - 1) Study what I didn't know, 2) Study all selected cards again 3) Choose new menu
+//These next two, however, are not.
+function gotIt() {
+	gotIt.push(flashcardONEARRAY[(gotIt.length + studyFurther.length)]);
+	if ((gotIt.length + studyFurther.length) < flashcardONEARRAY.length) {showFlashCardFront();}
+	else {statusReport(gotIt, studyFurther);}
+}
 
+function studyFurther() {
+	studyFurther.push(flashcardONEARRAY[(gotIt.length + studyFurther.length)]);
+	if ((gotIt.length + studyFurther.length) < flashcardONEARRAY.length) {showFlashCardFront();}
+	else {statusReport(gotIt, studyFurther);}
+}
+
+function statusReport(gotIt, studyFurther) {
+	console.log("gotIt:");
+	console.log(gotIt);
+	console.log("studyFurther");
+	console.log(studyFurther);
 }
 
 function entireMenu() {
@@ -242,7 +267,16 @@ function entireMenu() {
 	if (afterDinnerDrinks.length > 0) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	beginFlashCards(allFlashCards);
+	console.log("allFlashCards:");
+	console.log(allFlashCards);
+	for (var i = 0; i<allFlashCards.length; i++) {
+		for (var j = 0; j<allFlashCards[i].length; j++) {
+			flashcardONEARRAY.push(allFlashCards[i][j]);
+		}
+	}
+	console.log("flashcardONEARRAY");
+	console.log(flashcardONEARRAY);
+	showFlashCardFront();
 }
 
 function allFood() {
@@ -256,8 +290,16 @@ function allFood() {
 	if (kidsMenuItems.length > 0) {allFlashCards.push(kidsMenuItems);}
 	if (otherFoods.length > 0) {allFlashCards.push(otherFoods);}
 	shuffle(allFlashCards);
-	beginFlashCards(allFlashCards);
-
+	console.log("allFlashCards:");
+	console.log(allFlashCards);
+	for (var i = 0; i<allFlashCards.length; i++) {
+		for (var j = 0; j<allFlashCards[i].length; j++) {
+			flashcardONEARRAY.push(allFlashCards[i][j]);
+		}
+	}
+	console.log("flashcardONEARRAY");
+	console.log(flashcardONEARRAY);
+	showFlashCardFront();
 }
 
 function allDrinks() {
@@ -269,7 +311,16 @@ function allDrinks() {
 	if (afterDinnerDrinks.length > 0) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	beginFlashCards(allFlashCards);
+	console.log("allFlashCards:");
+	console.log(allFlashCards);
+	for (var i = 0; i<allFlashCards.length; i++) {
+		for (var j = 0; j<allFlashCards[i].length; j++) {
+			flashcardONEARRAY.push(allFlashCards[i][j]);
+		}
+	}
+	console.log("flashcardONEARRAY");
+	console.log(flashcardONEARRAY);
+	showFlashCardFront();
 }
 
 function selectedCategories(obj) {
@@ -289,7 +340,15 @@ function selectedCategories(obj) {
 	if (afterDinnerDrinks.length > 0 && obj.afterDinnerDrinks) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0 && obj.otherDrinks) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	beginFlashCards(allFlashCards);
+	console.log("allFlashCards:");
+	console.log(allFlashCards);	for (var i = 0; i<allFlashCards.length; i++) {
+		for (var j = 0; j<allFlashCards[i].length; j++) {
+			flashcardONEARRAY.push(allFlashCards[i][j]);
+		}
+	}
+	console.log("flashcardONEARRAY");
+	console.log(flashcardONEARRAY);
+	showFlashCardFront();
 }
 
 function shuffle(array) {
