@@ -2,6 +2,8 @@ var globalIter = 0
 var ItemIter = 0
 var checkboxIter = 0
 
+var menuJSON 
+
 //Initializes materializes silly javascript functions.
 $(document).ready(function() {
     $('select').material_select();
@@ -30,98 +32,39 @@ $(document).ready(function() {
 //It removes the dropdown option to prevent duplicating categories.
 function addCategory(e) {
     if (e.value === 'entree') {
-        createCategorySection('Entrees', 'Entrees', 'Add Entry Item')
+        createCategorySection('Entrees', 'entree', 'Add Entree')
     } else if (e.value === 'appetizer') {
-        addAppetizerCategory()
+        createCategorySection('Appetizers', 'appetizer', 'Add Appetizer')
     } else if (e.value === 'dessert') {
-        addDessertCategory()
+        createCategorySection('Desserts', 'dessert', 'Add Dessert')
     } else if (e.value === 'sides') {
-        addSidesCategory()
-    } else if (e.value === 'appetizer') {
-        addAppetizerCategory()
+        createCategorySection('Sides', 'sides', 'Add Side')
     } else if (e.value === 'addOn') {
-        addAddOnsCategory()
+        createCategorySection('Add-On', 'addOn', 'Add Add-On')
     } else if (e.value === 'soupOrSalad') {
-        addSoupSaladCategory()
+        createCategorySection('Soups & Salads', 'soupOrSaladaddOn', 'Add Soup or Salad')
     } else if (e.value === 'kidsMenu') {
-        addKidsMenuCategory()
+        createCategorySection('Soups & Salads', 'kidsMenu', 'Add Kids Item')
     } else if (e.value === 'otherFood') {
-        addOtherFoodsCategory()
+        createCategorySection('Other Food', 'otherFood', 'Add Other Food')
     } else if (e.value === 'wine') {
-        addWineCategory()
+        createCategorySection('Wine', 'wine', 'Add Wine')
     } else if (e.value === 'beer') {
-        addBeerCategory()
+        createCategorySection('Beer', 'beer', 'Add Beer')
     } else if (e.value === 'cocktails') {
-        addCocktailsCategory()
+        createCategorySection('Cocktails', 'cocktails', 'Add Cocktail')
     } else if (e.value === 'nonAlcoholic') {
-        addNonAlcoholicCategory()
+        createCategorySection('Non-Alcoholic', 'nonAlcoholic', 'Add Non-Alcoholic')
     } else if (e.value === 'afterDinnerDrink') {
-        addAfterDinnerDrinkCategory()
+        createCategorySection('After Dinner Drinks', 'afterDinnerDrink', 'Add After Dinner Drink')
     } else if (e.value === 'otherDrink') {
-        addOtherDrinkCategory()
+        createCategorySection('Other Drinks', 'otherDrink', 'Add Other Drink')
     }
     $(".categorySelector option[value='" + e.value + "']").remove();
     $('select').material_select();
 }
 
-//Category Creating functions.
 
-function addEntreeCategory() {
-    $('.menuFormHolder').append(entreeCategoryHTML)
-   
-}
-
-function addAppetizerCategory() {
-    console.log('Make App')
-}
-
-function addDessertCategory() {
-    console.log('Make Dessert')
-}
-
-function addSidesCategory() {
-    console.log('Make Sides')
-}
-
-function addAddOnsCategory() {
-    console.log('Make Addon')
-}
-
-function addSoupSaladCategory() {
-    console.log('Make Soup')
-}
-
-function addKidsMenuCategory() {
-    console.log('Make Kids')
-}
-
-function addOtherFoodsCategory() {
-    console.log('Make OtherFoods')
-}
-
-function addWineCategory() {
-    console.log('Make Wine')
-}
-
-function addBeerCategory() {
-    console.log('Make Beer')
-}
-
-function addCocktailsCategory() {
-    console.log('Make Cocktails')
-}
-
-function addNonAlcoholicCategory() {
-    console.log('Make NonAlcho')
-}
-
-function addAfterDinnerDrinkCategory() {
-    console.log('Make AfterDinner')
-}
-
-function addOtherDrinkCategory() {
-    console.log('Make otherDrink')
-}
 
 var secretItem = [{
     name: 'secret',
@@ -342,33 +285,120 @@ var CRImakerSource = [{
 }, {
     name: 'toGoutensils',
     text: 'To-Go utensils'
-}] //Objects Hidden Here
+}]
 
+var dessertsIng = [
+{
+    name: 'cake',
+    text: 'Cake'
+}, {
+    name: 'pie',
+    text: 'Pie'
+}, {
+    name: 'iceCream',
+    text: 'Ice Cream'
+}
+]
+ 
+var dessertsDescr = [
+{
+    name: 'chocolatey',
+    text: 'Chocolatey'
+}, {
+    name: 'fruity',
+    text: 'Fruity'
+}, {
+    name: 'light',
+    text: 'Light'
+}, {
+    name: 'rich',
+    text: 'Rich'
+},{
+    name: 'tart',
+    text: 'Tart'
+},{
+    name: 'toShare',
+    text: 'To Share'
+},{
+    name: 'popular',
+    text: 'Popular'
+},{
+    name: 'healthy',
+    text: 'Healthy'
+}
+]
 
-
+//Creating the form:
 checkBoxMaker(null, CRImakerSource, '.CRI');
 
-$('.menuFormHolder').on('click', '.addItemBtnEntrees', function(e) {
+$('.menuFormHolder').on('click', '.addItemBtnentree', function(e) {
     e.preventDefault();
-        createItemHolder('.Entrees')
+        createItemHolder('.entree', 'entree')
         createIntInput('price', 'Entree Price')
         createTextAreaInput('quickDescr', 'Quick Description')
         createTextAreaInput('detailedDescr', 'Detailed Description')
-        checkBoxMaker(null, secretItem, null)
-        checkBoxMaker('Descriptors', appEntDesc, null)
-        checkBoxMaker('Ingredients', appEntIng, null)
-        checkBoxMaker('Allergy Violations', allergiesList, null)       
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
     
 
     ItemIter++
 })
 
-// createTextInput('entree', 'Entree', 'form')
-// createIntInput('entreePrice', 'Entree Price', 'form')
-// checkBoxMaker('Commonly Requested Items', CRImakerSource, 'form');
-// createTextAreaInput('desc', 'fillthis', 'form')
+$('.menuFormHolder').on('click', '.addItemBtnappetizer', function(e) {
+    e.preventDefault();
+        createItemHolder('.appetizer', 'appetizer')
+        createIntInput('price', 'Appetizer Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
 
-function checkBoxMaker(title, object, selector) {
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtndessert', function(e) {
+    e.preventDefault();
+        createItemHolder('.dessert', 'dessert')
+        createIntInput('price', 'Dessert Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', dessertsDescr, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', dessertsIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+// var menuName = $('.menuName').val()
+// var comments = "No comments";
+// var menuJSON = JSON.stringify(bigJSON);
+// criJSON = JSON.stringify(criJSON);
+// var UserId = 1;     //Update this
+// var JobId = 1;      //Update this
+
+
+
+var menuObj = {
+    menuName: $('#menuName').val(),
+    comments: $('#comments').val(),
+    menuJSON: menuJSON,
+    criJSON: 'criJSON',
+    JobId: $('#jobID').val()
+}
+
+
+
+
+//Reusable functions Start here:
+
+function checkBoxMaker(title, object, selector, formClass) {
     if(!selector){
         selector = '.itemholder'+ ItemIter 
     }
@@ -376,7 +406,7 @@ function checkBoxMaker(title, object, selector) {
     if(title){ 
         $(selector).append("<h5>"+title+"</h5>")
     }
-        $(selector).append("<div class='row checkboxRow" + checkboxIter+ "'></div")
+        $(selector).append("<div class='row "+ formClass + " checkboxRow" + checkboxIter+ "'></div")
  for (var i = 0; i < object.length; i++) {
         $('.checkboxRow'+ checkboxIter).append("<div class='col s6 m4 l4'><input type='checkbox' class='filled-in' id='filled-in-box" + globalIter + "' name ='" + object[i].name + "'/><label class='checkboxLabel' for='filled-in-box" + globalIter + "'>" + object[i].text + "</label></div>")
         globalIter++
@@ -398,7 +428,7 @@ categoryHTML += "                <form class="+categoryClass+">";
 categoryHTML += "                <\/form>";
 categoryHTML += "                <div class=\"row\">";
 categoryHTML += "                    <div class=\" col s12\">";
-categoryHTML += "                        <button class=\"btn waves-effect waves-light addItemBtn"+categoryClass+"\">Add Entree Item<\/button>";
+categoryHTML += "                        <button class=\"btn waves-effect waves-light addItemBtn"+categoryClass+"\">" + buttonText + "<\/button>";
 categoryHTML += "                    <\/div>";
 categoryHTML += "                <\/div>";
 categoryHTML += "            <\/div>";
@@ -430,7 +460,7 @@ textInput += "";
 function createTextAreaInput(name, labelText){
 var textInput="";
 textInput += "<div class=\"input-field col s12\">";
-textInput += "    <textarea id=\""+name+globalIter+"\" class=\"materialize-textarea \"name="+name+"></textarea>";
+textInput += "    <textarea id=\""+name+globalIter+"\" class=\"materialize-textarea\" name="+name+"></textarea>";
 textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
 textInput += "<\/div>";
 textInput += "";
@@ -455,9 +485,9 @@ textInput += "";
 
 
 
-function createItemHolder(target){
+function createItemHolder(target, value){
     var categoryHTML="";
-categoryHTML += "<div class=\"row itemObject\">";
+categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
 categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
 categoryHTML += "        <li>";
 categoryHTML += "            <div class=\"collapsible-header open"+ItemIter+"\">";
@@ -470,7 +500,7 @@ categoryHTML += "<\/div>";
 categoryHTML += "";
 
 $(target).append(categoryHTML)
-$('.open' + ItemIter).addClass("active");
+// $('.open' + ItemIter).addClass("active");
 $('.collapsible').collapsible()
 }
 
@@ -479,14 +509,6 @@ $('.collapsible').collapsible()
 function slideOut() {
     $('.menuBuilderPanel').addClass('showDiv')
 }
-
-
-
-$('.itemTitle').on('click', function(e){
-    $(e).val("")
-    console.log('click')
-})
-
 
 
 $('.menuFormHolder').on('click', '.itemTitle', function(e) {
@@ -498,16 +520,101 @@ $('.menuFormHolder').on('click', '.itemTitle', function(e) {
     }
 })
 
+function MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations){
+                this.name = name,
+                this.price = price,
+                this.quickDescr = quickDescr,
+                this.detailedDescr = detailedDescr,
+                this.ingredients = ingredients,
+                this.descriptors = descriptors,
+                this.secret = secret,
+                this.allergyViolations = allergyViolations
+            }
 
-$('.serialButton').on('click', function(){
-$('.itemObject').each(function(){
 
-var inputs = $(this).find(".itemTitle").val();
-console.log(inputs)
 
+
+$('.serialButton').on('click', function() {
+    var category 
+    menuJSON = {
+        entree: [],
+        appetizer: [],
+        dessert: [],
+        side: [],
+        addOn: [],
+        soupOrSalad: [],
+        kidsMenuItem: [],
+        otherFood: [],
+        afterDinnerDrink: [],
+        wine: [],
+        beer: [],
+        cocktail: [],
+        nonAlcoholic: [],
+        otherDrink: []
+    }
+
+    $('.itemObject').each(function() {
+
+        // name: 'No Item Name',
+        // price: 0,
+        // quickDescr: 'No Description',
+        // detailedDescr: 'No Description',
+        // ingredients: [],
+        // descriptors: [],
+        // secret: false,
+        // allergyViolations: []
+
+
+        var name = $(this).find('.itemTitle').val()
+        var price = $(this).find("input[name='price']").val()
+        var quickDescr = $(this).find("textarea[name='quickDescr']").val()
+        var detailedDescr = $(this).find("textarea[name='detailedDescr']").val()
+        var secret = false;
+        var ingredients = {}
+        var descriptors = {}
+        var allergyViolations = {}
+        console.log(quickDescr)
+        if ($(this).find("input[name='secret']").val() === 'on'){
+            secret = true;
+        }
+
+       checkBoxParser('.ingredientsForm', ingredients)
+       checkBoxParser('.descriptorForm', descriptors)
+       checkBoxParser('.allergyForm', allergyViolations)
+
+        var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
+    //collect menu items in an array
+    // itemArray.push(item)
+
+    //It uses the html element value to sort itself into the correct category
+    category = $(this).attr('path');
+    menuJSON[category].push(item)
+    })
+    
  
-
-
- });
-
+    console.log(menuJSON)
 })
+
+
+function checkBoxParser(source, targetObject){
+     //Grab all of the checkboxes:
+        var serialized = $(source + ' input:checkbox').map(function() {
+            return { name: this.name, value: this.checked ? this.value : "false" };
+        });
+
+        //format the returned checkbox values:
+        for (var i = 0; i < serialized.length; i++) {
+            if (serialized[i].value === 'on') {
+                serialized[i].value = true
+            } else {
+                serialized[i].value = false
+            }
+        }
+
+        //Add them to the proper object:
+        for (var i = 0; i < serialized.length; i++) {
+            targetObject[serialized[i].name] = serialized[i].value
+        }
+
+
+}

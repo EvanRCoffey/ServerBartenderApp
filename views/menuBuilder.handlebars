@@ -26,6 +26,15 @@
            
         <div class="col s12 menuFormHolder">
         <div class="row">
+            <div class="input-field col s12">
+                <input id="menuName" type="text" required class="validate" name="menuName">
+                <label for="menuName">Menu Name</label>
+            </div>
+
+           <div class="input-field col s12">
+                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
+                <label for="comments">Comments</label>
+            </div>
 
             <div class="input-field col s12 CRIpanel">
               <ul class="collapsible" data-collapsible="expandable">
@@ -41,7 +50,7 @@
         </div>  
         </form>
 
-<button class="serialButton">WORK!</button>
+
         <div class="row">
           <div class="input-field col s12">
     <select class="categorySelector" onchange="addCategory(this);">
@@ -68,6 +77,6 @@
     <label>Create new Menu Category.</label>
   </div>
   </div>
-
+<button class="serialButton">WORK!</button>
 
 <script type="text/javascript" src="./javascript/menuBuilder.js"></script>
