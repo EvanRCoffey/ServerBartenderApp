@@ -1,6 +1,5 @@
 MILLS
 
-	-Finish the menu builder
 	-Implement the design/UI pass
 	-Debugging and presentation prep
 
@@ -16,12 +15,14 @@ EVAN
 	 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
 
 	-NEXT UPDATE:
-		-Using menu builder, add Fleming's menu to dummy account
+		-Undefined error with "secret item" questions (undefined is incorrect, others are correct)
+		-When a user gets a question correct or incorrect, display the correct answer(s)
+		-prevent duplicate questions and duplicate answers (can wait, if necessary)
+		-replace "restart" button with ten, twenty, and thirtyQuiz buttons
 		-Fix allergens and secret items section
 		-Get user identification and menu selection working
-		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
-		-Give the Fleming's menu a few test runs
-		-Update the site and send an email - menu builder and quiz maker are ready!
+		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one [alternatively, you can just swap all "select all that apply" with "select any that apply"]
+		-Update the site, update the dummy account, and send an email
 
 EITHER
 
