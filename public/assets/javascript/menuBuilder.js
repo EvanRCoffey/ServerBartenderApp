@@ -2,7 +2,11 @@ var globalIter = 0
 var ItemIter = 0
 var checkboxIter = 0
 
-var menuJSON 
+var menuJSON
+var criJSON
+
+var menuSaved = false;
+var menuID
 
 //Initializes materializes silly javascript functions.
 $(document).ready(function() {
@@ -42,9 +46,9 @@ function addCategory(e) {
     } else if (e.value === 'addOn') {
         createCategorySection('Add-On', 'addOn', 'Add Add-On')
     } else if (e.value === 'soupOrSalad') {
-        createCategorySection('Soups & Salads', 'soupOrSaladaddOn', 'Add Soup or Salad')
+        createCategorySection('Soups & Salads', 'soupOrSalad', 'Add Soup or Salad')
     } else if (e.value === 'kidsMenu') {
-        createCategorySection('Soups & Salads', 'kidsMenu', 'Add Kids Item')
+        createCategorySection('Soups & Salads', 'kidsMenuItem', 'Add Kids Item')
     } else if (e.value === 'otherFood') {
         createCategorySection('Other Food', 'otherFood', 'Add Other Food')
     } else if (e.value === 'wine') {
@@ -52,7 +56,7 @@ function addCategory(e) {
     } else if (e.value === 'beer') {
         createCategorySection('Beer', 'beer', 'Add Beer')
     } else if (e.value === 'cocktails') {
-        createCategorySection('Cocktails', 'cocktails', 'Add Cocktail')
+        createCategorySection('Cocktails', 'cocktail', 'Add Cocktail')
     } else if (e.value === 'nonAlcoholic') {
         createCategorySection('Non-Alcoholic', 'nonAlcoholic', 'Add Non-Alcoholic')
     } else if (e.value === 'afterDinnerDrink') {
@@ -376,25 +380,148 @@ $('.menuFormHolder').on('click', '.addItemBtndessert', function(e) {
     ItemIter++
 })
 
-// var menuName = $('.menuName').val()
-// var comments = "No comments";
-// var menuJSON = JSON.stringify(bigJSON);
-// criJSON = JSON.stringify(criJSON);
-// var UserId = 1;     //Update this
-// var JobId = 1;      //Update this
+$('.menuFormHolder').on('click', '.addItemBtnsides', function(e) {
+    e.preventDefault();
+        createItemHolder('.sides', 'sides')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnaddOn', function(e) {
+    e.preventDefault();
+        createItemHolder('.addOn', 'addOn')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnsoupOrSalad', function(e) {
+    e.preventDefault();
+        createItemHolder('.soupOrSalad', 'soupOrSalad')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnkidsMenuItem', function(e) {
+    e.preventDefault();
+        createItemHolder('.kidsMenuItem', 'kidsMenuItem')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnotherFood', function(e) {
+    e.preventDefault();
+        createItemHolder('.otherFood', 'otherFood')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+        checkBoxMaker(null, secretItem, null, 'secretItemForm')
+        checkBoxMaker('Descriptors', appEntDesc, null, 'descriptorForm')
+        checkBoxMaker('Ingredients', appEntIng, null, 'ingredientsForm')
+        checkBoxMaker('Allergy Violations', allergiesList, null, 'allergyForm')       
+    
+
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnwine', function(e) {
+    e.preventDefault();
+        createItemHolder('.wine', 'wine')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnafterDinnerDrink', function(e) {
+    e.preventDefault();
+        createItemHolder('.afterDinnerDrink', 'afterDinnerDrink')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnbeer', function(e) {
+    e.preventDefault();
+        createItemHolder('.beer', 'beer')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtncocktail', function(e) {
+    e.preventDefault();
+        createItemHolder('.cocktail', 'cocktail')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnnonAlcoholic', function(e) {
+    e.preventDefault();
+        createItemHolder('.nonAlcoholic', 'nonAlcoholic')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
+
+$('.menuFormHolder').on('click', '.addItemBtnotherDrink', function(e) {
+    e.preventDefault();
+        createItemHolder('.otherDrink', 'otherDrink')
+        createIntInput('price', 'Item Price')
+        createTextAreaInput('quickDescr', 'Quick Description')
+        createTextAreaInput('detailedDescr', 'Detailed Description')
+       
+    ItemIter++
+})
 
 
-
-var menuObj = {
-    menuName: $('#menuName').val(),
-    comments: $('#comments').val(),
-    menuJSON: menuJSON,
-    criJSON: 'criJSON',
-    JobId: $('#jobID').val()
-}
-
-
-
+//Saves the menu to the database on any button click.
+$('.menuFormHolder').on('click', '.save', function(e) {
+    e.preventDefault();
+    saveAndsend();
+     $('select').material_select();
+})
 
 //Reusable functions Start here:
 
@@ -413,6 +540,7 @@ function checkBoxMaker(title, object, selector, formClass) {
     }
     checkboxIter++
     $('.collapsible').collapsible();
+     $('select').material_select();
 }
 
 
@@ -428,7 +556,7 @@ categoryHTML += "                <form class="+categoryClass+">";
 categoryHTML += "                <\/form>";
 categoryHTML += "                <div class=\"row\">";
 categoryHTML += "                    <div class=\" col s12\">";
-categoryHTML += "                        <button class=\"btn waves-effect waves-light addItemBtn"+categoryClass+"\">" + buttonText + "<\/button>";
+categoryHTML += "                        <button class=\"btn waves-effect waves-light save addItemBtn"+categoryClass+"\">" + buttonText + "<\/button>";
 categoryHTML += "                    <\/div>";
 categoryHTML += "                <\/div>";
 categoryHTML += "            <\/div>";
@@ -478,7 +606,7 @@ textInput += "    <input id=\""+name+globalIter+"\"type=\"number\" step=\"0.01\"
 textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
 textInput += "<\/div>";
 textInput += "";
-    console.log('itemholder'+ ItemIter)
+
     $('.itemholder'+ ItemIter).append(textInput)
     globalIter++
 }
@@ -534,13 +662,17 @@ function MenuItem(name, price, quickDescr, detailedDescr, ingredients, descripto
 
 
 
-$('.serialButton').on('click', function() {
-    var category 
+function saveAndsend() {
+
+    var category
+
+    criJSON = {}
+
     menuJSON = {
         entree: [],
         appetizer: [],
         dessert: [],
-        side: [],
+        sides: [],
         addOn: [],
         soupOrSalad: [],
         kidsMenuItem: [],
@@ -553,17 +685,12 @@ $('.serialButton').on('click', function() {
         otherDrink: []
     }
 
+    checkBoxParser($('.menuFormHolder'), '.CRI', criJSON)
+
     $('.itemObject').each(function() {
 
-        // name: 'No Item Name',
-        // price: 0,
-        // quickDescr: 'No Description',
-        // detailedDescr: 'No Description',
-        // ingredients: [],
-        // descriptors: [],
-        // secret: false,
-        // allergyViolations: []
-
+        //Var lets the object get passed into functions.
+        var that = $(this)
 
         var name = $(this).find('.itemTitle').val()
         var price = $(this).find("input[name='price']").val()
@@ -574,31 +701,53 @@ $('.serialButton').on('click', function() {
         var descriptors = {}
         var allergyViolations = {}
         console.log(quickDescr)
-        if ($(this).find("input[name='secret']").val() === 'on'){
+        if ($(this).find("input[name='secret']").val() === 'on') {
             secret = true;
         }
 
-       checkBoxParser('.ingredientsForm', ingredients)
-       checkBoxParser('.descriptorForm', descriptors)
-       checkBoxParser('.allergyForm', allergyViolations)
+        checkBoxParser(that, '.ingredientsForm', ingredients)
+        checkBoxParser(that, '.descriptorForm', descriptors)
+        checkBoxParser(that, '.allergyForm', allergyViolations)
 
         var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
-    //collect menu items in an array
-    // itemArray.push(item)
+            //collect menu items in an array
+            // itemArray.push(item)
 
-    //It uses the html element value to sort itself into the correct category
-    category = $(this).attr('path');
-    menuJSON[category].push(item)
+        //It uses the html element value to sort itself into the correct category
+        category = $(this).attr('path');
+        menuJSON[category].push(item)
     })
+
+    var menuObj = {
+        menuID: menuID,
+        menuName: $('#menuName').val(),
+        comments: $('#comments').val(),
+        menuJSON: JSON.stringify(menuJSON),
+        criJSON: JSON.stringify(criJSON),
+        JobId: $('#jobID').val()
+    }
+
+    if(!menuSaved){
+    $.post("/newMenu", menuObj).then(function(data) {
+
     
- 
-    console.log(menuJSON)
+    menuID = data
+
+    menuSaved = true;
 })
+    } else { $.post("/updateMenu", menuObj).then(function(data) {
+
+})
+   
+}
+ console.log(menuObj)
+}
 
 
-function checkBoxParser(source, targetObject){
+
+function checkBoxParser(that,source, targetObject){
      //Grab all of the checkboxes:
-        var serialized = $(source + ' input:checkbox').map(function() {
+        var serialized = that.find(source +' input:checkbox').map(function() {
             return { name: this.name, value: this.checked ? this.value : "false" };
         });
 

@@ -638,8 +638,37 @@ router.post("/newMenu", loggedIn, function(req, res, next) {
         UserId: req.user.id,
         JobId: req.body.JobId
     }).then(function(dbUser) {
-        res.json(dbUser);
+        res.json(dbUser.dataValues.id);
   });
+});
+
+router.post("/updateMenu", loggedIn, function(req, res, next) {
+    var menuObject = {
+        menuName: req.body.menuName,
+        comments: req.body.comments,
+        menuJSON: req.body.menuJSON,
+        criJSON: req.body.criJSON,
+        }
+
+    db.Menu.update(menuObject, {
+        where: {id:req.body.JobId}
+    }).then(function(dbUser) {
+        console.log(dbUser)
+  });
+});
+
+router.post("/editShift", loggedIn, function(req, res, next) {
+  var shiftData = req.body;
+  console.log(shiftData);
+  db.Shift.update(shiftData, {
+    where: {id:shiftData.shiftID}
+  }).then(function(dbUser) {
+    var dataObject = {
+        message: 'Shift Updated'
+    }
+    res.render("dashboard", dataObject);
+    });
+
 });
 
 //Keep this at the end of the router section.
