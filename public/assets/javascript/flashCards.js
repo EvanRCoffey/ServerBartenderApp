@@ -40,60 +40,60 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var reParsedMenuJson = JSON.parse(parsedMenuJson);
 	console.log(reParsedMenuJson);
 
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
-		entrees.push(reParsedMenuJson[0][i]);
+	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
+		entrees.push(reParsedMenuJson.entree[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
-		appetizers.push(reParsedMenuJson[1][i]);
+	for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
+		appetizers.push(reParsedMenuJson.appetizer[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
-		desserts.push(reParsedMenuJson[2][i]);
+	for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
+		desserts.push(reParsedMenuJson.dessert[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[3].length; i++) {
-		sides.push(reParsedMenuJson[3][i]);
+	for (var i = 0; i<reParsedMenuJson.sides.length; i++) {
+		sides.push(reParsedMenuJson.sides[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[4].length; i++) {
-		addOns.push(reParsedMenuJson[4][i]);
+	for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {
+		addOns.push(reParsedMenuJson.addOn[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[5].length; i++) {
-		soupsAndSalads.push(reParsedMenuJson[5][i]);
+	for (var i = 0; i<reParsedMenuJson.soupOrSalad.length; i++) {
+		soupsAndSalads.push(reParsedMenuJson.soupOrSalad[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[6].length; i++) {
-		kidsMenuItems.push(reParsedMenuJson[6][i]);
+	for (var i = 0; i<reParsedMenuJson.kidsMenuItem.length; i++) {
+		kidsMenuItems.push(reParsedMenuJson.kidsMenuItem[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[7].length; i++) {
-		otherFoods.push(reParsedMenuJson[7][i]);
+	for (var i = 0; i<reParsedMenuJson.otherFood.length; i++) {
+		otherFoods.push(reParsedMenuJson.otherFood[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[8].length; i++) {
-		wines.push(reParsedMenuJson[8][i]);
+	for (var i = 0; i<reParsedMenuJson.wine.length; i++) {
+		wines.push(reParsedMenuJson.wine[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[9].length; i++) {
-		beers.push(reParsedMenuJson[9][i]);
+	for (var i = 0; i<reParsedMenuJson.beer.length; i++) {
+		beers.push(reParsedMenuJson.beer[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[10].length; i++) {
-		cocktails.push(reParsedMenuJson[10][i]);
+	for (var i = 0; i<reParsedMenuJson.cocktail.length; i++) {
+		cocktails.push(reParsedMenuJson.cocktail[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[11].length; i++) {
-		nonAlcoholicDrinks.push(reParsedMenuJson[11][i]);
+	for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {
+		nonAlcoholicDrinks.push(reParsedMenuJson.nonAlcoholic[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[12].length; i++) {
-		afterDinnerDrinks.push(reParsedMenuJson[12][i]);
+	for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {
+		afterDinnerDrinks.push(reParsedMenuJson.afterDinnerDrink[i]);
 	}
 
-	for (var i = 0; i<reParsedMenuJson[13].length; i++) {
-		otherDrinks.push(reParsedMenuJson[13][i]);
+	for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
+		otherDrinks.push(reParsedMenuJson.otherDrink[i]);
 	}
 
 	var boolFood = false;
