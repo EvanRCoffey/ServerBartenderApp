@@ -1,6 +1,6 @@
 MILLS
 
-	-Menu builder
+	-Finish the menu builder
 	-Implement the design/UI pass
 	-Debugging and presentation prep
 
@@ -8,20 +8,18 @@ EVAN
 
 	***Finish the Flash Cards (see flashCards.js comments)
 
-	***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)
-
-	***Finish the Quiz Maker
-		-Fix allergens and secret items section
-		-Get user identification and menu selection working
-		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
+	***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)		
 
 	***Users shouldn't delete shifts, jobs or menus.  They should "delete" them.
 	  	1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
 	 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
 	 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
 
-	[Go to Flemings for happy hour at the bar to chat with people and get a copy of up-to-date menus]
+	-NEXT UPDATE:
 		-Using menu builder, add Fleming's menu to dummy account
+		-Fix allergens and secret items section
+		-Get user identification and menu selection working
+		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
 		-Give the Fleming's menu a few test runs
 		-Update the site and send an email - menu builder and quiz maker are ready!
 
