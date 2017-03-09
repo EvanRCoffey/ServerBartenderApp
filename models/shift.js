@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         ppa: {type: DataTypes.FLOAT(10,2), allowNull: true},
         comments: {type: DataTypes.TEXT, allowNull: true},
         breakthroughs: {type: DataTypes.TEXT, allowNull: true},
+        deletedByUser: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
         isReal: DataTypes.BOOLEAN
     }, {
         classMethods: {
