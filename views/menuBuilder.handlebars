@@ -9,50 +9,74 @@
 
         <form class="col s12" id="menuForm">
 
+
+
+            <!--jobID INT-->
+       
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
-                    <option value="" disabled>Choose a Job for this Menu</option>
+                    <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
                         <option value="{{this.id}}">{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
             </div>
-
-            <!--totalWalkedWith DECIMAL(10,2)-->
+           
+        <div class="col s12 menuFormHolder">
+        <div class="row">
             <div class="input-field col s12">
-                <p>
-      <input type="checkbox" class="filled-in" id='filled-in-box' name ='item1'/>
-      <label class="checkboxLabel" for="filled-in-box">Filled in</label>
-      <input type="checkbox" class="filled-in" id='filled-in-box2' name ='item2'/>
-      <label class="checkboxLabel" for="filled-in-box2">Filled in</label>
-      <input type="checkbox" class="filled-in" id='filled-in-box3' name ='item3'/>
-      <label class="checkboxLabel" for="filled-in-box3">Filled in</label>
-    </p>
+                <input id="menuName" type="text" required class="validate" name="menuName">
+                <label for="menuName">Menu Name</label>
             </div>
+
+           <div class="input-field col s12">
+                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
+                <label for="comments">Comments</label>
+            </div>
+
+            <div class="input-field col s12 CRIpanel">
+              <ul class="collapsible" data-collapsible="expandable">
+            <li>
+              <div class="collapsible-header">Commonly Requested Items</div>
+              <div class="collapsible-body menuOverflow CRI"></div>
+            </li>
+          </ul>
+        </div>
+        </div>
         
-    
-             <div class="testButton">Test</div>
+        </div> <!-- End Menuform holder -->
+        </div>  
         </form>
-    </div>
-</div>
 
-  <div id="timeEqual" class="modal">
-    <div class="modal-content">
-      <h5>In-Time and Out-Time cannot be the same.</h5>
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
-    </div>
-  </div>
 
-<div id="timeLess" class="modal">
-<div class="modal-content">
-      <h5>In-Time is before Out-Time.</h5>
-      <div class="row">
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
-      </div>
-       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
-    </div>
+        <div class="row ">
+          <div class="input-field col s12">
+    <select class="categorySelector" onchange="addCategory(this);">
+    <option value="" disabled selected>Add Menu Category</option>
+      <optgroup label="Food">
+        <option value="entree">Entrees</option>
+        <option value="appetizer">Appetizers</option>
+        <option value="dessert">Desserts</option>
+        <option value="sides">Sides</option>
+        <option value="addOn">Add-Ons</option>
+        <option value="soupOrSalad">Soups and Salads</option>
+        <option value="kidsMenu">Kids Menu</option>
+        <option value="otherFood">Other Food</option>
+      </optgroup>
+      <optgroup label="Drink">
+        <option value="wine">Wine</option>
+        <option value="beer">Beer</option>
+        <option value="cocktails">Cocktails</option>
+        <option value="nonAlcoholic">Non-Alcoholic</option>
+        <option value="afterDinnerDrink">After Dinner Drinks</option>
+        <option value="otherDrink">Other Drinks</option>
+      </optgroup>
+    </select>
+    <label>Create new Menu Category.</label>
   </div>
+  </div>
+<!-- <button class="serialButton">WORK!</button> -->
 
 <script type="text/javascript" src="./javascript/menuBuilder.js"></script>
