@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
         menuName: DataTypes.STRING,
         comments: {type: DataTypes.TEXT, allowNull: true},
         menuJSON: DataTypes.JSON,
+        deletedByUser: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
         criJSON: DataTypes.JSON
     }, {
         classMethods: {

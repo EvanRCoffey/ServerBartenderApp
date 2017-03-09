@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 		wage: DataTypes.FLOAT(10,2),
 		isReal: DataTypes.BOOLEAN,
 		stillWorkingHere: DataTypes.BOOLEAN,
+    deletedByUser: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
 		comments: DataTypes.TEXT
 	}, {
       classMethods: {

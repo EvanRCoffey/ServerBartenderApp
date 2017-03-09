@@ -184,6 +184,10 @@ router.get("/timeline", loggedIn, function(req, res, next) {
     res.render("timeline", req);
 });
 
+router.get("/menuJSONCreator", loggedIn, function(req, res, next) {
+    res.render("menuJSONCreator", req);
+})
+
 //Logs user out and returns to homepage.
 router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();
@@ -618,8 +622,12 @@ router.post("/timelineGoals", loggedIn, function(req, res, next) {
   });
 });
 
-router.get("/menuJSON", loggedIn, function(req, res, next) {
-    res.render("menuJSON", req);
+router.get("/quizMaker", loggedIn, function(req, res, next) {
+    res.render("quizMaker", req);
+})
+
+router.get("/flashCards", loggedIn, function(req, res, next) {
+    res.render("flashCards", req);
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
