@@ -3,14 +3,19 @@ var tenQuiz = false;
 var twentyQuiz = false;
 var thirtyQuiz = false;
 
+$(document).ready(function() {
+    $('select').material_select();
+    // prepareJobDropdown();
+});
+
 function startQuizMaker() {
-
-	var selectedJobId = $("#job_id").val().trim();
-
+	//This is not pulling the value as intended.  Seems everything would work if it did, as the hardcoded "1" works just fine.
+	var selectedJobId = $("#jobId").val();
+	console.log(selectedJobId);
 	var idObj = {
-		jobId: selectedJobId
+		jobId: 1
 	}
-
+	console.log(idObj.jobId);
 	$.post("/checkMenuJSON", idObj).then(function(data2) {
 		var parsedCriJson = JSON.parse(data2.criJSON);
 		var parsedMenuJson = JSON.parse(data2.menuJSON);
@@ -1567,28 +1572,28 @@ function startQuizMaker() {
 		if (thirtyQuiz) {
 			//Put a button up for thirtyQuiz which calls clickedThirtyQuiz()
 			var thirtyQuizButtonString = '<div class="col-md-12"><button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizButton">Thirty Questions</button></div>';
-			$("#answersArea").append(thirtyQuizButtonString);
+			$("#messageArea").html(thirtyQuizButtonString);
 			//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
 			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
-			$("#answersArea").append(twentyQuizButtonString);
+			$("#messageArea").append(twentyQuizButtonString);
 			//Put a button up for tenQuiz which calls clickedTenQuiz()
 			var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
-			$("#answersArea").append(tenQuizButtonString);
+			$("#messageArea").append(tenQuizButtonString);
 		}
 
 		else if (twentyQuiz) {
 			//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
 			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
-			$("#answersArea").append(twentyQuizButtonString);
+			$("#messageArea").html(twentyQuizButtonString);
 			//Put a button up for tenQuiz which calls clickedTenQuiz()
 			var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
-			$("#answersArea").append(tenQuizButtonString);
+			$("#messageArea").append(tenQuizButtonString);
 		}
 
 		else if (tenQuiz) {
 			//Put a button up for tenQuiz which calls clickedTenQuiz()
 			var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
-			$("#answersArea").append(tenQuizButtonString);
+			$("#messageArea").html(tenQuizButtonString);
 		}
 
 		else {
@@ -2251,10 +2256,10 @@ function isCorrect(number) {
 }
 
 function caption() {
-	if (currentQuestion.correctAnswers.includes(1)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer1) + '<br><br>'}
-	if (currentQuestion.correctAnswers.includes(2)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer2) + '<br><br>'}
-	if (currentQuestion.correctAnswers.includes(3)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer3) + '<br><br>'}
-	if (currentQuestion.correctAnswers.includes(4)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer4) + '<br><br>'}
+	if (currentQuestion.correctAnswers.answer1) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer1) + '<br><br>'}
+	if (currentQuestion.correctAnswers.answer2) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer2) + '<br><br>'}
+	if (currentQuestion.correctAnswers.answer3) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer3) + '<br><br>'}
+	if (currentQuestion.correctAnswers.answer4) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer4) + '<br><br>'}
 }
 
 function clickedThirtyQuiz() {

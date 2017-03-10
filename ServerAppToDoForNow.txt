@@ -9,12 +9,13 @@ PRE-PRESENTATION STUFF:
 
 		-BEFORE NEXT UPDATE, TOMORROW MORNING:
 		
-			-Create a job dropdown just like in shift creator to replace the hardcoded "1" in idObj
-				-Why isn't this working?  It's exactly like the dropdown in shift.handlebars in every way, but it doesn't work the same.
+			-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
 
-			-When a user gets a question correct or incorrect, display the correct answer(s) along with the "next question" button
+			-[SOLVED BUT NOT TESTED - quizMaker.js, 2253-2258] When a user gets a question correct or incorrect, display the correct answer(s) along with the "next question" button
 
-			(PLUS WHATEVER MILLS FINISHES TONIGHT) - (if Mills didn't change the home page, do so for the new update)
+			-(PLUS WHATEVER MILLS FINISHES TONIGHT)
+
+			
 
 		***Finish the Flash Cards (see flashCards.js comments)
 
@@ -24,8 +25,10 @@ PRE-PRESENTATION STUFF:
 
 	EITHER/BOTH
 
+		-Add testing to project
 		-Get all updates online
-		-Rehearse presentation together
+		-Rehearse presentation together using online version of site
+		-(Have a backup offline version ready on a flash drive?!)
 
 
 
