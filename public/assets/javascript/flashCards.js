@@ -1,19 +1,13 @@
 //FLASH CARDS TO DO 
 
-//Make all checkboxes
-//Make the button reference all of the checkboxes correctly
-//Build the html for "cardFront" and "cardBack", to apply with jQuery
-	//entrees, sides, desserts - allergy violations, descriptors, ingredients, too
-	//can't continue because I don't understand the error "gotIt() is not a function"
-//Build status report with three buttons
-	//1)Study what I didn't know
-	//2)Study all selected cards again
-	//3)Choose new menu
+//Make all checkboxes for "selected categories" (later)
+//Make the button reference all of the checkboxes correctly (later)
+//Entrees, sides, and desserts should include allergy violations, descriptors, ingredients, too (later)
 
-//Eventually, user ID will be detected automatically and the menu can be selected.  For now, it's hardcoded.
+//Eventually, the job/menu can be selected.  For now, it's hardcoded.
 
 var idObj = {
-	id: 1
+	jobId: 1
 }
 
 var entrees = [];
@@ -31,9 +25,28 @@ var nonAlcoholicDrinks = [];
 var afterDinnerDrinks = [];
 var otherDrinks = [];
 var allFlashCards = [];
-var gotIt = [];
-var studyFurther = [];
+var gotItArray = [];
+var studyFurtherArray = [];
 var flashcardONEARRAY = [];
+
+var boolFood = false;
+var boolDrink = false;
+var boolEntrees = false;
+var boolAppetizers = false;
+var boolDesserts = false;
+var boolSides = false;
+var boolAddOns = false;
+var boolSoupsAndSalads = false;
+var boolKidsMenuItems = false;
+var boolOtherFoods = false;
+var boolWines = false;
+var boolBeers = false;
+var boolCocktails = false;
+var boolNonAlcoholicDrinks = false;
+var boolAfterDinnerDrinks = false;
+var boolOtherDrinks = false;
+
+var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks];
 
 $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var parsedMenuJson = JSON.parse(data2.menuJSON);
@@ -95,23 +108,6 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
 		otherDrinks.push(reParsedMenuJson.otherDrink[i]);
 	}
-
-	var boolFood = false;
-	var boolDrink = false;
-	var boolEntrees = false;
-	var boolAppetizers = false;
-	var boolDesserts = false;
-	var boolSides = false;
-	var boolAddOns = false;
-	var boolSoupsAndSalads = false;
-	var boolKidsMenuItems = false;
-	var boolOtherFoods = false;
-	var boolWines = false;
-	var boolBeers = false;
-	var boolCocktails = false;
-	var boolNonAlcoholicDrinks = false;
-	var boolAfterDinnerDrinks = false;
-	var boolOtherDrinks = false;
 
 	if (entrees.length > 0) {
 		boolFood = true;
@@ -183,17 +179,13 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		boolOtherDrinks = true;
 	}
 
-	var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks]
-
 	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div>';
 	$("#area1").append(entireMenuButtonString);
-
 
 	if (boolFood) {
 		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div>';
 		$("#area1").append(allFoodButtonString);
 	}
-
 
 	if (boolDrink) {
 		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div>';
@@ -217,7 +209,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 //////////////////
 
 function showFlashCardFront() {
-	var objBeingUsed = flashcardONEARRAY[(gotIt.length + studyFurther.length)];
+	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
 	var frontOfCardString = '<p>Item name = "' + objBeingUsed.name + '"</p><button onclick="flipCardOver()" type="button" class="btn btn-default" id="flipCardOver">Flip card over</button>';
 	$("#area1").html(frontOfCardString);
 }
@@ -225,33 +217,98 @@ function showFlashCardFront() {
 
 //This is being called just fine
 function flipCardOver() {
-	var objBeingUsed = flashcardONEARRAY[(gotIt.length + studyFurther.length)];
+	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
 	var backOfCardString = '<p>Item name = "'+objBeingUsed.name+'"</p><p>Price = $"'+objBeingUsed.price+'"</p><p>Quick description = "'+objBeingUsed.quickDescr+'"</p><p>Detailed description = "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
 	$("#area1").html(backOfCardString);
 }
 
 //These next two, however, are not.
 function gotIt() {
-	gotIt.push(flashcardONEARRAY[(gotIt.length + studyFurther.length)]);
-	if ((gotIt.length + studyFurther.length) < flashcardONEARRAY.length) {showFlashCardFront();}
-	else {statusReport(gotIt, studyFurther);}
+	gotItArray.push(flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)]);
+	if ((gotItArray.length + studyFurtherArray.length) < flashcardONEARRAY.length - 1) {showFlashCardFront();}
+	else {statusReport(gotItArray, studyFurtherArray);}
 }
 
 function studyFurther() {
-	studyFurther.push(flashcardONEARRAY[(gotIt.length + studyFurther.length)]);
-	if ((gotIt.length + studyFurther.length) < flashcardONEARRAY.length) {showFlashCardFront();}
-	else {statusReport(gotIt, studyFurther);}
+	studyFurtherArray.push(flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)]);
+	if ((gotItArray.length + studyFurtherArray.length) < flashcardONEARRAY.length -1) {showFlashCardFront();}
+	else {statusReport(gotItArray, studyFurtherArray);}
 }
 
-function statusReport(gotIt, studyFurther) {
-	console.log("gotIt:");
-	console.log(gotIt);
-	console.log("studyFurther");
-	console.log(studyFurther);
+function keepStudying() {
+	studyFurtherArray = [];
+
+	//Remove from flashcardONEARRAY any item that is in gotItArray, then empty gotItArray
+	for (var i = 0; i<gotItArray.length; i++) {
+		if (flashcardONEARRAY.includes(gotItArray[i])) {
+			for (var j = 0; j<flashcardONEARRAY.length; j++) {
+				if (flashcardONEARRAY[j] === gotItArray[i]) {
+					flashcardONEARRAY.splice(j, 1);
+				}
+			}
+		}
+	}
+	gotItArray = [];
+	$("#area2").html("Studying further...");
+
+	showFlashCardFront();
+}
+
+function statusReport(gotItArray, studyFurtherArray) {
+	$("#area1").html("STATUS REPORT:<br><br>");
+
+	$("#area1").append("These are the items you knew:<br>");
+	for (var i = 0; i<gotItArray.length; i++) {
+		$("#area1").append(gotItArray[i].name);
+		$("#area1").append("<br>");
+	}
+
+	$("#area1").append("<br>These are the items you need to study further:<br>");
+	for (var i = 0; i<studyFurtherArray.length; i++) {
+		$("#area1").append(studyFurtherArray[i].name);
+		$("#area1").append("<br>");
+	}
+
+	//See if there are any cards left to study
+	if (studyFurtherArray.length < 1) {
+		$("#area2").html("All flash cards complete!<br><br>");
+	}
+	else {
+		var keepStudyingButtonString = '<div class="col-md-12"><button onclick="keepStudying()" type="button" class="btn btn-default" id="keepStudyingButton">Study these items further</button></div><br><br>';
+		$("#area2").html(keepStudyingButtonString);
+	}
+
+	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div>';
+	$("#area2").append(entireMenuButtonString);
+
+	if (boolFood) {
+		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div>';
+		$("#area2").append(allFoodButtonString);
+	}
+
+	if (boolDrink) {
+		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div>';
+		$("#area2").append(allDrinksButtonString);
+	}
+
+	var checkboxesToInclude = []
+	for (var i=0; i<categoryArray.length; i++) {
+		if (categoryArray[i]) {checkboxesToInclude.push(i)}
+	}
+
+	//checbkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
+	//Make a checkbox for each index held in checkboxesToInclude[], plus a "Selected categories" button
+	//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
+	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
+	$("#area2").append(selectedCategoriesButtonString);
+	
 }
 
 function entireMenu() {
 	allFlashCards = [];
+	flashcardONEARRAY = [];
+	gotItArray = [];
+	studyFurtherArray = [];
 	if (entrees.length > 0) {allFlashCards.push(entrees);};
 	if (appetizers.length > 0) {allFlashCards.push(appetizers);}
 	if (desserts.length > 0) {allFlashCards.push(desserts);}
@@ -281,6 +338,9 @@ function entireMenu() {
 
 function allFood() {
 	allFlashCards = [];
+	flashcardONEARRAY = [];
+	gotItArray = [];
+	studyFurtherArray = [];
 	if (entrees.length > 0) {allFlashCards.push(entrees);};
 	if (appetizers.length > 0) {allFlashCards.push(appetizers);}
 	if (desserts.length > 0) {allFlashCards.push(desserts);}
@@ -304,6 +364,9 @@ function allFood() {
 
 function allDrinks() {
 	allFlashCards = [];
+	flashcardONEARRAY = [];
+	gotItArray = [];
+	studyFurtherArray = [];
 	if (wines.length > 0) {allFlashCards.push(wines);}
 	if (beers.length > 0) {allFlashCards.push(beers);}
 	if (cocktails.length > 0) {allFlashCards.push(cocktails);}
@@ -325,6 +388,9 @@ function allDrinks() {
 
 function selectedCategories(obj) {
 	allFlashCards = [];
+	flashcardONEARRAY = [];
+	gotItArray = [];
+	studyFurtherArray = [];
 	if (entrees.length > 0 && obj.entrees) {allFlashCards.push(entrees);};
 	if (appetizers.length > 0 && obj.appetizers) {allFlashCards.push(appetizers);}
 	if (desserts.length > 0 && obj.desserts) {allFlashCards.push(desserts);}
