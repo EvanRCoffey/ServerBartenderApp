@@ -3,19 +3,19 @@ var tenQuiz = false;
 var twentyQuiz = false;
 var thirtyQuiz = false;
 
-$(document).ready(function() {
-    $('select').material_select();
-    // prepareJobDropdown();
-});
+// $(document).ready(function() {
+//     $('select').material_select();
+//     // prepareJobDropdown();
+// });
 
-function startQuizMaker() {
-	//This is not pulling the value as intended.  Seems everything would work if it did, as the hardcoded "1" works just fine.
-	var selectedJobId = $("#jobId").val();
-	console.log(selectedJobId);
+// function startQuizMaker() {
+	// //This is not pulling the value as intended.  Seems everything would work if it did, as the hardcoded "1" works just fine.
+	// var selectedJobId = $("#jobId").val();
+	// console.log(selectedJobId);
 	var idObj = {
 		jobId: 1
 	}
-	console.log(idObj.jobId);
+	// console.log(idObj.jobId);
 	$.post("/checkMenuJSON", idObj).then(function(data2) {
 		var parsedCriJson = JSON.parse(data2.criJSON);
 		var parsedMenuJson = JSON.parse(data2.menuJSON);
@@ -1601,7 +1601,7 @@ function startQuizMaker() {
 			console.log("No quiz available");
 		}
 	})
-}
+// }
 
 //////////////////
 //HELPER FUNCTIONS
@@ -2250,16 +2250,16 @@ function isCorrect(number) {
 		//Increment incorrect answers
 		numIncorrect++;
 	}
-	caption();
 	//User clicks a button to see the next question
-	$("#answersArea").html('<button onclick="nextQuestion()" type="button" class="btn btn-default" id="nextQ">Continue</button>');
+	$("#answersArea").html('<button onclick="nextQuestion()" type="button" class="btn btn-default" id="nextQ">Continue</button><br><br>');
+	caption();
 }
 
 function caption() {
-	if (currentQuestion.correctAnswers.answer1) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer1) + '<br><br>'}
-	if (currentQuestion.correctAnswers.answer2) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer2) + '<br><br>'}
-	if (currentQuestion.correctAnswers.answer3) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer3) + '<br><br>'}
-	if (currentQuestion.correctAnswers.answer4) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer4) + '<br><br>'}
+	if (currentQuestion.correctAnswers.includes(1)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer1 + '<br><br>')}
+	if (currentQuestion.correctAnswers.includes(2)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer2 + '<br><br>')}
+	if (currentQuestion.correctAnswers.includes(3)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer3 + '<br><br>')}
+	if (currentQuestion.correctAnswers.includes(4)) {$("#answersArea").append('Correct answer(s): ' + currentQuestion.answer4 + '<br><br>')}
 }
 
 function clickedThirtyQuiz() {

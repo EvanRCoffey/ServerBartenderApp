@@ -7,16 +7,6 @@ PRE-PRESENTATION STUFF:
 
 	EVAN
 
-		-BEFORE NEXT UPDATE, TOMORROW MORNING:
-		
-			-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
-
-			-[SOLVED BUT NOT TESTED - quizMaker.js, 2253-2258] When a user gets a question correct or incorrect, display the correct answer(s) along with the "next question" button
-
-			-(PLUS WHATEVER MILLS FINISHES TONIGHT)
-
-			
-
 		***Finish the Flash Cards (see flashCards.js comments)
 
 		***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)
@@ -35,6 +25,7 @@ PRE-PRESENTATION STUFF:
 POST-PRESENTAITON STUFF:
 
 	-Quiz maker stuff:
+		-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
 		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
 		-Looks like all items are marked secret right now in the menu builder
 		-Prevent duplicate answers and duplicate questions
