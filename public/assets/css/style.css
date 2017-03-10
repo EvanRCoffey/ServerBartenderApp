@@ -8,6 +8,10 @@ Tan rgba(170, 162, 147, 1);
 
 */
 
+td{
+	color: rgba(73, 97, 125, 1); 
+}
+
 nav {
 	background-color: rgba(73, 97, 125, 1);
 	box-shadow: none;
@@ -23,6 +27,18 @@ nav {
 
 a.button-collapse{
 	color: rgba(252, 250, 208, 1); 
+}
+
+.noUi-connect, .noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+	background-color: rgba(98, 146, 202, 1);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+	background-color: rgba(98, 146, 202, 1);
+}
+
+.switch label .lever, .switch label input[type=checkbox]:checked+.lever{
+	background-color: rgba(170, 162, 147, .5);
 }
 
 h4 {
@@ -238,7 +254,7 @@ input[type=range]+.thumb.active {
 	left: 0;
 	right: 0;
 	bottom: 0px;
-	background-color: rgba(255,255,255,.9);
+	background-color: rgba(252, 250, 208, .9);
 }
 
 .datespan{
