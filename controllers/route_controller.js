@@ -623,7 +623,14 @@ router.post("/timelineGoals", loggedIn, function(req, res, next) {
 });
 
 router.get("/quizMaker", loggedIn, function(req, res, next) {
-    res.render("quizMaker", req);
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+      console.log(dbUser);
+      var dataObject = {
+          jobs: dbUser
+        };
+        console.log(dataObject);
+       res.render("quizMaker", dataObject);
+     });
 })
 
 router.get("/flashCards", loggedIn, function(req, res, next) {
@@ -631,7 +638,8 @@ router.get("/flashCards", loggedIn, function(req, res, next) {
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
-    db.Menu.findOne({ where: {id: req.body.id} }).then(function(dbUser) {
+    db.Menu.findOne({ where: {UserId: req.user.id, JobID: req.body.jobId} }).then(function(dbUser) {
+        console.log(dbUser);
         res.json(dbUser);
     });
 })

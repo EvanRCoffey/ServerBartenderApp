@@ -1,29 +1,68 @@
-MILLS
+PRE-PRESENTATION STUFF:
 
-	-Implement the design/UI pass
-	-Debugging and presentation prep
+	MILLS
 
-EVAN
+		-Implement the design/UI pass
+		-Debugging and presentation prep
 
-	***Finish the Flash Cards (see flashCards.js comments)
+	EVAN
 
-	***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)		
+		-BEFORE NEXT UPDATE, TOMORROW MORNING:
+		
+			-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
 
-	***Users shouldn't delete shifts, jobs or menus.  They should "delete" them.
+			-[SOLVED BUT NOT TESTED - quizMaker.js, 2253-2258] When a user gets a question correct or incorrect, display the correct answer(s) along with the "next question" button
+
+			-(PLUS WHATEVER MILLS FINISHES TONIGHT)
+
+			
+
+		***Finish the Flash Cards (see flashCards.js comments)
+
+		***Finish the Timeline Creator (Prebuilt display using amcharts?  Some other prebuilt display?  Build something from scratch?)
+
+		[Help with debugging, design, and UI work]	
+
+	EITHER/BOTH
+
+		-Add testing to project
+		-Get all updates online
+		-Rehearse presentation together using online version of site
+		-(Have a backup offline version ready on a flash drive?!)
+
+
+
+POST-PRESENTAITON STUFF:
+
+	-Quiz maker stuff:
+		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
+		-Looks like all items are marked secret right now in the menu builder
+		-Prevent duplicate answers and duplicate questions
+
+	-Users shouldn't delete shifts, jobs or menus.  They should "delete" them.
 	  	1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
 	 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
 	 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
 
-	-NEXT UPDATE:
-		-Undefined error with "secret item" questions (undefined is incorrect, others are correct)
-		-When a user gets a question correct or incorrect, display the correct answer(s)
-		-prevent duplicate questions and duplicate answers (can wait, if necessary)
-		-replace "restart" button with ten, twenty, and thirtyQuiz buttons
-		-Fix allergens and secret items section
-		-Get user identification and menu selection working
-		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one [alternatively, you can just swap all "select all that apply" with "select any that apply"]
-		-Update the site, update the dummy account, and send an email
 
-EITHER
+______________________________________________________________________________________________________
 
-	-Add testing to the project
+Good morning, everyone!  Presentation day is tomorrow, so this is a big update.
+
+-Menu builder prototype is in place - it's buggy, but it works.  You can't see what you've built once you leave the page, but the menu IS being pushed to the database any time you add a new item.  Rest assured, you'll be able to see/edit/delete it all soon!
+-Using the menu builder, I built the menu at Fleming's and added it to the dummy account (email: molander16@yahoo.com, password:"password")
+-Quiz maker is finished and available for use with the Fleming's menu on the dummy account
+-Flash card prototype is in place, but it's unfinished - everything works until you try to move from flash card #1 to flash card #2.  We'll fix that today.
+-Financial summary has been polished and is presentation-ready, with plenty of fake data in the dummy account
+-Timeline creator prototype is in place, but it's VERY bare.  Open up the console (right click your browser, click "inspect", then click console) to see the data that we will soon be making pretty and putting on the page.  We'll fix this today, too.
+-Website UI/design updated
+
+As you can see, there are now quite a few new features, so the home page no longer has instructions on it.  At this point, we want the website to just "flow" intuitively.  Hopefully our design will represent that goal.  If it doesn't, your input will be particularly helpful here!
+
+Unfortunately, our database has tumbleweeds in it - nobody has really used the website up until now.  If life has taken you to a place where you no longer want to help, no explanation necessary, and no worries!  However, Mills and I got excited about the prospect of having help from people in the industry - especially people that I personally know and respect.  If you can find the time to peek around and offer constructive criticism, it'd mean a lot.
+
+There won't be any real *changes* from here, per se - just improvements.  Thus, I won't send any emails after this one.  The website will remain online, so if you wanna have a look, feel free at any time.  You can email me with feedback, or you can use the feedback link on the site.  We'll push one final update just before 10:00 AM, when project presentations start.
+
+Thanks again for offering to help.  Miss you all, and wishing the best for each of you.
+
+-Evan (and Mills!)
