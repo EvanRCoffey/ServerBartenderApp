@@ -1,38 +1,63 @@
-PRE-PRESENTATION STUFF:
+***PRE-PRESENTATION STUFF:
 
-	MILLS
+	*Timeline: AMCharts?  Or just jQuery?
+	*Flash card
+		-Add checkboxes and functionality for "selected categories" button
+		-Make them look like actual flash cards ("flip over" and "next card" animations?)
+	*Navigation Bar: Decide how to organize all of the links
+	*Financial Summary: Add multiple colors to graph
+	*Home Page: Simplify it, but don't let it just be a blank page
+	*Dashboard (with goal checker)
+		-Decide on the layout of the dashboard, now that you have the full site available
+		-Build new dashboard layout
+		-Fix the goal status tabs
+		-Checking goals every time you go to the dashboard is OK as long as it is not annoying when you choose to ignore it
 
-		-Implement the design/UI pass
-		-Debugging and presentation prep
+	-Add testing to project???
+	-One final design/UI pass
+	-Make powerpoint and decide what to include in the presentation
+	-Rehearse presentation together using online version of site
 
-	EVAN
 
-		-Finish the Timeline Creator 
+***POST-PRESENTATION STUFF
+
+	///////////////////
+	//NO VISIBLE ERRORS
+	///////////////////
+
+		Login
+		Password Recovery
+		Update Account
+
+	//////////////////
+	//STILL NEEDS WORK
+	//////////////////
+
+		*Dashboard, Home Page, Navigation Bar, Financial Summary, Timeline
+			-See "pre-presentation stuff" above
+
+		*Shift Management, Goal Management, Job Management
+			1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
+		 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
+		 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
+		 	(Shift edit only - slidebars are both defaulting to Noon)
+
+		*Sign Up
+			-Should we demand passwords be a certain length/complexity?
+
+		*Feedback
+			-Redirect to dashboard with a success message
+
+		*Quiz Maker, cont...
+			-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
+			-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
+			-Looks like all items are marked secret right now in the menu builder
+			-Prevent duplicate answers and duplicate questions
+
+		*Flash Card, cont...
+			-Entrees, sides, and desserts should include allergy violations, descriptors, and ingredients, too
+			-Job/menu should be selected (just like with the quiz maker)
+			-Give user option to shuffle cards or do them in order
+
+		*Timeline, cont...
 			-Mills said he'd take a look at amcharts and see if it'd be quick to implement.  If not, just make something from scratch.
-		-Help with debugging, design, and UI work
-			-Goal checker still needs a touchup (materialize card tabs aren't working)
-
-	EITHER/BOTH
-
-		-Add testing to project???
-		-Rehearse presentation together using online version of site
-		-(Have a backup offline version ready on a flash drive?!)
-
-POST-PRESENTAITON STUFF:
-
-	-Quiz maker stuff:
-		-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
-		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
-		-Looks like all items are marked secret right now in the menu builder
-		-Prevent duplicate answers and duplicate questions
-
-	-Flash card stuff:
-		-Make all checkboxes for "selected categories" (later)
-		-Make the button reference all of the checkboxes correctly (later)
-		-Entrees, sides, and desserts should include allergy violations, descriptors, ingredients, too (later)
-		-Job/menu should be selected instead of hardcoded, just like with the quiz maker
-
-	-Users shouldn't delete shifts, jobs or menus.  They should "delete" them.
-	  	1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
-	 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
-	 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"

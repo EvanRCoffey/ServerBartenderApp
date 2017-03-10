@@ -1375,7 +1375,7 @@ var thirtyQuiz = false;
 		var sampleCorrectAnswers = [];
 		var sampleFourAnswers = [];
 		var sampleQ = "Do you have any of these common sauces? (There may be more than one correct answer)";
-		var saucesArray = ["a1","bbqSauce","cocktailSauce","heinz57","hotSauce","ketchup","marinara","mayonnaise","mustardSpicy","mustardYellow","salsa","soySauce"];
+		var saucesArray = ["A1","BBQ Sauce","Cocktail Sauce","Heinz 57","Hot Sauce","Ketchup","Marinara","Mayonnaise","Spicy Mustard","Yellow Mustard","Salsa","Soy Sauce"];
 
 		//Get four random sauces for answers - for now, there might be duplicates
 		var randomSauce1 = saucesArray[Math.floor(Math.random() * saucesArray.length)];
@@ -1571,10 +1571,10 @@ var thirtyQuiz = false;
 
 		if (thirtyQuiz) {
 			//Put a button up for thirtyQuiz which calls clickedThirtyQuiz()
-			var thirtyQuizButtonString = '<div class="col-md-12"><button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizButton">Thirty Questions</button></div>';
+			var thirtyQuizButtonString = '<div class="col-md-12"><button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizButton">Thirty Questions</button></div><br>';
 			$("#messageArea").html(thirtyQuizButtonString);
 			//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
-			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
+			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div><br>';
 			$("#messageArea").append(twentyQuizButtonString);
 			//Put a button up for tenQuiz which calls clickedTenQuiz()
 			var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
@@ -1583,7 +1583,7 @@ var thirtyQuiz = false;
 
 		else if (twentyQuiz) {
 			//Put a button up for twentyQuiz which calls clickedTwentyQuiz()
-			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div>';
+			var twentyQuizButtonString = '<div class="col-md-12"><button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizButton">Twenty Questions</button></div><br>';
 			$("#messageArea").html(twentyQuizButtonString);
 			//Put a button up for tenQuiz which calls clickedTenQuiz()
 			var tenQuizButtonString = '<div class="col-md-12"><button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizButton">Ten Questions</button></div>';
@@ -2213,10 +2213,10 @@ function nextQuestion() {
 		$("#answersArea").append("Total incorrect: " + numIncorrect + "<br>");
 		$("#answersArea").append("Press the restart button to play again!<br><br>");
 		if (thirtyQuiz) {
-			$("#answersArea").append('<button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizRestart">Restart with a new thirty-question quiz</button>');	
+			$("#answersArea").append('<button onclick="clickedThirtyQuiz()" type="button" class="btn btn-default" id="thirtyQuizRestart">Restart with a new thirty-question quiz</button><br><br>');	
 		}
 		if (twentyQuiz) {
-			$("#answersArea").append('<button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizRestart">Restart with a new twenty-question quiz</button>');	
+			$("#answersArea").append('<button onclick="clickedTwentyQuiz()" type="button" class="btn btn-default" id="twentyQuizRestart">Restart with a new twenty-question quiz</button><br><br>');	
 		}
 		if (tenQuiz) {
 			$("#answersArea").append('<button onclick="clickedTenQuiz()" type="button" class="btn btn-default" id="tenQuizRestart">Restart with a new ten-question quiz</button>');	

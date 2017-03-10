@@ -1,11 +1,3 @@
-//FLASH CARDS TO DO 
-
-//Make all checkboxes for "selected categories" (later)
-//Make the button reference all of the checkboxes correctly (later)
-//Entrees, sides, and desserts should include allergy violations, descriptors, ingredients, too (later)
-
-//Eventually, the job/menu can be selected.  For now, it's hardcoded.
-
 var idObj = {
 	jobId: 1
 }
@@ -51,7 +43,6 @@ var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolA
 $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var parsedMenuJson = JSON.parse(data2.menuJSON);
 	var reParsedMenuJson = JSON.parse(parsedMenuJson);
-	console.log(reParsedMenuJson);
 
 	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
 		entrees.push(reParsedMenuJson.entree[i]);
@@ -179,16 +170,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 		boolOtherDrinks = true;
 	}
 
-	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div>';
+	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div><br>';
 	$("#area1").append(entireMenuButtonString);
 
 	if (boolFood) {
-		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div>';
+		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div><br>';
 		$("#area1").append(allFoodButtonString);
 	}
 
 	if (boolDrink) {
-		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div>';
+		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div><br>';
 		$("#area1").append(allDrinksButtonString);
 	}
 
@@ -210,7 +201,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 function showFlashCardFront() {
 	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
-	var frontOfCardString = '<p>Item name = "' + objBeingUsed.name + '"</p><button onclick="flipCardOver()" type="button" class="btn btn-default" id="flipCardOver">Flip card over</button>';
+	var frontOfCardString = '<p>' + objBeingUsed.name + '</p><button onclick="flipCardOver()" type="button" class="btn btn-default" id="flipCardOver">Flip card over</button>';
 	$("#area1").html(frontOfCardString);
 }
 
@@ -218,7 +209,7 @@ function showFlashCardFront() {
 //This is being called just fine
 function flipCardOver() {
 	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
-	var backOfCardString = '<p>Item name = "'+objBeingUsed.name+'"</p><p>Price = $"'+objBeingUsed.price+'"</p><p>Quick description = "'+objBeingUsed.quickDescr+'"</p><p>Detailed description = "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
+	var backOfCardString = '<p>'+objBeingUsed.name+'</p><p>$'+objBeingUsed.price+'</p><p>Quick description = "'+objBeingUsed.quickDescr+'"</p><p>Detailed description = "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><br><br><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
 	$("#area1").html(backOfCardString);
 }
 
@@ -305,6 +296,8 @@ function statusReport(gotItArray, studyFurtherArray) {
 }
 
 function entireMenu() {
+	$("#area1").html("<div></div>");
+	$("#area2").html("<div></div>");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -324,19 +317,17 @@ function entireMenu() {
 	if (afterDinnerDrinks.length > 0) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	console.log("allFlashCards:");
-	console.log(allFlashCards);
 	for (var i = 0; i<allFlashCards.length; i++) {
 		for (var j = 0; j<allFlashCards[i].length; j++) {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
-	console.log("flashcardONEARRAY");
-	console.log(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function allFood() {
+	$("#area1").html("<div></div>");
+	$("#area2").html("<div></div>");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -350,19 +341,17 @@ function allFood() {
 	if (kidsMenuItems.length > 0) {allFlashCards.push(kidsMenuItems);}
 	if (otherFoods.length > 0) {allFlashCards.push(otherFoods);}
 	shuffle(allFlashCards);
-	console.log("allFlashCards:");
-	console.log(allFlashCards);
 	for (var i = 0; i<allFlashCards.length; i++) {
 		for (var j = 0; j<allFlashCards[i].length; j++) {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
-	console.log("flashcardONEARRAY");
-	console.log(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function allDrinks() {
+	$("#area1").html("<div></div>");
+	$("#area2").html("<div></div>");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -374,19 +363,17 @@ function allDrinks() {
 	if (afterDinnerDrinks.length > 0) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	console.log("allFlashCards:");
-	console.log(allFlashCards);
 	for (var i = 0; i<allFlashCards.length; i++) {
 		for (var j = 0; j<allFlashCards[i].length; j++) {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
-	console.log("flashcardONEARRAY");
-	console.log(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function selectedCategories(obj) {
+	$("#area1").html("<div></div>");
+	$("#area2").html("<div></div>");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -406,14 +393,11 @@ function selectedCategories(obj) {
 	if (afterDinnerDrinks.length > 0 && obj.afterDinnerDrinks) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinks.length > 0 && obj.otherDrinks) {allFlashCards.push(otherDrinks);}
 	shuffle(allFlashCards);
-	console.log("allFlashCards:");
-	console.log(allFlashCards);	for (var i = 0; i<allFlashCards.length; i++) {
+	for (var i = 0; i<allFlashCards.length; i++) {
 		for (var j = 0; j<allFlashCards[i].length; j++) {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
-	console.log("flashcardONEARRAY");
-	console.log(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
