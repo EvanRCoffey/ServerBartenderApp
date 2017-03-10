@@ -39,144 +39,144 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//User selects menu, then...
 
 	//For each entree...
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
 		//Push the ent to allEnt[]
-		allEnt.push(reParsedMenuJson[0][i]);
+		allEnt.push(reParsedMenuJson.entree[i]);
 		//Push the ent to popEnts if appropriate
-		if (reParsedMenuJson[0][i].descriptors.popular) {
-			popEnts.push(reParsedMenuJson[0][i]);
+		if (reParsedMenuJson.entree[i].descriptors.popular) {
+			popEnts.push(reParsedMenuJson.entree[i]);
 		}
 		//Increment entsWithPrice and push the app to allQ1Ent[] if appropriate
-		if (parseFloat(reParsedMenuJson[0][i].price) > 0) {
-			allQ1Ent.push(reParsedMenuJson[0][i]);
+		if (parseFloat(reParsedMenuJson.entree[i].price) > 0) {
+			allQ1Ent.push(reParsedMenuJson.entree[i]);
 		}
 	}
 
 	//For each appetizer...
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
 		//Push the app to allApp[]
-		allApp.push(reParsedMenuJson[1][i]);
+		allApp.push(reParsedMenuJson.appetizer[i]);
 		//Push the app to popApps if appropriate
-		if (reParsedMenuJson[1][i].descriptors.popular) {
-			popApps.push(reParsedMenuJson[1][i]);
+		if (reParsedMenuJson.appetizer[i].descriptors.popular) {
+			popApps.push(reParsedMenuJson.appetizer[i]);
 		}
 		//Increment appsWithPrice and push the app to allQ1App[] if appropriate
-		if (parseFloat(reParsedMenuJson[1][i].price) > 0) {
-			allQ1App.push(reParsedMenuJson[1][i]);
+		if (parseFloat(reParsedMenuJson.appetizer[i].price) > 0) {
+			allQ1App.push(reParsedMenuJson.appetizer[i]);
 		}
 	}
 
 	//For each dessert...
-	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
 		//Push the dessert to allDes[]
-		allDes.push(reParsedMenuJson[2][i]);
+		allDes.push(reParsedMenuJson.dessert[i]);
 		//Push the dessert to popDesserts if appropriate
-		if (reParsedMenuJson[2][i].descriptors.popular) {
-			popDesserts.push(reParsedMenuJson[2][i]);
+		if (reParsedMenuJson.dessert[i].descriptors.popular) {
+			popDesserts.push(reParsedMenuJson.dessert[i]);
 		}
 	}
 
 	//For each addOn, push that addOn to addOns[]
-	for (var i = 0; i<reParsedMenuJson[4].length; i++) {
-		addOns.push(reParsedMenuJson[4][i]);
+	for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {
+		addOns.push(reParsedMenuJson.addOn[i]);
 	}
 
 	//For each app, for each descriptor that's marked true, if it's not in uniqueAppDescr[], push it
 	var numAppDescr = 17;
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
 		for (var j = 0; j<numAppDescr; j++) {
-			if ((reParsedMenuJson[1][i].descriptors.aLaCarteOrBiteSize) && (!uniqueAppDescr.includes("aLaCarteOrBiteSize"))) {uniqueAppDescr.push("aLaCarteOrBiteSize")};
-			if ((reParsedMenuJson[1][i].descriptors.cheesy) && (!uniqueAppDescr.includes("cheesy"))) {uniqueAppDescr.push("cheesy")};
-			if ((reParsedMenuJson[1][i].descriptors.fresh) && (!uniqueAppDescr.includes("fresh"))) {uniqueAppDescr.push("fresh")};
-			if ((reParsedMenuJson[1][i].descriptors.fried) && (!uniqueAppDescr.includes("fried"))) {uniqueAppDescr.push("fried")};
-			if ((reParsedMenuJson[1][i].descriptors.healthy) && (!uniqueAppDescr.includes("healthy"))) {uniqueAppDescr.push("healthy")};
-			if ((reParsedMenuJson[1][i].descriptors.hearty) && (!uniqueAppDescr.includes("hearty"))) {uniqueAppDescr.push("hearty")};
-			if ((reParsedMenuJson[1][i].descriptors.indulgent) && (!uniqueAppDescr.includes("indulgent"))) {uniqueAppDescr.push("indulgent")};
-			if ((reParsedMenuJson[1][i].descriptors.light) && (!uniqueAppDescr.includes("light"))) {uniqueAppDescr.push("light")};
-			if ((reParsedMenuJson[1][i].descriptors.plain) && (!uniqueAppDescr.includes("plain"))) {uniqueAppDescr.push("plain")};
-			if ((reParsedMenuJson[1][i].descriptors.popular) && (!uniqueAppDescr.includes("popular"))) {uniqueAppDescr.push("popular")};
-			if ((reParsedMenuJson[1][i].descriptors.raw) && (!uniqueAppDescr.includes("raw"))) {uniqueAppDescr.push("raw")};
-			if ((reParsedMenuJson[1][i].descriptors.salty) && (!uniqueAppDescr.includes("salty"))) {uniqueAppDescr.push("salty")};
-			if ((reParsedMenuJson[1][i].descriptors.servedCold) && (!uniqueAppDescr.includes("servedCold"))) {uniqueAppDescr.push("servedCold")};
-			if ((reParsedMenuJson[1][i].descriptors.spicy) && (!uniqueAppDescr.includes("spicy"))) {uniqueAppDescr.push("spicy")};
-			if ((reParsedMenuJson[1][i].descriptors.sweet) && (!uniqueAppDescr.includes("sweet"))) {uniqueAppDescr.push("sweet")};
-			if ((reParsedMenuJson[1][i].descriptors.toShare) && (!uniqueAppDescr.includes("toShare"))) {uniqueAppDescr.push("toShare")};
-			if ((reParsedMenuJson[1][i].descriptors.vegetarian) && (!uniqueAppDescr.includes("vegetarian"))) {uniqueAppDescr.push("vegetarian"), vegApps.push(reParsedMenuJson[1][i]);};
+			if ((reParsedMenuJson.appetizer[i].descriptors.aLaCarteOrBiteSize) && (!uniqueAppDescr.includes("aLaCarteOrBiteSize"))) {uniqueAppDescr.push("aLaCarteOrBiteSize")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.cheesy) && (!uniqueAppDescr.includes("cheesy"))) {uniqueAppDescr.push("cheesy")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.fresh) && (!uniqueAppDescr.includes("fresh"))) {uniqueAppDescr.push("fresh")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.fried) && (!uniqueAppDescr.includes("fried"))) {uniqueAppDescr.push("fried")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.healthy) && (!uniqueAppDescr.includes("healthy"))) {uniqueAppDescr.push("healthy")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.hearty) && (!uniqueAppDescr.includes("hearty"))) {uniqueAppDescr.push("hearty")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.indulgent) && (!uniqueAppDescr.includes("indulgent"))) {uniqueAppDescr.push("indulgent")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.light) && (!uniqueAppDescr.includes("light"))) {uniqueAppDescr.push("light")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.plain) && (!uniqueAppDescr.includes("plain"))) {uniqueAppDescr.push("plain")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.popular) && (!uniqueAppDescr.includes("popular"))) {uniqueAppDescr.push("popular")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.raw) && (!uniqueAppDescr.includes("raw"))) {uniqueAppDescr.push("raw")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.salty) && (!uniqueAppDescr.includes("salty"))) {uniqueAppDescr.push("salty")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.servedCold) && (!uniqueAppDescr.includes("servedCold"))) {uniqueAppDescr.push("servedCold")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.spicy) && (!uniqueAppDescr.includes("spicy"))) {uniqueAppDescr.push("spicy")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.sweet) && (!uniqueAppDescr.includes("sweet"))) {uniqueAppDescr.push("sweet")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.toShare) && (!uniqueAppDescr.includes("toShare"))) {uniqueAppDescr.push("toShare")};
+			if ((reParsedMenuJson.appetizer[i].descriptors.vegetarian) && (!uniqueAppDescr.includes("vegetarian"))) {uniqueAppDescr.push("vegetarian"), vegApps.push(reParsedMenuJson.appetizer[i]);};
 		}
 	}
 
 	//For each app, for each ingredient that's marked true, if it's not in uniqueAppIngr[], push it
 	var numAppIngr = 6;
-	for (var i = 0; i<reParsedMenuJson[1].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
 		for (var j = 0; j<numAppIngr; j++) {
-			if ((reParsedMenuJson[1][i].ingredients.beef) && (!uniqueAppIngr.includes("beef"))) {uniqueAppIngr.push("beef")};
-			if ((reParsedMenuJson[1][i].ingredients.chicken) && (!uniqueAppIngr.includes("chicken"))) {uniqueAppIngr.push("chicken")};
-			if ((reParsedMenuJson[1][i].ingredients.lamb) && (!uniqueAppIngr.includes("lamb"))) {uniqueAppIngr.push("lamb")};
-			if ((reParsedMenuJson[1][i].ingredients.otherProtein) && (!uniqueAppIngr.includes("otherProtein"))) {uniqueAppIngr.push("otherProtein")};
-			if ((reParsedMenuJson[1][i].ingredients.pork) && (!uniqueAppIngr.includes("pork"))) {uniqueAppIngr.push("pork")};
-			if ((reParsedMenuJson[1][i].ingredients.seafood) && (!uniqueAppIngr.includes("seafood"))) {uniqueAppIngr.push("seafood")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.beef) && (!uniqueAppIngr.includes("beef"))) {uniqueAppIngr.push("beef")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.chicken) && (!uniqueAppIngr.includes("chicken"))) {uniqueAppIngr.push("chicken")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.lamb) && (!uniqueAppIngr.includes("lamb"))) {uniqueAppIngr.push("lamb")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.otherProtein) && (!uniqueAppIngr.includes("otherProtein"))) {uniqueAppIngr.push("otherProtein")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.pork) && (!uniqueAppIngr.includes("pork"))) {uniqueAppIngr.push("pork")};
+			if ((reParsedMenuJson.appetizer[i].ingredients.seafood) && (!uniqueAppIngr.includes("seafood"))) {uniqueAppIngr.push("seafood")};
 		}
 	}
 
 	//For each entree, for each descriptor that's marked true, if it's not in uniqueEntDescr[], push it
 	var numEntDescr = 17;
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
 		for (var j = 0; j<numEntDescr; j++) {
-			if ((reParsedMenuJson[0][i].descriptors.aLaCarteOrBiteSize) && (!uniqueEntDescr.includes("aLaCarteOrBiteSize"))) {uniqueEntDescr.push("aLaCarteOrBiteSize")};
-			if ((reParsedMenuJson[0][i].descriptors.cheesy) && (!uniqueEntDescr.includes("cheesy"))) {uniqueEntDescr.push("cheesy")};
-			if ((reParsedMenuJson[0][i].descriptors.fresh) && (!uniqueEntDescr.includes("fresh"))) {uniqueEntDescr.push("fresh")};
-			if ((reParsedMenuJson[0][i].descriptors.fried) && (!uniqueEntDescr.includes("fried"))) {uniqueEntDescr.push("fried")};
-			if ((reParsedMenuJson[0][i].descriptors.healthy) && (!uniqueEntDescr.includes("healthy"))) {uniqueEntDescr.push("healthy")};
-			if ((reParsedMenuJson[0][i].descriptors.hearty) && (!uniqueEntDescr.includes("hearty"))) {uniqueEntDescr.push("hearty")};
-			if ((reParsedMenuJson[0][i].descriptors.indulgent) && (!uniqueEntDescr.includes("indulgent"))) {uniqueEntDescr.push("indulgent")};
-			if ((reParsedMenuJson[0][i].descriptors.light) && (!uniqueEntDescr.includes("light"))) {uniqueEntDescr.push("light")};
-			if ((reParsedMenuJson[0][i].descriptors.plain) && (!uniqueEntDescr.includes("plain"))) {uniqueEntDescr.push("plain")};
-			if ((reParsedMenuJson[0][i].descriptors.popular) && (!uniqueEntDescr.includes("popular"))) {uniqueEntDescr.push("popular")};
-			if ((reParsedMenuJson[0][i].descriptors.raw) && (!uniqueEntDescr.includes("raw"))) {uniqueEntDescr.push("raw")};
-			if ((reParsedMenuJson[0][i].descriptors.salty) && (!uniqueEntDescr.includes("salty"))) {uniqueEntDescr.push("salty")};
-			if ((reParsedMenuJson[0][i].descriptors.servedCold) && (!uniqueEntDescr.includes("servedCold"))) {uniqueEntDescr.push("servedCold")};
-			if ((reParsedMenuJson[0][i].descriptors.spicy) && (!uniqueEntDescr.includes("spicy"))) {uniqueEntDescr.push("spicy")};
-			if ((reParsedMenuJson[0][i].descriptors.sweet) && (!uniqueEntDescr.includes("sweet"))) {uniqueEntDescr.push("sweet")};
-			if ((reParsedMenuJson[0][i].descriptors.toShare) && (!uniqueEntDescr.includes("toShare"))) {uniqueEntDescr.push("toShare")};
-			if ((reParsedMenuJson[0][i].descriptors.vegetarian) && (!uniqueEntDescr.includes("vegetarian"))) {uniqueEntDescr.push("vegetarian"), vegEnts.push(reParsedMenuJson[0][i]);};
+			if ((reParsedMenuJson.entree[i].descriptors.aLaCarteOrBiteSize) && (!uniqueEntDescr.includes("aLaCarteOrBiteSize"))) {uniqueEntDescr.push("aLaCarteOrBiteSize")};
+			if ((reParsedMenuJson.entree[i].descriptors.cheesy) && (!uniqueEntDescr.includes("cheesy"))) {uniqueEntDescr.push("cheesy")};
+			if ((reParsedMenuJson.entree[i].descriptors.fresh) && (!uniqueEntDescr.includes("fresh"))) {uniqueEntDescr.push("fresh")};
+			if ((reParsedMenuJson.entree[i].descriptors.fried) && (!uniqueEntDescr.includes("fried"))) {uniqueEntDescr.push("fried")};
+			if ((reParsedMenuJson.entree[i].descriptors.healthy) && (!uniqueEntDescr.includes("healthy"))) {uniqueEntDescr.push("healthy")};
+			if ((reParsedMenuJson.entree[i].descriptors.hearty) && (!uniqueEntDescr.includes("hearty"))) {uniqueEntDescr.push("hearty")};
+			if ((reParsedMenuJson.entree[i].descriptors.indulgent) && (!uniqueEntDescr.includes("indulgent"))) {uniqueEntDescr.push("indulgent")};
+			if ((reParsedMenuJson.entree[i].descriptors.light) && (!uniqueEntDescr.includes("light"))) {uniqueEntDescr.push("light")};
+			if ((reParsedMenuJson.entree[i].descriptors.plain) && (!uniqueEntDescr.includes("plain"))) {uniqueEntDescr.push("plain")};
+			if ((reParsedMenuJson.entree[i].descriptors.popular) && (!uniqueEntDescr.includes("popular"))) {uniqueEntDescr.push("popular")};
+			if ((reParsedMenuJson.entree[i].descriptors.raw) && (!uniqueEntDescr.includes("raw"))) {uniqueEntDescr.push("raw")};
+			if ((reParsedMenuJson.entree[i].descriptors.salty) && (!uniqueEntDescr.includes("salty"))) {uniqueEntDescr.push("salty")};
+			if ((reParsedMenuJson.entree[i].descriptors.servedCold) && (!uniqueEntDescr.includes("servedCold"))) {uniqueEntDescr.push("servedCold")};
+			if ((reParsedMenuJson.entree[i].descriptors.spicy) && (!uniqueEntDescr.includes("spicy"))) {uniqueEntDescr.push("spicy")};
+			if ((reParsedMenuJson.entree[i].descriptors.sweet) && (!uniqueEntDescr.includes("sweet"))) {uniqueEntDescr.push("sweet")};
+			if ((reParsedMenuJson.entree[i].descriptors.toShare) && (!uniqueEntDescr.includes("toShare"))) {uniqueEntDescr.push("toShare")};
+			if ((reParsedMenuJson.entree[i].descriptors.vegetarian) && (!uniqueEntDescr.includes("vegetarian"))) {uniqueEntDescr.push("vegetarian"), vegEnts.push(reParsedMenuJson.entree[i]);};
 		}
 	}
 
 	//For each entree, for each ingredient that's marked true, if it's not in uniqueEntIngr[], push it
 	var numEntIngr = 6;
-	for (var i = 0; i<reParsedMenuJson[0].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
 		for (var j = 0; j<numEntIngr; j++) {
-			if ((reParsedMenuJson[0][i].ingredients.beef) && (!uniqueEntIngr.includes("beef"))) {uniqueEntIngr.push("beef")};
-			if ((reParsedMenuJson[0][i].ingredients.chicken) && (!uniqueEntIngr.includes("chicken"))) {uniqueEntIngr.push("chicken")};
-			if ((reParsedMenuJson[0][i].ingredients.lamb) && (!uniqueEntIngr.includes("lamb"))) {uniqueEntIngr.push("lamb")};
-			if ((reParsedMenuJson[0][i].ingredients.otherProtein) && (!uniqueEntIngr.includes("otherProtein"))) {uniqueEntIngr.push("otherProtein")};
-			if ((reParsedMenuJson[0][i].ingredients.pork) && (!uniqueEntIngr.includes("pork"))) {uniqueEntIngr.push("pork")};
-			if ((reParsedMenuJson[0][i].ingredients.seafood) && (!uniqueEntIngr.includes("seafood"))) {uniqueEntIngr.push("seafood")};
+			if ((reParsedMenuJson.entree[i].ingredients.beef) && (!uniqueEntIngr.includes("beef"))) {uniqueEntIngr.push("beef")};
+			if ((reParsedMenuJson.entree[i].ingredients.chicken) && (!uniqueEntIngr.includes("chicken"))) {uniqueEntIngr.push("chicken")};
+			if ((reParsedMenuJson.entree[i].ingredients.lamb) && (!uniqueEntIngr.includes("lamb"))) {uniqueEntIngr.push("lamb")};
+			if ((reParsedMenuJson.entree[i].ingredients.otherProtein) && (!uniqueEntIngr.includes("otherProtein"))) {uniqueEntIngr.push("otherProtein")};
+			if ((reParsedMenuJson.entree[i].ingredients.pork) && (!uniqueEntIngr.includes("pork"))) {uniqueEntIngr.push("pork")};
+			if ((reParsedMenuJson.entree[i].ingredients.seafood) && (!uniqueEntIngr.includes("seafood"))) {uniqueEntIngr.push("seafood")};
 		}
 	}
 
 	//For each dessert, for each descriptor that's marked true, if it's not in uniqueDesDescr[], push it
 	var numDesDescr = 8;
-	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
 		for (var j = 0; j<numDesDescr; j++) {
-			if ((reParsedMenuJson[2][i].descriptors.chocolatey) && (!uniqueDesDescr.includes("chocolatey"))) {uniqueDesDescr.push("chocolatey")};
-			if ((reParsedMenuJson[2][i].descriptors.fruity) && (!uniqueDesDescr.includes("fruity"))) {uniqueDesDescr.push("fruity")};
-			if ((reParsedMenuJson[2][i].descriptors.healthy) && (!uniqueDesDescr.includes("healthy"))) {uniqueDesDescr.push("healthy")};
-			if ((reParsedMenuJson[2][i].descriptors.light) && (!uniqueDesDescr.includes("light"))) {uniqueDesDescr.push("light")};
-			if ((reParsedMenuJson[2][i].descriptors.popular) && (!uniqueDesDescr.includes("healthy"))) {uniqueDesDescr.push("healthy")};
-			if ((reParsedMenuJson[2][i].descriptors.rich) && (!uniqueDesDescr.includes("rich"))) {uniqueDesDescr.push("rich")};
-			if ((reParsedMenuJson[2][i].descriptors.tart) && (!uniqueDesDescr.includes("tart"))) {uniqueDesDescr.push("tart")};
-			if ((reParsedMenuJson[2][i].descriptors.toShare) && (!uniqueDesDescr.includes("toShare"))) {uniqueDesDescr.push("toShare")};
+			if ((reParsedMenuJson.dessert[i].descriptors.chocolatey) && (!uniqueDesDescr.includes("chocolatey"))) {uniqueDesDescr.push("chocolatey")};
+			if ((reParsedMenuJson.dessert[i].descriptors.fruity) && (!uniqueDesDescr.includes("fruity"))) {uniqueDesDescr.push("fruity")};
+			if ((reParsedMenuJson.dessert[i].descriptors.healthy) && (!uniqueDesDescr.includes("healthy"))) {uniqueDesDescr.push("healthy")};
+			if ((reParsedMenuJson.dessert[i].descriptors.light) && (!uniqueDesDescr.includes("light"))) {uniqueDesDescr.push("light")};
+			if ((reParsedMenuJson.dessert[i].descriptors.popular) && (!uniqueDesDescr.includes("healthy"))) {uniqueDesDescr.push("healthy")};
+			if ((reParsedMenuJson.dessert[i].descriptors.rich) && (!uniqueDesDescr.includes("rich"))) {uniqueDesDescr.push("rich")};
+			if ((reParsedMenuJson.dessert[i].descriptors.tart) && (!uniqueDesDescr.includes("tart"))) {uniqueDesDescr.push("tart")};
+			if ((reParsedMenuJson.dessert[i].descriptors.toShare) && (!uniqueDesDescr.includes("toShare"))) {uniqueDesDescr.push("toShare")};
 		}
 	}
 
 	//For each dessert, for each ingredient that's marked true, if it's not in uniqueDesIngr[], push it
 	var numDesIngr = 3;
-	for (var i = 0; i<reParsedMenuJson[2].length; i++) {
+	for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
 		for (var j = 0; j<numDesIngr; j++) {
-			if ((reParsedMenuJson[2][i].ingredients.cake) && (!uniqueDesIngr.includes("cake"))) {uniqueDesIngr.push("cake")};
-			if ((reParsedMenuJson[2][i].ingredients.pie) && (!uniqueDesIngr.includes("pie"))) {uniqueDesIngr.push("pie")};
-			if ((reParsedMenuJson[2][i].ingredients.iceCream) && (!uniqueDesIngr.includes("iceCream"))) {uniqueDesIngr.push("iceCream")};
+			if ((reParsedMenuJson.dessert[i].ingredients.cake) && (!uniqueDesIngr.includes("cake"))) {uniqueDesIngr.push("cake")};
+			if ((reParsedMenuJson.dessert[i].ingredients.pie) && (!uniqueDesIngr.includes("pie"))) {uniqueDesIngr.push("pie")};
+			if ((reParsedMenuJson.dessert[i].ingredients.iceCream) && (!uniqueDesIngr.includes("iceCream"))) {uniqueDesIngr.push("iceCream")};
 		}
 	}
 
