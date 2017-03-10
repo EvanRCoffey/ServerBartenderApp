@@ -1,11 +1,196 @@
-.signUpError {
-	color: red;
+/* COLORS!
+
+Red rgba(171, 51, 50, 1);
+DarkBlue rgba(40, 50, 79, 1);
+LightBlue rgba(73, 97, 125, 1);
+Cream rgba(252, 250, 208, 1);
+Tan rgba(170, 162, 147, 1);
+
+*/
+
+td{
+	color: rgba(73, 97, 125, 1); 
 }
+
+nav {
+	background-color: rgba(73, 97, 125, 1);
+	box-shadow: none;
+}
+
+.side-nav{
+	background-color: rgba(252, 250, 208, 1);
+}
+
+.side-nav a{
+	color:rgba(73, 97, 125, 1);
+}
+
+a.button-collapse{
+	color: rgba(252, 250, 208, 1); 
+}
+
+.noUi-connect, .noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+	background-color: rgba(98, 146, 202, 1);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+	background-color: rgba(98, 146, 202, 1);
+}
+
+.switch label .lever, .switch label input[type=checkbox]:checked+.lever{
+	background-color: rgba(170, 162, 147, .5);
+}
+
+h4 {
+	font-family: 'Khand', sans-serif;
+	color:rgba(73, 97, 125, 1);
+	text-transform: uppercase;
+}
+
+h5 {
+	color:rgba(73, 97, 125, 1);
+}
+
+[type="checkbox"].filled-in:not(:checked)+label:after {
+    border: 2px solid rgba(73, 97, 125, 1);
+}
+
+.input-field label{
+	color: rgba(73, 97, 125, .7);
+}
+
+
+body {
+	background-color: rgba(252, 250, 208, 1); 
+}
+
+p {
+	color: rgba(40, 50, 79, 1) !important; 
+}
+
+.card {
+	background-color: rgba(170, 162, 147, .3);
+	color: rgba(40, 50, 79, 1);
+	box-shadow: none;
+}
+
+.card .card-action {
+	background-color: rgba(40, 50, 79, 1);
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
+	color: rgba(170, 162, 147, 1);
+}
+
+.card .card-title{
+	font-size: 40px;
+	font-family: 'Khand', sans-serif;
+	color:rgba(73, 97, 125, 1);
+	text-transform: uppercase;
+}
+
+  input[type=range]::-webkit-slider-thumb {
+    background-color: rgba(98, 146, 202, 1);
+  }
+  input[type=range]::-moz-range-thumb {
+    background-color: rgba(98, 146, 202, 1);
+  }
+  input[type=range]::-ms-thumb {
+    background-color: rgba(98, 146, 202, 1);
+  }
+
+
+.welcome{
+	text-align: center;
+}
+
+.btn{
+	background-color: rgba(40, 50, 79, 1);
+	box-shadow: none;
+}
+
+.btn:focus, .btn-large:focus, .btn-floating:focus {
+    background-color: rgba(40, 50, 79, 1);
+}
+
+.btn:hover {
+	background-color: rgba(73, 97, 125, 1);
+}
+
+.brand-logo{
+	margin-top: 10px;
+	margin-left: 20px;
+}
+.signUpError {
+	color: rgba(171, 51, 50, 1);
+}
+
+.picker__weekday-display{
+	background-color:rgba(40, 50, 79, 1);
+}
+
+.picker__date-display{
+	background-color: rgba(73, 97, 125, 1);
+}
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected{
+	background-color: rgba(73, 97, 125, 1);
+}
+
+.picker__close, .picker__today {
+	color:rgba(98, 146, 202, 1) 
+}
+
+ul.dropdown-content.select-dropdown li span {
+    color:rgba(73, 97, 125, 1);
+}
+
+
+a {
+	color: rgba(98, 146, 202, 1) 
+}
+
+input:not([type]).valid,
+input:not([type]):focus.valid,
+input[type=text].valid,
+input[type=text]:focus.valid,
+input[type=password].valid,
+input[type=password]:focus.valid,
+input[type=email].valid,
+input[type=email]:focus.valid,
+input[type=url].valid,
+input[type=url]:focus.valid,
+input[type=time].valid,
+input[type=time]:focus.valid,
+input[type=date].valid,
+input[type=date]:focus.valid,
+input[type=datetime].valid,
+input[type=datetime]:focus.valid,
+input[type=datetime-local].valid,
+input[type=datetime-local]:focus.valid,
+input[type=tel].valid,
+input[type=tel]:focus.valid,
+input[type=number].valid,
+input[type=number]:focus.valid,
+input[type=search].valid,
+input[type=search]:focus.valid,
+textarea.materialize-textarea.valid,
+textarea.materialize-textarea:focus.valid {
+    border-bottom: 1px solid rgba(98, 146, 202, 1);
+    box-shadow: 0 1px 0 0 #4CAF50;
+    color:rgba(73, 97, 125, 1);
+}
+
+
 
 button.tableEditButton {
 	border: none;
-	background-color: white;
-	color: gray;
+	background-color: rgba(252, 250, 208, 1);
+	color: rgba(98, 146, 202, 1) 
+}
+
+.collapsible{
+	background-color: rgba(170, 162, 147, .05);
 }
 
 .dashMessage {
@@ -69,7 +254,7 @@ input[type=range]+.thumb.active {
 	left: 0;
 	right: 0;
 	bottom: 0px;
-	background-color: rgba(255,255,255,.9);
+	background-color: rgba(252, 250, 208, .9);
 }
 
 .datespan{
@@ -157,6 +342,37 @@ input[type=range]+.thumb.active {
  overflow-y: auto;
 }
 
+.CRIheader {
+	font-size: 25px;
+}
+
+.collapsible-header {
+    background-color: rgba(170, 162, 147, .0);
+    border-bottom: 1px solid #ddd;
+}
+
+[type="checkbox"].filled-in:checked+label:after{
+	background-color: rgba(40, 50, 79, 1); 
+}
+
+[type="checkbox"].filled-in:checked+label:after {
+    border: 2px solid rgba(40, 50, 79, 1); 
+}
+
+.menuCategoryHeader {
+	text-align: center;
+}
+
+.itemTitle{
+	font-family: 'Khand', sans-serif;
+	color:rgba(73, 97, 125, 1);
+	font-size: 25px;
+}
+
+textarea.materialize-textarea {
+    color:rgba(73, 97, 125, 1);
+}
+
 .menuFormHolder{
 	border: solid;
 	border-width: 1px;
@@ -180,15 +396,43 @@ input.itemTitle{
 	font-size: 20px;
 }
 
-.catSelctContainer {
-
-
+input:not([type]):focus:not([readonly]),
+input[type=text]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=url]:focus:not([readonly]),
+input[type=time]:focus:not([readonly]),
+input[type=date]:focus:not([readonly]),
+input[type=datetime]:focus:not([readonly]),
+input[type=datetime-local]:focus:not([readonly]),
+input[type=tel]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid rgba(40, 50, 79, 1);
+    box-shadow: 0 1px 0 0 #26a69a;
 }
 
-.categorySelector{
-	
+.input-field input[type=text]:focus + label,
+.input-field input[type=password]:focus + label,
+.input-field input[type=email]:focus + label,
+.input-field input[type=time]:focus + label,
+.input-field input[type=date]:focus + label,
+.input-field input[type=number]:focus + label,
+textarea:focus + label {
+     color: rgba(40, 50, 79, 1);
 }
 
 
+
+
+
+@media only screen and (max-width: 600px) {
+   
+    .brand-logo img {
+	width: 190px ;
+			}
+    
+}
 
 
