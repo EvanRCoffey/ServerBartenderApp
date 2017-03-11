@@ -1,39 +1,37 @@
 PRESENTATION OUTLINE:
 
-1) Explain the site in less than a minute [Evan]
+I) Explain the site in under one minute [Evan]
+	-Helps you improve as a server/bartender
+	-Goal management system
+	-Financial companion
+	-Study companion
 
-2) Demo the whole site [Evan plus Mills]
-	-Demo login stuff as you log in
-	-Start with "freaking nail the presentation" joke, but don't explain anything yet
-	-Go in order of the way you would use the site naturally, but don't actually submit anything
-		1) Job
-		2) Shift
-		3) Financial Summary (Mills)
-		4) Goals
-		5) *MENTION* Timeline
-		6) Menu Builder (Mills)
-		7) Flash Cards
-		8) Quiz Maker
+II) Demo the whole site in under four minutes [Evan plus Mills]
+	1)Demo login stuff as you log in
+	2)Start with "freaking nail the presentation" joke - extend the goal
+	3)Show shift form, including validation, and mention the job/goal/shift management
+	4)Show shift edit table, including slidebar
+	5)Financial Summary (Mills)
+	6)*MENTION* Timeline
+	7)Menu Builder (Mills)
+	8)Flash Cards
+	9)Quiz Maker - have the class take the quiz!
 
-3) Talk about technologies, using slide(s) [Mills plus Evan]
+III) Talk about technologies in under three minutes, using slide(s) [Mills plus Evan]
 
-4) Q/A [Both]
-
-[Have two accounts open IF NECESSARY]
+IV) Q/A [Both]
 
 
 
 ***PRE-PRESENTATION STUFF:
 
 	-Fix the goal status tabs on the dashboard [Evan]
+		-Make goal info bigger/different from the other text
 	-Figure out how to get the values of the checkboxes on the flash card page [Evan]
 		-ALT: just click one of the other buttons and only demo two or three cards
+	-Push everything to heroku and run through the presentation using the dummy account [Evan]
 
-	-Make them look like actual flash cards (look like a card - yes; animation - maybe) [Mills]
-	*Navigation Bar: Decide how to organize all of the links [Mills]
-	*Home Page: Simplify it, but don't let it just be a blank page [Mills]
-	-Make PDFs/slides for presentation [Mills]
-
+	-Possibly make the flash cards have flipping animations [Mills]
 
 
 ***POST-PRESENTATION STUFF
