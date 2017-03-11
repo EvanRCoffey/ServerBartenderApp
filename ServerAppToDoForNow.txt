@@ -26,7 +26,8 @@ PRESENTATION OUTLINE:
 ***PRE-PRESENTATION STUFF:
 
 	-Fix the goal status tabs on the dashboard [Evan]
-	-Add checkboxes and functionality for "selected categories" button on the flash card page [Evan]
+	-Figure out how to get the values of the checkboxes on the flash card page [Evan]
+		-ALT: just click one of the other buttons and only demo two or three cards
 
 	-Make them look like actual flash cards (look like a card - yes; animation - maybe) [Mills]
 	*Navigation Bar: Decide how to organize all of the links [Mills]
