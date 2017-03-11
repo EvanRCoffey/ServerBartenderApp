@@ -38,8 +38,6 @@ var boolNonAlcoholicDrinks = false;
 var boolAfterDinnerDrinks = false;
 var boolOtherDrinks = false;
 
-var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks];
-
 $.post("/checkMenuJSON", idObj).then(function(data2) {
 	var parsedMenuJson = JSON.parse(data2.menuJSON);
 	var reParsedMenuJson = JSON.parse(parsedMenuJson);
@@ -184,15 +182,61 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	var checkboxesToInclude = []
+	var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks];
 	for (var i=0; i<categoryArray.length; i++) {
 		if (categoryArray[i]) {checkboxesToInclude.push(i)}
 	}
 
-	//checbkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
+	//checkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
 	//Make a checkbox for each index held in checkboxesToInclude[], plus a "Selected categories" button
+	var checkboxJqueryString = '<form action="#">';
+	if (checkboxesToInclude.includes(0)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="entrees" /><label for="entrees">Entrees</label></p>'
+	}
+	if (checkboxesToInclude.includes(1)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="appetizers" /><label for="appetizers">Appetizers</label></p>'
+	}
+	if (checkboxesToInclude.includes(2)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="desserts" /><label for="desserts">Desserts</label></p>'
+	}
+	if (checkboxesToInclude.includes(3)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="sides" /><label for="sides">Sides</label></p>'
+	}
+	if (checkboxesToInclude.includes(4)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="soupOrSalad" /><label for="soupOrSalad">Soups and Salads</label></p>'
+	}
+	if (checkboxesToInclude.includes(5)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="addOns" /><label for="addOns">Entree Add-Ons</label></p>'
+	}
+	if (checkboxesToInclude.includes(6)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="kidsMenuItems" /><label for="kidsMenuItems">Kids Menu Items</label></p>'
+	}
+	if (checkboxesToInclude.includes(7)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="otherFoods" /><label for="otherFood">Other Food</label></p>'
+	}
+	if (checkboxesToInclude.includes(8)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="wines" /><label for="wines">Wines</label></p>'
+	}
+	if (checkboxesToInclude.includes(9)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="beers" /><label for="beers">Beers</label></p>'
+	}
+	if (checkboxesToInclude.includes(10)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="cocktails" /><label for="cocktails">Cocktails</label></p>'
+	}
+	if (checkboxesToInclude.includes(11)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="nonAlcoholic" /><label for="nonAlcoholic">Non-Alcoholic Drinks</label></p>'
+	}
+	if (checkboxesToInclude.includes(12)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="afterDinnerDrinks" /><label for="afterDinnerDrinks">After-Dinner Drinks</label></p>'
+	}
+	if (checkboxesToInclude.includes(13)) {
+		checkboxJqueryString += '<p><input type="checkbox" id="otherDrinks" /><label for="otherDrinks">Other Drinks</label></p>'
+	}
+	checkboxJqueryString += '</form>';
 	//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
 	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
 	$("#area2").append(selectedCategoriesButtonString);
+	$("#area2").append(checkboxJqueryString);
 });
 
 //////////////////
