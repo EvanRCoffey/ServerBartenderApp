@@ -7,6 +7,34 @@ Cream rgba(252, 250, 208, 1);
 Tan rgba(170, 162, 147, 1);
 
 */
+
+.home-card{
+	text-align: center;
+}
+
+.landingPage{
+	text-align: center
+}
+
+.landText {
+	color: rgba(73, 97, 125, 1) !important;
+}
+
+.arrow {
+	color: rgba(73, 97, 125, .5) !important;
+	font-size: 65px;
+}
+
+.homeIcon{
+	color: rgba(73, 97, 125, 1) !important;
+	font-size: 125px;
+	margin-bottom: -20px;
+}
+
+.moveUp{
+	margin-top: 0px;
+}
+
 #area1{
 	position: relative;
 	background-color: rgba(170, 162, 147, .2);
