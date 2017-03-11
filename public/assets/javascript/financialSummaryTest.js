@@ -300,7 +300,7 @@ noUiSlider.create(slider, {
             "bulletColor": "#FFFFFF",
             "bulletSize": 5,
             "hideBulletsCount": 50,
-            "lineThickness": 1,
+            "lineThickness": 2,
             "lineColor": "#20acd4",
             "type": "smoothedLine",
             "title": "Total Walked With",

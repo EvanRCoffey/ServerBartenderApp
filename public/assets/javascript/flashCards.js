@@ -171,16 +171,16 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	}
 
 	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div><br>';
-	$("#area1").append(entireMenuButtonString);
+	$("#area2").append(entireMenuButtonString);
 
 	if (boolFood) {
 		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div><br>';
-		$("#area1").append(allFoodButtonString);
+		$("#area2").append(allFoodButtonString);
 	}
 
 	if (boolDrink) {
 		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div><br>';
-		$("#area1").append(allDrinksButtonString);
+		$("#area2").append(allDrinksButtonString);
 	}
 
 	var checkboxesToInclude = []
@@ -192,7 +192,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 	//Make a checkbox for each index held in checkboxesToInclude[], plus a "Selected categories" button
 	//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
 	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
-	$("#area1").append(selectedCategoriesButtonString);
+	$("#area2").append(selectedCategoriesButtonString);
 });
 
 //////////////////
@@ -201,7 +201,7 @@ $.post("/checkMenuJSON", idObj).then(function(data2) {
 
 function showFlashCardFront() {
 	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
-	var frontOfCardString = '<p>' + objBeingUsed.name + '</p><button onclick="flipCardOver()" type="button" class="btn btn-default" id="flipCardOver">Flip card over</button>';
+	var frontOfCardString = '<p class="flashFront">' + objBeingUsed.name + '</p><button onclick="flipCardOver()" type="button" class="btn btn-default flipButton" id="flipCardOver">Flip card over</button>';
 	$("#area1").html(frontOfCardString);
 }
 
@@ -209,7 +209,7 @@ function showFlashCardFront() {
 //This is being called just fine
 function flipCardOver() {
 	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
-	var backOfCardString = '<p>'+objBeingUsed.name+'</p><p>$'+objBeingUsed.price+'</p><p>Quick description = "'+objBeingUsed.quickDescr+'"</p><p>Detailed description = "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><br><br><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
+	var backOfCardString = '<p class="flashBackTitle">'+objBeingUsed.name+'</p><pclass="flashBackText>$'+objBeingUsed.price+'</p><p class="flashBackText">Quick description: "'+objBeingUsed.quickDescr+'"</p><pclass="flashBackText>Detailed description: "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><br><br><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
 	$("#area1").html(backOfCardString);
 }
 
