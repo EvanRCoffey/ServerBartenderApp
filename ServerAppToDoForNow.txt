@@ -1,22 +1,38 @@
+PRESENTATION OUTLINE:
+
+1) Explain the site in less than a minute [Evan]
+
+2) Demo the whole site [Evan plus Mills]
+	-Demo login stuff as you log in
+	-Start with "freaking nail the presentation" joke, but don't explain anything yet
+	-Go in order of the way you would use the site naturally, but don't actually submit anything
+		1) Job
+		2) Shift
+		3) Financial Summary (Mills)
+		4) Goals
+		5) *MENTION* Timeline
+		6) Menu Builder (Mills)
+		7) Flash Cards
+		8) Quiz Maker
+
+3) Talk about technologies, using slide(s) [Mills plus Evan]
+
+4) Q/A [Both]
+
+[Have two accounts open IF NECESSARY]
+
+
+
 ***PRE-PRESENTATION STUFF:
 
-	*Timeline: AMCharts?  Or just jQuery?
-	*Flash card
-		-Add checkboxes and functionality for "selected categories" button
-		-Make them look like actual flash cards ("flip over" and "next card" animations?)
-	*Navigation Bar: Decide how to organize all of the links
-	*Financial Summary: Add multiple colors to graph
-	*Home Page: Simplify it, but don't let it just be a blank page
-	*Dashboard (with goal checker)
-		-Decide on the layout of the dashboard, now that you have the full site available
-		-Build new dashboard layout
-		-Fix the goal status tabs
-		-Checking goals every time you go to the dashboard is OK as long as it is not annoying when you choose to ignore it
+	-Fix the goal status tabs on the dashboard [Evan]
+	-Add checkboxes and functionality for "selected categories" button on the flash card page [Evan]
 
-	-Add testing to project???
-	-One final design/UI pass
-	-Make powerpoint and decide what to include in the presentation
-	-Rehearse presentation together using online version of site
+	-Make them look like actual flash cards (look like a card - yes; animation - maybe) [Mills]
+	*Navigation Bar: Decide how to organize all of the links [Mills]
+	*Home Page: Simplify it, but don't let it just be a blank page [Mills]
+	-Make PDFs/slides for presentation [Mills]
+
 
 
 ***POST-PRESENTATION STUFF

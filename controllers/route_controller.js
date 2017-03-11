@@ -59,7 +59,7 @@ router.get("/feedback", function(req, res) {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/loginFailure',
-    successRedirect: '/dashboardWithGoalChecker'
+    successRedirect: '/dashboard'
 }))
 
 router.get("/loginFailure", function(req, res) {
@@ -171,10 +171,6 @@ router.get("/goals", loggedIn, function(req, res, next) {
 router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });
-
-router.get("/dashboardWithGoalChecker", loggedIn, function(req, res, next) {
-    res.render("dashboardWithGoalChecker", req);
-})
 
 router.get("/financialSummaryTest", loggedIn, function(req, res, next) {
     res.render("financialSummaryTest", req);
