@@ -5,26 +5,24 @@
     <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
     <div class="row">
-        <div class="row">
-            <div class="col s12">
-                <br><h4>Fill out this form to create a new shift</h4>
-            </div>
-        </div>
-
-        <form class="col s12" id="shiftForm" method="POST"  onsubmit="return shiftValidate()" action="/newShift">
 
         {{#unless jobs}}
-      <!-- This section only shows when no jobs. -->
-                <div class="input-field col s12">
-                <select name="job_id" id="noJob" required>
-                    <option value="" disabled selected>Please create a Job First</option>
-                </select>
-                <label>Job Selector</label>
-                <a href="/job"><h5>Click here to create a job.</h5></a>
+            <!-- This section only shows when no jobs. -->
+            <div class="input-field col s12">
+                <h5>To add information for a shift, you must first create a job.
+                <a href="/job"><h5>Click here to create one.</h5></a>
             </div>
-         {{/unless}}
+        {{/unless}}
             
-            {{#if jobs}}
+        {{#if jobs}}
+            <div class="row">
+                <div class="col s12">
+                    <br><h4>Fill out this form to create a new shift</h4>
+                </div>
+            </div>
+
+            <form class="col s12" id="shiftForm" method="POST"  onsubmit="return shiftValidate()" action="/newShift">
+
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
@@ -35,7 +33,6 @@
                 </select>
                 <label>Job Selector</label>
             </div>
-            {{/if}}
 
             <!--totalWalkedWith DECIMAL(10,2)-->
             <div class="input-field col s12">
@@ -130,15 +127,13 @@
             </select>
             <label>Shift type</label>
             
-            {{#if jobs}}
             <button class="btn waves-effect waves-light shiftSubmit" type="submit">Create New Shift</button>
-            {{/if}}
+            
 
-            {{#unless jobs}}
-            <button class="btn waves-effect waves-light disabled">Create New Shift</button>
-            {{/unless}}
             <div class="row"></div>
-        </form>
+            
+            </form>
+        {{/if}}
     </div>
 </div>
 
