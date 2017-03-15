@@ -1,78 +1,38 @@
-PRESENTATION OUTLINE:
+///////////////////
+//NO VISIBLE ERRORS
+///////////////////
 
-I) Explain the site in under one minute [Evan]
-	-Helps you improve as a server/bartender
-	-Goal management system
-	-Financial companion
-	-Study companion
+	Login
+	Password Recovery
+	Update Account
 
-II) Demo the whole site in under four minutes [Evan plus Mills]
-	1)Demo login stuff as you log in
-	2)Start with "freaking nail the presentation" joke - extend the goal
-	3)Show shift form, including validation, and mention the job/goal/shift management
-	4)Show shift edit table, including slidebar
-	5)Financial Summary (Mills)
-	6)*MENTION* Timeline
-	7)Menu Builder (Mills)
-	8)Flash Cards
-	9)Quiz Maker - have the class take the quiz!
+//////////////////
+//STILL NEEDS WORK
+//////////////////
 
-III) Talk about technologies in under three minutes, using slide(s) [Mills plus Evan]
+	*Shift Management, Goal Management, Job Management
+		1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
+	 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
+	 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
+	 	(Shift edit only - slidebars are both defaulting to Noon)
 
-IV) Q/A [Both]
+	*Financial Summary
+		-User selects a job (or jobs?) [on github]
 
+	*Sign Up
+		-Should we demand passwords be a certain length/complexity? [on github]
 
+	*Feedback
+		-Redirect to dashboard with a success message [on github]
 
-***PRE-PRESENTATION STUFF:
+	*Quiz Maker, cont...
+		-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js. [on github]
+		-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one [on github]
+		-Looks like all items are marked secret right now in the menu builder [on github]
+		-Prevent duplicate answers and duplicate questions [on github]
 
-	-Fix the goal status tabs on the dashboard [Evan]
-		-Make goal info bigger/different from the other text
-	-Figure out how to get the values of the checkboxes on the flash card page [Evan]
-		-ALT: just click one of the other buttons and only demo two or three cards
-	-Push everything to heroku and run through the presentation using the dummy account [Evan]
+	*Flash Card, cont...
+		-Job/menu should be selected (just like with the quiz maker) [on github]
+		-Give user option to shuffle cards or do them in order [on github]
 
-	-Possibly make the flash cards have flipping animations [Mills]
-
-
-***POST-PRESENTATION STUFF
-
-	///////////////////
-	//NO VISIBLE ERRORS
-	///////////////////
-
-		Login
-		Password Recovery
-		Update Account
-
-	//////////////////
-	//STILL NEEDS WORK
-	//////////////////
-
-		*Dashboard, Home Page, Navigation Bar, Financial Summary, Timeline
-			-See "pre-presentation stuff" above
-
-		*Shift Management, Goal Management, Job Management
-			1) Add an extra level of validation to each delete button.  On job deletion, also explain that its shifts will go, too.
-		 	2) When something is "deleted", just change its "deletedByUser" flag to true.  (When a user "deletes" a job, be sure to cascade to include all of that job's shifts' "deletedByUser" flags, as well.)
-		 	3) Add something to all job/shift/menu queries along the lines of "{where: {deletedByUser: false}}"
-		 	(Shift edit only - slidebars are both defaulting to Noon)
-
-		*Sign Up
-			-Should we demand passwords be a certain length/complexity?
-
-		*Feedback
-			-Redirect to dashboard with a success message
-
-		*Quiz Maker, cont...
-			-"Start quiz maker" button not pulling job ID correctly.  It all seems to hinge on line 13 in quizMaker.js.
-			-Change quiz answer buttons to checkboxes plus a submit button - ALL answers must match for a correct result, not just one
-			-Looks like all items are marked secret right now in the menu builder
-			-Prevent duplicate answers and duplicate questions
-
-		*Flash Card, cont...
-			-Entrees, sides, and desserts should include allergy violations, descriptors, and ingredients, too
-			-Job/menu should be selected (just like with the quiz maker)
-			-Give user option to shuffle cards or do them in order
-
-		*Timeline, cont...
-			-Mills said he'd take a look at amcharts and see if it'd be quick to implement.  If not, just make something from scratch.
+	*Timeline - finish it! [on github]

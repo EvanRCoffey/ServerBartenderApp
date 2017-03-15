@@ -523,7 +523,6 @@ router.post("/deleteGoal:id", loggedIn, function(req, res, next) {
 //Grabs all shifts for a user, for use with financial summary
 router.post("/financialSummary", loggedIn, function(req, res, next) {
   console.log(req.body);
-
   db.Shift.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
     res.json(dbUser);
   });
@@ -541,7 +540,6 @@ router.post("/financialSummary", loggedIn, function(req, res, next) {
 //Grabs all jobs for a user, for use with the job selector dropdown
 router.post("/allJobs", loggedIn, function(req, res, next) {
     console.log(req.body);
-
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
         res.json(dbUser);
     });
@@ -630,14 +628,28 @@ router.get("/quizMaker", loggedIn, function(req, res, next) {
 })
 
 router.get("/flashCards", loggedIn, function(req, res, next) {
-    res.render("flashCards", req);
+    db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
+      console.log(dbUser);
+      var dataObject = {
+          jobs: dbUser
+        };
+        console.log(dataObject);
+       res.render("flashCards", dataObject);
+     });
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
-    db.Menu.findOne({ where: {UserId: req.user.id, JobID: req.body.jobId} }).then(function(dbUser) {
+    db.Menu.findOne({ where: {UserId: req.user.id, id: req.body.menuId} }).then(function(dbUser) {
         console.log(dbUser);
         res.json(dbUser);
     });
+})
+
+router.post("/getMenus", loggedIn, function(req, res, next) {
+    db.Menu.findAll({ where: {UserId: req.user.id, JobID: req.body.jobId}}).then(function(dbUser) {
+        console.log(dbUser);
+        res.json(dbUser);
+    })
 })
 
 router.post("/newMenu", loggedIn, function(req, res, next) {
