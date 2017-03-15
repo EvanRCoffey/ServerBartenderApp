@@ -523,6 +523,27 @@ $('.menuFormHolder').on('click', '.save', function(e) {
      $('select').material_select();
 })
 
+$('.menuFormHolder').on('click', '.itemToggle', function() {
+    console.log('click')
+    $(this).parents('.itemObject').find('.itemHolderToggle').slideToggle()
+    if ($(this).text() === 'add') {
+        $(this).text('remove')
+    } else {
+        $(this).text('add')
+    }
+})
+
+$('.menuFormHolder').on('click', '.catToggle', function() {
+    console.log('click')
+     $(this).parents('.catRow').find('.catHolderToggle').slideToggle()
+    if ($(this).text() === 'add') {
+        $(this).text('remove')
+    } else {
+        $(this).text('add')
+    }
+})
+
+
 //Reusable functions Start here:
 
 function checkBoxMaker(title, object, selector, formClass) {
@@ -546,12 +567,12 @@ function checkBoxMaker(title, object, selector, formClass) {
 
 function createCategorySection(categoryTitle, categoryClass, buttonText){
     var categoryHTML="";
-categoryHTML += "<div class=\"row\">";
-categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "<div class=\"row catRow\">";
+categoryHTML += "    <ul>";
 categoryHTML += "        <li>";
-categoryHTML += "            <div class=\"collapsible-header menuCategoryHeader active\">";
-categoryHTML += "                <h4>"+categoryTitle+"<\/h4><\/div>";
-categoryHTML += "            <div class=\"collapsible-body menuOverflow\">";
+categoryHTML += "            <div class=\"menuCategoryHeader\">";
+categoryHTML += "                <i class=\"material-icons catToggle\">remove</i><h4 class=\"catTitle\">"+categoryTitle+"<\/h4><\/div>";
+categoryHTML += "            <div class=\"itemBody catHolderToggle menuOverflow\">";
 categoryHTML += "                <form class="+categoryClass+">";
 categoryHTML += "                <\/form>";
 categoryHTML += "                <div class=\"row\">";
@@ -616,11 +637,11 @@ textInput += "";
 function createItemHolder(target, value){
     var categoryHTML="";
 categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
-categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "    <ul>";
 categoryHTML += "        <li>";
-categoryHTML += "            <div class=\"collapsible-header open"+ItemIter+"\">";
-categoryHTML += "                <input class=\"itemTitle\" name=\"name\" value=\"Enter Item Name\"></input><\/div>";
-categoryHTML += "            <div class=\"collapsible-body menuOverflow itemholder" +ItemIter +"\">";
+categoryHTML += "            <div class=\"ItemHeader\">";
+categoryHTML += "                <i class=\"material-icons itemToggle\">remove</i><input class=\"itemTitle\" name=\"name\" value=\"Enter Item Name\"></input><\/div>";
+categoryHTML += "            <div class=\"menuOverflow itemHolderToggle itemholder" +ItemIter +"\">";
 categoryHTML += "            <\/div>";
 categoryHTML += "        <\/li>";
 categoryHTML += "    <\/ul>";
@@ -628,7 +649,6 @@ categoryHTML += "<\/div>";
 categoryHTML += "";
 
 $(target).append(categoryHTML)
-// $('.open' + ItemIter).addClass("active");
 $('.collapsible').collapsible()
 }
 

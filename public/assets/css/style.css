@@ -406,9 +406,39 @@ input[type=range]+.thumb.active {
 	font-size: 25px;
 }
 
+.itemToggle{
+	vertical-align: middle;
+	height: 36px;
+	margin-right: 6px;
+	font-size: 30px;
+	color: rgba(73, 97, 125, .5);
+	cursor: pointer;
+	transition: color 1s;
+}
+
+.catToggle:hover, .itemToggle:hover{
+	color: rgba(98, 146, 202, 1);
+}
+
+.catToggle{
+	display: inline;
+	vertical-align: middle;
+	height: 36px;
+	margin-right: 6px;
+	font-size: 30px;
+	color: rgba(73, 97, 125, .5);
+	cursor: pointer;
+	transition: color 1s;
+	/*float: left;*/
+}
+
+.ItemHeader {
+	background-color: rgba(170, 162, 147, .15);
+}
+
+
 .collapsible-header {
     background-color: rgba(170, 162, 147, .0);
-    border-bottom: 1px solid #ddd;
 }
 
 [type="checkbox"].filled-in:checked+label:after{
@@ -420,7 +450,15 @@ input[type=range]+.thumb.active {
 }
 
 .menuCategoryHeader {
+	display: inline-block;
 	text-align: center;
+	width: 100%;
+}
+
+.catTitle{
+	text-align: center;
+	display: inline-block;
+	margin: 0px;
 }
 
 .itemTitle{
