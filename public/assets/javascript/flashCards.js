@@ -1,7 +1,3 @@
-var idObj = {
-	jobId: 1
-}
-
 var entrees = [];
 var appetizers = [];
 var desserts = [];
@@ -38,204 +34,9 @@ var boolNonAlcoholicDrinks = false;
 var boolAfterDinnerDrinks = false;
 var boolOtherDrinks = false;
 
-$.post("/checkMenuJSON", idObj).then(function(data2) {
-	var parsedMenuJson = JSON.parse(data2.menuJSON);
-	var reParsedMenuJson = JSON.parse(parsedMenuJson);
-
-	for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
-		entrees.push(reParsedMenuJson.entree[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
-		appetizers.push(reParsedMenuJson.appetizer[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
-		desserts.push(reParsedMenuJson.dessert[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.sides.length; i++) {
-		sides.push(reParsedMenuJson.sides[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {
-		addOns.push(reParsedMenuJson.addOn[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.soupOrSalad.length; i++) {
-		soupsAndSalads.push(reParsedMenuJson.soupOrSalad[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.kidsMenuItem.length; i++) {
-		kidsMenuItems.push(reParsedMenuJson.kidsMenuItem[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.otherFood.length; i++) {
-		otherFoods.push(reParsedMenuJson.otherFood[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.wine.length; i++) {
-		wines.push(reParsedMenuJson.wine[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.beer.length; i++) {
-		beers.push(reParsedMenuJson.beer[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.cocktail.length; i++) {
-		cocktails.push(reParsedMenuJson.cocktail[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {
-		nonAlcoholicDrinks.push(reParsedMenuJson.nonAlcoholic[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {
-		afterDinnerDrinks.push(reParsedMenuJson.afterDinnerDrink[i]);
-	}
-
-	for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
-		otherDrinks.push(reParsedMenuJson.otherDrink[i]);
-	}
-
-	if (entrees.length > 0) {
-		boolFood = true;
-		boolEntrees = true;
-	}
-
-	if (appetizers.length > 0) {
-		boolFood = true;
-		boolAppetizers = true;
-	}	
-
-	if (desserts.length > 0) {
-		boolFood = true;
-		boolDesserts= true;
-	}
-
-	if (sides.length > 0) {
-		boolFood = true;
-		boolSides = true;
-	}
-
-	if (addOns.length > 0) {
-		boolFood = true;
-		boolAddOns = true;
-	}
-
-	if (soupsAndSalads.length > 0) {
-		boolFood = true;
-		boolSoupsAndSalads = true;
-	}
-
-	if (kidsMenuItems.length > 0) {
-		boolFood = true;
-		boolKidsMenuItems = true;
-	}
-
-	if (otherFoods.length > 0) {
-		boolFood = true;
-		boolOtherFoods = true;
-	}
-
-	if (wines.length > 0) {
-		boolDrink = true;
-		boolWines = true;
-	}
-
-	if (beers.length > 0) {
-		boolDrink = true;
-		boolBeers = true;
-	}
-
-	if (cocktails.length > 0) {
-		boolDrink = true;
-		boolCocktails = true;
-	}	
-
-	if (nonAlcoholicDrinks.length > 0) {
-		boolDrink = true;
-		boolNonAlcoholicDrinks = true;
-	}
-
-	if (afterDinnerDrinks.length > 0) {
-		boolDrink = true;
-		boolAfterDinnerDrinks = true;
-	}
-
-	if (otherDrinks.length > 0) {
-		boolDrink = true;
-		boolOtherDrinks = true;
-	}
-
-	var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div><br>';
-	$("#area2").append(entireMenuButtonString);
-
-	if (boolFood) {
-		var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div><br>';
-		$("#area2").append(allFoodButtonString);
-	}
-
-	if (boolDrink) {
-		var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div><br>';
-		$("#area2").append(allDrinksButtonString);
-	}
-
-	var checkboxesToInclude = []
-	var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks];
-	for (var i=0; i<categoryArray.length; i++) {
-		if (categoryArray[i]) {checkboxesToInclude.push(i)}
-	}
-
-	//checkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
-	var checkboxJqueryString = '<form action="#">';
-	if (checkboxesToInclude.includes(0)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="entrees" /><label for="entrees">Entrees</label></p>'
-	}
-	if (checkboxesToInclude.includes(1)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="appetizers" /><label for="appetizers">Appetizers</label></p>'
-	}
-	if (checkboxesToInclude.includes(2)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="desserts" /><label for="desserts">Desserts</label></p>'
-	}
-	if (checkboxesToInclude.includes(3)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="sides" /><label for="sides">Sides</label></p>'
-	}
-	if (checkboxesToInclude.includes(4)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="soupOrSalad" /><label for="soupOrSalad">Soups and Salads</label></p>'
-	}
-	if (checkboxesToInclude.includes(5)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="addOns" /><label for="addOns">Entree Add-Ons</label></p>'
-	}
-	if (checkboxesToInclude.includes(6)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="kidsMenuItems" /><label for="kidsMenuItems">Kids Menu Items</label></p>'
-	}
-	if (checkboxesToInclude.includes(7)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="otherFoods" /><label for="otherFood">Other Food</label></p>'
-	}
-	if (checkboxesToInclude.includes(8)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="wines" /><label for="wines">Wines</label></p>'
-	}
-	if (checkboxesToInclude.includes(9)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="beers" /><label for="beers">Beers</label></p>'
-	}
-	if (checkboxesToInclude.includes(10)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="cocktails" /><label for="cocktails">Cocktails</label></p>'
-	}
-	if (checkboxesToInclude.includes(11)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="nonAlcoholic" /><label for="nonAlcoholic">Non-Alcoholic Drinks</label></p>'
-	}
-	if (checkboxesToInclude.includes(12)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="afterDinnerDrinks" /><label for="afterDinnerDrinks">After-Dinner Drinks</label></p>'
-	}
-	if (checkboxesToInclude.includes(13)) {
-		checkboxJqueryString += '<p><input type="checkbox" id="otherDrinks" /><label for="otherDrinks">Other Drinks</label></p>'
-	}
-	checkboxJqueryString += '</form>';
-	//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
-	var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
-	$("#area2").append(selectedCategoriesButtonString);
-	$("#area2").append(checkboxJqueryString);
+$(document).ready(function() {
+    $('select').material_select();
+    // prepareJobDropdown();
 });
 
 //////////////////
@@ -385,6 +186,7 @@ function statusReport(gotItArray, studyFurtherArray) {
 function entireMenu() {
 	$("#area1").html("<div></div>");
 	$("#area2").html("<div></div>");
+	$("#dropdown").html("");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -409,12 +211,15 @@ function entireMenu() {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
+	shuffle(flashcardONEARRAY);
+	shuffle(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function allFood() {
 	$("#area1").html("<div></div>");
 	$("#area2").html("<div></div>");
+	$("#dropdown").html("");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -433,12 +238,15 @@ function allFood() {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
+	shuffle(flashcardONEARRAY);
+	shuffle(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function allDrinks() {
 	$("#area1").html("<div></div>");
 	$("#area2").html("<div></div>");
+	$("#dropdown").html("");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
@@ -455,31 +263,33 @@ function allDrinks() {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
+	shuffle(flashcardONEARRAY);
+	shuffle(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
 function selectedCategories() {
-	$("#area1").html("<div></div>");
-	$("#area2").html("<div></div>");
 	allFlashCards = [];
 	flashcardONEARRAY = [];
 	gotItArray = [];
 	studyFurtherArray = [];
-	var entreesBool = $("#entreesCheckbox").val();
-	console.log(entreesBool);		//STILL UNDEFINED
-	var appetizersBool = $("#appetizersCheckbox").val();
-	var dessertsBool = $("#dessertsCheckbox").val();
-	var sidesBool = $("#sidesCheckbox").val();
-	var addOnsBool = $("#addOnsCheckbox").val();
-	var soupOrSaladBool = $("#soupOrSaladCheckbox").val();
-	var kidsMenuItemsBool = $("#kidsMenuItemsCheckbox").val();
-	var otherFoodsBool = $("#otherFoodsCheckbox").val();
-	var winesBool = $("#winesCheckbox").val();
-	var beersBool = $("#beersCheckbox").val();
-	var cocktailsBool = $("#cocktailsCheckbox").val();
-	var nonAlcoholicBool = $("#nonAlcoholicCheckbox").val();
-	var afterDinnerDrinksBool = $("#afterDinnerDrinksCheckbox").val();
-	var otherDrinksBool = $("#otherDrinksCheckbox").val();
+	var entreesBool = document.getElementById('entreesCheckbox').checked;
+	var appetizersBool = document.getElementById('appetizersCheckbox').checked;
+	var dessertsBool = document.getElementById('dessertsCheckbox').checked;
+	var sidesBool = document.getElementById('sidesCheckbox').checked;
+	var addOnsBool = document.getElementById('addOnsCheckbox').checked;
+	var soupOrSaladBool = document.getElementById('soupOrSaladCheckbox').checked;
+	var kidsMenuItemsBool = document.getElementById('kidsMenuItemsCheckbox').checked;
+	var otherFoodsBool = document.getElementById('otherFoodsCheckbox').checked;
+	var winesBool = document.getElementById('winesCheckbox').checked;
+	var beersBool = document.getElementById('beersCheckbox').checked;
+	var cocktailsBool = document.getElementById('cocktailsCheckbox').checked;
+	var nonAlcoholicBool = document.getElementById('nonAlcoholicCheckbox').checked;
+	var afterDinnerDrinksBool = document.getElementById('afterDinnerDrinksCheckbox').checked;
+	var otherDrinksBool = document.getElementById('otherDrinksCheckbox').checked;
+	$("#area1").html("<div></div>");
+	$("#area2").html("<div></div>");
+	$("#dropdown").html("");
 	if (entreesBool) {allFlashCards.push(entrees);};
 	if (appetizersBool) {allFlashCards.push(appetizers);}
 	if (dessertsBool) {allFlashCards.push(desserts);}
@@ -501,6 +311,8 @@ function selectedCategories() {
 			flashcardONEARRAY.push(allFlashCards[i][j]);
 		}
 	}
+	shuffle(flashcardONEARRAY);
+	shuffle(flashcardONEARRAY);
 	showFlashCardFront();
 }
 
@@ -521,4 +333,239 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function loadMenus(job) {
+	var parentJobID = job.value;
+	var jobIdObj = {
+		jobId:parentJobID
+	}
+	$.post("/getMenus", jobIdObj).then(function(data3) {
+		if (data3.length === 0) {
+			var jQueryString = '<div class="col s12"><br><h4>Flash Cards</h4></div><div class="input-field col s12"><h5>To use the flash cards, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+			$("#dropdown").html(jQueryString);
+		}
+		else if (data3.length > 0) {
+
+			var jQueryString = '<div class="input-field col s12"><select class="menuSelector" onchange="startFlashCards(this.value);"><option value="" disabled>Click here to choose a menu</option>';
+
+
+			for (var i = 0; i<data3.length; i++) {
+				jQueryString += '<option value="'+ data3[i].id +'" selected>'+ data3[i].menuName +'</option>'
+			}
+
+		    jQueryString += '</select><label>Menu Selector</label></div>';
+
+		    $("#dropdown").html(jQueryString);
+		    $('select').material_select();
+		}		
+	});
+}
+
+function startFlashCards(menu) {
+	var idObj = {
+		menuId: menu
+	}
+
+	$.post("/checkMenuJSON", idObj).then(function(data2) {
+		var parsedMenuJson = JSON.parse(data2.menuJSON);
+		var reParsedMenuJson = JSON.parse(parsedMenuJson);
+
+		$("#dropdown").html("Menu analyzed!  Select options below");
+
+		for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
+			entrees.push(reParsedMenuJson.entree[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
+			appetizers.push(reParsedMenuJson.appetizer[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {
+			desserts.push(reParsedMenuJson.dessert[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.sides.length; i++) {
+			sides.push(reParsedMenuJson.sides[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {
+			addOns.push(reParsedMenuJson.addOn[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.soupOrSalad.length; i++) {
+			soupsAndSalads.push(reParsedMenuJson.soupOrSalad[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.kidsMenuItem.length; i++) {
+			kidsMenuItems.push(reParsedMenuJson.kidsMenuItem[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.otherFood.length; i++) {
+			otherFoods.push(reParsedMenuJson.otherFood[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.wine.length; i++) {
+			wines.push(reParsedMenuJson.wine[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.beer.length; i++) {
+			beers.push(reParsedMenuJson.beer[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.cocktail.length; i++) {
+			cocktails.push(reParsedMenuJson.cocktail[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {
+			nonAlcoholicDrinks.push(reParsedMenuJson.nonAlcoholic[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {
+			afterDinnerDrinks.push(reParsedMenuJson.afterDinnerDrink[i]);
+		}
+
+		for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
+			otherDrinks.push(reParsedMenuJson.otherDrink[i]);
+		}
+
+		if (entrees.length > 0) {
+			boolFood = true;
+			boolEntrees = true;
+		}
+
+		if (appetizers.length > 0) {
+			boolFood = true;
+			boolAppetizers = true;
+		}	
+
+		if (desserts.length > 0) {
+			boolFood = true;
+			boolDesserts= true;
+		}
+
+		if (sides.length > 0) {
+			boolFood = true;
+			boolSides = true;
+		}
+
+		if (addOns.length > 0) {
+			boolFood = true;
+			boolAddOns = true;
+		}
+
+		if (soupsAndSalads.length > 0) {
+			boolFood = true;
+			boolSoupsAndSalads = true;
+		}
+
+		if (kidsMenuItems.length > 0) {
+			boolFood = true;
+			boolKidsMenuItems = true;
+		}
+
+		if (otherFoods.length > 0) {
+			boolFood = true;
+			boolOtherFoods = true;
+		}
+
+		if (wines.length > 0) {
+			boolDrink = true;
+			boolWines = true;
+		}
+
+		if (beers.length > 0) {
+			boolDrink = true;
+			boolBeers = true;
+		}
+
+		if (cocktails.length > 0) {
+			boolDrink = true;
+			boolCocktails = true;
+		}	
+
+		if (nonAlcoholicDrinks.length > 0) {
+			boolDrink = true;
+			boolNonAlcoholicDrinks = true;
+		}
+
+		if (afterDinnerDrinks.length > 0) {
+			boolDrink = true;
+			boolAfterDinnerDrinks = true;
+		}
+
+		if (otherDrinks.length > 0) {
+			boolDrink = true;
+			boolOtherDrinks = true;
+		}
+
+		var entireMenuButtonString = '<div class="col-md-12"><button onclick="entireMenu()" type="button" class="btn btn-default" id="entireMenuButton">Entire menu</button></div><br>';
+		$("#area2").append(entireMenuButtonString);
+
+		if (boolFood) {
+			var allFoodButtonString = '<div class="col-md-12"><button onclick="allFood()" type="button" class="btn btn-default" id="allFoodButton">All food</button></div><br>';
+			$("#area2").append(allFoodButtonString);
+		}
+
+		if (boolDrink) {
+			var allDrinksButtonString = '<div class="col-md-12"><button onclick="allDrinks()" type="button" class="btn btn-default" id="Button">All drinks</button></div><br>';
+			$("#area2").append(allDrinksButtonString);
+		}
+
+		var checkboxesToInclude = []
+		var categoryArray = [boolEntrees, boolAppetizers, boolDesserts, boolSides, boolAddOns, boolSoupsAndSalads, boolKidsMenuItems, boolOtherFoods, boolWines, boolBeers, boolCocktails, boolNonAlcoholicDrinks, boolAfterDinnerDrinks, boolOtherDrinks];
+		for (var i=0; i<categoryArray.length; i++) {
+			if (categoryArray[i]) {checkboxesToInclude.push(i)}
+		}
+
+		//checkboxesToInclude[] contains all indexes for categories that need checkboxes.  0=entree, 1=appetizer, etc.
+		var checkboxJqueryString = '<div>';
+		if (checkboxesToInclude.includes(0)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="entreesCheckbox" /><label for="entreesCheckbox">Entrees</label></p>'
+		}
+		if (checkboxesToInclude.includes(1)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="appetizersCheckbox" /><label for="appetizersCheckbox">Appetizers</label></p>'
+		}
+		if (checkboxesToInclude.includes(2)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="dessertsCheckbox" /><label for="dessertsCheckbox">Desserts</label></p>'
+		}
+		if (checkboxesToInclude.includes(3)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="sidesCheckbox" /><label for="sidesCheckbox">Sides</label></p>'
+		}
+		if (checkboxesToInclude.includes(4)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="soupOrSaladCheckbox" /><label for="soupOrSaladCheckbox">Soups and Salads</label></p>'
+		}
+		if (checkboxesToInclude.includes(5)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="addOnsCheckbox" /><label for="addOnsCheckbox">Entree Add-Ons</label></p>'
+		}
+		if (checkboxesToInclude.includes(6)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="kidsMenuItemsCheckbox" /><label for="kidsMenuItemsCheckbox">Kids Menu Items</label></p>'
+		}
+		if (checkboxesToInclude.includes(7)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="otherFoodsCheckbox" /><label for="otherFoodCheckbox">Other Food</label></p>'
+		}
+		if (checkboxesToInclude.includes(8)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="winesCheckbox" /><label for="winesCheckbox">Wines</label></p>'
+		}
+		if (checkboxesToInclude.includes(9)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="beersCheckbox" /><label for="beersCheckbox">Beers</label></p>'
+		}
+		if (checkboxesToInclude.includes(10)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="cocktailsCheckbox" /><label for="cocktailsCheckbox">Cocktails</label></p>'
+		}
+		if (checkboxesToInclude.includes(11)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="nonAlcoholicCheckbox" /><label for="nonAlcoholicCheckbox">Non-Alcoholic Drinks</label></p>'
+		}
+		if (checkboxesToInclude.includes(12)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="afterDinnerDrinksCheckbox" /><label for="afterDinnerDrinksCheckbox">After-Dinner Drinks</label></p>'
+		}
+		if (checkboxesToInclude.includes(13)) {
+			checkboxJqueryString += '<p><input type="checkbox" id="otherDrinksCheckbox" /><label for="otherDrinksCheckbox">Other Drinks</label></p>'
+		}
+		checkboxJqueryString += '</div>';
+		//The button calls selectedCategories and passes it an object with boolean values .entrees, .appetizers, etc
+		var selectedCategoriesButtonString = '<div class="col-md-12"><button onclick="selectedCategories()" type="button" class="btn btn-default" id="Button">Selected categories</button></div>';
+		$("#area2").append(selectedCategoriesButtonString);
+		$("#area2").append(checkboxJqueryString);
+	});
 }

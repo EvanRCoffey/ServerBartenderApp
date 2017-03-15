@@ -3,25 +3,33 @@
         <div class="col s12">
             <br><h4>Quiz Maker</h4>
         </div>
+
+		{{#unless jobs}}
+            <!-- This section only shows when no jobs. -->
+            <div class="input-field col s12">
+                <h5>To use the flash cards, you must create a job and a menu.
+                <a href="/job"><h5>Click here to create a job.</h5></a>
+            </div>
+        {{/unless}}
+
+		{{#if jobs}}
+		   	<div id="dropdown">
+			    <div class="input-field col s12">
+			        <select class="jobSelector" onchange="loadMenus(this);">
+			            <option value="" disabled>Click here to choose a job</option>
+			            {{#each jobs}}
+			                <option value="{{this.id}}" selected>{{this.job_name}}</option>
+			            {{/each}}
+			        </select>
+			        <label>Job Selector</label>
+			    </div>
+			</div>
+		{{/if}}
     </div>
 </div>
 
 <div class="container" id="triviaContainer">
 	<div class="row" id="messageArea">
-			<!--
-			<div class="input-field col s12">
-
-			    <select name="job_id" id="jobID" required>
-			        <option value="" disabled>Click here to choose a job</option>
-			        {{#each jobs}}
-			            <option value="{{this.id}}">{{this.job_name}}</option>
-			        {{/each}}
-			    </select>
-			    <label>Job Selector</label>
-			</div>
-
-			<button class="btn waves-effect waves-light" onclick="startQuizMaker()">Begin quiz maker</button>
-			-->
 	</div>
 	<div class="row" id="answersArea">
 		<div class="col-md-12"></div>
