@@ -700,18 +700,20 @@ function saveAndsend() {
         var ingredients = {}
         var descriptors = {}
         var allergyViolations = {}
-        console.log(quickDescr)
-        if ($(this).find("input[name='secret']").val() === 'on') {
-            secret = true;
+
+    
+        //The checkBoxParser function write to an object, not a single variable.
+        //This is a quick workaround.    
+        var secretParse = {}
+        checkBoxParser(that, '.secretItemForm ', secretParse)
+        if(secretParse.secret === true){
+            secret = true
         }
 
         checkBoxParser(that, '.ingredientsForm', ingredients)
         checkBoxParser(that, '.descriptorForm', descriptors)
         checkBoxParser(that, '.allergyForm', allergyViolations)
-
         var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
-            //collect menu items in an array
-            // itemArray.push(item)
 
         //It uses the html element value to sort itself into the correct category
         category = $(this).attr('path');
@@ -740,7 +742,7 @@ function saveAndsend() {
 })
    
 }
- console.log(menuObj)
+ 
 }
 
 
@@ -764,6 +766,5 @@ function checkBoxParser(that,source, targetObject){
         for (var i = 0; i < serialized.length; i++) {
             targetObject[serialized[i].name] = serialized[i].value
         }
-
 
 }
