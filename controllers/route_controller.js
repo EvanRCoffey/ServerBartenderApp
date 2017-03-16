@@ -292,7 +292,10 @@ router.post("/sendFeedback", function(req, res) {
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
-    res.redirect('/login'); //Sends user to login screen for now.
+    var dataObject = {
+        message: "Feedback sent successfully"
+    };
+    res.render("dashboard", dataObject);
 })
 
 //
