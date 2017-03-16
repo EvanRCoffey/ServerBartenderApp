@@ -336,13 +336,21 @@ function shuffle(array) {
 }
 
 function loadMenus(job) {
-	var parentJobID = job.value;
-	var jobIdObj = {
-		jobId:parentJobID
+	if (job === 9999) {
+		var jobIdObj = {
+			jobId: 9999
+		}
 	}
+	else {
+		var parentJobID = job.value;
+		var jobIdObj = {
+			jobId:parentJobID
+		}
+	}
+	
 	$.post("/getMenus", jobIdObj).then(function(data3) {
 		if (data3.length === 0) {
-			var jQueryString = '<div class="col s12"><br><h4>Flash Cards</h4></div><div class="input-field col s12"><h5>To use the flash cards, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+			var jQueryString = '<div class="input-field col s12"><h5>To use the flash cards, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
 			$("#dropdown").html(jQueryString);
 		}
 		else if (data3.length > 0) {

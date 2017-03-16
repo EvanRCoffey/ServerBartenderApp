@@ -9,6 +9,7 @@
             <div class="input-field col s12">
                 <h5>To use the flash cards, you must create a job and a menu.
                 <a href="/job"><h5>Click here to create a job.</h5></a>
+                <a href="javascript:startQuizMaker(9999);"><h5>Click here to try the quiz maker using the Fleming's menu</h5></a>
             </div>
         {{/unless}}
 
@@ -17,6 +18,7 @@
 			    <div class="input-field col s12">
 			        <select class="jobSelector" onchange="loadMenus(this);">
 			            <option value="" disabled>Click here to choose a job</option>
+			            <option value="9999" selected>Dummy Job - Fleming's</option>
 			            {{#each jobs}}
 			                <option value="{{this.id}}" selected>{{this.job_name}}</option>
 			            {{/each}}

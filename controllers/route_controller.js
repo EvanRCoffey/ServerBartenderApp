@@ -642,14 +642,14 @@ router.get("/flashCards", loggedIn, function(req, res, next) {
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
-    db.Menu.findOne({ where: {UserId: req.user.id, id: req.body.menuId} }).then(function(dbUser) {
+    db.Menu.findOne({ where: {id: req.body.menuId} }).then(function(dbUser) {
         console.log(dbUser);
         res.json(dbUser);
     });
 })
 
 router.post("/getMenus", loggedIn, function(req, res, next) {
-    db.Menu.findAll({ where: {UserId: req.user.id, JobID: req.body.jobId}}).then(function(dbUser) {
+    db.Menu.findAll({ where: {JobID: req.body.jobId}}).then(function(dbUser) {
         console.log(dbUser);
         res.json(dbUser);
     })

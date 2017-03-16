@@ -773,7 +773,7 @@ function loadMenus(job) {
 	}
 	$.post("/getMenus", jobIdObj).then(function(data3) {
 		if (data3.length === 0) {
-			var jQueryString = '<div class="col s12"><br><h4>Quiz Maker</h4></div><div class="input-field col s12"><h5>To use the quiz maker, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+			var jQueryString = '<div class="input-field col s12"><h5>To use the quiz maker, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
 			$("#dropdown").html(jQueryString);
 		}
 		else if (data3.length > 0) {
