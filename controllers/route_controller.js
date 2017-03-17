@@ -155,7 +155,7 @@ router.get("/goalsTable", loggedIn, function(req, res, next) {
 });
 
 router.get("/goals", loggedIn, function(req, res, next) {
-    db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
+    db.Goal.findAll({ where: {UserId: req.user.id}, order: '"goalDeadline" DESC'}).then(function(dbUser) {
         var dataObject = {
             allGoals: dbUser
         };
