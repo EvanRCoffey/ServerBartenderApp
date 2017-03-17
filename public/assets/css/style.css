@@ -420,6 +420,10 @@ input[type=range]+.thumb.active {
 	color: rgba(98, 146, 202, 1);
 }
 
+.catClose:hover {
+	color: rgba(171, 51, 50, 1);
+}
+
 .catToggle{
 	display: inline;
 	vertical-align: middle;
@@ -429,9 +433,20 @@ input[type=range]+.thumb.active {
 	color: rgba(73, 97, 125, .5);
 	cursor: pointer;
 	transition: color 1s;
-	/*float: left;*/
+	float: left;
 }
 
+.catClose{
+	display: inline;
+	vertical-align: middle;
+	height: 36px;
+	margin-right: 6px;
+	font-size: 30px;
+	color: rgba(73, 97, 125, .5);
+	cursor: pointer;
+	transition: color 1s;
+	float: right;
+}
 .ItemHeader {
 	background-color: rgba(170, 162, 147, .15);
 }

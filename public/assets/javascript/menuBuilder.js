@@ -571,7 +571,7 @@ categoryHTML += "<div class=\"row catRow\">";
 categoryHTML += "    <ul>";
 categoryHTML += "        <li>";
 categoryHTML += "            <div class=\"menuCategoryHeader\">";
-categoryHTML += "                <i class=\"material-icons catToggle\">remove</i><h4 class=\"catTitle\">"+categoryTitle+"<\/h4><\/div>";
+categoryHTML += "                <i class=\"material-icons catToggle\">remove</i><h4 class=\"catTitle\">"+categoryTitle+"<\/h4><i class=\"material-icons catClose\">clear</i><\/div>";
 categoryHTML += "            <div class=\"itemBody catHolderToggle menuOverflow\">";
 categoryHTML += "                <form class="+categoryClass+">";
 categoryHTML += "                <\/form>";
