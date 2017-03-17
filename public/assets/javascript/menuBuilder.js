@@ -523,6 +523,27 @@ $('.menuFormHolder').on('click', '.save', function(e) {
      $('select').material_select();
 })
 
+$('.menuFormHolder').on('click', '.itemToggle', function() {
+    console.log('click')
+    $(this).parents('.itemObject').find('.itemHolderToggle').slideToggle()
+    if ($(this).text() === 'add') {
+        $(this).text('remove')
+    } else {
+        $(this).text('add')
+    }
+})
+
+$('.menuFormHolder').on('click', '.catToggle', function() {
+    console.log('click')
+     $(this).parents('.catRow').find('.catHolderToggle').slideToggle()
+    if ($(this).text() === 'add') {
+        $(this).text('remove')
+    } else {
+        $(this).text('add')
+    }
+})
+
+
 //Reusable functions Start here:
 
 function checkBoxMaker(title, object, selector, formClass) {
@@ -546,12 +567,12 @@ function checkBoxMaker(title, object, selector, formClass) {
 
 function createCategorySection(categoryTitle, categoryClass, buttonText){
     var categoryHTML="";
-categoryHTML += "<div class=\"row\">";
-categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "<div class=\"row catRow\">";
+categoryHTML += "    <ul>";
 categoryHTML += "        <li>";
-categoryHTML += "            <div class=\"collapsible-header menuCategoryHeader active\">";
-categoryHTML += "                <h4>"+categoryTitle+"<\/h4><\/div>";
-categoryHTML += "            <div class=\"collapsible-body menuOverflow\">";
+categoryHTML += "            <div class=\"menuCategoryHeader\">";
+categoryHTML += "                <i class=\"material-icons catToggle\">remove</i><h4 class=\"catTitle\">"+categoryTitle+"<\/h4><i class=\"material-icons catClose\">clear</i><\/div>";
+categoryHTML += "            <div class=\"itemBody catHolderToggle menuOverflow\">";
 categoryHTML += "                <form class="+categoryClass+">";
 categoryHTML += "                <\/form>";
 categoryHTML += "                <div class=\"row\">";
@@ -616,11 +637,11 @@ textInput += "";
 function createItemHolder(target, value){
     var categoryHTML="";
 categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
-categoryHTML += "    <ul class=\"collapsible\" data-collapsible=\"expandable\">";
+categoryHTML += "    <ul>";
 categoryHTML += "        <li>";
-categoryHTML += "            <div class=\"collapsible-header open"+ItemIter+"\">";
-categoryHTML += "                <input class=\"itemTitle\" name=\"name\" value=\"Enter Item Name\"></input><\/div>";
-categoryHTML += "            <div class=\"collapsible-body menuOverflow itemholder" +ItemIter +"\">";
+categoryHTML += "            <div class=\"ItemHeader\">";
+categoryHTML += "                <i class=\"material-icons itemToggle\">remove</i><input class=\"itemTitle\" name=\"name\" value=\"Enter Item Name\"></input><\/div>";
+categoryHTML += "            <div class=\"menuOverflow itemHolderToggle itemholder" +ItemIter +"\">";
 categoryHTML += "            <\/div>";
 categoryHTML += "        <\/li>";
 categoryHTML += "    <\/ul>";
@@ -628,7 +649,6 @@ categoryHTML += "<\/div>";
 categoryHTML += "";
 
 $(target).append(categoryHTML)
-// $('.open' + ItemIter).addClass("active");
 $('.collapsible').collapsible()
 }
 
@@ -700,18 +720,20 @@ function saveAndsend() {
         var ingredients = {}
         var descriptors = {}
         var allergyViolations = {}
-        console.log(quickDescr)
-        if ($(this).find("input[name='secret']").val() === 'on') {
-            secret = true;
+
+    
+        //The checkBoxParser function write to an object, not a single variable.
+        //This is a quick workaround.    
+        var secretParse = {}
+        checkBoxParser(that, '.secretItemForm ', secretParse)
+        if(secretParse.secret === true){
+            secret = true
         }
 
         checkBoxParser(that, '.ingredientsForm', ingredients)
         checkBoxParser(that, '.descriptorForm', descriptors)
         checkBoxParser(that, '.allergyForm', allergyViolations)
-
         var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
-            //collect menu items in an array
-            // itemArray.push(item)
 
         //It uses the html element value to sort itself into the correct category
         category = $(this).attr('path');
@@ -740,7 +762,7 @@ function saveAndsend() {
 })
    
 }
- console.log(menuObj)
+ 
 }
 
 
@@ -764,6 +786,5 @@ function checkBoxParser(that,source, targetObject){
         for (var i = 0; i < serialized.length; i++) {
             targetObject[serialized[i].name] = serialized[i].value
         }
-
 
 }
