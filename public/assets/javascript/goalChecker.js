@@ -221,22 +221,22 @@ function processPassedDeadline(num) {
 }
 
 function noMorePassedDeadlines() {
-	var goalCardString = '<div class="card"><div class="card-content white-text"><span class="card-title">Goal checker</span><p>No pending goals with passed deadlines.</p>';
+	// var goalCardString = '<div class="card"><div class="card-content white-text"><span class="card-title">Goal checker</span><p>No pending goals with passed deadlines.</p>';
 
-	var newGoalLink = '<a href="/goal">New Goal</a>';
-	var editDeleteGoalsLink = '<a href="/goalsTable">Edit/Delete Goals</a>';
+	// var newGoalLink = '<a href="/goal">New Goal</a>';
+	// var editDeleteGoalsLink = '<a href="/goalsTable">Edit/Delete Goals</a>';
 
-	goalCardString += '<p>' + newGoalLink + '</p>';
+	// goalCardString += '<p>' + newGoalLink + '</p>';
 
-	//IF THERE ARE UPCOMING DEADLINES
-	if (deadlinesUpcoming.length > 0) {
-		goalCardString += '<p>You\'ve got some goals with upcoming deadlines.</p>';
-		goalCardString += '<p>' + editDeleteGoalsLink + '</p>';
-	}
+	// //IF THERE ARE UPCOMING DEADLINES
+	// if (deadlinesUpcoming.length > 0) {
+	// 	goalCardString += '<p>You\'ve got some goals with upcoming deadlines.</p>';
+	// 	goalCardString += '<p>' + editDeleteGoalsLink + '</p>';
+	// }
 
-	goalCardString += "</div></div>"
+	// goalCardString += "</div></div>"
 
-	$("#cardGoesHere").html(goalCardString);
+	// $("#cardGoesHere").html(goalCardString);
 }
 
 $(document).on("click",".completedButton",function(){

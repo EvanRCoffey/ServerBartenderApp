@@ -550,4 +550,6 @@ textarea:focus + label {
     
 }
 
-
+#dashboardText {
+	text-align: center;
+}
