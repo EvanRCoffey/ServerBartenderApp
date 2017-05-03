@@ -3,9 +3,17 @@ var deadlinesUpcoming = [];
 var deadlinesPassed = [];
 var today = moment();
 
-//Each time a user logs in, get all of that user's goals, then...
-$.get("/goals").then(function(goals) {
-	console.log(goals)
+
+// //Each time a user logs in, get all of that user's goals, then...
+// $.get("/goals").then(function(goals) {
+
+
+//If you change the get request to get goals AND shifts that can be referenced separately, it should just work.
+//allGoals[] will contain all of the goals and allShifts[] will contain all of the shifts.
+//
+
+//Each time a user logs in, get all of that user's goals and shifts, then...
+$.get("/goalsAndShifts").then(function(goals) {
 	//Pushes all goals to either deadlinesUpcoming[] or deadlinesPassed[]
 	for (var i = 0; i<goals.allGoals.length; i++) {
 		if ((today.diff(moment(goals.allGoals[i].goalDeadline, "MMM DD YYYY"), "days") < 0) && JSON.parse(goals.allGoals[i].goalStatus).completed === false && JSON.parse(goals.allGoals[i].goalStatus).abandoned === false) {
@@ -18,33 +26,43 @@ $.get("/goals").then(function(goals) {
 
 	passedDeadlineCheck();
 
-//Timeline Code:
+	//Timeline Code:
 
-  var container = document.getElementById('visualization');
-  var goalItem 
-  var goalArray = []
-  // Create a DataSet (allows two way data-binding)
-  for (var i = 0; i < goals.allGoals.length; i++) {
-      goalItem = {
-          start: goals.allGoals[i].goalDeadline,
-          content: '<a href="/editGoal' + goals.allGoals[i].id + '?">' + goals.allGoals[i].goalName + '</a>'
+	var container = document.getElementById('visualization');
+	
+	var goalItem 
+	var goalsAndShifts = []
+	// Create a DataSet (allows two way data-binding)
+	for (var i = 0; i < goals.allGoals.length; i++) {
+		goalItem = {
+	    	start: goals.allGoals[i].goalDeadline,
+	      	content: '<a href="/editGoal' + goals.allGoals[i].id + '?">' + goals.allGoals[i].goalName + '</a>',
+	      	style: "color: red; background-color: pink;"
+	  	}
+	  	goalsAndShifts.push(goalItem)
+	}
 
-          
-      }
-      goalArray.push(goalItem)
-  }
+	var shiftItem 
+	// Create a DataSet (allows two way data-binding)
+	for (var i = 0; i < goals.allShifts.length; i++) {
+		shiftItem = {
+	    	start: goals.allShifts[i].shiftDate,
+	      	content: '<a href="/editShift' + goals.allShifts[i].id + '?">' + goals.allShifts[i].shiftName + '</a>',
+	      	style: "color: green; background-color: blue;"
+	  	}
+	  	goalsAndShifts.push(shiftItem)
+	}
 
-console.log(goalArray)
-  var items = new vis.DataSet(goalArray);
+	var items = new vis.DataSet(goalsAndShifts);
 
-  // Configuration for the Timeline
-  var options = {
-  width: '100%',
-  height: '200px',
-  stack: true,
-  margin: {
-    item: 20
-  }
+	// Configuration for the Timeline
+	var options = {
+	width: '100%',
+	height: '200px',
+	stack: true,
+	margin: {
+	item: 20
+	}
 };
 
   // Create a Timeline
