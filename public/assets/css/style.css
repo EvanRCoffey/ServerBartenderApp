@@ -552,4 +552,33 @@ textarea:focus + label {
 
 #dashboardText {
 	text-align: center;
+	font-size: x-large;
+	color: #49617e;
+}
+
+.grayBorder {
+	border: 10px solid #28324f;
+	padding: 10px 20px 0px 20px;
+	font-family: 'Khand', sans-serif;
+	color: #49617e;
+}
+
+#cardGoesHere {
+	font-size: larger;
+}
+
+#abandonedButton {
+	font-size: larger;
+}
+
+#completedButton {
+	font-size: larger;
+}
+
+#extendedButton {
+	font-size: larger;
+}
+
+#modifiedButton {
+	font-size: larger;
 }

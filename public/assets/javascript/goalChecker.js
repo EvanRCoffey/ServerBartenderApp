@@ -58,7 +58,7 @@ $.get("/goalsAndShifts").then(function(goals) {
 	// Configuration for the Timeline
 	var options = {
 	width: '100%',
-	height: '200px',
+	height: '250px',
 	stack: true,
 	margin: {
 	item: 20
@@ -227,7 +227,7 @@ function passedDeadlineCheck() {
 
 function processPassedDeadline(num) {
 	passedDeadlinesUpdated++;
-	var jQueryString = '<div class="card"><div class="card-content white-text"><p>You\'ve got a goal with a deadline that has passed!</p><p>Name: ' + deadlinesPassed[num].goalName + ' </p><p>Text: ' + deadlinesPassed[num].goalText + ' </p><p>Deadline: ' + deadlinesPassed[num].goalDeadline + '</p><p>Comments: ' + deadlinesPassed[num].comments + ' </p><p>You need to modify this goal\'s status. Choose one of the four options below.</p></div><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a href="#test4" class="completedButton">Completed</a></li><li class="tab"><a href="#test5" class="abandonedButton">Abandoned</a></li><li class="tab"><a href="#test6" class="extendedButton">Extended</a></li><li class="tab"><a href="#test7" class="modifiedButton">Modified</a></li></ul></div><div class="card-content grey lighten-4"> <div id="test4" style="display:none;"> <div class="input-field col s12"> <textarea id="completedComments" class="materialize-textarea" name="completedComments"></textarea> <label for="completedComments">New comments for completed goal [OPTIONAL]</label> </div><button class="btn waves-effect waves-light" onclick="completed()">Complete goal</button> </div><div id="test5" style="display:none;"> <div class="input-field col s12"> <textarea id="abandonedComments" class="materialize-textarea" name="abandonedComments"></textarea> <label for="abandonedComments">New comments for abandoned goal [OPTIONAL]</label> </div><button class="btn waves-effect waves-light" onclick="abandoned()">Abandon goal</button> </div><div id="test6" style="display:none;"> <div class="input-field col s12"> <input id="goalIdHidden" type="hidden" name="goalIdHidden" value=' + deadlinesPassed[num].id + '><input name="goalNewDeadline" id="goalNewDeadline" type="date" class="datepicker" required> <label for="goalNewDeadline">New deadline for extended goal [MANDATORY] </label> </div><button class="btn waves-effect waves-light" onclick="extended()">Extend goal</button> </div><div id="test7" style="display:none;"> <div class="input-field col s12"> <input id="goalNewName" type="text" class="validate" name="goalNewName"> <label for="goalNewName">New name for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <input id="goalNewText" type="text" class="validate" name="goalNewText"> <label for="goalNewText">New text for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <textarea name="modifiedComments" id="modifiedComments" class="materialize-textarea"></textarea> <label for="modifiedComments">New comments for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <input name="goalNewDeadlineMod" id="goalNewDeadlineMod" type="date" class="datepicker" required> <label for="goalNewDeadlineMod">New deadline for modified goal [MANDATORY] </label> </div><button class="btn waves-effect waves-light" onclick="modified()">Modify goal</button></div></div></div>';
+	var jQueryString = '<div class="card"><div class="card-content white-text"><p>You\'ve got a goal with a deadline that has passed!</p><p>Name: ' + deadlinesPassed[num].goalName + ' </p><p>Text: ' + deadlinesPassed[num].goalText + ' </p><p>Deadline: ' + deadlinesPassed[num].goalDeadline + '</p><p>Comments: ' + deadlinesPassed[num].comments + ' </p><p>You need to modify this goal\'s status. Choose one of the four options below.</p></div><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a href="#test4" id="completedButton">Completed</a></li><li class="tab"><a href="#test5" id="abandonedButton">Abandoned</a></li><li class="tab"><a href="#test6" id="extendedButton">Extended</a></li><li class="tab"><a href="#test7" id="modifiedButton">Modified</a></li></ul></div><div class="card-content grey lighten-4"> <div id="test4" style="display:none;"> <div class="input-field col s12"> <textarea id="completedComments" class="materialize-textarea" name="completedComments"></textarea> <label for="completedComments">New comments for completed goal [OPTIONAL]</label> </div><button class="btn waves-effect waves-light" onclick="completed()">Complete goal</button> </div><div id="test5" style="display:none;"> <div class="input-field col s12"> <textarea id="abandonedComments" class="materialize-textarea" name="abandonedComments"></textarea> <label for="abandonedComments">New comments for abandoned goal [OPTIONAL]</label> </div><button class="btn waves-effect waves-light" onclick="abandoned()">Abandon goal</button> </div><div id="test6" style="display:none;"> <div class="input-field col s12"> <input id="goalIdHidden" type="hidden" name="goalIdHidden" value=' + deadlinesPassed[num].id + '><input name="goalNewDeadline" id="goalNewDeadline" type="date" class="datepicker" required> <label for="goalNewDeadline">New deadline for extended goal [MANDATORY] </label> </div><button class="btn waves-effect waves-light" onclick="extended()">Extend goal</button> </div><div id="test7" style="display:none;"> <div class="input-field col s12"> <input id="goalNewName" type="text" class="validate" name="goalNewName"> <label for="goalNewName">New name for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <input id="goalNewText" type="text" class="validate" name="goalNewText"> <label for="goalNewText">New text for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <textarea name="modifiedComments" id="modifiedComments" class="materialize-textarea"></textarea> <label for="modifiedComments">New comments for modified goal [OPTIONAL]</label> </div><div class="input-field col s12"> <input name="goalNewDeadlineMod" id="goalNewDeadlineMod" type="date" class="datepicker" required> <label for="goalNewDeadlineMod">New deadline for modified goal [MANDATORY] </label> </div><button class="btn waves-effect waves-light" onclick="modified()">Modify goal</button></div></div></div>';
 	$("#cardGoesHere").html(jQueryString);
 	$('.datepicker').pickadate({
 	    selectMonths: true, // Creates a dropdown to control month
@@ -255,30 +255,31 @@ function noMorePassedDeadlines() {
 	// goalCardString += "</div></div>"
 
 	// $("#cardGoesHere").html(goalCardString);
+	$("#cardGoesHere").html("");
 }
 
-$(document).on("click",".completedButton",function(){
+$(document).on("click","#completedButton",function(){
 	$("#test4").css("display","block");
 	$("#test5").css("display","none");
 	$("#test6").css("display","none");
 	$("#test7").css("display","none");
 });
 
-$(document).on("click",".abandonedButton",function(){
+$(document).on("click","#abandonedButton",function(){
 	$("#test4").css("display","none");
 	$("#test5").css("display","block");
 	$("#test6").css("display","none");
 	$("#test7").css("display","none");
 });
 
-$(document).on("click",".extendedButton",function(){
+$(document).on("click","#extendedButton",function(){
 	$("#test4").css("display","none");
 	$("#test5").css("display","none");
 	$("#test6").css("display","block");
 	$("#test7").css("display","none");
 });
 
-$(document).on("click",".modifiedButton",function(){
+$(document).on("click","#modifiedButton",function(){
 	$("#test4").css("display","none");
 	$("#test5").css("display","none");
 	$("#test6").css("display","none");
