@@ -168,6 +168,28 @@ router.get("/goals", loggedIn, function(req, res, next) {
     });
 });
 
+router.get("/goalsAndShifts", loggedIn, function(req, res, next) {
+    db.Goal.findAll({ where: {UserId: req.user.id}, order: '"goalDeadline" DESC'}).then(function(dbUser) {
+        var dataObject = {
+            allGoals: dbUser
+        };
+        //Hideous loop that converts the UTC time in the DB to a more readable format.
+        for (var i = 0; i < dataObject.allGoals.length; i++) {
+            dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
+        }
+
+        db.Shift.findAll({ where: {UserId: req.user.id}, order: '"shiftDate" DESC'}).then(function(dbUser2) {
+            dataObject.allShifts = dbUser2;
+            //Hideous loop that converts the UTC time in the DB to a more readable format.
+            for (var i = 0; i < dataObject.allShifts.length; i++) {
+                dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
+            }
+
+            res.json(dataObject);
+        });
+    });
+});
+
 router.get("/dashboard", loggedIn, function(req, res, next) {
     res.render("dashboard", req);
 });

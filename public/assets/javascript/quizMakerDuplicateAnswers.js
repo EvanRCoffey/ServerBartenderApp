@@ -1,4 +1,3 @@
-//Make a dropdown on this page (handlebars?) where a user can select a job and run the quiz maker for that job
 var tenQuiz = false;
 var twentyQuiz = false;
 var thirtyQuiz = false;
@@ -12,20 +11,59 @@ $(document).ready(function() {
 //HELPER FUNCTIONS
 //////////////////
 
+
+//The next two functions aren't working properly.  An infinite loop is occurring with an appetizer question with two correct answers.
+//The problem is that the function calls itself, and when there's an incompatibility, it doesn't catch it, just keeps on going forever.
+
+
 function returnIncorrectName(incorrectAnswers, sampleFourAnswers) {
 	var randInc = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
-	if (!sampleFourAnswers.includes(randInc)) {
-		return randInc;
+	console.log(randInc);
+
+	var flag = false;
+	for (var i = 0; i<incorrectAnswers.length; i++) {
+		if (!sampleFourAnswers.includes(incorrectAnswers[i])) {
+			flag = true;
+		}
 	}
-	else {return returnIncorrectName(incorrectAnswers, sampleFourAnswers)}
+
+	if (flag) {
+		if (sampleFourAnswers.includes(randInc)) {
+			return returnIncorrectName(incorrectAnswers, sampleFourAnswers);
+		}
+		else {
+			return randInc;
+		}
+	}
+	else {
+		return "ALL ANSWERS ALREADY INCLUDED";
+	}
+		
 }
 
 function returnCorrectName(correctAnswers, sampleFourAnswers) {
 	var randInc = correctAnswers[Math.floor(Math.random() * correctAnswers.length)];
-	if (!sampleFourAnswers.includes(randInc)) {
-		return randInc;
+	console.log(randInc);
+
+	var flag = false;
+	for (var i = 0; i<correctAnswers.length; i++) {
+		if (!sampleFourAnswers.includes(correctAnswers[i])) {
+			flag = true;
+		}
 	}
-	else {return returnCorrectName(correctAnswers, sampleFourAnswers)}
+
+	if (flag) {
+		if (sampleFourAnswers.includes(randInc)) {
+			return returnCorrectName(correctAnswers, sampleFourAnswers);
+		}
+		else {
+			return randInc;
+		}
+	}
+	else {
+		return "ALL ANSWERS ALREADY INCLUDED";
+	}
+	
 }
 
 function shuffle(array) {
@@ -1348,7 +1386,15 @@ function startQuizMaker(menu) {
 		var sampleQ = "What's your most expensive appetizer?";
 		var sampleFourAnswers = [];
 		sampleFourAnswers.push(topItemName);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
+		for (var i = 0; i<3; i++) {
+			var randomIncorrectAnswer = returnIncorrectName(incorrectAnswers, sampleFourAnswers);
+			if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+				sampleFourAnswers.push(randomIncorrectAnswer);
+			}
+			else {
+				i--;
+			}
+		}
 		var sampleCorrectAnswers = [];
 		sampleCorrectAnswers.push(topItemName);
 		shuffle(sampleFourAnswers);
@@ -1358,7 +1404,15 @@ function startQuizMaker(menu) {
 		var sampleQ = "What's your cheapest appetizer?";
 		var sampleFourAnswers = [];
 		sampleFourAnswers.push(bottomItemName);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
+		for (var i = 0; i<3; i++) {
+			var randomIncorrectAnswer = returnIncorrectName(incorrectAnswers,sampleFourAnswers);
+			if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+				sampleFourAnswers.push(randomIncorrectAnswer);
+			}
+			else {
+				i--;
+			}
+		}
 		var sampleCorrectAnswers = [];
 		sampleCorrectAnswers.push(bottomItemName);
 		shuffle(sampleFourAnswers);
@@ -1409,7 +1463,15 @@ function startQuizMaker(menu) {
 		var sampleQ = "What's your most expensive entree?";
 		var sampleFourAnswers = [];
 		sampleFourAnswers.push(topItemName);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
+		for (var i = 0; i<3; i++) {
+			var randomIncorrectAnswer = returnCorrectName(incorrectAnswers,sampleFourAnswers);
+			if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+				sampleFourAnswers.push(randomIncorrectAnswer);
+			}
+			else {
+				i--;
+			}
+		}
 		var sampleCorrectAnswers = [];
 		sampleCorrectAnswers.push(topItemName);
 		shuffle(sampleFourAnswers);
@@ -1419,7 +1481,15 @@ function startQuizMaker(menu) {
 		var sampleQ = "What's your cheapest entree?";
 		var sampleFourAnswers = [];
 		sampleFourAnswers.push(bottomItemName);
-		for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(incorrectAnswers, sampleFourAnswers));}
+		for (var i = 0; i<3; i++) {
+			var randomIncorrectAnswer = returnCorrectName(incorrectAnswers,sampleFourAnswers);
+			if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+				sampleFourAnswers.push(randomIncorrectAnswer);
+			}
+			else {
+				i--;
+			}
+		}
 		var sampleCorrectAnswers = [];
 		sampleCorrectAnswers.push(bottomItemName);
 		shuffle(sampleFourAnswers);
@@ -1541,8 +1611,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "vegetarian") { if (allApp[i].descriptors.vegetarian) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1550,13 +1629,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1610,8 +1705,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "vegetarian") { if (allEnt[i].descriptors.vegetarian) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1619,13 +1723,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1670,8 +1790,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "toShare") { if (allDes[i].descriptors.toShare) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1679,13 +1808,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1728,8 +1873,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "seafood") { if (allApp[i].ingredients.seafood) {hasThing.push(allApp[i].name);} else {noThing.push(allApp[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1737,13 +1891,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1785,8 +1955,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "seafood") { if (allEnt[i].ingredients.seafood) {hasThing.push(allEnt[i].name);} else {noThing.push(allEnt[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1794,13 +1973,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1839,8 +2034,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "iceCream") { if (allDes[i].ingredients.iceCream) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1848,13 +2052,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1921,8 +2141,17 @@ function startQuizMaker(menu) {
 				else if (randomThing === "wheat") { if (allDes[i].allergyViolations.wheat) {hasThing.push(allDes[i].name);} else {noThing.push(allDes[i].name);}}
 			}
 			if (hasThing.length >= 3) {
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-				sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+				for (var i = 0; i<3; i++) {
+					var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+						sampleFourAnswers.push(randomCorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
+				var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 				sampleCorrectAnswers.push(sampleFourAnswers[0]);
 				sampleCorrectAnswers.push(sampleFourAnswers[1]);
 				sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1930,13 +2159,29 @@ function startQuizMaker(menu) {
 			else if (hasThing.length === 2) {
 				sampleFourAnswers.push(hasThing[0]);
 				sampleFourAnswers.push(hasThing[1]);
-				for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<2; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 				sampleCorrectAnswers.push(hasThing[1]);
 			}
 			else if (hasThing.length === 1) {
 				sampleFourAnswers.push(hasThing[0]);
-				for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+				for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 				sampleCorrectAnswers.push(hasThing[0]);
 			}
 
@@ -1971,8 +2216,17 @@ function startQuizMaker(menu) {
 			else {noThing.push(allApp[i].name)}
 		}
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -1980,13 +2234,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 
@@ -2020,8 +2290,17 @@ function startQuizMaker(menu) {
 			else {noThing.push(allEnt[i].name)}
 		}
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -2029,13 +2308,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 
@@ -2069,8 +2364,17 @@ function startQuizMaker(menu) {
 			else {noThing.push(allDes[i].name)}
 		}
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -2078,13 +2382,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 
@@ -2118,8 +2438,17 @@ function startQuizMaker(menu) {
 			else {noThing.push(allApp[i].name)}
 		}
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -2127,13 +2456,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 
@@ -2167,8 +2512,17 @@ function startQuizMaker(menu) {
 			else {noThing.push(allEnt[i].name)}
 		}
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+				sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -2176,13 +2530,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 
@@ -2225,8 +2595,17 @@ function startQuizMaker(menu) {
 		}
 
 		if (hasThing.length >= 3) {
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnCorrectName(hasThing, sampleFourAnswers));}
-			sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));
+			for (var i = 0; i<3; i++) {
+				var randomCorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomCorrectAnswer)) {
+					sampleFourAnswers.push(randomCorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
+			var incorrectAnswerTest = returnIncorrectName(noThing, sampleFourAnswers)
+			sampleFourAnswers.push(incorrectAnswerTest);
 			sampleCorrectAnswers.push(sampleFourAnswers[0]);
 			sampleCorrectAnswers.push(sampleFourAnswers[1]);
 			sampleCorrectAnswers.push(sampleFourAnswers[2]);
@@ -2234,13 +2613,29 @@ function startQuizMaker(menu) {
 		else if (hasThing.length === 2) {
 			sampleFourAnswers.push(hasThing[0]);
 			sampleFourAnswers.push(hasThing[1]);
-			for (var i = 0; i<2; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+					var randomIncorrectAnswer = returnCorrectName(hasThing,sampleFourAnswers);
+					if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+						sampleFourAnswers.push(randomIncorrectAnswer);
+					}
+					else {
+						i--;
+					}
+				}
 			sampleCorrectAnswers.push(hasThing[0]);
 			sampleCorrectAnswers.push(hasThing[1]);
 		}
 		else if (hasThing.length === 1) {
 			sampleFourAnswers.push(hasThing[0]);
-			for (var i = 0; i<3; i++) {sampleFourAnswers.push(returnIncorrectName(noThing, sampleFourAnswers));}
+			for (var i = 0; i<3; i++) {
+				var randomIncorrectAnswer = returnIncorrectName(hasThing,sampleFourAnswers);
+				if (!sampleFourAnswers.includes(randomIncorrectAnswer)) {
+					sampleFourAnswers.push(randomIncorrectAnswer);
+				}
+				else {
+					i--;
+				}
+			}
 			sampleCorrectAnswers.push(hasThing[0]);
 		}
 

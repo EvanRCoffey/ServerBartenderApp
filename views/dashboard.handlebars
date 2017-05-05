@@ -1,45 +1,151 @@
 <link rel="stylesheet" href="./javascript/vis/dist/vis.css"">
 
-<div id="mainDiv"></div>
+<div class="container" id="dashboardHeader">
 
-<div class="row messageContainer">
-    <div class="col s12">
-        <h5 class="dashMessage">{{this.message}}</h5>
+    <div class="row">
+        <div class="col s12">
+            <h1>DASHBOARD</h1>
+            <h2 class="dashMessage">{{this.message}}</h4>
+        </div>
+    </div>   
+
+</div>
+
+<div class="container grayBorder">
+
+    <div class="row messageContainer">
+        <div class="col s12">
+            <div id="cardGoesHere"></div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col s12" id="dashboardText">
+            Create new shifts and goals here.
+        </div>
     </div>
-</div>
 
-<div class="row">
-<div class="col s12">
-<div id="visualization"></div>
-</div>
-<div class="col s12">
-<div id="cardGoesHere"></div>
-</div>
-</div>
-
-<div class="row">
-    <div class="col s6">
-        <div class="card homeCard">
-            <div class="card-content homeCard">
-                <span class="card-title">New Shift</span>
-                <p>Click below to create a new shift</p>
+    <div class="row">
+        <div class="col s2"></div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">New Shift</span>
+                </div>
+                <div class="card-action">
+                    <a href="/shift">Click Here</a>
+                </div>
             </div>
-            <div class="card-action">
-                <a href="/shift">New Shift</a>
+        </div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">New Goal</span>
+                </div>
+                <div class="card-action">
+                    <a href="/goal">Click Here</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s2"></div>
+    </div>
+
+</div>
+
+<br><br>
+
+<div class="container grayBorder">
+
+    <div class="row">
+        <div class="col s12" id="dashboardText">
+            Edit shifts and goals via timeline bubbles or table views.   Check your stats with the financial summary.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div id="visualization"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Shifts Table</span>
+                </div>
+                <div class="card-action">
+                    <a href="/shiftsTable">Click Here</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Goals Table</span>
+                </div>
+                <div class="card-action">
+                    <a href="/goalsTable">Click Here</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Financial Summary</span>
+                </div>
+                <div class="card-action">
+                    <a href="/financialSummaryTest">Click Here</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col s6">
-        <div class="card homeCard">
-            <div class="card-content homeCard">
-                <span class="card-title">Edit Shifts</span>
-                <p>Click below to edit or delete a currently existing shift</p>
+
+</div>
+
+<br><br>
+
+<div class="container grayBorder" style="margin-bottom: 30px">
+
+    <div class="row">
+        <div class="col s12" id="dashboardText">
+            Create and edit menus using the menu builder.  Study them with the quiz maker and flash cards.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Menu Builder</span>
+                </div>
+                <div class="card-action">
+                    <a href="/menuBuilder">Click Here</a>
+                </div>
             </div>
-            <div class="card-action">
-                <a href="/shiftsTable">Edit/Delete Shifts</a>
+        </div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Quiz Maker</span>
+                </div>
+                <div class="card-action">
+                    <a href="/quizMaker">Click Here</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Flash Cards</span>
+                </div>
+                <div class="card-action">
+                    <a href="/flashCards">Click Here</a>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
 
