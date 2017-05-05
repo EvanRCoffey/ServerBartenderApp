@@ -1,28 +1,32 @@
 <link rel="stylesheet" href="./javascript/vis/dist/vis.css"">
 
-<div id="mainDiv"></div>
+<div class="container" id="dashboardHeader">
 
-<div class="row messageContainer">
-    <div class="col s12">
-        <h5 class="dashMessage">{{this.message}}</h5>
-    </div>
+    <div class="row">
+        <div class="col s12">
+            <h1>DASHBOARD</h1>
+            <h2 class="dashMessage">{{this.message}}</h4>
+        </div>
+    </div>   
+
 </div>
 
 <div class="container grayBorder">
 
-    <div class="row">
+    <div class="row messageContainer">
         <div class="col s12">
             <div id="cardGoesHere"></div>
         </div>
-    </div>
+    </div>  
 
     <div class="row">
         <div class="col s12" id="dashboardText">
-            Create new shifts and goals below.  Check your stats with the financial summary.
+            Create new shifts and goals here.
         </div>
     </div>
 
     <div class="row">
+        <div class="col s2"></div>
         <div class="col s4">
             <div class="card homeCard">
                 <div class="card-content homeCard">
@@ -43,16 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">Financial Summary</span>
-                </div>
-                <div class="card-action">
-                    <a href="/financialSummaryTest">Click Here</a>
-                </div>
-            </div>
-        </div>
+        <div class="col s2"></div>
     </div>
 
 </div>
@@ -63,7 +58,7 @@
 
     <div class="row">
         <div class="col s12" id="dashboardText">
-            Edit shifts and goals via the timeline or the table views.
+            Edit shifts and goals via timeline bubbles or table views.   Check your stats with the financial summary.
         </div>
     </div>
 
@@ -74,7 +69,6 @@
     </div>
 
     <div class="row">
-        <div class="col s2"></div>
         <div class="col s4">
             <div class="card homeCard">
                 <div class="card-content homeCard">
@@ -95,7 +89,16 @@
                 </div>
             </div>
         </div>
-        <div class="col s2"></div>
+        <div class="col s4">
+            <div class="card homeCard">
+                <div class="card-content homeCard">
+                    <span class="card-title">Financial Summary</span>
+                </div>
+                <div class="card-action">
+                    <a href="/financialSummaryTest">Click Here</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

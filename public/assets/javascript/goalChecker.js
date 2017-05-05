@@ -47,7 +47,7 @@ $.get("/goalsAndShifts").then(function(goals) {
 	for (var i = 0; i < goals.allShifts.length; i++) {
 		shiftItem = {
 	    	start: goals.allShifts[i].shiftDate,
-	      	content: '<a href="/editShift' + goals.allShifts[i].id + '?">' + goals.allShifts[i].shiftName + '</a>',
+	      	content: '<a href="/editShift' + goals.allShifts[i].id + '?">' + goals.allShifts[i].shiftDate + '</a>',
 	      	style: "color: green; background-color: blue;"
 	  	}
 	  	goalsAndShifts.push(shiftItem)

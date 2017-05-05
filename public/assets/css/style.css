@@ -35,12 +35,26 @@ Tan rgba(170, 162, 147, 1);
 	margin-top: 0px;
 }
 
-#area1{
+#triviaContainer{
 	position: relative;
 	background-color: rgba(170, 162, 147, .2);
 	box-shadow: 2px 4px 5px rgba(170, 162, 147, .4);
 	min-height: 200px;
 	padding: 30px;
+	font-family: 'Khand', sans-serif;
+	color: #49617e;
+	font-size: 22px;
+}
+
+#flashCardContainer{
+	position: relative;
+	background-color: rgba(170, 162, 147, .2);
+	box-shadow: 2px 4px 5px rgba(170, 162, 147, .4);
+	min-height: 200px;
+	padding: 30px;
+	font-family: 'Khand', sans-serif;
+	color: #49617e;
+	font-size: 22px;
 }
 
 .flipButton{
@@ -58,12 +72,10 @@ Tan rgba(170, 162, 147, 1);
 }
 
 .flashBackTitle{
-	font-size: 18px;
 	color:rgba(73, 97, 125, 1);
 	font-weight: 700;
 }
 .flashBackText {
-    font-size: 14px;
     color: rgba(73, 97, 125, 1);
 }
 
@@ -268,7 +280,7 @@ button.tableEditButton {
 	margin-bottom: 0px !important;
 }
 
-@keyframes dashMessage{
+/*@keyframes dashMessage{
     from {opacity :1;}
     to {opacity :0;}
 }
@@ -276,7 +288,7 @@ button.tableEditButton {
 @-webkit-keyframes dashMessage{
     from {opacity :1;}
     to {opacity :0;}
-}
+}*/
 
 .loginFailContainer{
 	padding-top: 80px;
@@ -581,4 +593,16 @@ textarea:focus + label {
 
 #modifiedButton {
 	font-size: larger;
+}
+
+#dashboardHeader {
+	text-align: center;
+	font-family: 'Khand', sans-serif;
+	color: #49617e;
+}
+
+#fixFont {
+	font-family: 'Khand', sans-serif;
+	color: #49617e;
+	font-size: 22px;
 }

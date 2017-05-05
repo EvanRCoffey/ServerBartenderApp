@@ -53,7 +53,7 @@ function showFlashCardFront() {
 //This is being called just fine
 function flipCardOver() {
 	var objBeingUsed = flashcardONEARRAY[(gotItArray.length + studyFurtherArray.length)];
-	var backOfCardString = '<p class="flashBackTitle">'+objBeingUsed.name+'</p><pclass="flashBackText>$'+objBeingUsed.price+'</p><p class="flashBackText">Quick description: "'+objBeingUsed.quickDescr+'"</p><pclass="flashBackText>Detailed description: "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><br><br><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
+	var backOfCardString = '<p class="flashBackTitle">'+objBeingUsed.name+'</p><p class="flashBackText">$'+objBeingUsed.price+'</p><p class="flashBackText">Quick description: "'+objBeingUsed.quickDescr+'"</p><p class="flashBackText">Detailed description: "'+objBeingUsed.detailedDescr+'"</p><button onclick="gotIt()" type="button" class="btn btn-default" id="gotIt">Got it</button><br><br><button onclick="studyFurther()" type="button" class="btn btn-default" id="studyFurther">Need to study further</button>';
 	$("#area1").html(backOfCardString);
 }
 
@@ -84,32 +84,35 @@ function keepStudying() {
 		}
 	}
 	gotItArray = [];
-	$("#area2").html("Studying further...");
-
+	$("#area2").html("");
 	showFlashCardFront();
 }
 
 function statusReport(gotItArray, studyFurtherArray) {
 	$("#area1").html("STATUS REPORT:<br><br>");
 
-	$("#area1").append("These are the items you knew:<br>");
-	for (var i = 0; i<gotItArray.length; i++) {
-		$("#area1").append(gotItArray[i].name);
-		$("#area1").append("<br>");
+	if (gotItArray.length > 0) {
+		$("#area1").append("These are the items you knew:<br>");
+		for (var i = 0; i<gotItArray.length; i++) {
+			$("#area1").append(gotItArray[i].name);
+			$("#area1").append("<br>");
+		}
 	}
-
-	$("#area1").append("<br>These are the items you need to study further:<br>");
-	for (var i = 0; i<studyFurtherArray.length; i++) {
-		$("#area1").append(studyFurtherArray[i].name);
-		$("#area1").append("<br>");
+	
+	if (studyFurtherArray.length > 0) {
+		$("#area1").append("<br>These are the items you need to study further:<br>");
+		for (var i = 0; i<studyFurtherArray.length; i++) {
+			$("#area1").append(studyFurtherArray[i].name);
+			$("#area1").append("<br>");
+		}
 	}
 
 	//See if there are any cards left to study
 	if (studyFurtherArray.length < 1) {
-		$("#area2").html("All flash cards complete!<br><br>");
+		$("#area2").html("All flash cards complete!<hr>");
 	}
 	else {
-		var keepStudyingButtonString = '<div class="col-md-12"><button onclick="keepStudying()" type="button" class="btn btn-default" id="keepStudyingButton">Study these items further</button></div><br><br>';
+		var keepStudyingButtonString = '<div class="col-md-12"><button onclick="keepStudying()" type="button" class="btn btn-default" id="keepStudyingButton">Study these items further</button></div><hr>';
 		$("#area2").html(keepStudyingButtonString);
 	}
 
