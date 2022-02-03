@@ -1,3 +1,19 @@
+//
+//
+//
+//
+//
+//I think this file isn't actually used anywhere?  Get it all working, then delete this and see if still works?
+//The more I look the more I think this is true.
+//Comment from Mills in server.js:
+//"this only configs passport. If i require it as an external
+//file it all goes to hell. It can live here for now.""
+
+
+
+
+
+
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 var connection = require('./connection.js');
@@ -43,8 +59,6 @@ module.exports = function(passport) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         connection.query("select * from users where email = '"+email+"'",function(err,rows){
-            console.log(rows);
-            console.log("above row object");
             if (err)
                 return done(err);
              if (rows.length) {
@@ -59,7 +73,6 @@ module.exports = function(passport) {
                 newUserMysql.password = password; // use the generateHash function in our user model
             
                 var insertQuery = "INSERT INTO users ( email, password ) values ('" + email +"','"+ password +"')";
-                    console.log(insertQuery);
                 connection.query(insertQuery,function(err,rows){
                 newUserMysql.id = rows.insertId;
                 

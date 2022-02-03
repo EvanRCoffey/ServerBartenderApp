@@ -4,7 +4,7 @@
     <!--New Shift Form-->
     <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-    <div class="row">
+    <div class="row container">
 
         {{#unless jobs}}
             <!-- This section only shows when no jobs. -->
@@ -26,9 +26,9 @@
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
-                    <option value="" disabled>Click here to choose a job</option>
+                    <option value="">Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}" selected>{{this.job_name}}</option>
+                        <option value="{{this.id}}">{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
@@ -138,22 +138,22 @@
 </div>
 
 {{#if jobs}}
-  <div id="timeEqual" class="modal">
+  <div id="timeEqual" class="modal container">
     <div class="modal-content">
       <h5>In-Time and Out-Time cannot be the same.</h5>
       <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
     </div>
   </div>
 
-<div id="timeLess" class="modal">
-<div class="modal-content">
-      <h5>In-Time is before Out-Time.</h5>
-      <div class="row">
-      <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
-      </div>
-       <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
+    <div id="timeLess" class="modal container">
+        <div class="modal-content">
+            <h5>In-Time is before Out-Time.</h5>
+            <div class="row">
+                <button class="btn waves-effect waves-light" onclick="closeModal()">Oops. I'll fix it.</button>
+            </div>
+            <button class="btn waves-effect waves-light shiftSubmit" onclick="submitForm()" type="submit">Submit Anyways.</button>
+        </div>
     </div>
-  </div>
   {{/if}}
 
 <script type="text/javascript" src="./javascript/shift.js"></script>

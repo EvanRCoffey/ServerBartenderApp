@@ -932,8 +932,6 @@ function startQuizMaker(menu) {
 		var parsedMenuJson = JSON.parse(data2.menuJSON);
 		var reParsedCriJson = JSON.parse(parsedCriJson);
 		var reParsedMenuJson = JSON.parse(parsedMenuJson);
-		console.log(reParsedMenuJson);
-		console.log(reParsedCriJson);
 
 		$("#dropdown").html("Menu analyzed!  Select options below");
 
@@ -1168,7 +1166,6 @@ function startQuizMaker(menu) {
 			if ((reParsedMenuJson.dessert[i].allergyViolations.treeNuts) && (!uniqueAllVio.includes("treeNuts"))) {uniqueAllVio.push("treeNuts")};
 			if ((reParsedMenuJson.dessert[i].allergyViolations.wheat) && (!uniqueAllVio.includes("wheat"))) {uniqueAllVio.push("wheat")};
 		}
-		console.log(uniqueAllVio);
 
 		//For every item, if secret is true, push that item to secretItems[]
 		for (var i = 0; i<reParsedMenuJson.entree.length; i++) {if (reParsedMenuJson.entree[i].secret) {secretItems.push(reParsedMenuJson.entree[i])}}
@@ -1185,7 +1182,6 @@ function startQuizMaker(menu) {
 		for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {if (reParsedMenuJson.nonAlcoholic[i].secret) {secretItems.push(reParsedMenuJson.nonAlcoholic[i])}}
 		for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {if (reParsedMenuJson.afterDinnerDrink[i].secret) {secretItems.push(reParsedMenuJson.afterDinnerDrink[i])}}
 		for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {if (reParsedMenuJson.otherDrink[i].secret) {secretItems.push(reParsedMenuJson.otherDrink[i])}}
-		console.log(secretItems);
 
 		// //Hardcoding this to proceed with testing.  No idea why the above code isn't working, even after console.logging to investigate
 		// uniqueAllVio.push("eggs");

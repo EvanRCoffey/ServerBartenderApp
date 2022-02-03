@@ -4,8 +4,6 @@
 
 // $('.shiftEditBtn2').on('click', function(event) {
 //     event.preventDefault();
-//     console.log(event);
-
 //     var totalWalkedWith = $("#totalWalkedWith").val().trim();
 //     var largestTip = $("#largestTip").val().trim();
 //     var smallestTip = $("#smallestTip").val().trim();
@@ -47,9 +45,7 @@
 
 //     // Update object via AJAX post
 //     $.post("/editShift", newShift)
-//     .done(function(data) {
-//         console.log(data);
-//     });
+//     .done(function(data) {});
 // });
 
 // $('.datepicker').pickadate({

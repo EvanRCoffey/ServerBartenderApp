@@ -84,13 +84,11 @@ function shiftValidate(){
         return false
     } else if (moment(inTime, 'HH:mm:ss').isAfter(moment(outTime, 'HH:mm:ss')) && !timeConfirmed) { 
         $('#timeLess').modal('open');
-        console.log('time less')
         return false
     }
 }
 
 function submitForm(){
-    console.log('submit!')
     timeConfirmed = true
     $('#shiftForm').submit();
 }
@@ -167,10 +165,6 @@ function submitForm(){
 //                     var timeOutInt = array2[i];
 //                 }
 //             }
-
-//             console.log(timeInInt);
-//             console.log(timeOutInt);
-
 //             $("#inTime").val(timeInInt); //Sets inTime slider value to timeInInt
 //             $("#outTime").val(timeOutInt); //Sets outtime slider value to timeOutInt
 //         }
@@ -225,9 +219,7 @@ function submitForm(){
 //             $("#dateToDeleteDiv").append(deleteSuccessfulString);
 //             //Delete DB entry of selectedShiftObject
 //             $.post("/deleteShift", selectedShiftObject)
-//             .done(function(data) {
-//                 console.log(data);
-//             })
+//             .done(function(data) {})
 //         }
 
 //         //More than one match?  Card.
@@ -244,8 +236,6 @@ function submitForm(){
 
 // $('.shiftSubmitBtn').on('click', function(event) {
 //     event.preventDefault();
-//     console.log(event);
-
 //     var totalWalkedWith = $("#totalWalkedWith").val().trim();
 //     var largestTip = $("#largestTip").val().trim();
 //     var smallestTip = $("#smallestTip").val().trim();
@@ -295,9 +285,7 @@ function submitForm(){
 //     // Send object via AJAX post
 //     $.post("/newShift", newShift)
 //     //Once sent deal with successful/unsuccessful signup.
-//     .done(function(data) {
-//         console.log(data);
-//     });
+//     .done(function(data) {});
 // });
 
 // //Converts a number 0-1440 to a xx:xx:xx time.  Returns the time as a string.  Only works if num is divisible by 15.
@@ -359,8 +347,5 @@ function submitForm(){
 //         for (var i=0; i<data.length; i++) {
 //             jQueryString += '<option value="' + data[i].id + '">'+ data[i].id +'</option>'
 //         }
-//         $("#jobID").append(jQueryString);
-//         console.log(jQueryString);
-//         console.log(data);
-//     });
+//         $("#jobID").append(jQueryString);});
 // }

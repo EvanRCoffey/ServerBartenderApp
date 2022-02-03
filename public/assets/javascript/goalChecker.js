@@ -103,7 +103,6 @@ function completed() {
 	}
 	
 	$.post("/editGoal", completedGoal).then(function(data) {
-		console.log(data);
 		passedDeadlineCheck();
 	});
 }
@@ -242,7 +241,7 @@ function noMorePassedDeadlines() {
 	// var goalCardString = '<div class="card"><div class="card-content white-text"><span class="card-title">Goal checker</span><p>No pending goals with passed deadlines.</p>';
 
 	// var newGoalLink = '<a href="/goal">New Goal</a>';
-	// var editDeleteGoalsLink = '<a href="/goalsTable">Edit/Delete Goals</a>';
+	// var editDeleteGoalsLink = '<a href="/myGoals">Edit/Delete Goals</a>';
 
 	// goalCardString += '<p>' + newGoalLink + '</p>';
 

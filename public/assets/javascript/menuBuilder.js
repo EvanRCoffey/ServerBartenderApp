@@ -524,7 +524,6 @@ $('.menuFormHolder').on('click', '.save', function(e) {
 })
 
 $('.menuFormHolder').on('click', '.itemToggle', function() {
-    console.log('click')
     $(this).parents('.itemObject').find('.itemHolderToggle').slideToggle()
     if ($(this).text() === 'add') {
         $(this).text('remove')
@@ -534,7 +533,6 @@ $('.menuFormHolder').on('click', '.itemToggle', function() {
 })
 
 $('.menuFormHolder').on('click', '.catToggle', function() {
-    console.log('click')
      $(this).parents('.catRow').find('.catHolderToggle').slideToggle()
     if ($(this).text() === 'add') {
         $(this).text('remove')

@@ -1,82 +1,73 @@
-<div id="mainDiv">
-
+<div id="mainDiv" class="container">
     <div class="row">
         <div class="row">
             <div class="col s12">
-                <br><h4>Menu Builder</h4>
+                <br>
+                <h4>Menu Builder</h4>
             </div>
         </div>
-
         <form class="col s12" id="menuForm">
-
-
-
-            <!--jobID INT-->
-       
             <!--jobID INT-->
             <div class="input-field col s12">
                 <select name="job_id" id="jobID" required>
                     <option value="" disabled>Click here to choose a job</option>
                     {{#each jobs}}
-                        <option value="{{this.id}}">{{this.job_name}}</option>
+                    <option value="{{this.id}}">{{this.job_name}}</option>
                     {{/each}}
                 </select>
                 <label>Job Selector</label>
             </div>
-           
-        <div class="col s12 menuFormHolder">
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="menuName" type="text" required class="validate" name="menuName">
-                <label for="menuName">Menu Name</label>
-            </div>
-
-           <div class="input-field col s12">
-                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
-                <label for="comments">Comments</label>
-            </div>
-
-            <div class="input-field col s12 CRIpanel">
-              <ul class="collapsible" data-collapsible="expandable">
-            <li>
-              <div class="collapsible-header"><h4 class="CRIheader">Commonly Requested Items</h4></div>
-              <div class="collapsible-body menuOverflow CRI"></div>
-            </li>
-          </ul>
-        </div>
-        </div>
-        
-        </div> <!-- End Menuform holder -->
-        </div>  
+            <div class="col s12 menuFormHolder">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="menuName" type="text" required class="validate" name="menuName">
+                        <label for="menuName">Menu Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
+                        <label for="comments">Comments</label>
+                    </div>
+                    <div class="input-field col s12 CRIpanel">
+                        <ul class="collapsible" data-collapsible="expandable">
+                            <li>
+                                <div class="collapsible-header">
+                                    <h4 class="CRIheader">Commonly Requested Items</h4>
+                                </div>
+                                <div class="collapsible-body menuOverflow CRI"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> <!-- End Menuform holder -->
         </form>
+    </div>
+    <div class="row ">
+        <div class="input-field col s12">
+            <select class="categorySelector" onchange="addCategory(this);">
+                <option value="" disabled selected>Add Menu Category</option>
+                <optgroup label="Food">
+                    <option value="entree">Entrees</option>
+                    <option value="appetizer">Appetizers</option>
+                    <option value="dessert">Desserts</option>
+                    <option value="sides">Sides</option>
+                    <option value="addOn">Add-Ons</option>
+                    <option value="soupOrSalad">Soups and Salads</option>
+                    <option value="kidsMenu">Kids Menu</option>
+                    <option value="otherFood">Other Food</option>
+                </optgroup>
+                <optgroup label="Drink">
+                    <option value="wine">Wine</option>
+                    <option value="beer">Beer</option>
+                    <option value="cocktails">Cocktails</option>
+                    <option value="nonAlcoholic">Non-Alcoholic</option>
+                    <option value="afterDinnerDrink">After Dinner Drinks</option>
+                    <option value="otherDrink">Other Drinks</option>
+                </optgroup>
+            </select>
+            <label>Create new Menu Category.</label>
+        </div>
+    </div>
+</div>
 
-
-        <div class="row ">
-          <div class="input-field col s12">
-    <select class="categorySelector" onchange="addCategory(this);">
-    <option value="" disabled selected>Add Menu Category</option>
-      <optgroup label="Food">
-        <option value="entree">Entrees</option>
-        <option value="appetizer">Appetizers</option>
-        <option value="dessert">Desserts</option>
-        <option value="sides">Sides</option>
-        <option value="addOn">Add-Ons</option>
-        <option value="soupOrSalad">Soups and Salads</option>
-        <option value="kidsMenu">Kids Menu</option>
-        <option value="otherFood">Other Food</option>
-      </optgroup>
-      <optgroup label="Drink">
-        <option value="wine">Wine</option>
-        <option value="beer">Beer</option>
-        <option value="cocktails">Cocktails</option>
-        <option value="nonAlcoholic">Non-Alcoholic</option>
-        <option value="afterDinnerDrink">After Dinner Drinks</option>
-        <option value="otherDrink">Other Drinks</option>
-      </optgroup>
-    </select>
-    <label>Create new Menu Category.</label>
-  </div>
-  </div>
 <!-- <button class="serialButton">WORK!</button> -->
-
 <script type="text/javascript" src="./javascript/menuBuilder.js"></script>

@@ -28,14 +28,11 @@ $('#modal1').modal('close');
 
 // $('.jobSubmitBtn').on('click', function(event) {
 //     event.preventDefault();
-//     console.log(event);
-
 //     var startDate = $("#startDate").val().trim();
 //     var endDate = $("#endDate").val().trim();
 //     var wage = $("#wage").val().trim();
 //     //var userJobMenu = userJobMenu JSON location
 //     var comments = $("#comments").val().trim();
-
 //     //Create new user object.
 //     var newJob = {
 //         startDate:startDate,
@@ -49,7 +46,5 @@ $('#modal1').modal('close');
 //     // Send object via AJAX post
 //     $.post("/newJob", newJob)
 //     //Once sent deal with successful/unsuccessful signup.
-//     .done(function(data) {
-//         console.log(data);
-//     });
+//     .done(function(data) {});
 // });

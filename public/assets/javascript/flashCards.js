@@ -307,7 +307,6 @@ function selectedCategories() {
 	if (nonAlcoholicBool) {allFlashCards.push(nonAlcoholicDrinks);}
 	if (afterDinnerDrinksBool) {allFlashCards.push(afterDinnerDrinks);}
 	if (otherDrinksBool) {allFlashCards.push(otherDrinks);}
-	console.log(allFlashCards);
 	shuffle(allFlashCards);
 	for (var i = 0; i<allFlashCards.length; i++) {
 		for (var j = 0; j<allFlashCards[i].length; j++) {

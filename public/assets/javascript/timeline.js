@@ -1,12 +1,7 @@
 //This array will hold all goals for the user
 var allGoals = [];
 
-$.post("/timelineGoals").done(function(data) {
-
-	console.log(data);
-
-	// console.log(allGoals);
-});
+$.post("/timelineGoals").done(function(data) {});
 
 //This array will hold one timeline for each job
 var finishedTimelines = [];

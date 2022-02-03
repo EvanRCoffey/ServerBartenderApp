@@ -213,7 +213,6 @@ for (var i = 0; i<numberOfEntries; i++) {
 	}
 	itemsArray.push(menuJSON)
 }
-console.log(itemsArray);
 
 //FOR ALL OTHER ITEMS:
 //Create an array of numberOfEntries2 items with evenly divided prices from lowestPrice2 to highestPrice2
@@ -237,7 +236,6 @@ for (var i = 0; i<numberOfEntries2; i++) {
 	}
 	itemsArray2.push(menuJSON2)
 }
-console.log(itemsArray2);
 
 // var name = "Entree 1";
 // var price = 19.99;
@@ -283,5 +281,3 @@ console.log(itemsArray2);
 // 	}
 // 	entreesArray.push(menuJSON2)
 // }
-
-// console.log(entreesArray);

@@ -271,13 +271,11 @@ $.post("/financialSummary").done(function(data) {
 
     //Sets initial visible state of graphs, leaving only first one on.
     //  for ( var i = 1; i < chart.graphs.length; i++ ){
-    //     console.log('wat')
     //     chart.hideGraph(chart.graphs[i])
     // }
 
     //     AmCharts.ready(function() {
     //     for ( var i = 1; i < chart.graphs.length; i++ ){
-    //     console.log('wat')
     //     chart.hideGraph(chart.graphs[i])
     // }
     //     $('.amcharts-chart-div').find('a').addClass('superHide')
@@ -483,10 +481,6 @@ function updateAverage() {
         $(".totalHoursVal").text(summaryObj.totalHoursWorked + ' hours');
         $(".avgShiftLengthVal").text(summaryObj.avgShiftLength + ' hours');
 
-        // //Logs contents of finishedSummaries[]
-        // for (var i = 0; i<finishedSummaries.length; i++) {
-        //     console.log(finishedSummaries[i]);
-        // }
     }
 }
 

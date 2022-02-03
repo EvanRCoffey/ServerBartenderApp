@@ -104,9 +104,9 @@ router.get("/goal", loggedIn, function(req, res, next) {
     res.render("goal", req);
 });
 
-//Testing out a shifts table.
+//Testing out a My Shifts.
 //Added a raw:true option to cut down the garbage.
-router.get("/shiftsTable", loggedIn, function(req, res, next) {
+router.get("/myShifts", loggedIn, function(req, res, next) {
     db.Shift.findAll({ where: {UserId: req.user.id},
         include: [ db.Job ],
         raw: false, // Will order by shiftDate on an associated User
@@ -122,13 +122,11 @@ router.get("/shiftsTable", loggedIn, function(req, res, next) {
         }
 
         // moment().format('MMMM Do YYYY, h:mm:ss a');
-
-        console.log(dataObject.allShifts[0])
-       res.render("shiftsTable", dataObject);
+       res.render("myShifts", dataObject);
      });
  });
 
-router.get("/jobsTable", loggedIn, function(req, res, next) {
+router.get("/myJobs", loggedIn, function(req, res, next) {
     db.Job.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
       var dataObject = {
           allJobs: dbUser
@@ -137,11 +135,11 @@ router.get("/jobsTable", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allJobs.length; i++) {
             dataObject.allJobs[i].startDate = moment.utc(dataObject.allJobs[i].startDate).add(18, 'hours').format('ll')
         }
-       res.render("jobsTable", dataObject);
+       res.render("myJobs", dataObject);
      });
  });
 
-router.get("/goalsTable", loggedIn, function(req, res, next) {
+router.get("/myGoals", loggedIn, function(req, res, next) {
     db.Goal.findAll({ where: {UserId: req.user.id}}).then(function(dbUser) {
         var dataObject = {
             allGoals: dbUser
@@ -150,7 +148,7 @@ router.get("/goalsTable", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allGoals.length; i++) {
             dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
         }
-        res.render("goalsTable", dataObject);
+        res.render("myGoals", dataObject);
     });
 });
 
@@ -163,7 +161,6 @@ router.get("/goals", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allGoals.length; i++) {
             dataObject.allGoals[i].goalDeadline = moment.utc(dataObject.allGoals[i].goalDeadline).add(18, 'hours').format('ll')
         }
-        console.log(dataObject.allGoals[0]);
         res.json(dataObject);
     });
 });
@@ -246,7 +243,6 @@ router.post("/newUser", function(req, res, next) {
 //User types in their old password, and can then update any of thier login credintials.
 //It then logs them out and asks relog in. This prevents potentional conflicts/exploits.
 router.post("/updateAccount", loggedIn, function(req, res, next) {
-    console.log(bcrypt.compareSync(req.body.old_password, req.user.user_password))
     if (bcrypt.compareSync(req.body.old_password, req.user.user_password)) {
         var updateUser = {
             user_email: req.body.user_email,
@@ -271,7 +267,6 @@ router.post("/updateAccount", loggedIn, function(req, res, next) {
 router.post("/reset", function(req, res, next) {
     //generate temporary password.
     var tempPass = tempPWgenerator()
-    console.log(tempPass)
     var reset = {
         user_password: bcrypt.hashSync(tempPass)
     };
@@ -359,8 +354,6 @@ router.post("/newShift", loggedIn, function(req, res, next) {
         JobId: req.body.job_id,
         UserId: req.user.id
     }).then(function(dbUser) {
-        console.log(dbUser);
-
         db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
             var dataObject = {
               jobs: dbUser
@@ -372,9 +365,7 @@ router.post("/newShift", loggedIn, function(req, res, next) {
 });
 
 router.post("/newJob", loggedIn, function(req, res, next) {
-    console.log(req.body.endDate);
     if (req.body.endDate === "") {
-        console.log(req.user.id)
         db.Job.create({
             UserId: req.user.id,
             job_name: req.body.job_name,
@@ -435,7 +426,6 @@ router.post("/newGoal", loggedIn, function(req, res, next) {
 
 router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
-  console.log(shiftData);
   db.Shift.update(shiftData, {
     where: {id:shiftData.shiftID}
   }).then(function(dbUser) {
@@ -444,7 +434,6 @@ router.post("/editShift", loggedIn, function(req, res, next) {
     }
     res.render("dashboard", dataObject);
     });
-
 });
 
 router.post("/editJob", loggedIn, function(req, res, next) {
@@ -462,7 +451,6 @@ router.post("/editJob", loggedIn, function(req, res, next) {
     else {
         jobData.stillWorkingHere = false;
         db.Job.update(jobData, {where: {id:jobData.jobIdHidden}}).then(function(dbUser) {
-            console.log(dbUser);
                var dataObject = {
                 message: 'Job Updated'
             }
@@ -475,27 +463,18 @@ router.post("/editGoal", loggedIn, function(req, res, next) {
     //Called when you edit an existing goal
     var goalData = req.body;
 
-    console.log(goalData.goalStatusNumber);
-
     if (goalData.goalStatusNumber === '1') {
-        console.log("Setting goalStatus to completed:true");
         var goalStatus = {completed: true, abandoned: false, extended: false, modified: false}
     }
     if (goalData.goalStatusNumber === '2') {
-        console.log("Setting goalStatus to abandoned:true");
         var goalStatus = {completed: false, abandoned: true, extended: false, modified: false}
     }
     if (goalData.goalStatusNumber === '3') {
-        console.log("Setting goalStatus to extended:true");
         var goalStatus = {completed: false, abandoned: false, extended: true, modified: false}
     }
     if (goalData.goalStatusNumber === '4') {
-        console.log("Setting goalStatus to modified:true");
         var goalStatus = {completed: false, abandoned: false, extended: false, modified: true}
     }
-
-    console.log("goalStatus: ");
-    console.log(goalStatus)
 
     goalData.goalStatus = goalStatus;
 
@@ -517,16 +496,14 @@ router.post("/editGoal", loggedIn, function(req, res, next) {
 router.post("/deleteShift:id", loggedIn, function(req, res, next) {
   var ShiftID = req.params.id;
   db.Shift.destroy({where: {UserId: req.user.id, id: ShiftID}}).then(function(dbUser) {
-    console.log("Shift deleted");
-    res.redirect('/shiftsTable')
+    res.redirect('/myShifts')
   });
 });
 
 router.post("/deleteJob:id", loggedIn, function(req, res, next) {
   var JobID = req.params.id;
   db.Job.destroy({where: {UserId: req.user.id, id: JobID}}).then(function(dbUser) {
-    console.log("Job deleted");
-    res.redirect('/jobsTable');
+    res.redirect('/myJobs');
   });
 });
 
@@ -534,8 +511,7 @@ router.post("/deleteGoal:id", loggedIn, function(req, res, next) {
     //Called when you delete a shift with a provided ID
     var GoalID = req.params.id;
     db.Goal.destroy({where: {UserId: req.user.id, id: GoalID}}).then(function(dbUser) {
-        console.log("Goal deleted");
-        res.redirect('/goalsTable');
+        res.redirect('/myGoals');
     });
 });
 
@@ -547,7 +523,6 @@ router.post("/deleteGoal:id", loggedIn, function(req, res, next) {
 
 //Grabs all shifts for a user, for use with financial summary
 router.post("/financialSummary", loggedIn, function(req, res, next) {
-  console.log(req.body);
   db.Shift.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
     res.json(dbUser);
   });
@@ -555,8 +530,6 @@ router.post("/financialSummary", loggedIn, function(req, res, next) {
 
 //Grabs all shifts of a given date, for use with edit shift button
 // router.post("/shiftByDate", function(req, res) {
-//   console.log(req.body);
-
 //   db.Shift.findAll({where: {shiftDate: req.body.dateToEdit}}).then(function(dbUser) {
 //     res.json(dbUser);
 //   });
@@ -564,7 +537,6 @@ router.post("/financialSummary", loggedIn, function(req, res, next) {
 
 //Grabs all jobs for a user, for use with the job selector dropdown
 router.post("/allJobs", loggedIn, function(req, res, next) {
-    console.log(req.body);
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
         res.json(dbUser);
     });
@@ -573,24 +545,24 @@ router.post("/allJobs", loggedIn, function(req, res, next) {
 // Grabs a shift with a given id, for use with shift editor
 router.get("/editShift:id", loggedIn, function(req, res, next) {
     db.sequelize.Promise.all([
-            db.Shift.findAll({
-                where: { id: req.params.id }
-            }),
-            db.Job.findAll({
-                where: { UserId: req.user.id },
-            })
-        ])
-        .spread(function(shift, jobs) {
-            //Reformat before sending to Render
-               shift[0].shiftDate = moment(shift[0].shiftDate).add(18, 'hours').format('YYYY-MM-DD')
-               shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
-               shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
-             var dataObject = {
-                shift: shift[0],
-                job: jobs
-            }
-             
-             res.render("shiftEditor", dataObject)
+        db.Shift.findAll({
+            where: { id: req.params.id }
+        }),
+        db.Job.findAll({
+            where: { UserId: req.user.id },
+        })
+    ])
+    .spread(function(shift, jobs) {
+        //Reformat before sending to Render
+           shift[0].shiftDate = moment(shift[0].shiftDate).add(18, 'hours').format('YYYY-MM-DD')
+           shift[0].timeIn = moment(shift[0].timeIn, 'hh:mm:ss').format('h:mm A')
+           shift[0].timeOut = moment(shift[0].timeOut, 'hh:mm:ss').format('h:mm A')
+         var dataObject = {
+            shift: shift[0],
+            job: jobs
+        }
+         
+         res.render("shiftEditor", dataObject)
      });
       
 });
@@ -603,10 +575,8 @@ router.get("/editJob:id", loggedIn, function(req, res, next) {
         raw: true
     }).then(function(dbUser) {
         var date = moment(dbUser[0].startDate).add(18, 'hours').format('YYYY-MM-DD')
-        console.log(date)
         dbUser[0].startDate = date
         var date2 = moment(dbUser[0].endDate).add(18, 'hours').format('YYYY-MM-DD')
-        console.log(date2)
         dbUser[0].endDate = date2
         res.render("jobEditor", dbUser[0]);
     });
@@ -621,7 +591,6 @@ router.get("/editGoal:id", loggedIn, function(req, res, next) {
         raw: true
     }).then(function(dbUser) {
         var date = moment(dbUser[0].goalDeadline).add(18, 'hours').format('YYYY-MM-DD');
-        console.log(date);
         dbUser[0].goalDeadline = date;
         res.render("goalEditor", dbUser[0]);
     });
@@ -643,42 +612,35 @@ router.post("/timelineGoals", loggedIn, function(req, res, next) {
 
 router.get("/quizMaker", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
-      console.log(dbUser);
       var dataObject = {
           jobs: dbUser
         };
-        console.log(dataObject);
        res.render("quizMaker", dataObject);
      });
 })
 
 router.get("/flashCards", loggedIn, function(req, res, next) {
     db.Job.findAll({where: {UserId: req.user.id}}).then(function(dbUser) {
-      console.log(dbUser);
       var dataObject = {
           jobs: dbUser
         };
-        console.log(dataObject);
        res.render("flashCards", dataObject);
      });
 })
 
 router.post("/checkMenuJSON", loggedIn, function(req, res, next) {
     db.Menu.findOne({ where: {id: req.body.menuId} }).then(function(dbUser) {
-        console.log(dbUser);
         res.json(dbUser);
     });
 })
 
 router.post("/getMenus", loggedIn, function(req, res, next) {
     db.Menu.findAll({ where: {JobID: req.body.jobId}}).then(function(dbUser) {
-        console.log(dbUser);
         res.json(dbUser);
     })
 })
 
 router.post("/newMenu", loggedIn, function(req, res, next) {
-    console.log(req.body)
     db.Menu.create({
         menuName: req.body.menuName,
         comments: req.body.comments,
@@ -701,14 +663,11 @@ router.post("/updateMenu", loggedIn, function(req, res, next) {
 
     db.Menu.update(menuObject, {
         where: {id:req.body.JobId}
-    }).then(function(dbUser) {
-        console.log(dbUser)
-  });
+    }).then(function(dbUser) {});
 });
 
 router.post("/editShift", loggedIn, function(req, res, next) {
   var shiftData = req.body;
-  console.log(shiftData);
   db.Shift.update(shiftData, {
     where: {id:shiftData.shiftID}
   }).then(function(dbUser) {
@@ -717,7 +676,6 @@ router.post("/editShift", loggedIn, function(req, res, next) {
     }
     res.render("dashboard", dataObject);
     });
-
 });
 
 //Keep this at the end of the router section.
@@ -798,45 +756,3 @@ function convertToTime(num) {
 
     return string;
 }
-
-// SEQUELIZE CRUD METHODS, FOR REFERENCE
-
-//  CREATE!
-//   db.Blah.create({
-//   email: "HELLYEAH@myspace.com",
-//   password: "superduperinsecurepassword123",
-//   age: 55,
-//   name: "Betty"
-// }).then(function(dbUser) {
-//   console.log(dbUser);
-// });
-
-//  FIND ONE!
-// db.Blah.findOne({ where: {id: 1} }).then(function(dbUser) {
-//     console.log(dbUser);
-//   });
-
-//  FIND ALL!
-// db.Blah.findAll().then(function(dbUser) {
-//   console.log(dbUser);
-// });
-
-//  UPDATE ONE!
-// var newTom = {
-//   age: 25,
-//   email: "mark@facebook.com"
-// };
-// db.Blah.update(newTom, {
-//   where: {
-//     id: 1
-//   }
-// }).then(function(dbUser) {
-//   console.log(dbUser);
-// });
-
-// DELETE ONE!
-// db.Blah.destroy({
-//   where: {id: 1}
-// }).then(function(dbUser) {
-//   console.log(dbUser);
-// });

@@ -514,6 +514,4 @@ var menuObj = {
 	JobId: JobId
 }
 
-$.post("/newMenu", menuObj).then(function(data) {
-	console.log(data);
-})
+$.post("/newMenu", menuObj).then(function(data) {})
