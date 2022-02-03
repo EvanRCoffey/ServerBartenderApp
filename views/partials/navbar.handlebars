@@ -1,28 +1,74 @@
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li class="divider"></li>
+    <li><a href="/financialSummaryTest">Financial Summary</a></li>
+    <li><a href="/shift">New Shift</a></li>    
+    <li><a href="/goal">New Goal</a></li>
+    <li><a href="/job">New Job</a></li>
+    <li><a href="/myShifts">My Shifts</a></li>
+    <li><a href="/myGoals">My Goals</a></li>
+    <li><a href="/myJobs">My Jobs</a></li>
+    <li class="divider"></li>
+    <li><a href="/menuBuilder">Menu Builder</a></li>
+    <li><a href="/quizMaker">Quiz Maker</a></li>
+    <li><a href="/flashCards">Flash Cards</a></li>
+    <li class="divider"></li>
+    <li><a href="/feedback">Feedback</a></li>
+    <li><a href="/updateAccount">Update Account</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+
 <nav>
-  <div>
-    <ul>
-    {{#unless this.user}}
+    <div class="nav-wrapper">
+      {{#unless this.user}}
       <!-- This section only shows when not logged in. -->
-      <li><a href="/login">Login</a></li>
-      <li><a href="/signup">Sign Up</a></li>
-    {{/unless}}
-    {{#if this.user}}
-      <!-- This section only shows when logged in. -->
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/financialSummaryTest">Financial Summary</a></li>
-      <li><a href="/shift">New Shift</a></li>    
-      <li><a href="/goal">New Goal</a></li>
-      <li><a href="/job">New Job</a></li>
-      <li><a href="/myShifts">My Shifts</a></li>
-      <li><a href="/myGoals">My Goals</a></li>
-      <li><a href="/myJobs">My Jobs</a></li>
-      <li><a href="/menuBuilder">Menu Builder</a></li>
-      <li><a href="/quizMaker">Quiz Maker</a></li>
-      <li><a href="/flashCards">Flash Cards</a></li>
-      <li><a href="/feedback">Feedback</a></li>
-      <li><a href="/updateAccount">Update Account</a></li>
-      <li><a href="/logout">Logout</a></li>
-    {{/if}}
-    </ul>
-  </div>
-</nav>
+        <a href="/" class="brand-logo"><img src="./images/PreShiftPlanner.svg" alt="PreShift Planner Logo"></a>
+         {{/unless}}
+        {{#if this.user}}
+        <!-- This section only shows when logged in. -->
+         <a href="/dashboard" class="brand-logo"><img src="./images/PreShiftPlanner.svg" alt="PreShift Planner Logo"></a>
+        {{/if}}
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+      {{#unless this.user}}
+      <!-- This section only shows when not logged in. -->
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+         {{/unless}}
+        {{#if this.user}}
+        <!-- This section only shows when logged in. -->
+         <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Let's plan, then!<i class="material-icons right">arrow_drop_down</i></a></li>
+        {{/if}}
+        <!-- If we need a menu item to show when logged in and not, but it outside of those if/unless statements. -->
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+      {{#unless this.user}}
+      <!-- This section only shows when not logged in. -->
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+        {{/unless}}
+        {{#if this.user}}
+            <!-- This section only shows when logged in. -->
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li class="divider"></li>
+            <li><a href="/financialSummaryTest">Financial Summary</a></li>
+            <li><a href="/shift">New Shift</a></li>    
+            <li><a href="/goal">New Goal</a></li>
+            <li><a href="/job">New Job</a></li>
+            <li><a href="/myShifts">My Shifts</a></li>
+            <li><a href="/myGoals">My Goals</a></li>
+            <li><a href="/myJobs">My Jobs</a></li>
+            <li class="divider"></li>
+            <li><a href="/menuBuilder">Menu Builder</a></li>
+            <li><a href="/quizMaker">Quiz Maker</a></li>
+            <li><a href="/flashCards">Flash Cards</a></li>
+            <li class="divider"></li>
+            <li><a href="/feedback">Feedback</a></li>
+            <li><a href="/updateAccount">Update Account</a></li>
+            <li><a href="/logout">Logout</a></li>
+        {{/if}}
+        <!-- If we need a menu item to show when logged in and not, but it outside of those if/unless statements. -->
+        </ul>
+    </div>
+  </nav>
+   
