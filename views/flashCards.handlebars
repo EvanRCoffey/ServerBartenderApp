@@ -19,7 +19,7 @@
 			        <select class="jobSelector" onchange="loadMenus(this);">
 			            <option value="" disabled>Click here to choose a job</option>
 			            {{#each jobs}}
-			                <option value="{{this.id}}" selected>{{dataValues.job_name}}</option>
+			                <option value="{{dataValues.id}}" selected>{{dataValues.job_name}}</option>
 			            {{/each}}
 			        </select>
 			        <label>Job Selector</label>
