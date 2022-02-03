@@ -120,7 +120,6 @@ router.get("/myShifts", loggedIn, function(req, res, next) {
             dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
             dataObject.allShifts[i].timeIn = moment(dataObject.allShifts[i].timeIn, 'hh:mm:ss').format('h:mm A')
         }
-
         // moment().format('MMMM Do YYYY, h:mm:ss a');
        res.render("myShifts", dataObject);
      });
@@ -561,7 +560,6 @@ router.get("/editShift:id", loggedIn, function(req, res, next) {
             shift: shift[0],
             job: jobs
         }
-         
          res.render("shiftEditor", dataObject)
      });
       

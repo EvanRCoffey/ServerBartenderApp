@@ -1,27 +1,15 @@
-<div class="row container">
-    <div class="row">
-        <div class="col s12">
-            <h4>Feedback</h4>
+<div>
+    <h4>Feedback</h4>
+    <form method="POST" action="/sendFeedback" onsubmit="return validateForm()" >
+        <div class="input-field">
+            <input id="email" type="email" name="user_email" value={{this.user.user_email}}>
+            <label for="email">Email (optional)</label>
         </div>
-    </div>
-    <form class="col s12" method="POST" action="/sendFeedback" onsubmit="return validateForm()" >
-        <div class="row">
+        <div class="input-field">
+            <textarea id="comments" name="comment"></textarea>
+            <label for="comments">Let us know of any problems or suggestions.</label>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="email" type="email" class="validate" name="user_email" value={{this.user.user_email}}>
-                <label for="email">Email (optional)</label>
-            </div>
-        </div>
-        <div class="row">
-           <div class="input-field col s12">
-                <textarea id="comments" class="materialize-textarea" name="comment"></textarea>
-                <label for="comments">Let us know of any problems or suggestions.</label>
-            </div>
-        </div>
-        <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Send Feedback</button>
-        <div class="row">
-        </div>
+        <button class="btn" type="submit">Send Feedback</button>
     </form>
 </div>
 

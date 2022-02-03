@@ -1,12 +1,12 @@
 <nav>
-  <div class="nav-wrapper" style="text-align: center; padding-top: 10px">
+  <div style="text-align: center; padding-top: 10px">
     {{#unless this.user}}
-    <!-- This section only shows when not logged in. -->
+      <!-- This section only shows when not logged in. -->
       <a href="/"><img src="./images/PreShiftPlanner.svg" alt="PreShift Planner Logo"></a>
-       {{/unless}}
-      {{#if this.user}}
-      <!-- This section only shows when logged in. -->
-       <a href="/dashboard"><img src="./images/PreShiftPlanner.svg" alt="PreShift Planner Logo"></a>
-      {{/if}}
+    {{/unless}}
+    {{#if this.user}}
+    <!-- This section only shows when logged in. -->
+     <a href="/dashboard"><img src="./images/PreShiftPlanner.svg" alt="PreShift Planner Logo"></a>
+    {{/if}}
   </div>
 </nav>

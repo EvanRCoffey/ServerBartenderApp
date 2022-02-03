@@ -1,79 +1,54 @@
-<div id="mainDiv"> 
-    <div class="row">
-        <div class="row">
-            <div class="col s12">
-                <br><h4>Edit Job</h4>
-            </div>
+<div id="mainDiv">
+    <h4>Edit Job</h4>
+    <form method="POST" action="/editJob">
+
+        <input id='jobIdHidden' type="hidden" name="jobIdHidden" value={{this.id}}>
+
+        <div class="input-field">
+            <input id="job_name" type="text" class="validate" name="job_name" value="{{this.job_name}}" required>
+            <label for="job_name">Job Name</label>
         </div>
 
-        <form class="col s12" method="POST" action="/editJob">
+        <!--startDate DATE-->
+        <div class="input-field">
+            <input name="startDate" id="startDate" type="date" class="datepicker" value='' required>
+            <label for="startDate">Click here to select a start date for this job</label>
+        </div>
 
-            <input id='jobIdHidden' type="hidden" name="jobIdHidden" value={{this.id}}>
+       <input id='startDateHidden' type="hidden" name="startDateHidden" value={{this.startDate}}>
 
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="job_name" type="text" class="validate" name="job_name" value="{{this.job_name}}" required>
-                    <label for="job_name">Job Name</label>
-                </div>
-            </div>
+        <!--endDate DATE-->
+        <div class="input-field">
+            <input name="endDate" id="endDate" type="date" class="datepicker" value="{{this.endDate}}">
+            <label for="endDate">End Date (Leave blank if still there)</label>
+        </div>
 
-            <div class="row">
-                <!--startDate DATE-->
-                <div class="input-field col s12">
-                    <input name="startDate" id="startDate" type="date" class="datepicker" value='' required>
-                    <label for="startDate">Click here to select a start date for this job</label>
-                </div>
-            </div>
-               <input id='startDateHidden' type="hidden" name="startDateHidden" value={{this.startDate}}>
+        <!--wage DECIMAL(10,2)-->
+        <div class="input-field">
+            <input name="wage" id="wage" type="number" step="0.01" class="validate" value="{{this.wage}}" required>
+            <label for="wage">Hourly wage</label>
+        </div>
+    
+        <!--userJobMenu JSON would go here-->
 
-            <div class="row">
-                <!--endDate DATE-->
-                <div class="input-field col s12">
-                    <input name="endDate" id="endDate" type="date" class="datepicker" value="{{this.endDate}}">
-                    <label for="endDate">End Date (Leave blank if still there)</label>
-                </div>
-            </div>
+        <!--comments MEDIUMBLOB-->
+        <div class="input-field">
+            <textarea name="comments" id="comments" class="materialize-textarea" required>{{this.comments}}</textarea>
+            <label for="comments">Comments</label>
+        </div>
 
-            <div class="row">
-                <!--wage DECIMAL(10,2)-->
-                <div class="input-field col s12">
-                    <input name="wage" id="wage" type="number" step="0.01" class="validate" value="{{this.wage}}" required>
-                    <label for="wage">Hourly wage</label>
-                </div>
-            </div>
-            
-            <!--userJobMenu JSON would go here-->
+        <button class="btn waves-effect waves-light">Edit Job</button>
+        <button data-target="modal1" class="btn">Delete Job</button>
 
-            <div class="row">
-                <!--comments MEDIUMBLOB-->
-                <div class="input-field col s12">
-                    <textarea name="comments" id="comments" class="materialize-textarea" required>{{this.comments}}</textarea>
-                    <label for="comments">Comments</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6">
-                    <button class="btn waves-effect waves-light">Edit Job
-                         </button>
-                </div>
-            <div class="col s6">
-              <button data-target="modal1" class="btn">Delete Job</button>
-            </div>
-                <div class="row">
-            </div>
-            </div>
-        </form>
-    </div>
+    </form>
 </div>
 
 <div id="modal1" class="modal">
     <div class="modal-content">
-      <h5>Sorry! You can't delete jobs at the moment.</h5>
-      <div class="row">
-    <!--     <form action="/deleteJob{{this.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Job</button></form> -->
-      </div>
-      <button class="btn waves-effect waves-light" onclick="closeModal()">That's lame</button>
+        <h5>Sorry! You can't delete jobs at the moment.</h5>
+        <!-- <form action="/deleteJob{{this.id}}?" method="POST"><button class="btn waves-effect waves-light" type="submit">Delete Job</button></form> -->
     </div>
+    <button class="btn waves-effect waves-light" onclick="closeModal()">That's lame</button>
 </div>
 
 <script type="text/javascript" src="./javascript/job.js"></script>

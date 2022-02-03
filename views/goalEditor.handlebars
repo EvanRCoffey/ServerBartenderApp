@@ -1,64 +1,41 @@
-<div id="mainDiv" class="container"> 
-    <div class="row">
-        <div class="row">
-            <div class="col s12">
-                <br><h4>Edit goal</h4>
-            </div>
+<div id="mainDiv"> 
+    <h4>Edit goal</h4>
+    <form method="POST" action="/editGoal">
+        <input id='goalIdHidden' type="hidden" name="goalIdHidden" value={{this.id}}>
+
+        <div class="input-field">
+            <input id="goalName" type="text" class="validate" name="goalName" value="{{this.goalName}}" required>
+            <label for="goalName">Goal Name</label>
+        </div>
+    
+        <div class="input-field">
+            <input name="goalDeadline" id="goalDeadline" type="date" class="datepicker" value='' required>
+            <label for="goalDeadline">Click here to select a deadline for this goal</label>
         </div>
 
-        <form class="col s12" method="POST" action="/editGoal">
-
-            <input id='goalIdHidden' type="hidden" name="goalIdHidden" value={{this.id}}>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="goalName" type="text" class="validate" name="goalName" value="{{this.goalName}}" required>
-                    <label for="goalName">Goal Name</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <input name="goalDeadline" id="goalDeadline" type="date" class="datepicker" value='' required>
-                    <label for="goalDeadline">Click here to select a deadline for this goal</label>
-                </div>
-            </div>
-            <input id='goalDeadlineHidden' type="hidden" name="goalDeadlineHidden" value="{{this.goalDeadline}}">
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea name="goalText" id="goalText" class="materialize-textarea" required>{{this.goalText}}</textarea>
-                    <label for="goalText">Goal Text</label>
-                </div>
-            </div>
-            
-            <!--goalStatus JSON would go here-->
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea name="comments" id="comments" class="materialize-textarea">{{this.comments}}</textarea>
-                    <label for="comments">Comments</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s6">
-                    <button class="btn waves-effect waves-light">Edit Goal</button>
-                </div>
-                <div class="col s6">
-                    <button data-target="modal1" class="btn">Delete Goal</button>
-                </div>
-                <div class="row"></div>
-            </div>
-            
-        </form>
-    </div>
+        <input id='goalDeadlineHidden' type="hidden" name="goalDeadlineHidden" value="{{this.goalDeadline}}">
+    
+        <div class="input-field">
+            <textarea name="goalText" id="goalText" required>{{this.goalText}}</textarea>
+            <label for="goalText">Goal Text</label>
+        </div>
+    
+        <!--goalStatus JSON would go here-->
+    
+        <div class="input-field">
+            <textarea name="comments" id="comments">{{this.comments}}</textarea>
+            <label for="comments">Comments</label>
+        </div>
+    
+        <button class="btn waves-effect waves-light">Edit Goal</button>
+        <button data-target="modal1" class="btn">Delete Goal</button>     
+    </form>
 </div>
 
 <div id="modal1" class="modal container">
     <div class="modal-content">
         <h5>Sorry! You can't delete goals at the moment.</h5>
-        <div class="row"></div>
+        </div>
         <button class="btn waves-effect waves-light" onclick="closeModal()">That's lame</button>
     </div>
 </div>

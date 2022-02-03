@@ -1,15 +1,14 @@
 <div id="mainDiv">
-    <div class="container" id="fixFont">
-        <div class="col s12">
-            <br><h4>Quiz Maker</h4>
-        </div>
+    <div id="fixFont">
+        <h4>Quiz Maker</h4>
+
+        <!-- At some point ensure nothing goes wrong if a job does not have any menus yet.  Add a link to menu builder in that case? -->
 
 		{{#unless jobs}}
 	        <div id="dropdown">
-	            <div class="input-field col s12">
+	            <div class="input-field">
 	                <h5>To use the quiz maker, you must create a job and a menu.</h5>
 	                <a href="/job"><h5>Click here to create a job.</h5></a>
-	                <a href="javascript:startQuizMaker(9999);"><h5>Click here to try the quiz maker using the Fleming's menu</h5></a>
 	            </div>
 	        </div>
         {{/unless}}
@@ -19,9 +18,8 @@
 			    <div class="input-field col s12">
 			        <select class="jobSelector" onchange="loadMenus(this);">
 			            <option value="" disabled>Click here to choose a job</option>
-			            <option value="9999" selected>Dummy Job - Fleming's</option>
 			            {{#each jobs}}
-			                <option value="{{this.id}}" selected>{{this.job_name}}</option>
+			                <option value="{{this.id}}" selected>{{dataValues.job_name}}</option>
 			            {{/each}}
 			        </select>
 			        <label>Job Selector</label>
@@ -31,13 +29,9 @@
     </div>
 </div>
 
-<div class="container" id="triviaContainer">
-	<div class="row" id="messageArea">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row" id="answersArea">
-		<div class="col-md-12"></div>
-	</div>
+<div id="triviaContainer">
+	<div id="messageArea"></div>
+	<div id="answersArea"></div>
 </div>
 
 <script type="text/javascript" src="./javascript/quizMaker.js"></script>

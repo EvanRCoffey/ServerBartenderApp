@@ -1,44 +1,33 @@
-<div class="row container">
-    <div class="col s12">
-        <table class="bordered">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time In</th>
-                    <th>Job Name</th>
-                    <th class="formEditButton">Edit/Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each allShifts}}
-                <tr class="shiftRow">
-                    <td class="shiftd">{{this.shiftDate}}</td>
-                    <td class="shiftd">{{this.timeIn}}</td>
-                    <td class="shiftd">{{this.Job.job_name}}</td>
-                    <td class="shiftd">
-                        <form class="formEditButton" action="/editShift{{this.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-        <div class="bottomSpacer"></div>
-    </div>
+<table class="bordered">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time In</th>
+            <th>Job Name</th>
+            <th class="formEditButton">Edit/Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each allShifts}}
+        <tr class="shiftRow">
+            <td class="shiftd">{{dataValues.shiftDate}}</td>
+            <td class="shiftd">{{dataValues.timeIn}}</td>
+            <td class="shiftd">{{dataValues.Job.job_name}}</td>
+            <td class="shiftd">
+                <form class="formEditButton" action="/editShift{{dataValues.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<div class="bottomSpacer"></div>
+
+<div class="stickyBottom">
+    <span class="date1 datespan">Date 1</span> through <span class="date2 datespan">Date 2</span>
+    <div id="dateSlider" ng-model="hello" ng-value="start"></div>
 </div>
-<div class="row stickyBottom">
-    <div class="container ">
-        <div class="row ">
-            <div class="col s12">
-                <span class="date1 datespan">Date 1</span> through <span class="date2 datespan">Date 2</span>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col s12">
-                <div id="dateSlider" ng-model="hello" ng-value="start"></div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
 <script type="text/javascript" src="./javascript/nouislider.min.js"></script>
 <script type="text/javascript" src="./javascript/shiftTable.js"></script>

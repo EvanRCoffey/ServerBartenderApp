@@ -1,154 +1,92 @@
 <link rel="stylesheet" href="./javascript/vis/dist/vis.css">
 
-<div class="container" id="dashboardHeader">
-
-    <div class="row">
-        <div class="col s12">
-            <h1>DASHBOARD</h1>
-            <h2 class="dashMessage">{{this.message}}</h4>
-        </div>
+<div id="dashboardHeader">
+    <div>
+        <h1>DASHBOARD</h1>
+        <h2 class="dashMessage">{{this.message}}</h4>
     </div>   
-
 </div>
 
-<div class="container grayBorder">
-
-    <div class="row messageContainer">
-        <div class="col s12">
-            <div id="cardGoesHere"></div>
-        </div>
+<div class="grayBorder">
+    <div class="messageContainer">
+        <div id="cardGoesHere"></div>
     </div>  
-
-    <div class="row">
-        <div class="col s12" id="dashboardText">
-            Create new shifts and goals here.
+    <div id="dashboardText">
+        Create new shifts and goals here.
+    </div>
+    <div class="card">
+        <div>
+            <span class="card-title">New Shift</span>
+        </div>
+        <div class="card-action">
+            <a href="/shift">Click Here</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s2"></div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">New Shift</span>
-                </div>
-                <div class="card-action">
-                    <a href="/shift">Click Here</a>
-                </div>
-            </div>
+    <div class="card">
+        <div>
+            <span class="card-title">New Goal</span>
         </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">New Goal</span>
-                </div>
-                <div class="card-action">
-                    <a href="/goal">Click Here</a>
-                </div>
-            </div>
+        <div class="card-action">
+            <a href="/goal">Click Here</a>
         </div>
-        <div class="col s2"></div>
     </div>
-
 </div>
 
 <br><br>
 
-<div class="container grayBorder">
-
-    <div class="row">
-        <div class="col s12" id="dashboardText">
-            To edit a shift or a goal, select a timeline bubble below or visit the My Shifts/My Goals pages.  
-            <br/> 
-            Check your stats on the Financial Summary page.
+<div class="grayBorder">
+    <div id="dashboardText">
+        To edit a shift or a goal, select a timeline bubble below or visit the My Shifts/My Goals pages.  
+        <br/> 
+        Check your stats on the Financial Summary page.
+    </div>
+    <div id="visualization"></div>
+    <div class="card">
+        <span class="card-title">My Shifts</span>
+        <div class="card-action">
+            <a href="/myShifts">Click Here</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s12">
-            <div id="visualization"></div>
+    <div class="card">
+        <span class="card-title">My Goals</span>
+        <div class="card-action">
+            <a href="/myGoals">Click Here</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">My Shifts</span>
-                </div>
-                <div class="card-action">
-                    <a href="/myShifts">Click Here</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">My Goals</span>
-                </div>
-                <div class="card-action">
-                    <a href="/myGoals">Click Here</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">Financial Summary</span>
-                </div>
-                <div class="card-action">
-                    <a href="/financialSummaryTest">Click Here</a>
-                </div>
-            </div>
+    <div class="card">
+        <span class="card-title">Financial Summary</span>
+        <div class="card-action">
+            <a href="/financialSummaryTest">Click Here</a>
         </div>
     </div>
-
 </div>
 
 <br><br>
 
-<div class="container grayBorder" style="margin-bottom: 30px">
-
-    <div class="row">
-        <div class="col s12" id="dashboardText">
-            Create and edit menus using the menu builder.  Study them with the quiz maker and flash cards.
+<div class="grayBorder">
+    <div id="dashboardText">
+        Create and edit menus using the menu builder.  Study them with the quiz maker and flash cards.
+    </div>
+    <div class="card">
+        <span class="card-title">Menu Builder</span>
+        <div class="card-action">
+            <a href="/menuBuilder">Click Here</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">Menu Builder</span>
-                </div>
-                <div class="card-action">
-                    <a href="/menuBuilder">Click Here</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">Quiz Maker</span>
-                </div>
-                <div class="card-action">
-                    <a href="/quizMaker">Click Here</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card homeCard">
-                <div class="card-content homeCard">
-                    <span class="card-title">Flash Cards</span>
-                </div>
-                <div class="card-action">
-                    <a href="/flashCards">Click Here</a>
-                </div>
-            </div>
+    <div class="card">
+        <span class="card-title">Quiz Maker</span>
+        <div class="card-action">
+            <a href="/quizMaker">Click Here</a>
         </div>
     </div>
-
+    <div class="card">
+        <span class="card-title">Flash Cards</span>
+        <div class="card-action">
+            <a href="/flashCards">Click Here</a>
+        </div>
+    </div>
 </div>
 
+<br><br>
 
 <script type="text/javascript" src="./javascript/goalChecker.js"></script>

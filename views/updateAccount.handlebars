@@ -1,53 +1,31 @@
-<div class="row messageContainer">
-    <div class="col s12">
-        <h5 class="dashMessage">{{this.message}}</h5>
-    </div>
+<div class="messageContainer">
+    <h5 class="dashMessage">{{this.message}}</h5>
 </div>
 
-<div class="row container">
-    <div class="row">
-        <div class="col s12">
-            <h4>Update Account Info</h4>
-        </div>
+<h4>Update Account Info</h4>
+
+<form method="POST" action="/updateAccount" onsubmit="return validateForm()" >
+    <div class="input-field">
+        <input id="first_name" type="text" class="validate" name="user_name" value={{this.user.dataValues.user_name}}>
+        <label for="first_name">New First Name</label>
     </div>
-    <form class="col s12" method="POST" action="/updateAccount" onsubmit="return validateForm()" >
-        <div class="row">
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="first_name" type="text" class="validate" name="user_name" value={{this.user.user_name}}>
-                <label for="first_name">New First Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="email" type="email" class="validate" name="user_email" value={{this.user.user_email}}>
-                <label for="email">New Email</label>
-            </div>
-        </div>
-            <div class="row">
-            <div class="input-field col s12">
-                <input id="Oldpassword" type="password" class="validate" name="old_password">
-                <label for="password">Old Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="password" type="password" class="validate" name="new_password">
-                <label for="password">New Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="passwordCheck" type="password" class="validate">
-                <label for="password">Re-enter New Password</label>
-            </div>
-        </div>
-        <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Update
-        </button>
-        <div class="row">
-        </div>
-    </form>
-</div>
+    <div class="input-field">
+        <input id="email" type="email" class="validate" name="user_email" value={{this.user.dataValues.user_email}}>
+        <label for="email">New Email</label>
+    </div>
+    <div class="input-field">
+        <input id="Oldpassword" type="password" class="validate" name="old_password">
+        <label for="password">Old Password</label>
+    </div>
+    <div class="input-field">
+        <input id="password" type="password" class="validate" name="new_password">
+        <label for="password">New Password</label>
+    </div>
+    <div class="input-field">
+        <input id="passwordCheck" type="password" class="validate">
+        <label for="password">Re-enter New Password</label>
+    </div>
+    <button class="btn waves-effect waves-light signUpSubmitBtn" type="submit">Update</button>
+</form>
 
 <script type="text/javascript" src="./javascript/updateAccount.js"></script>
