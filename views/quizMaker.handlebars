@@ -18,7 +18,6 @@
 			    <div class="input-field col s12">
 			        <select class="jobSelector" onchange="loadMenus(this);">
 			            <option value="" disabled>Click here to choose a job</option>
-			            <option value="9999" selected>Dummy Job - Fleming's</option>
 			            {{#each jobs}}
 			                <option value="{{dataValues.id}}" selected>{{dataValues.job_name}}</option>
 			            {{/each}}

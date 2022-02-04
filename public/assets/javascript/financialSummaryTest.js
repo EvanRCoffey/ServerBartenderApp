@@ -258,44 +258,44 @@ $.post("/financialSummary").done(function(data) {
         },
         "dataProvider": data.reverse()
     });
+
+
+    AmCharts.ready(function() {
+        $('.amcharts-chart-div').find('a').addClass('superHide')
+    })
+
+
+
+
+
+    //Date slider actions section.
+    slider.noUiSlider.on('update', function() {
+        startDate = slider.noUiSlider.get()[0]
+        endDate = slider.noUiSlider.get()[1]
+
+        $('.amcharts-chart-div').find('a').addClass('superHide')
+        chart.zoomToIndexes(startDate, endDate)
+
+        var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
+        var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
+
+        $('.date1').text(startDateFormat)
+        $('.date2').text(endDateFormat)
+        updateAverage()
+    })
+
+    //Sets initial visible state of graphs, leaving only first one on.
+    //  for ( var i = 1; i < chart.graphs.length; i++ ){
+    //     chart.hideGraph(chart.graphs[i])
+    // }
+
+    //     AmCharts.ready(function() {
+    //     for ( var i = 1; i < chart.graphs.length; i++ ){
+    //     chart.hideGraph(chart.graphs[i])
+    // }
+    //     $('.amcharts-chart-div').find('a').addClass('superHide')
+    //     })
 })
-
-AmCharts.ready(function() {
-    $('.amcharts-chart-div').find('a').addClass('superHide')
-})
-
-
-
-
-
-//Date slider actions section.
-slider.noUiSlider.on('update', function() {
-    startDate = slider.noUiSlider.get()[0]
-    endDate = slider.noUiSlider.get()[1]
-
-    $('.amcharts-chart-div').find('a').addClass('superHide')
-    chart.zoomToIndexes(startDate, endDate)
-
-    var startDateFormat = moment(data[startDate].shiftDate).format('MMM DD YYYY')
-    var endDateFormat = moment(data[endDate].shiftDate).format('MMM DD YYYY')
-
-    $('.date1').text(startDateFormat)
-    $('.date2').text(endDateFormat)
-    updateAverage()
-})
-
-//Sets initial visible state of graphs, leaving only first one on.
-//  for ( var i = 1; i < chart.graphs.length; i++ ){
-//     chart.hideGraph(chart.graphs[i])
-// }
-
-//     AmCharts.ready(function() {
-//     for ( var i = 1; i < chart.graphs.length; i++ ){
-//     chart.hideGraph(chart.graphs[i])
-// }
-//     $('.amcharts-chart-div').find('a').addClass('superHide')
-//     })
-
 
 
 //Toggles the viewable graphs.
@@ -318,9 +318,6 @@ $('.lever').on('click', function(){
   }
 })
 
-
-
-});
 
 
 

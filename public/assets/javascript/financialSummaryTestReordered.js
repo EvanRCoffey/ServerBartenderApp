@@ -1,3 +1,5 @@
+//I guess we're using this now instead of financialSummaryTest.js???
+
 ///////////////////////////////////////
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
