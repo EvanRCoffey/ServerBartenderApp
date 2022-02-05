@@ -571,6 +571,8 @@ textarea:focus + label {
 .grayBorder {
 	border: 10px solid #28324f;
 	padding: 10px 20px 0px 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 	font-family: 'Khand', sans-serif;
 	color: #49617e;
 }

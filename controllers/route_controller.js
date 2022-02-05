@@ -119,8 +119,10 @@ router.get("/myShifts", loggedIn, function(req, res, next) {
         for (var i = 0; i < dataObject.allShifts.length; i++) {
             dataObject.allShifts[i].shiftDate = moment.utc(dataObject.allShifts[i].shiftDate).add(18, 'hours').format('ll')
             dataObject.allShifts[i].timeIn = moment(dataObject.allShifts[i].timeIn, 'hh:mm:ss').format('h:mm A')
+            dataObject.allShifts[i].timeOut = moment(dataObject.allShifts[i].timeOut, 'hh:mm:ss').format('h:mm A')
         }
         // moment().format('MMMM Do YYYY, h:mm:ss a');
+
        res.render("myShifts", dataObject);
      });
  });

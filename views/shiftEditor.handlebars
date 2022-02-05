@@ -1,4 +1,4 @@
-<div id="mainDiv">
+<div id="mainDiv" class="container grayBorder">
     <div class="row">
         <div class="row">
             <div class="col s12">
@@ -22,72 +22,6 @@
                 <label>Job Selector</label>
             </div>
 
-            <!--totalWalkedWith DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="totalWalkedWith" id="totalWalkedWith" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.totalWalkedWith}}" required>
-                <label for="totalWalkedWith" class="active">Total walked with</label>                                          
-            </div>
-         
-            <!--largestTip DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="largestTip" id="largestTip" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.largestTip}}">
-                <label for="largestTip" class="active">Largest tip</label>
-            </div>
-
-            <!--smallestTip DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="smallestTip" id="smallestTip" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.smallestTip}}">
-                <label for="smallestTip" class="active">Smallest tip</label>
-            </div>
-
-            <!--stiffed INT(10)-->
-            <div class="input-field col s12">
-                <input name="stiffed" id="stiffed" type="number" class="validate" value="{{this.shift.dataValues.stiffed}}">
-                <label for="stiffed" class="active">Number of times stiffed (hopefully zero!)</label>
-            </div>
-
-            <!--sales DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="sales" id="sales" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.sales}}" required>
-                <label for="sales" class="active">Sales</label>
-            </div>
-
-            <!--ppa DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="ppa" id="ppa" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.ppa}}">
-                <label for="ppa" class="active">PPA</label>
-            </div>
-
-            <!--tipout DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="tipout" id="tipout" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.tipout}}">
-                <label for="tipout" class="active">Total tipped out</label>
-            </div>
-
-            <!--tipPercent DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="tipPercent" id="tipPercent" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.tipPercent}}">
-                <label for="tipPercent" class="active">Tip %</label>
-            </div>
-
-            <!--bwl DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="bwl" id="bwl" type="number" step="0.01" min="0" max="100" class="validate" value="{{this.shift.dataValues.bwl}}">
-                <label for="bwl" class="active">BWL %</label>
-            </div>
-
-            <!--comments MEDIUMBLOB-->
-            <div class="input-field col s12">
-                <textarea name="comments" id="comments" class="materialize-textarea">{{this.shift.dataValues.comments}}</textarea>
-                <label for="comments" class="active">Comments</label>
-            </div>
-
-            <!--breakthroughs MEDIUMBLOB-->
-            <div class="input-field col s12">
-                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea">{{this.shift.dataValues.breakthroughs}}</textarea>
-                <label for="breakthroughs" class="active">Breakthroughs</label>
-            </div>
-
             <!--shiftDate DATE-->
             <div class="input-field col s12">
                 <input name="shiftDate" id="shiftDate" type="date" class="datepicker" value="{{this.shift.dataValues.shiftDate}}" required>
@@ -98,25 +32,105 @@
 
             <!--timeIn TIMESTAMP NOT NULL-->
             <br><br><br><br>
-            <input type="range" min="0" max="95" value="48" step="1" class="timeRun" id="inTime" oninput="showInTime(this.value)" required/><br><span id="inTimeSpan">In-time: {{this.shift.dataValues.timeIn}}</span><br><br>
+            <input type="range" min="0" max="95" step="1" class="timeRun" id="inTime" oninput="showInTime(this.value)" required/><br><span id="inTimeSpan">In-time: {{this.shift.dataValues.timeIn}}</span><br><br>
+
+
+
+            <!--To use showInTime() and showOutTime(), you need to send it an int between 0 and 95.  You currently have timestamps only. -->
             <input id='inTimeHidden' type="hidden" name="timeIn" value="{{this.shift.dataValues.timeIn}}">
 
+
+
+
             <!--timeOut TIMESTAMP NOT NULL-->
-          <input  type="range" min="0" max="95" value="48" step="1" class="timeRun" id="outTime" oninput="showOutTime(this.value)" required/><br><span id="outTimeSpan">Out-time: {{this.shift.dataValues.timeOut}}</span><br><br>
+            <input  type="range" min="0" max="95" step="1" class="timeRun" id="outTime" oninput="showOutTime(this.value)" required/><br><span id="outTimeSpan">Out-time: {{this.shift.dataValues.timeOut}}</span><br><br>
+
+
+            <!--To use showInTime() and showOutTime(), you need to send it an int between 0 and 95.  You currently have timestamps only. -->
             <input id='outTimeHidden' type="hidden" name="timeOut" value="{{this.shift.dataValues.timeOut}}">
+
 
             <!--shiftType VARCHAR(32)-->
             <select name="shiftType" id="shiftType">
-              <option value="" disabled selected>Click here to choose the shift type</option>
-              <option value="breakfast">Breakfast</option>
-              <option value="brunch">Brunch</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-              <option value="double">Double</option>
-              <option value="openToClose">Open to Close</option>
+                <option value="" disabled selected>(Optional) Click here to choose the shift type</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="brunch">Brunch</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="double">Double</option>
+                <option value="openToClose">Open to Close</option>
             </select>
             <label>Shift type</label>
             <input type="hidden" id='shiftTypePopulate' value="{{this.shift.dataValues.shiftType}}">
+
+            <!--For some reason, putting this under the time slider is breaking it, so I leave it here-->
+            <!--totalWalkedWith DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="totalWalkedWith" id="totalWalkedWith" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.totalWalkedWith}}" required>
+                <label for="totalWalkedWith" class="active">Total walked with</label>                                          
+            </div>
+
+
+            <!--For some reason, putting this under the time slider is breaking it, so I leave it here-->
+            <!--sales DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="sales" id="sales" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.sales}}" required>
+                <label for="sales" class="active">Sales</label>
+            </div>
+         
+            <!--largestTip DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="largestTip" id="largestTip" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.largestTip}}">
+                <label for="largestTip" class="active">(Optional) Largest tip</label>
+            </div>
+
+            <!--smallestTip DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="smallestTip" id="smallestTip" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.smallestTip}}">
+                <label for="smallestTip" class="active">(Optional) Smallest tip</label>
+            </div>
+
+            <!--stiffed INT(10)-->
+            <div class="input-field col s12">
+                <input name="stiffed" id="stiffed" type="number" class="validate" value="{{this.shift.dataValues.stiffed}}">
+                <label for="stiffed" class="active">(Optional) Number of times stiffed (hopefully zero!)</label>
+            </div>
+
+            <!--ppa DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="ppa" id="ppa" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.ppa}}">
+                <label for="ppa" class="active">(Optional) PPA</label>
+            </div>
+
+            <!--tipout DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="tipout" id="tipout" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.tipout}}">
+                <label for="tipout" class="active">(Optional) Total tipped out</label>
+            </div>
+
+            <!--tipPercent DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="tipPercent" id="tipPercent" type="number" step="0.01" min="0" max="100000" class="validate" value="{{this.shift.dataValues.tipPercent}}">
+                <label for="tipPercent" class="active">(Optional) Tip %</label>
+            </div>
+
+            <!--bwl DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="bwl" id="bwl" type="number" step="0.01" min="0" max="100" class="validate" value="{{this.shift.dataValues.bwl}}">
+                <label for="bwl" class="active">(Optional) BWL %</label>
+            </div>
+
+            <!--comments MEDIUMBLOB-->
+            <div class="input-field col s12">
+                <textarea name="comments" id="comments" class="materialize-textarea">{{this.shift.dataValues.comments}}</textarea>
+                <label for="comments" class="active">(Optional) Comments</label>
+            </div>
+
+            <!--breakthroughs MEDIUMBLOB-->
+            <div class="input-field col s12">
+                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea">{{this.shift.dataValues.breakthroughs}}</textarea>
+                <label for="breakthroughs" class="active">(Optional) Breakthroughs</label>
+            </div>
 
              <input type="hidden" name="shiftID" value="{{this.shift.dataValues.id}}">
     <div class="row">

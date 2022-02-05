@@ -1,3 +1,6 @@
+//This prevents the calendar from automatically closing on 2nd selection
+$('.datepicker').on('mousedown', function(event){ event.preventDefault(); })
+
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15, // Creates a dropdown of 15 years to control year

@@ -54,7 +54,9 @@
 // });
 
 // $(document).ready(function() {
-//     $('select').material_select();
+//     	$('select').material_select();
+// 		//Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+//  	document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
 // });
 
 // //This allows the slideout navbar to function.

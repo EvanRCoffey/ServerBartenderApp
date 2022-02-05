@@ -1,26 +1,24 @@
-<div class="row container">
-  <div class="col s12">
-    <table class="bordered">
-    
-      <thead>
-        <tr>
-          <th>Goal Name</th>
-          <th>Goal Deadline</th>
-          <th class="formEditButton">Edit/Delete</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {{#each allGoals}}
-        <tr>
-        <td>{{dataValues.goalName}}</td>
-        <td>{{dataValues.goalDeadline}}</td>
-          <td><form  class="formEditButton" action="/editGoal{{dataValues.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form></td>
-        </tr>
-        {{/each}}
-      </tbody>
-
-    </table>
-  </div>
+<div class="row container grayBorder">
+    <div class="col s12">
+        <table class="bordered">
+            <thead>
+                <tr>
+                    <th>Goal Name</th>
+                    <th>Goal Deadline</th>
+                    <th class="formEditButton">Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each allGoals}}
+                <tr>
+                    <td>{{dataValues.goalName}}</td>
+                    <td>{{dataValues.goalDeadline}}</td>
+                    <td>
+                        <form class="formEditButton" action="/editGoal{{dataValues.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>
-

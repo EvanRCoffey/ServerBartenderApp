@@ -11,6 +11,8 @@ var menuID
 //Initializes materializes silly javascript functions.
 $(document).ready(function() {
     $('select').material_select();
+    //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+    document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
     $('.collapsible').collapsible({
         accordion: false
     });
@@ -66,6 +68,8 @@ function addCategory(e) {
     }
     $(".categorySelector option[value='" + e.value + "']").remove();
     $('select').material_select();
+    //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+    document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
 }
 
 
@@ -521,6 +525,8 @@ $('.menuFormHolder').on('click', '.save', function(e) {
     e.preventDefault();
     saveAndsend();
      $('select').material_select();
+     //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+    document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
 })
 
 $('.menuFormHolder').on('click', '.itemToggle', function() {
@@ -560,6 +566,8 @@ function checkBoxMaker(title, object, selector, formClass) {
     checkboxIter++
     $('.collapsible').collapsible();
      $('select').material_select();
+     //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+    document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
 }
 
 

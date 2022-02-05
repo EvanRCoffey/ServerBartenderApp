@@ -1,4 +1,4 @@
-<div class="row container">
+<div class="row container grayBorder">
     <div class="col s12">
         <table class="bordered">
             <thead>
@@ -14,7 +14,7 @@
                 <tr class="shiftRow">
                     <td class="shiftd">{{dataValues.shiftDate}}</td>
                     <td class="shiftd">{{dataValues.timeIn}}</td>
-                    <td class="shiftd">{{dataValues.Job.job_name}}</td>
+                    <td class="shiftd">{{Job.dataValues.job_name}}</td>
                     <td class="shiftd">
                         <form class="formEditButton" action="/editShift{{dataValues.id}}?" method="GET"><button class='tableEditButton' type="submit"><i class="small material-icons">mode_edit</i></button></form>
                     </td>

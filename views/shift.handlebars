@@ -4,7 +4,7 @@
     <!--New Shift Form-->
     <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-    <div class="row container">
+    <div class="row container grayBorder">
 
         {{#unless jobs}}
             <!-- This section only shows when no jobs. -->
@@ -34,72 +34,6 @@
                 <label>Job Selector</label>
             </div>
 
-            <!--totalWalkedWith DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="totalWalkedWith" id="totalWalkedWith" type="number" step="0.01" min="0" max="100000" class="validate" required>
-                <label for="totalWalkedWith">Total walked with</label>
-            </div>
-        
-            <!--largestTip DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="largestTip" id="largestTip" type="number" step="0.01" min="0" max="100000" class="validate">
-                <label for="largestTip">Largest tip</label>
-            </div>
-
-            <!--smallestTip DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="smallestTip" id="smallestTip" type="number" step="0.01" min="0" max="100000" class="validate">
-                <label for="smallestTip">Smallest tip</label>
-            </div>
-
-            <!--stiffed INT(10)-->
-            <div class="input-field col s12">
-                <input name="stiffed" id="stiffed" type="number" class="validate">
-                <label for="stiffed">Number of times stiffed (hopefully zero!)</label>
-            </div>
-
-            <!--sales DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="sales" id="sales" type="number" step="0.01" min="0" max="100000" class="validate" required>
-                <label for="sales">Sales</label>
-            </div>
-
-            <!--ppa DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="ppa" id="ppa" type="number" step="0.01" min="0" max="100000" class="validate">
-                <label for="ppa">PPA</label>
-            </div>
-
-            <!--tipout DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="tipout" id="tipout" type="number" min="0" max="100000" step="0.01" class="validate">
-                <label for="tipout">Total tipped out</label>
-            </div>
-
-            <!--tipPercent DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="tipPercent" id="tipPercent" type="number" min="0" max="100000" step="0.01" class="validate">
-                <label for="tipPercent">Tip %</label>
-            </div>
-
-            <!--bwl DECIMAL(10,2)-->
-            <div class="input-field col s12">
-                <input name="bwl" id="bwl" type="number" step="0.01" min="0" max="100" class="validate">
-                <label for="bwl">BWL %</label>
-            </div>
-
-            <!--comments MEDIUMBLOB-->
-            <div class="input-field col s12">
-                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
-                <label for="comments">Comments</label>
-            </div>
-
-            <!--breakthroughs MEDIUMBLOB-->
-            <div class="input-field col s12">
-                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea"></textarea>
-                <label for="breakthroughs">Breakthroughs</label>
-            </div>
-
             <!--shiftDate DATE-->
             <div class="input-field col s12">
                 <input name="shiftDate" id="shiftDate" type="date" class="datepicker" required>
@@ -117,18 +51,87 @@
 
             <!--shiftType VARCHAR(32)-->
             <select name="shiftType" id="shiftType">
-              <option value="" disabled selected>Click here to choose the shift type</option>
-              <option value="breakfast">Breakfast</option>
-              <option value="brunch">Brunch</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-              <option value="double">Double</option>
-              <option value="openToClose">Open to Close</option>
+                <option value="" disabled selected>(Optional) Click here to choose the shift type</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="brunch">Brunch</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="double">Double</option>
+                <option value="openToClose">Open to Close</option>
             </select>
             <label>Shift type</label>
+
+            <!--For some reason, putting this under the time slider is breaking it, so I leave it here-->
+            <!--totalWalkedWith DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="totalWalkedWith" id="totalWalkedWith" type="number" step="0.01" min="0" max="100000" class="validate" required>
+                <label for="totalWalkedWith">Total walked with</label>
+            </div>
+
+            <!--For some reason, putting this under the time slider is breaking it, so I leave it here-->
+            <!--sales DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="sales" id="sales" type="number" step="0.01" min="0" max="100000" class="validate" required>
+                <label for="sales">Sales</label>
+            </div>
+        
+            <!--largestTip DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="largestTip" id="largestTip" type="number" step="0.01" min="0" max="100000" class="validate">
+                <label for="largestTip">(Optional) Largest tip</label>
+            </div>
+
+            <!--smallestTip DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="smallestTip" id="smallestTip" type="number" step="0.01" min="0" max="100000" class="validate">
+                <label for="smallestTip">(Optional) Smallest tip</label>
+            </div>
+
+            <!--stiffed INT(10)-->
+            <div class="input-field col s12">
+                <input name="stiffed" id="stiffed" type="number" class="validate">
+                <label for="stiffed">(Optional) Number of times stiffed (hopefully zero!)</label>
+            </div>
+
+            
+
+            <!--ppa DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="ppa" id="ppa" type="number" step="0.01" min="0" max="100000" class="validate">
+                <label for="ppa">(Optional) PPA</label>
+            </div>
+
+            <!--tipout DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="tipout" id="tipout" type="number" min="0" max="100000" step="0.01" class="validate">
+                <label for="tipout">(Optional) Total tipped out</label>
+            </div>
+
+            <!--tipPercent DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="tipPercent" id="tipPercent" type="number" min="0" max="100000" step="0.01" class="validate">
+                <label for="tipPercent">(Optional) Tip %</label>
+            </div>
+
+            <!--bwl DECIMAL(10,2)-->
+            <div class="input-field col s12">
+                <input name="bwl" id="bwl" type="number" step="0.01" min="0" max="100" class="validate">
+                <label for="bwl">(Optional) BWL %</label>
+            </div>
+
+            <!--comments MEDIUMBLOB-->
+            <div class="input-field col s12">
+                <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
+                <label for="comments">(Optional) Comments</label>
+            </div>
+
+            <!--breakthroughs MEDIUMBLOB-->
+            <div class="input-field col s12">
+                <textarea name="breakthroughs" id="breakthroughs" class="materialize-textarea"></textarea>
+                <label for="breakthroughs">(Optional) Breakthroughs</label>
+            </div>
             
             <button class="btn waves-effect waves-light shiftSubmit" type="submit">Create New Shift</button>
-            
 
             <div class="row"></div>
             
