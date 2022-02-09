@@ -4,9 +4,6 @@
 
 $.get("/allShifts").done(function(data) {
 
-    var startDate;
-    var endDate;
-
     //Initiate Slider
     var slider = document.getElementById('dateSlider');
     noUiSlider.create(slider, {
@@ -307,6 +304,13 @@ $( window ).resize(function() {
 });
 
 function updateAverage() {
+
+    //These two variables were moved from being the first thing that happened in the .get
+    //That caused the financial summary to work correctly
+    //Not sure if moving it will cause something else to break but I'm leaving it for now because it all looks good to me
+    var startDate;
+    var endDate;
+
     var hourlyWage = 0;
     var totalWalkedWith = 0;
     var totalHoursWorked = 0;
