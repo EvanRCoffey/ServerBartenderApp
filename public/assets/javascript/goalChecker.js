@@ -13,7 +13,7 @@ var today = moment();
 //
 
 //Each time a user logs in, get all of that user's goals and shifts, then...
-$.get("/goalsAndShifts").then(function(goals) {
+$.get("/goalsAndShiftsAndJobs").then(function(goals) {
     //Pushes all goals to either deadlinesUpcoming[] or deadlinesPassed[]
     for (var i = 0; i < goals.allGoals.length; i++) {
         if ((today.diff(moment(goals.allGoals[i].goalDeadline, "MMM DD YYYY"), "days") < 0) && JSON.parse(goals.allGoals[i].goalStatus).completed === false && JSON.parse(goals.allGoals[i].goalStatus).abandoned === false) {
@@ -25,7 +25,11 @@ $.get("/goalsAndShifts").then(function(goals) {
 
     passedDeadlineCheck();
 
-    //Timeline Code:
+    if (goals.allGoals.length == 0 && goals.allShifts.length == 0) {
+        $('#visualization').text("A super sweet timeline would go here, but this account currently has not made any goals or shifts");
+    }
+    else {
+        //Timeline Code:
 
     var container = document.getElementById('visualization');
 
@@ -66,6 +70,7 @@ $.get("/goalsAndShifts").then(function(goals) {
 
     // Create a Timeline
     var timeline = new vis.Timeline(container, items, options);
+    }
 
 });
 

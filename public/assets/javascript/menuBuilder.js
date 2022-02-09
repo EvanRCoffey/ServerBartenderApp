@@ -18,22 +18,6 @@ $(document).ready(function() {
     });
 });
 
-// var entreeIndex= 0;
-// var appetizerIndex = 1;
-// var dessertIndex = 2;
-// var sideIndex = 3;
-// var addOnIndex = 4;
-// var soupOrSaladIndex = 5;
-// var kidsMenuItemIndex = 6;
-// var otherFoodIndex = 7;
-// var wineIndex = 8;
-// var beerIndex = 9;
-// var cocktailIndex = 10;
-// var nonAlcoholicIndex = 11;
-// var afterDinnerDrinkIndex = 12;
-// var otherDrinkIndex = 13;
-
-
 //This function creates a new menu category based on the dropdown selection.
 //It removes the dropdown option to prevent duplicating categories.
 function addCategory(e) {

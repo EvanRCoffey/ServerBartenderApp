@@ -349,7 +349,7 @@ function loadMenus(job) {
         }
     }
 
-    $.post("/getMenus", jobIdObj).then(function(data3) {
+    $.post("/getMenusGivenJob", jobIdObj).then(function(data3) {
         if (data3.length === 0) {
             var jQueryString = '<div class="input-field col s12"><h5>To use the flash cards, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
             $("#dropdown").html(jQueryString);
@@ -377,7 +377,7 @@ function startFlashCards(menu) {
         menuId: menu
     }
 
-    $.post("/checkMenuJSON", idObj).then(function(data2) {
+    $.post("/getMenu", idObj).then(function(data2) {
         var parsedMenuJson = JSON.parse(data2.menuJSON);
         var reParsedMenuJson = JSON.parse(parsedMenuJson);
 

@@ -1,10 +1,8 @@
-//I guess we're using this now instead of financialSummaryTest.js???
-
 ///////////////////////////////////////
 //GOING THROUGH SHIFTS FOR THIS USER...
 ///////////////////////////////////////
 
-$.post("/financialSummary").done(function(data) {
+$.get("/allShifts").done(function(data) {
 
     var startDate;
     var endDate;

@@ -48,8 +48,4 @@ slider.noUiSlider.on('update', function() {
     $('.date2').text(endDateValue)
 })
 
-//     $('.autoRow').on('transitionend webkitTransitionEnd oTransitionEnd', function() {
-//    $('.tableHide').addClass('displayNone')
-// });
-
 
