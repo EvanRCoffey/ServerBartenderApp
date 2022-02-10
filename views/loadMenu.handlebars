@@ -1,0 +1,34 @@
+<div id="mainDiv" class="container">
+    <div id="fixFont">
+        <div class="col s12">
+            <br><h4>Load Menu</h4>
+        </div>
+
+		{{#unless jobs}}
+	        <div id="dropdown">
+	            <div class="input-field col s12">
+	                <h5>To make a menu, you must create a job.</h5>
+	                <a href="/job"><h5>Click here to create a job.</h5></a>
+	            </div>
+	        </div>
+        {{/unless}}
+
+		{{#if jobs}}
+		   	<div id="dropdown">
+			    <div class="input-field col s12">
+			        <select class="jobSelector" onchange="loadMenus(this);">
+			            <option value="" disabled>Click here to choose a job</option>
+			            {{#each jobs}}
+			                <option value="{{dataValues.id}}" selected>{{dataValues.job_name}}</option>
+			            {{/each}}
+			        </select>
+			        <label>Job Selector</label>
+			    </div>
+			</div>
+		{{/if}}
+    </div>
+</div>
+
+<div id="menuResults"></div>
+
+<script type="text/javascript" src="./javascript/loadMenu.js"></script>

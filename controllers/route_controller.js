@@ -228,6 +228,15 @@ router.get("/menuBuilder", loggedIn, function(req, res, next) {
     });
 });
 
+router.get("/loadMenu", loggedIn, function(req, res, next) {
+    db.Job.findAll({ where: { UserId: req.user.id } }).then(function(dbUser) {
+        var dataObject = {
+            jobs: dbUser
+        };
+        res.render("loadMenu", dataObject);
+    });
+});
+
 //Logs user out and returns to homepage.
 router.get('/logout', loggedIn, function(req, res, next) {
     req.logout();

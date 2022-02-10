@@ -774,3 +774,229 @@ function saveAndsend() {
 }
 
 function slideOut() {$('.menuBuilderPanel').addClass('showDiv')}
+
+
+
+
+//////////////////////////////////////////////////////////////
+// BELOW THIS LINE WAS WRITTEN SPECIFICALLY FOR LOADMENU.JS
+//////////////////////////////////////////////////////////////
+
+
+
+
+function loadMenus(job) {
+    var parentJobID = job.value;
+    var jobIdObj = {
+        jobId: parentJobID
+    }
+    $.post("/getMenusGivenJob", jobIdObj).then(function(data3) {
+        if (data3.length === 0) {
+            var jQueryString = '<div class="input-field col s12"><h5>To use the quiz maker, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+            $("#dropdown").html(jQueryString);
+        } else if (data3.length > 0) {
+
+            var jQueryString = '<div class="input-field col s12"><select class="menuSelector" onchange="buildMenuElements(this.value);"><option value="" disabled>Click here to choose a menu</option>';
+
+
+            for (var i = 0; i < data3.length; i++) {
+                jQueryString += '<option value="' + data3[i].id + '" selected>' + data3[i].menuName + '</option>'
+            }
+
+            jQueryString += '</select><label>Menu Selector</label></div>';
+
+            $("#dropdown").html(jQueryString);
+            $('select').material_select();
+            //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+            document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
+        }
+    });
+}
+
+function buildMenuElements(menu) {
+
+    var idObj = {
+        menuId: menu
+    }
+
+    $.post("/getMenu", idObj).then(function(data2) {
+        var parsedCriJson = JSON.parse(data2.criJSON);
+        var parsedMenuJson = JSON.parse(data2.menuJSON);
+        var reParsedCriJson = JSON.parse(parsedCriJson);
+        var reParsedMenuJson = JSON.parse(parsedMenuJson);
+
+        console.log(reParsedCriJson);
+        console.log(reParsedMenuJson);
+
+
+        //Probably don't use this
+        var bigArray = []
+
+
+
+        if (reParsedMenuJson.entree.length > 0) {
+
+            //add entree menu category 
+
+            for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
+
+                //click "add entree" button
+
+
+                //populate elements appropriately
+
+
+            }
+        }
+
+        
+
+        if (reParsedMenuJson.appetizer.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.appetizer[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.sides.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.sides.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.sides[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.addOn.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.addOn[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.soupOrSalad.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.soupOrSalad.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.soupOrSalad[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.kidsMenuItem.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.kidsMenuItem.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.kidsMenuItem[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.otherFood.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.otherFood.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.otherFood[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.afterDinnerDrink.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.afterDinnerDrink[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.wine.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.wine.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.wine[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.beer.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.beer.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.beer[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.cocktail.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.cocktail.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.cocktail[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.nonAlcoholic.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.nonAlcoholic[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        if (reParsedMenuJson.otherDrink.length > 0) {
+
+            for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
+
+                //make an HTML element for it, formatted just like menuBuilder
+                //currently just a placeholder element
+                var itemElement = '<div>' + reParsedMenuJson.otherDrink[i].name + '</div>';
+
+                bigArray.push(itemElement);
+            }
+        }
+
+        for (var i = 0; i<bigArray.length; i++) {
+            $("#menuResults").append(bigArray[i]);
+        }
+    })
+}

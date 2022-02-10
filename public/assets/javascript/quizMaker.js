@@ -878,7 +878,7 @@ function loadMenus(job) {
     }
     $.post("/getMenusGivenJob", jobIdObj).then(function(data3) {
         if (data3.length === 0) {
-            var jQueryString = '<div class="input-field col s12"><h5>To use the quiz maker, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+            var jQueryString = '<div class="input-field col s12"><h5>You have not created a menu for this job.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
             $("#dropdown").html(jQueryString);
         } else if (data3.length > 0) {
 
@@ -909,6 +909,9 @@ function startQuizMaker(menu) {
         var parsedMenuJson = JSON.parse(data2.menuJSON);
         var reParsedCriJson = JSON.parse(parsedCriJson);
         var reParsedMenuJson = JSON.parse(parsedMenuJson);
+
+        console.log(parsedCriJson);
+        console.log(parsedMenuJson);
 
         $("#dropdown").html("Menu analyzed!  Select options below");
 
