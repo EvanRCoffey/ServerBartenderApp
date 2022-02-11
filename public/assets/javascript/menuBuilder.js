@@ -237,7 +237,7 @@ var CRImakerSource = [{
         name: 'toGoCups',
         text: 'To-Go Cups'
     }, {
-        name: 'toGoutensils',
+        name: 'toGoUtensils',
         text: 'To-Go utensils'
     }
 ]
@@ -309,7 +309,7 @@ checkBoxMaker(null, CRImakerSource, '.CRI');
 //
 
 $('.menuFormHolder').on('click', '.addItemBtnentree', function(e) {
-    e.preventDefault();
+    e.preventDefault(); //e is a click event
     createItemHolder('.entree', 'entree')
     createIntInput('price', 'Entree Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -538,7 +538,7 @@ function addCategory(e) {
     } else if (e.value === 'soupOrSalad') {
         createCategorySection('Soups & Salads', 'soupOrSalad', 'Add Soup or Salad')
     } else if (e.value === 'kidsMenu') {
-        createCategorySection('Soups & Salads', 'kidsMenuItem', 'Add Kids Item')
+        createCategorySection('Kids Menu Item', 'kidsMenuItem', 'Add Kids Item')
     } else if (e.value === 'otherFood') {
         createCategorySection('Other Food', 'otherFood', 'Add Other Food')
     } else if (e.value === 'wine') {
@@ -760,8 +760,14 @@ function saveAndsend() {
         comments: $('#comments').val(),
         menuJSON: JSON.stringify(menuJSON),
         criJSON: JSON.stringify(criJSON),
-        JobId: $('#jobID').val()
+        JobId: $('#jobIdPopulate').val()    //THIS WAS CHANGED FROM 'JobID' WHEN LOADMENU JOINED WITH MENUBUILDER
     }
+
+    //Instead of having this if statement, you could POST it to a method using findOrCreate
+    //If not found, it is created
+    //If found, it is updated instead
+
+    //Will work as-is for now but should probably change to the above at some point
 
     if(!menuSaved){
         $.post("/newMenu", menuObj).then(function(data) {
@@ -774,3 +780,523 @@ function saveAndsend() {
 }
 
 function slideOut() {$('.menuBuilderPanel').addClass('showDiv')}
+
+
+
+
+//////////////////////////////////////////////////////////////
+// BELOW THIS LINE WAS WRITTEN SPECIFICALLY FOR LOADMENU.JS
+//////////////////////////////////////////////////////////////
+
+function createItemHolderAndPopulate(target, value, item){
+    var categoryHTML="";
+    categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
+    categoryHTML += "    <ul>";
+    categoryHTML += "        <li>";
+    categoryHTML += "            <div class=\"ItemHeader\">";
+    categoryHTML += "                <i class=\"material-icons itemToggle\">remove</i><input class=\"itemTitle\" name=\"name\" value=\""+item.name +"\"></input><\/div>";
+    categoryHTML += "            <div class=\"menuOverflow itemHolderToggle itemholder" +ItemIter +"\">";
+    categoryHTML += "            <\/div>";
+    categoryHTML += "        <\/li>";
+    categoryHTML += "    <\/ul>";
+    categoryHTML += "<\/div>";
+    categoryHTML += "";
+
+    $(target).append(categoryHTML)
+    $('.collapsible').collapsible()
+}
+
+function createIntInputAndPopulate(name, labelText, item){
+    var textInput="";
+    textInput += "<div class=\"input-field col s12\">";
+    textInput += "    <input id=\""+name+globalIter+"\"type=\"number\" step=\"0.01\" min=\"0\" max=\"100000\" required class=\"validate\" value=\""+item.price+"\"name="+name+">";
+    textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+    textInput += "<\/div>";
+    textInput += "";
+
+    $('.itemholder'+ ItemIter).append(textInput)
+    globalIter++
+}
+
+function createTextAreaInputAndPopulate(name, labelText, item){
+
+    if (name == "quickDescr") {var textToPopulate = item.quickDescr}
+    if (name == "detailedDescr") {var textToPopulate = item.detailedDescr}
+
+    var textInput="";
+    textInput += "<div class=\"input-field col s12\">";
+    textInput += "    <textarea id=\""+name+globalIter+"\" class=\"materialize-textarea\" name="+name+">"+textToPopulate+"</textarea>";
+    textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+    textInput += "<\/div>";
+    textInput += "";
+    
+    $('.itemholder'+ ItemIter).append(textInput)
+    globalIter++
+}
+
+function checkBoxMakerAndPopulate(title, array, selector, formClass, item) {
+    if(!selector){
+        selector = '.itemholder'+ ItemIter 
+    }
+
+    if(title){ 
+        $(selector).append("<h5>"+title+"</h5>")
+    }
+
+    $(selector).append("<div class='row "+ formClass + " checkboxRow" + checkboxIter+ "'></div")
+    
+    for (var i = 0; i < array.length; i++) {
+        
+        //Check box if you should
+        if (returnCheckboxBool(array[i], item) == true) {
+            //Set the checkbox we just created as checked
+            $('.checkboxRow'+ checkboxIter).append("<div class='col s6 m4 l4'><input type='checkbox' checked class='filled-in' id='filled-in-box" + globalIter + "' name ='" + array[i].name + "'/><label class='checkboxLabel' for='filled-in-box" + globalIter + "'>" + array[i].text + "</label></div>")
+        } 
+        //Don't if you shouldn't
+        else {
+            $('.checkboxRow'+ checkboxIter).append("<div class='col s6 m4 l4'><input type='checkbox' class='filled-in' id='filled-in-box" + globalIter + "' name ='" + array[i].name + "'/><label class='checkboxLabel' for='filled-in-box" + globalIter + "'>" + array[i].text + "</label></div>")
+        }    
+        globalIter++   
+    }
+    
+    checkboxIter++
+    
+    $('.collapsible').collapsible();
+    $('select').material_select();
+    
+    //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+    document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
+}
+
+function returnCheckboxBool(arrayElement, item) {
+    if (arrayElement.name == "secretItem") {return item.descriptors.secretItem}
+    if (arrayElement.name == "beef") {return item.descriptors.beef}
+    if (arrayElement.name == "chicken") {return item.descriptors.chicken}
+    if (arrayElement.name == "pork") {return item.descriptors.pork}
+    if (arrayElement.name == "seafood") {return item.descriptors.seafood}
+    if (arrayElement.name == "lamb") {return item.descriptors.lamb}
+    if (arrayElement.name == "otherProtein") {return item.descriptors.otherProtein}
+    if (arrayElement.name == "cheesy") {return item.descriptors.cheesy}
+    if (arrayElement.name == "fresh") {return item.descriptors.fresh}
+    if (arrayElement.name == "fried") {return item.descriptors.fried}
+    if (arrayElement.name == "hearty") {return item.descriptors.hearty}
+    if (arrayElement.name == "indulgent") {return item.descriptors.indulgent}
+    if (arrayElement.name == "light") {return item.descriptors.light}
+    if (arrayElement.name == "plain") {return item.descriptors.plain}
+    if (arrayElement.name == "raw") {return item.descriptors.raw}
+    if (arrayElement.name == "salty") {return item.descriptors.salty}
+    if (arrayElement.name == "spicy") {return item.descriptors.spicy}
+    if (arrayElement.name == "sweet") {return item.descriptors.sweet}
+    if (arrayElement.name == "healthy") {return item.descriptors.healthy}
+    if (arrayElement.name == "aLaCarteOrBiteSize") {return item.descriptors.aLaCarteOrBiteSize}
+    if (arrayElement.name == "servedCold") {return item.descriptors.servedCold}
+    if (arrayElement.name == "toShare") {return item.descriptors.toShare}
+    if (arrayElement.name == "popular") {return item.descriptors.popular}
+    if (arrayElement.name == "vegetarian") {return item.descriptors.vegetarian}
+    if (arrayElement.name == "eggs") {return item.descriptors.eggs}
+    if (arrayElement.name == "fish") {return item.descriptors.fish}
+    if (arrayElement.name == "gluten") {return item.descriptors.gluten}
+    if (arrayElement.name == "milk") {return item.descriptors.milk}
+    if (arrayElement.name == "peanuts") {return item.descriptors.peanuts}
+    if (arrayElement.name == "shellfish") {return item.descriptors.shellfish}
+    if (arrayElement.name == "soy") {return item.descriptors.soy}
+    if (arrayElement.name == "treeNuts") {return item.descriptors.treeNuts}
+    if (arrayElement.name == "wheat") {return item.descriptors.wheat}
+    if (arrayElement.name == "a1") {return item.descriptors.a1}
+    if (arrayElement.name == "balsVin") {return item.descriptors.balsVin}
+    if (arrayElement.name == "bbqSauce") {return item.descriptors.bbqSauce}
+    if (arrayElement.name == "blueCheese") {return item.descriptors.blueCheese}
+    if (arrayElement.name == "bottledSparkling") {return item.descriptors.bottledSparkling}
+    if (arrayElement.name == "caesar") {return item.descriptors.caesar}
+    if (arrayElement.name == "cappuccino") {return item.descriptors.cappuccino}
+    if (arrayElement.name == "clubSoda") {return item.descriptors.clubSoda}
+    if (arrayElement.name == "cocktailSauce") {return item.descriptors.cocktailSauce}
+    if (arrayElement.name == "coffeeDecaf") {return item.descriptors.coffeeDecaf}
+    if (arrayElement.name == "coffeeRegular") {return item.descriptors.coffeeRegular}
+    if (arrayElement.name == "espressoDecaf") {return item.descriptors.espressoDecaf}
+    if (arrayElement.name == "espressoRegular") {return item.descriptors.espressoRegular}
+    if (arrayElement.name == "french") {return item.descriptors.french}
+    if (arrayElement.name == "greek") {return item.descriptors.greek}
+    if (arrayElement.name == "heinz57") {return item.descriptors.heinz57}
+    if (arrayElement.name == "honeyMustard") {return item.descriptors.honeyMustard}
+    if (arrayElement.name == "hotSauce") {return item.descriptors.hotSauce}
+    if (arrayElement.name == "hotTea") {return item.descriptors.hotTea}
+    if (arrayElement.name == "italian") {return item.descriptors.italian}
+    if (arrayElement.name == "ketchup") {return item.descriptors.ketchup}
+    if (arrayElement.name == "lemons") {return item.descriptors.lemons}
+    if (arrayElement.name == "limes") {return item.descriptors.limes}
+    if (arrayElement.name == "marinara") {return item.descriptors.marinara}
+    if (arrayElement.name == "mayonnaise") {return item.descriptors.mayonnaise}
+    if (arrayElement.name == "mustardSpicy") {return item.descriptors.mustardSpicy}
+    if (arrayElement.name == "mustardYellow") {return item.descriptors.mustardYellow}
+    if (arrayElement.name == "oilAndVin") {return item.descriptors.oilAndVin}
+    if (arrayElement.name == "otherVin") {return item.descriptors.otherVin}
+    if (arrayElement.name == "ranch") {return item.descriptors.ranch}
+    if (arrayElement.name == "salsa") {return item.descriptors.salsa}
+    if (arrayElement.name == "soySauce") {return item.descriptors.soySauce}
+    if (arrayElement.name == "thousandIsland") {return item.descriptors.thousandIsland}
+    if (arrayElement.name == "toGoBoxes") {return item.descriptors.toGoBoxes}
+    if (arrayElement.name == "toGoCups") {return item.descriptors.toGoCups}
+    if (arrayElement.name == "toGoUtensils") {return item.descriptors.toGoUtensils}
+    if (arrayElement.name == "cake") {return item.descriptors.cake}
+    if (arrayElement.name == "pie") {return item.descriptors.pie}
+    if (arrayElement.name == "iceCream") {return item.descriptors.iceCream}
+    if (arrayElement.name == "chocolatey") {return item.descriptors.chocolatey}
+    if (arrayElement.name == "fruity") {return item.descriptors.fruity}
+    if (arrayElement.name == "light") {return item.descriptors.light}
+    if (arrayElement.name == "rich") {return item.descriptors.rich}
+    if (arrayElement.name == "tart") {return item.descriptors.tart}
+    if (arrayElement.name == "toShare") {return item.descriptors.toShare}
+    if (arrayElement.name == "popular") {return item.descriptors.popular}
+    if (arrayElement.name == "healthy") {return item.descriptors.healthy}
+}
+
+function loadMenus(job) {
+    var parentJobID = job.value;
+    var jobIdObj = {
+        jobId: parentJobID
+    }
+    $("#jobIdPopulate").val(job.value);
+    $.post("/getMenusGivenJob", jobIdObj).then(function(data3) {
+        if (data3.length === 0) {
+            var jQueryString = '<div class="input-field col s12"><h5>To use the quiz maker, you must create a job and a menu.<a href="/menuBuilder"><h5>Click here to create a menu.</h5></a></div>'
+            $("#dropdown").html(jQueryString);
+        } else if (data3.length > 0) {
+
+            var jQueryString = '<div class="input-field col s12"><select class="menuSelector" onchange="buildMenuElements(this.value);"><option value="" disabled>Click here to choose a menu</option>';
+
+
+            for (var i = 0; i < data3.length; i++) {
+                jQueryString += '<option value="' + data3[i].id + '" selected>' + data3[i].menuName + '</option>'
+            }
+
+            jQueryString += '</select><label>Menu Selector</label></div>';
+
+            $("#dropdown").html(jQueryString);
+            $('select').material_select();
+            //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
+            document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
+        }
+    });
+}
+
+function buildMenuElements(menu) {
+
+    $('#hiddenMenuForm').removeAttr('hidden');
+    $('#hiddenCategories').removeAttr('hidden');
+    $("#dropdown").attr("hidden","true");
+
+    //You still need to populate name and comments
+
+    var idObj = {
+        menuId: menu
+    }
+
+    menuSaved = true;
+
+    $.post("/getMenu", idObj).then(function(data2) {
+        var parsedCriJson = JSON.parse(data2.criJSON);
+        var parsedMenuJson = JSON.parse(data2.menuJSON);
+        var reParsedCriJson = JSON.parse(parsedCriJson);
+        var reParsedMenuJson = JSON.parse(parsedMenuJson);
+
+        console.log(reParsedCriJson);
+        console.log(reParsedMenuJson);
+
+        //Populate entrees
+        if (reParsedMenuJson.entree.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "entree"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.entree.length; i++) {
+
+                createItemHolderAndPopulate('.entree', 'entree', reParsedMenuJson.entree[i])
+                createIntInputAndPopulate('price', 'Entree Price', reParsedMenuJson.entree[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.entree[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.entree[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.entree[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.entree[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.entree[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.entree[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate appetizers
+        if (reParsedMenuJson.appetizer.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "appetizer"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.appetizer.length; i++) {   
+
+                createItemHolderAndPopulate('.appetizer', 'appetizer', reParsedMenuJson.appetizer[i])
+                createIntInputAndPopulate('price', 'Appetizer Price', reParsedMenuJson.appetizer[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.appetizer[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.appetizer[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.appetizer[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.appetizer[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.appetizer[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.appetizer[i])
+                ItemIter++
+            }
+        }
+
+        //Populate desserts
+        if (reParsedMenuJson.dessert.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "dessert"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.dessert.length; i++) {     
+
+                createItemHolderAndPopulate('.dessert', 'dessert', reParsedMenuJson.dessert[i])
+                createIntInputAndPopulate('price', 'Dessert Price', reParsedMenuJson.dessert[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.dessert[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.dessert[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.dessert[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.dessert[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.dessert[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.dessert[i])
+                ItemIter++                
+
+            }
+        }
+
+        //Populate sides
+        if (reParsedMenuJson.sides.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "sides"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.sides.length; i++) {
+
+                createItemHolderAndPopulate('.sides', 'sides', reParsedMenuJson.sides[i])
+                createIntInputAndPopulate('price', 'Side Price', reParsedMenuJson.sides[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.sides[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.sides[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.sides[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.sides[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.sides[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.sides[i])
+                ItemIter++
+            }
+        }
+
+        //Populate addOns
+        if (reParsedMenuJson.addOn.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "addOn"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.addOn.length; i++) {             
+
+                createItemHolderAndPopulate('.addOn', 'addOn', reParsedMenuJson.addOn[i])
+                createIntInputAndPopulate('price', 'AddOn Price', reParsedMenuJson.addOn[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.addOn[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.addOn[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.addOn[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.addOn[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.addOn[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.addOn[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate soupOrSalads
+        if (reParsedMenuJson.soupOrSalad.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "soupOrSalad"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.soupOrSalad.length; i++) {     
+                
+                createItemHolderAndPopulate('.soupOrSalad', 'soupOrSalad', reParsedMenuJson.soupOrSalad[i])
+                createIntInputAndPopulate('price', 'Soup/Salad Price', reParsedMenuJson.soupOrSalad[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.soupOrSalad[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.soupOrSalad[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.soupOrSalad[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.soupOrSalad[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.soupOrSalad[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.soupOrSalad[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate kidsMenuItems
+        if (reParsedMenuJson.kidsMenuItem.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "kidsMenu"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.kidsMenuItem.length; i++) {     
+                
+                createItemHolderAndPopulate('.kidsMenuItem', 'kidsMenuItem', reParsedMenuJson.kidsMenuItem[i])
+                createIntInputAndPopulate('price', 'Kids Menu Item Price', reParsedMenuJson.kidsMenuItem[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.kidsMenuItem[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.kidsMenuItem[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.kidsMenuItem[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.kidsMenuItem[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.kidsMenuItem[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.kidsMenuItem[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate otherFoods
+        if (reParsedMenuJson.otherFood.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "otherFood"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.otherFood.length; i++) {
+
+                createItemHolderAndPopulate('.otherFood', 'otherFood', reParsedMenuJson.otherFood[i])
+                createIntInputAndPopulate('price', 'Other Food Price', reParsedMenuJson.otherFood[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.otherFood[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.otherFood[i])
+                checkBoxMakerAndPopulate(null, secretItem, null, 'secretItemForm', reParsedMenuJson.otherFood[i])
+                checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.otherFood[i])
+                checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.otherFood[i])
+                checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.otherFood[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate afterDinnerDrinks
+        if (reParsedMenuJson.afterDinnerDrink.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "afterDinnerDrink"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.afterDinnerDrink.length; i++) {
+
+                createItemHolderAndPopulate('.afterDinnerDrink', 'afterDinnerDrink', reParsedMenuJson.afterDinnerDrink[i])
+                createIntInputAndPopulate('price', 'After Dinner Drink Price', reParsedMenuJson.afterDinnerDrink[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.afterDinnerDrink[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.afterDinnerDrink[i])                
+                ItemIter++
+
+            }
+        }
+
+        //Populate wines
+        if (reParsedMenuJson.wine.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "wine"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.wine.length; i++) {
+
+                createItemHolderAndPopulate('.wine', 'wine', reParsedMenuJson.wine[i])
+                createIntInputAndPopulate('price', 'Wine Price', reParsedMenuJson.wine[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.wine[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.wine[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate beers
+        if (reParsedMenuJson.beer.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "beer"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.beer.length; i++) {
+
+                createItemHolderAndPopulate('.beer', 'beer', reParsedMenuJson.beer[i])
+                createIntInputAndPopulate('price', 'Beer Price', reParsedMenuJson.beer[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.beer[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.beer[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate cocktails
+        if (reParsedMenuJson.cocktail.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "cocktails"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.cocktail.length; i++) {
+
+                createItemHolderAndPopulate('.cocktail', 'cocktail', reParsedMenuJson.cocktail[i])
+                createIntInputAndPopulate('price', 'Cocktail Price', reParsedMenuJson.cocktail[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.cocktail[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.cocktail[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate nonAlcoholics
+        if (reParsedMenuJson.nonAlcoholic.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "nonAlcoholic"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.nonAlcoholic.length; i++) {
+
+                createItemHolderAndPopulate('.nonAlcoholic', 'nonAlcoholic', reParsedMenuJson.nonAlcoholic[i])
+                createIntInputAndPopulate('price', 'Non-Alcoholic Drink Price', reParsedMenuJson.nonAlcoholic[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.nonAlcoholic[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.nonAlcoholic[i])
+                ItemIter++
+
+            }
+        }
+
+        //Populate otherDrinks
+        if (reParsedMenuJson.otherDrink.length > 0) {
+
+            var valueObject = {};
+            valueObject.value = "otherDrink"
+            addCategory(valueObject)
+
+            for (var i = 0; i<reParsedMenuJson.otherDrink.length; i++) {
+
+                createItemHolderAndPopulate('.otherDrink', 'otherDrink', reParsedMenuJson.otherDrink[i])
+                createIntInputAndPopulate('price', 'Other Drink Price', reParsedMenuJson.otherDrink[i])
+                createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.otherDrink[i])
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.otherDrink[i])
+                ItemIter++
+
+            }
+        }
+    })
+}
+
+function prepareNewMenu() {
+    $("#newOrLoadMenu").attr("hidden","true");
+    $('#menuForm').removeAttr('hidden');
+    $('#hiddenMenuForm').removeAttr('hidden');
+    $('#hiddenCategories').removeAttr('hidden');
+}
+
+function prepareLoadMenu() {
+    $("#newOrLoadMenu").attr("hidden","true");
+    $("#jobID").attr("onchange","loadMenus(this);");
+    $("#newOrOld").html("Editing an existing menu");
+    $('#menuForm').removeAttr('hidden');
+}
