@@ -310,6 +310,7 @@ checkBoxMaker(null, CRImakerSource, '.CRI');
 
 $('.menuFormHolder').on('click', '.addItemBtnentree', function(e) {
     e.preventDefault(); //e is a click event
+    saveAndsend();
     createItemHolder('.entree', 'entree')
     createIntInput('price', 'Entree Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -324,6 +325,7 @@ $('.menuFormHolder').on('click', '.addItemBtnentree', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnappetizer', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.appetizer', 'appetizer')
     createIntInput('price', 'Appetizer Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -338,6 +340,7 @@ $('.menuFormHolder').on('click', '.addItemBtnappetizer', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtndessert', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.dessert', 'dessert')
     createIntInput('price', 'Dessert Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -352,6 +355,7 @@ $('.menuFormHolder').on('click', '.addItemBtndessert', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnsides', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.sides', 'sides')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -366,6 +370,7 @@ $('.menuFormHolder').on('click', '.addItemBtnsides', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnaddOn', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.addOn', 'addOn')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -380,6 +385,7 @@ $('.menuFormHolder').on('click', '.addItemBtnaddOn', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnsoupOrSalad', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.soupOrSalad', 'soupOrSalad')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -394,6 +400,7 @@ $('.menuFormHolder').on('click', '.addItemBtnsoupOrSalad', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnkidsMenuItem', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.kidsMenuItem', 'kidsMenuItem')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -408,6 +415,7 @@ $('.menuFormHolder').on('click', '.addItemBtnkidsMenuItem', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnotherFood', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.otherFood', 'otherFood')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -422,6 +430,7 @@ $('.menuFormHolder').on('click', '.addItemBtnotherFood', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnwine', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.wine', 'wine')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -432,6 +441,7 @@ $('.menuFormHolder').on('click', '.addItemBtnwine', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnafterDinnerDrink', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.afterDinnerDrink', 'afterDinnerDrink')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -442,6 +452,7 @@ $('.menuFormHolder').on('click', '.addItemBtnafterDinnerDrink', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnbeer', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.beer', 'beer')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -452,6 +463,7 @@ $('.menuFormHolder').on('click', '.addItemBtnbeer', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtncocktail', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.cocktail', 'cocktail')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -462,6 +474,7 @@ $('.menuFormHolder').on('click', '.addItemBtncocktail', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnnonAlcoholic', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.nonAlcoholic', 'nonAlcoholic')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -472,6 +485,7 @@ $('.menuFormHolder').on('click', '.addItemBtnnonAlcoholic', function(e) {
 
 $('.menuFormHolder').on('click', '.addItemBtnotherDrink', function(e) {
     e.preventDefault();
+    saveAndsend();
     createItemHolder('.otherDrink', 'otherDrink')
     createIntInput('price', 'Item Price')
     createTextAreaInput('quickDescr', 'Quick Description')
@@ -481,9 +495,9 @@ $('.menuFormHolder').on('click', '.addItemBtnotherDrink', function(e) {
 })
 
 //Saves the menu to the database on any button click.
+//saveAndSend() is now done in each onclick instead of this one
 $('.menuFormHolder').on('click', '.save', function(e) {
     e.preventDefault();
-    saveAndsend();
     $('select').material_select();
     //Found this line from stackoverflow and it fixed the "need to click dropdown twice" bug so I'm gonna keep it
     document.querySelectorAll('.select-wrapper').forEach(t => t.addEventListener('click', e=>e.stopPropagation()))
@@ -631,18 +645,6 @@ function createCategorySection(categoryTitle, categoryClass, buttonText){
     $('.collapsible').collapsible()
 }
 
-function createTextInput(name, labelText){
-    var textInput="";
-    textInput += "<div class=\"input-field col s12\">";
-    textInput += "    <input id=\""+name+globalIter+"\"type=\"text\" required class=\"validate\" name="+name+">";
-    textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
-    textInput += "<\/div>";
-    textInput += "";
-    
-    $('.itemholder'+ ItemIter).append(textInput)
-    globalIter++
-}
-
 function createTextAreaInput(name, labelText){
     var textInput="";
     textInput += "<div class=\"input-field col s12\">";
@@ -669,7 +671,7 @@ function createIntInput(name, labelText){
 
 function createItemHolder(target, value){
     var categoryHTML="";
-    categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
+    categoryHTML += "<div class=\"row itemObject\" style=\"margin-left:0px; margin-right:0px; padding: 0em 0.5em\" path=\""+value+"\">";
     categoryHTML += "    <ul>";
     categoryHTML += "        <li>";
     categoryHTML += "            <div class=\"ItemHeader\">";
@@ -723,35 +725,40 @@ function saveAndsend() {
 
     $('.itemObject').each(function() {
 
-        //Var lets the object get passed into functions.
-        var that = $(this)
-
-        var name = $(this).find('.itemTitle').val()
-        var price = $(this).find("input[name='price']").val()
-        var quickDescr = $(this).find("textarea[name='quickDescr']").val()
-        var detailedDescr = $(this).find("textarea[name='detailedDescr']").val()
-        var secret = false;
-        var ingredients = {}
-        var descriptors = {}
-        var allergyViolations = {}
-
-    
-        //The checkBoxParser function write to an object, not a single variable.
-        //This is a quick workaround.    
-        var secretParse = {}
-        checkBoxParser(that, '.secretItemForm ', secretParse)
-        if(secretParse.secret === true){
-            secret = true
+        if ($(this).find('.menuOverflow').attr('hidden') == 'hidden') {
+            console.log("hidden seen");
         }
+        else {
+            //Var lets the object get passed into functions.
+            var that = $(this)
 
-        checkBoxParser(that, '.ingredientsForm', ingredients)
-        checkBoxParser(that, '.descriptorForm', descriptors)
-        checkBoxParser(that, '.allergyForm', allergyViolations)
-        var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
+            var name = $(this).find('.itemTitle').val()
+            var price = $(this).find("input[name='price']").val()
+            var quickDescr = $(this).find("textarea[name='quickDescr']").val()
+            var detailedDescr = $(this).find("textarea[name='detailedDescr']").val()
+            var secret = false;
+            var ingredients = {}
+            var descriptors = {}
+            var allergyViolations = {}
 
-        //It uses the html element value to sort itself into the correct category
-        category = $(this).attr('path');
-        menuJSON[category].push(item)
+        
+            //The checkBoxParser function write to an object, not a single variable.
+            //This is a quick workaround.    
+            var secretParse = {}
+            checkBoxParser(that, '.secretItemForm ', secretParse)
+            if(secretParse.secret === true){
+                secret = true
+            }
+
+            checkBoxParser(that, '.ingredientsForm', ingredients)
+            checkBoxParser(that, '.descriptorForm', descriptors)
+            checkBoxParser(that, '.allergyForm', allergyViolations)
+            var item = new MenuItem(name, price, quickDescr, detailedDescr, ingredients, descriptors, secret, allergyViolations)
+
+            //It uses the html element value to sort itself into the correct category
+            category = $(this).attr('path');
+            menuJSON[category].push(item)
+        }
     })
 
     var menuObj = {
@@ -772,6 +779,12 @@ function saveAndsend() {
     if(!menuSaved){
         $.post("/newMenu", menuObj).then(function(data) {
             menuID = data
+
+            //update hidden menu ID field here
+            $('#menuIdPopulate').val(menuID)
+
+            console.log("hidden menu ID is " + menuID)
+
             menuSaved = true;
         })
     } else { 
@@ -782,20 +795,18 @@ function saveAndsend() {
 function slideOut() {$('.menuBuilderPanel').addClass('showDiv')}
 
 
-
-
 //////////////////////////////////////////////////////////////
 // BELOW THIS LINE WAS WRITTEN SPECIFICALLY FOR LOADMENU.JS
 //////////////////////////////////////////////////////////////
 
 function createItemHolderAndPopulate(target, value, item){
     var categoryHTML="";
-    categoryHTML += "<div class=\"row itemObject\" path=\""+value+"\">";
+    categoryHTML += "<div class=\"row itemObject\" style=\"margin-left:0px; margin-right:0px; padding: 0em 0.5em\" path=\""+value+"\">";
     categoryHTML += "    <ul>";
     categoryHTML += "        <li>";
-    categoryHTML += "            <div class=\"ItemHeader\">";
-    categoryHTML += "                <i class=\"material-icons itemToggle\">remove</i><input class=\"itemTitle\" name=\"name\" value=\""+item.name +"\"></input><\/div>";
     categoryHTML += "            <div class=\"menuOverflow itemHolderToggle itemholder" +ItemIter +"\">";
+    categoryHTML += "               <div class=\"ItemHeader\">";
+    categoryHTML += "                   <i class=\"material-icons itemToggle\">remove</i><input class=\"itemTitle\" name=\"name\" value=\""+item.name +"\"></input><\/div>";
     categoryHTML += "            <\/div>";
     categoryHTML += "        <\/li>";
     categoryHTML += "    <\/ul>";
@@ -810,11 +821,12 @@ function createIntInputAndPopulate(name, labelText, item){
     var textInput="";
     textInput += "<div class=\"input-field col s12\">";
     textInput += "    <input id=\""+name+globalIter+"\"type=\"number\" step=\"0.01\" min=\"0\" max=\"100000\" required class=\"validate\" value=\""+item.price+"\"name="+name+">";
-    textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+    textInput += "    <label for=\""+name+globalIter+"\" class='active'>"+labelText+"<\/labeltext>";
     textInput += "<\/div>";
     textInput += "";
 
     $('.itemholder'+ ItemIter).append(textInput)
+    $('#'+name+globalIter).addClass("active")
     globalIter++
 }
 
@@ -826,11 +838,12 @@ function createTextAreaInputAndPopulate(name, labelText, item){
     var textInput="";
     textInput += "<div class=\"input-field col s12\">";
     textInput += "    <textarea id=\""+name+globalIter+"\" class=\"materialize-textarea\" name="+name+">"+textToPopulate+"</textarea>";
-    textInput += "    <label for=\""+name+globalIter+"\">"+labelText+"<\/labeltext>";
+    textInput += "    <label for=\""+name+globalIter+"\" class='active'>"+labelText+"<\/labeltext>";
     textInput += "<\/div>";
     textInput += "";
     
     $('.itemholder'+ ItemIter).append(textInput)
+    $('#'+name+globalIter).addClass("active")
     globalIter++
 }
 
@@ -963,11 +976,11 @@ function loadMenus(job) {
             $("#dropdown").html(jQueryString);
         } else if (data3.length > 0) {
 
-            var jQueryString = '<div class="input-field col s12"><select class="menuSelector" onchange="buildMenuElements(this.value);"><option value="" disabled>Click here to choose a menu</option>';
+            var jQueryString = '<div class="input-field col s12"><select class="menuSelector" onchange="buildMenuElements(this.value);"><option value="" disabled selected>Click here to choose a menu</option>';
 
 
             for (var i = 0; i < data3.length; i++) {
-                jQueryString += '<option value="' + data3[i].id + '" selected>' + data3[i].menuName + '</option>'
+                jQueryString += '<option value="' + data3[i].id + '">' + data3[i].menuName + '</option>'
             }
 
             jQueryString += '</select><label>Menu Selector</label></div>';
@@ -982,11 +995,8 @@ function loadMenus(job) {
 
 function buildMenuElements(menu) {
 
-    $('#hiddenMenuForm').removeAttr('hidden');
-    $('#hiddenCategories').removeAttr('hidden');
     $("#dropdown").attr("hidden","true");
-
-    //You still need to populate name and comments
+    $("#hiddenMenuForm").addClass("grayBorder");
 
     var idObj = {
         menuId: menu
@@ -1002,6 +1012,17 @@ function buildMenuElements(menu) {
 
         console.log(reParsedCriJson);
         console.log(reParsedMenuJson);
+
+        $('#menuName').val(data2.menuName)
+        $('#comments').val(data2.comments)
+
+        menuID = data2.id
+
+        //update hidden menu ID field here
+        $('#menuIdPopulate').val(menuID)
+
+        $('#menuNameLabel').addClass('active')
+        $('#commentsLabel').addClass('active')
 
         //Populate entrees
         if (reParsedMenuJson.entree.length > 0) {
@@ -1020,6 +1041,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.entree[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.entree[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.entree[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1042,6 +1064,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.appetizer[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.appetizer[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.appetizer[i])
+                addDeleteButton()
                 ItemIter++
             }
         }
@@ -1063,6 +1086,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.dessert[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.dessert[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.dessert[i])
+                addDeleteButton()
                 ItemIter++                
 
             }
@@ -1085,6 +1109,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.sides[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.sides[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.sides[i])
+                addDeleteButton()
                 ItemIter++
             }
         }
@@ -1106,6 +1131,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.addOn[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.addOn[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.addOn[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1128,6 +1154,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.soupOrSalad[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.soupOrSalad[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.soupOrSalad[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1150,6 +1177,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.kidsMenuItem[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.kidsMenuItem[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.kidsMenuItem[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1172,6 +1200,7 @@ function buildMenuElements(menu) {
                 checkBoxMakerAndPopulate('Descriptors', appEntDesc, null, 'descriptorForm', reParsedMenuJson.otherFood[i])
                 checkBoxMakerAndPopulate('Ingredients', appEntIng, null, 'ingredientsForm', reParsedMenuJson.otherFood[i])
                 checkBoxMakerAndPopulate('Allergy Violations', allergiesList, null, 'allergyForm', reParsedMenuJson.otherFood[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1189,7 +1218,8 @@ function buildMenuElements(menu) {
                 createItemHolderAndPopulate('.afterDinnerDrink', 'afterDinnerDrink', reParsedMenuJson.afterDinnerDrink[i])
                 createIntInputAndPopulate('price', 'After Dinner Drink Price', reParsedMenuJson.afterDinnerDrink[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.afterDinnerDrink[i])
-                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.afterDinnerDrink[i])                
+                createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.afterDinnerDrink[i])
+                addDeleteButton()                
                 ItemIter++
 
             }
@@ -1208,6 +1238,7 @@ function buildMenuElements(menu) {
                 createIntInputAndPopulate('price', 'Wine Price', reParsedMenuJson.wine[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.wine[i])
                 createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.wine[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1226,6 +1257,7 @@ function buildMenuElements(menu) {
                 createIntInputAndPopulate('price', 'Beer Price', reParsedMenuJson.beer[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.beer[i])
                 createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.beer[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1244,6 +1276,7 @@ function buildMenuElements(menu) {
                 createIntInputAndPopulate('price', 'Cocktail Price', reParsedMenuJson.cocktail[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.cocktail[i])
                 createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.cocktail[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1262,6 +1295,7 @@ function buildMenuElements(menu) {
                 createIntInputAndPopulate('price', 'Non-Alcoholic Drink Price', reParsedMenuJson.nonAlcoholic[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.nonAlcoholic[i])
                 createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.nonAlcoholic[i])
+                addDeleteButton()
                 ItemIter++
 
             }
@@ -1280,10 +1314,15 @@ function buildMenuElements(menu) {
                 createIntInputAndPopulate('price', 'Other Drink Price', reParsedMenuJson.otherDrink[i])
                 createTextAreaInputAndPopulate('quickDescr', 'Quick Description', reParsedMenuJson.otherDrink[i])
                 createTextAreaInputAndPopulate('detailedDescr', 'Detailed Description', reParsedMenuJson.otherDrink[i])
+                addDeleteButton()
                 ItemIter++
 
             }
         }
+
+    $('#hiddenMenuForm').removeAttr('hidden');
+    $('#hiddenCategories').removeAttr('hidden');
+
     })
 }
 
@@ -1292,6 +1331,7 @@ function prepareNewMenu() {
     $('#menuForm').removeAttr('hidden');
     $('#hiddenMenuForm').removeAttr('hidden');
     $('#hiddenCategories').removeAttr('hidden');
+    $("#hiddenMenuForm").addClass("grayBorder");
 }
 
 function prepareLoadMenu() {
@@ -1299,4 +1339,20 @@ function prepareLoadMenu() {
     $("#jobID").attr("onchange","loadMenus(this);");
     $("#newOrOld").html("Editing an existing menu");
     $('#menuForm').removeAttr('hidden');
+}
+
+function deleteItem(itemIter) {
+    console.log(itemIter);
+    //hide the element
+    $('.itemholder'+ itemIter).attr("hidden","true");
+}
+
+function addDeleteButton() {
+    var textInput="<button onclick='deleteItem("+ItemIter+")' type='button'>DELETE THIS ITEM</button>";
+    $('.itemholder'+ ItemIter).append(textInput)
+}
+
+function setHiddenJobField(jobValue) {
+    $("#jobIdPopulate").val(jobValue);
+    console.log(jobValue)
 }

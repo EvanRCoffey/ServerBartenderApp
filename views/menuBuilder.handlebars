@@ -24,8 +24,8 @@
             <h5 id="newOrOld">Creating a new menu</h4>
             <div id="dropdown">
                 <div class="input-field col s12">
-                    <select name="job_id" id="jobID" required>
-                        <option value="" disabled>Click here to choose a job</option>
+                    <select name="job_id" id="jobID" onchange="setHiddenJobField(this.value)" required>
+                        <option value="" disabled selected>Click here to choose a job</option>
                         {{#each jobs}}
                         <option value="{{dataValues.id}}">{{dataValues.job_name}}</option>
                         {{/each}}
@@ -35,17 +35,20 @@
             </div>
 
             <!--hidden job id element-->
-            <input type="hidden" id='jobIdPopulate'>
+            <input type="hidden" id='jobIdPopulate' name="jobIdPopulate">
+
+            <!--hidden menu id element-->
+            <input type="hidden" id='menuIdPopulate' name="menuIdPopulate">
 
             <div class="col s12 menuFormHolder" id="hiddenMenuForm" hidden>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="menuName" type="text" required class="validate" name="menuName">
-                        <label for="menuName">Menu Name</label>
+                        <label for="menuName" id="menuNameLabel">Menu Name</label>
                     </div>
                     <div class="input-field col s12">
                         <textarea name="comments" id="comments" class="materialize-textarea"></textarea>
-                        <label for="comments">Comments</label>
+                        <label for="comments" id="commentsLabel">Comments</label>
                     </div>
                     <div class="input-field col s12 CRIpanel">
                         <ul class="collapsible" data-collapsible="expandable">
